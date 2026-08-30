@@ -13,7 +13,8 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, getBusinessTenure, BUSINESS_S
 	<body>
 		<Header />
 		<main>
-			<h1>Cleaning By Cassi</h1>
+			<h1>{SITE_TITLE}</h1>
+			<h2>{SITE_DESCRIPTION}</h2>
 			<p>
 				Hi, I'm {OWNER_NAME}. For <span id="business-tenure">{getBusinessTenure()}</span> I've
 				been helping homes and businesses in the Fox Cities area feel like a fresh start again.
@@ -28,7 +29,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, getBusinessTenure, BUSINESS_S
 				<li>Recurring service (weekly, biweekly, monthly)</li>
 			</ul>
 			<p>
-				<a href="/menu">See the full menu of services</a> or <a href="/about">learn more about me</a>.
+				<a href="/services">See the full list of services</a>, <a href="/pricing">Pricing</a>, or <a href="/about">learn more about me</a>.
 			</p>
 		</main>
 		<Footer />
