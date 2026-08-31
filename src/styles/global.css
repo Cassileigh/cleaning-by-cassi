@@ -33,9 +33,32 @@ body {
 	font-family: "Atkinson", sans-serif;
 	margin: 0;
 	padding: 0;
+	min-height: 100vh;
 	text-align: left;
-	background: linear-gradient(180deg, #003bff 0.000%, #004bff 8.333%, #125cff 16.667%, #2b6cff 25.000%, #447bff 33.333%, #5d8bff 41.667%, #7499ff 50.000%, #8aa7ff 58.333%, #9db3ff 66.667%, #adbfff 75.000%, #b9c9ff 83.333%, #c2d2ff 91.667%, #c6d9ff 100.000%);
+	background:
+		radial-gradient(
+			circle at 15% 20%,
+			rgba(255, 79, 163, 0.75),
+			transparent 35%
+		),
+		radial-gradient(
+			circle at 85% 25%,
+			rgba(106, 0, 244, 0.85),
+			transparent 40%
+		),
+		radial-gradient(
+			circle at 50% 90%,
+			rgba(36, 107, 253, 0.85),
+			transparent 45%
+		),
+		linear-gradient(
+			135deg,
+			#5B00D6,
+			#246BFD 50%,
+			#FF4FA3
+		);
 	background-attachment: fixed;
+	background-size: cover;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(220, 224, 232);
