@@ -7,39 +7,14 @@
 :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
+	--black: 234, 237, 243;
+	--gray: 150, 160, 180;
+	--gray-light: 45, 50, 65;
+	--gray-dark: 220, 224, 232;
 	--box-shadow:
 		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%),
 		0 16px 32px rgba(var(--gray), 33%);
 }
-
-@media (prefers-color-scheme: dark) {
-	:root {
-		--black: 234, 237, 243;
-		--gray: 150, 160, 180;
-		--gray-light: 45, 50, 65;
-		--gray-dark: 220, 224, 232;
-		--gray-gradient: rgba(var(--gray-light), 50%), rgb(20, 22, 30);
-	}
-
-	html {
-		background-color: rgb(20, 22, 30);
-	}
-
-	body {
-		background-color: rgb(20, 22, 30);
-	}
-
-	code {
-		background-color: rgb(var(--gray-light));
-	}
-}
-
-
 @font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-regular.woff") format("woff");
@@ -59,8 +34,11 @@ body {
 	margin: 0;
 	padding: 0;
 	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
+	background-image: url('/bg.jpg');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	color: rgb(var(--gray-dark));
