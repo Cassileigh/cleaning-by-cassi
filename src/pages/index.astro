@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, getBusinessTenure, BUSINESS_START_DATE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, OWNER_NAME, SERVICE_AREA, CONTACT_EMAIL } from '../consts';
 ---
 
 <!doctype html>
@@ -15,6 +15,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, getBusinessTenure, BUSINESS_S
 		<main>
 			<h1>{SITE_TITLE}</h1>
 			<h2>{SITE_DESCRIPTION}</h2>
+			<h2>Proudly servicing the {SERVICE_AREA} area.</h2>
 			<p>
 				Hi, I'm {OWNER_NAME}. For <span id="business-tenure">{getBusinessTenure()}</span> I've
 				been helping homes and businesses in the Fox Cities area feel like a fresh start again.
