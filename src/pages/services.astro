@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, OWNER_NAME, SERVICE_AREA, CONTACT_EMAIL, getAge, BIRTHDATE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
 <!doctype html>
@@ -14,7 +14,77 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
 		<Header />
 		<main>
 			<h1>{SITE_TITLE}</h1>
-			<h2>{SITE_DESCRIPTION}</h2>
+			<p>{SITE_DESCRIPTION}</p>
+
+			<img
+				src="/base-price-sheet.jpg"
+				alt="Cleaning Services base price sheet: cleaning frequency and base room rates"
+				width="1125"
+				height="1450"
+			/>
+
+			<h2>Cleaning Frequency</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Frequency</th>
+						<th>Base Rate</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Weekly</td>
+						<td>Base Rate</td>
+					</tr>
+					<tr>
+						<td>Bi-Weekly</td>
+						<td>Base + $5</td>
+					</tr>
+					<tr>
+						<td>Monthly</td>
+						<td>Base + $10</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h2>Base Room Rates</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>Service Area</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Bedroom — per room</td>
+						<td>$15</td>
+					</tr>
+					<tr>
+						<td>Living Space — per room</td>
+						<td>$15</td>
+					</tr>
+					<tr>
+						<td>Full Bathroom — per bathroom</td>
+						<td>$25</td>
+					</tr>
+					<tr>
+						<td>Half Bathroom — per bathroom</td>
+						<td>$15</td>
+					</tr>
+					<tr>
+						<td>Kitchen / Dining — per room</td>
+						<td>$35</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<h3>First-Time Cleanings</h3>
+			<p>
+				All first-time cleanings are priced separately to get the home to a good base point
+				before regular cleaning rates begin.
+			</p>
+			<p>Additional deep-cleaning services or special requests may be quoted separately.</p>
 		</main>
 		<Footer />
 	</body>
