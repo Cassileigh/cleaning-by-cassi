@@ -1,0 +1,66 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, OWNER_NAME, SERVICE_AREA, CONTACT_EMAIL, getAge, BIRTHDATE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<img
+			src="/homepage.jpg"
+			alt="Cleaning By Cassi — accepting new clients. Clean spaces, happier faces. Reliable and trusted. Cleaning you can count on."
+			width="1536"
+			height="1024"
+			class="hero-image"
+		/>
+		<main>
+			<h1>{SITE_TITLE}</h1>
+			<h2>{SITE_DESCRIPTION}</h2>
+			<h2>Proudly servicing the {SERVICE_AREA} area.</h2>
+			<p>
+				Hi, I'm {OWNER_NAME}. For <span id="business-tenure">{getBusinessTenure()}</span> I've
+				been helping homes and businesses in the Fox Cities area feel like a fresh start again.
+			</p>
+			<p>
+				From one-time deep cleans to recurring weekly or biweekly visits, I bring the same care
+				and attention to every job — no shortcuts, no surprises.
+			</p>
+			<ul>
+				<li>Standard & deep cleaning</li>
+				<li>Move-in / move-out cleaning</li>
+				<li>Recurring service (weekly, biweekly, monthly)</li>
+			</ul>
+			<p>
+				<a href="/services">See the full list of services</a>, <a href="/pricing">Pricing</a>, or <a href="/about">learn more about me</a>.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.hero-image {
+		display: block;
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: 2em auto 2em auto;
+		border-radius: 12px;
+	}
+</style>
+
+<script define:vars={{ startDate: BUSINESS_START_DATE.toISOString() }}>
+	function getTenure(startISO, from) {
+		const start = new Date(startISO);
+		const months = (from.getFullYear() - start.getFullYear()) * 12 + (from.getMonth() - start.getMonth());
+		if (months < 12) return `${months} month${months === 1 ? '' : 's'}`;
+		const years = Math.floor(months / 12);
+		return `${years} year${years === 1 ? '' : 's'}`;
+	}
+	document.getElementById('business-tenure').textContent = getTenure(startDate, new Date());
+</script>
