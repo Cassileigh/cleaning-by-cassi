@@ -1,1535 +1,863 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, OWNER_NAME, SERVICE_AREA, CONTACT_EMAIL, getAge, BIRTHDATE } from '../consts';
+import BlogPost from '../layouts/BlogPost.astro';
+
+const title = 'Get a Free Quote';
+const description =
+  'Tell Cleaning by Cassi a little about your home and cleaning needs to receive a personalized quote.';
+const pubDate = new Date();
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Get a Free Quote | Cleaning by Cassi</title>
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link hrel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  >
-
-  <style>
-    :root {
-      --purple: #8f4fc7;
-      --light-purple: #eee1fa;
-      --pink: #dc65a6;
-      --light-pink: #fde8f3;
-      --blue: #5b86dc;
-      --light-blue: #e8f0ff;
-      --text: #36333a;
-      --muted: #77717b;
-      --white: #ffffff;
-      --border: rgba(100, 75, 120, 0.12);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Poppins", sans-serif;
-      color: var(--text);
-      min-height: 100vh;
-
-      background:
-        radial-gradient(
-          circle at 10% 10%,
-          rgba(220, 101, 166, 0.22),
-          transparent 28%
-        ),
-        radial-gradient(
-          circle at 90% 20%,
-          rgba(91, 134, 220, 0.22),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 50% 100%,
-          rgba(143, 79, 199, 0.18),
-          transparent 35%
-        ),
-        linear-gradient(
-          135deg,
-          #faf4ff,
-          #f4f8ff 50%,
-          #fff5fa
-        );
-
-      padding: 50px 18px 70px;
-    }
-
-    /* =========================
-       PAGE HEADER
-    ========================= */
-
-    .page {
-      max-width: 1050px;
-      margin: 0 auto;
-    }
-
-    .hero {
-      text-align: center;
-      max-width: 760px;
-      margin: 0 auto 42px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-
-      padding: 7px 16px;
-      border-radius: 50px;
-
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(143, 79, 199, 0.14);
-
-      color: var(--purple);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-
-      box-shadow: 0 8px 25px rgba(90, 65, 110, 0.07);
-    }
-
-    .hero h1 {
-      font-family: "DM Serif Display", serif;
-      font-weight: 400;
-
-      font-size: clamp(3rem, 8vw, 5.2rem);
-      line-height: 1.02;
-
-      margin: 18px 0 15px;
-
-      background:
-        linear-gradient(
-          90deg,
-          var(--purple),
-          var(--pink),
-          var(--blue)
-        );
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero h2 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: 0 auto;
-
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.8;
-    }
-
-    /* =========================
-       FORM
-    ========================= */
-
-    .quote-form {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    .form-card {
-      position: relative;
-
-      background: rgba(255, 255, 255, 0.84);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      border-radius: 26px;
-
-      padding: 30px;
-
-      box-shadow:
-        0 18px 50px rgba(77, 57, 95, 0.08),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-
-      margin-bottom: 23px;
-    }
-
-    .number {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 42px;
-      height: 42px;
-      flex-shrink: 0;
-
-      border-radius: 13px;
-
-      background: linear-gradient(
-        135deg,
-        var(--purple),
-        var(--pink)
-      );
-
-      color: white;
-      font-size: 0.82rem;
-      font-weight: 700;
-
-      box-shadow: 0 8px 20px rgba(143, 79, 199, 0.22);
-    }
-
-    .section-heading h3 {
-      font-family: "DM Serif Display", serif;
-      font-size: 1.65rem;
-      font-weight: 400;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-      font-size: 0.76rem;
-      margin-top: 2px;
-    }
-
-    /* =========================
-       INPUTS
-    ========================= */
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 17px;
-    }
-
-    .field {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .full {
-      grid-column: 1 / -1;
-    }
-
-    label {
-      color: #4d4751;
-      font-size: 0.78rem;
-      font-weight: 600;
-      margin-bottom: 7px;
-    }
-
-    .required {
-      color: var(--pink);
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-
-      padding: 13px 15px;
-
-      border: 1px solid var(--border);
-      border-radius: 13px;
-
-      background: rgba(255, 255, 255, 0.9);
-
-      color: var(--text);
-      font-family: "Poppins", sans-serif;
-      font-size: 0.84rem;
-
-      outline: none;
-
-      transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #aaa3ad;
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: rgba(143, 79, 199, 0.45);
-
-      box-shadow:
-        0 0 0 4px rgba(143, 79, 199, 0.08);
-
-      transform: translateY(-1px);
-    }
-
-    textarea {
-      min-height: 145px;
-      resize: vertical;
-    }
-
-    /* =========================
-       SELECTABLE OPTIONS
-    ========================= */
-
-    .options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 11px;
-    }
-
-    .option {
-      position: relative;
-    }
-
-    .option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .option label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      min-height: 50px;
-
-      margin: 0;
-      padding: 11px 14px;
-
-      border: 1px solid var(--border);
-      border-radius: 14px;
-
-      background: rgba(255, 255, 255, 0.76);
-
-      cursor: pointer;
-
-      font-size: 0.78rem;
-      font-weight: 500;
-
-      transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .option label:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 18px rgba(75, 55, 90, 0.07);
-    }
-
-    .option label::before {
-      content: "";
-
-      width: 19px;
-      height: 19px;
-      flex-shrink: 0;
-
-      border: 2px solid #d2ccd5;
-      border-radius: 6px;
-
-      background: white;
-    }
-
-    .option input:checked + label {
-      border-color: rgba(143, 79, 199, 0.45);
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(238, 225, 250, 0.9),
-          rgba(253, 232, 243, 0.9)
-        );
-
-      box-shadow:
-        0 7px 20px rgba(143, 79, 199, 0.08);
-    }
-
-    .option input:checked + label::before {
-      background: var(--purple);
-      border-color: var(--purple);
-
-      box-shadow:
-        inset 0 0 0 3px white;
-    }
-
-    .radio label::before {
-      border-radius: 50%;
-    }
-
-    .radio input:checked + label::before {
-      background: var(--pink);
-      border-color: var(--pink);
-
-      box-shadow:
-        inset 0 0 0 4px white;
-    }
-
-    /* =========================
-       NOTES
-    ========================= */
-
-    .note {
-      margin-top: 15px;
-
-      padding: 14px 16px;
-
-      border-radius: 13px;
-
-      background: linear-gradient(
-        135deg,
-        rgba(253, 232, 243, 0.75),
-        rgba(238, 225, 250, 0.75)
-      );
-
-      color: #665d68;
-
-      font-size: 0.74rem;
-      line-height: 1.65;
-    }
-
-    .note strong {
-      color: var(--purple);
-    }
-
-    /* =========================
-       DISCLAIMER
-    ========================= */
-
-    .disclaimer {
-      padding: 16px 18px;
-
-      border-radius: 14px;
-
-      background: rgba(246, 244, 247, 0.8);
-
-      color: #77717b;
-
-      font-size: 0.7rem;
-      line-height: 1.7;
-    }
-
-    .disclaimer strong {
-      color: #57505b;
-    }
-
-    /* =========================
-       SUBMIT
-    ========================= */
-
-    .submit-card {
-      text-align: center;
-
-      padding: 38px 25px;
-
-      border-radius: 28px;
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(143, 79, 199, 0.95),
-          rgba(220, 101, 166, 0.94),
-          rgba(91, 134, 220, 0.95)
-        );
-
-      box-shadow:
-        0 20px 50px rgba(95, 65, 120, 0.18);
-
-      color: white;
-    }
-
-    .submit-card h3 {
-      font-family: "DM Serif Display", serif;
-      font-size: 2rem;
-      font-weight: 400;
-      margin-bottom: 8px;
-    }
-
-    .submit-card p {
-      max-width: 550px;
-      margin: 0 auto 22px;
-
-      font-size: 0.78rem;
-      line-height: 1.7;
-
-      opacity: 0.92;
-    }
-
-    .submit-button {
-      border: none;
-
-      padding: 15px 31px;
-
-      border-radius: 50px;
-
-      background: white;
-      color: var(--purple);
-
-      font-family: "Poppins", sans-serif;
-      font-size: 0.82rem;
-      font-weight: 700;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 10px 25px rgba(50, 30, 70, 0.16);
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-    .submit-button:hover {
-      transform: translateY(-3px);
-
-      box-shadow:
-        0 14px 30px rgba(50, 30, 70, 0.22);
-    }
-
-    .privacy {
-      margin-top: 13px;
-
-      font-size: 0.66rem;
-      opacity: 0.78;
-    }
-
-    /* =========================
-       FOOTER BRAND MOMENT
-    ========================= */
-
-    .brand-message {
-      text-align: center;
-
-      max-width: 650px;
-
-      margin: 48px auto 0;
-    }
-
-    .brand-message .sparkles {
-      font-size: 1.1rem;
-      letter-spacing: 5px;
-      margin-bottom: 10px;
-    }
-
-    .brand-message h3 {
-      font-family: "DM Serif Display", serif;
-      font-size: 1.7rem;
-      font-weight: 400;
-
-      margin-bottom: 7px;
-    }
-
-    .brand-message p {
-      color: var(--muted);
-
-      font-size: 0.78rem;
-      line-height: 1.8;
-    }
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-width: 680px) {
-
-      body {
-        padding: 32px 12px 50px;
-      }
-
-      .hero {
-        margin-bottom: 28px;
-      }
-
-      .hero h1 {
-        font-size: 3rem;
-      }
-
-      .hero p {
-        font-size: 0.82rem;
-      }
-
-      .form-card {
-        padding: 22px 17px;
-        border-radius: 21px;
-      }
-
-      .grid,
-      .options {
-        grid-template-columns: 1fr;
-      }
-
-      .section-heading {
-        margin-bottom: 19px;
-      }
-
-      .section-heading h3 {
-        font-size: 1.45rem;
-      }
-
-      .number {
-        width: 38px;
-        height: 38px;
-      }
-
-      .submit-card {
-        border-radius: 22px;
-        padding: 32px 20px;
-      }
-
-      .submit-card h3 {
-        font-size: 1.8rem;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <main class="page">
-
-    <!-- =========================
-         HERO
-    ========================= -->
-
-    <header class="hero">
-
-      <span class="eyebrow">
-        ✨ Cleaning by Cassi
-      </span>
-
-      <h1>
-        Let’s Make Your<br>
-        Home Shine!
-      </h1>
-
-      <h2>
-        Request Your Free Quote
-      </h2>
-
-      <p>
-        Tell me a little about your home and what you're looking for.
-        Every quote is customized to fit your home, your needs, and
-        the level of cleaning you’re looking for.
-      </p>
-
-    </header>
-
-
-    <!-- =========================
-         QUOTE FORM
-    ========================= -->
-
-    <form
-      class="quote-form"
-      action="YOUR_CLOUDFLARE_FORM_ENDPOINT"
-      method="POST"
-    >
-
-      <!-- =========================
-           01 — ABOUT YOU
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">01</span>
-
-          <div>
-            <h3>About You</h3>
-            <p>Let’s start with the basics.</p>
-          </div>
-
-        </div>
-
-
-        <div class="grid">
-
-          <div class="field">
-
-            <label for="name">
-              Full Name <span class="required">*</span>
-            </label>
-
-            <input
-              id="name"
-              name="name"
-              type="text"
-              placeholder="Your name"
-              required
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="email">
-              Email Address <span class="required">*</span>
-            </label>
-
-            <input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-              required
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="phone">
-              Phone Number <span class="required">*</span>
-            </label>
-
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              placeholder="(555) 555-5555"
-              required
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="contact">
-              Preferred Contact Method
-            </label>
-
-            <select
-              id="contact"
-              name="preferred_contact"
-            >
-              <option value="">Choose one</option>
-              <option>Email</option>
-              <option>Phone</option>
-              <option>Text</option>
-            </select>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           02 — YOUR HOME
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">02</span>
-
-          <div>
-            <h3>Your Home</h3>
-            <p>A few details help me prepare your quote.</p>
-          </div>
-
-        </div>
-
-
-        <div class="grid">
-
-          <div class="field full">
-
-            <label for="address">
-              Home Address
-            </label>
-
-            <input
-              id="address"
-              name="address"
-              type="text"
-              placeholder="Street, city, state & ZIP"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="home_type">
-              Type of Home
-            </label>
-
-            <select
-              id="home_type"
-              name="home_type"
-            >
-              <option value="">Choose one</option>
-              <option>House</option>
-              <option>Apartment</option>
-              <option>Condo</option>
-              <option>Townhome</option>
-              <option>Other</option>
-            </select>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="bedrooms">
-              Bedrooms
-            </label>
-
-            <select
-              id="bedrooms"
-              name="bedrooms"
-            >
-              <option value="">Choose one</option>
-              <option>Studio</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5+</option>
-            </select>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="bathrooms">
-              Bathrooms
-            </label>
-
-            <select
-              id="bathrooms"
-              name="bathrooms"
-            >
-              <option value="">Choose one</option>
-              <option>1</option>
-              <option>1.5</option>
-              <option>2</option>
-              <option>2.5</option>
-              <option>3</option>
-              <option>3.5</option>
-              <option>4+</option>
-            </select>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="sqft">
-              Approximate Square Footage
-            </label>
-
-            <input
-              id="sqft"
-              name="square_footage"
-              type="text"
-              placeholder="Example: 1,500 sq. ft."
-            >
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           03 — CLEANING SERVICE
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">03</span>
-
-          <div>
-            <h3>Your Cleaning</h3>
-            <p>What type of cleaning are you looking for?</p>
-          </div>
-
-        </div>
-
-
-        <div class="options">
-
-          <div class="option radio">
-
-            <input
-              id="standard"
-              type="radio"
-              name="cleaning_service"
-              value="Standard Cleaning"
-              required
-            >
-
-            <label for="standard">
-              🧹 Standard Cleaning
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="deep"
-              type="radio"
-              name="cleaning_service"
-              value="Deep Cleaning"
-            >
-
-            <label for="deep">
-              ✨ Deep Cleaning
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="first_time"
-              type="radio"
-              name="cleaning_service"
-              value="First-Time Cleaning"
-            >
-
-            <label for="first_time">
-              🏡 First-Time Cleaning
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="move_in"
-              type="radio"
-              name="cleaning_service"
-              value="Move-In Cleaning"
-            >
-
-            <label for="move_in">
-              📦 Move-In Cleaning
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="move_out"
-              type="radio"
-              name="cleaning_service"
-              value="Move-Out Cleaning"
-            >
-
-            <label for="move_out">
-              🚚 Move-Out Cleaning
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="other"
-              type="radio"
-              name="cleaning_service"
-              value="Other"
-            >
-
-            <label for="other">
-              💕 Other
-            </label>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           04 — FREQUENCY
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">04</span>
-
-          <div>
-            <h3>How Often?</h3>
-            <p>Choose the cleaning schedule that fits your needs.</p>
-          </div>
-
-        </div>
-
-
-        <div class="options">
-
-          <div class="option radio">
-
-            <input
-              id="one_time"
-              type="radio"
-              name="frequency"
-              value="One-Time"
-            >
-
-            <label for="one_time">
-              One-Time
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="weekly"
-              type="radio"
-              name="frequency"
-              value="Weekly"
-            >
-
-            <label for="weekly">
-              Weekly
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="biweekly"
-              type="radio"
-              name="frequency"
-              value="Every 2 Weeks"
-            >
-
-            <label for="biweekly">
-              Every 2 Weeks
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="three_weeks"
-              type="radio"
-              name="frequency"
-              value="Every 3 Weeks"
-            >
-
-            <label for="three_weeks">
-              Every 3 Weeks
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="monthly"
-              type="radio"
-              name="frequency"
-              value="Monthly"
-            >
-
-            <label for="monthly">
-              Monthly
-            </label>
-
-          </div>
-
-
-          <div class="option radio">
-
-            <input
-              id="not_sure"
-              type="radio"
-              name="frequency"
-              value="Not Sure Yet"
-            >
-
-            <label for="not_sure">
-              Not Sure Yet
-            </label>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           05 — ADD ONS
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">05</span>
-
-          <div>
-            <h3>Make It Extra ✨</h3>
-            <p>Select any add-ons you’d like included in your quote.</p>
-          </div>
-
-        </div>
-
-
-        <div class="options">
-
-          <div class="option">
-            <input
-              id="window_tracks"
-              type="checkbox"
-              name="add_ons[]"
-              value="Window Tracks & Sills"
-            >
-            <label for="window_tracks">
-              🪟 Window Tracks & Sills
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="baseboards"
-              type="checkbox"
-              name="add_ons[]"
-              value="Baseboards"
-            >
-            <label for="baseboards">
-              🧹 Baseboards
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="doors"
-              type="checkbox"
-              name="add_ons[]"
-              value="Doors & Door Frames"
-            >
-            <label for="doors">
-              🚪 Doors & Door Frames
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="cabinet_fronts"
-              type="checkbox"
-              name="add_ons[]"
-              value="Cabinet Fronts"
-            >
-            <label for="cabinet_fronts">
-              🗄️ Cabinet Fronts
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="trash_cans"
-              type="checkbox"
-              name="add_ons[]"
-              value="Trash Can Cleaning & Sanitizing"
-            >
-            <label for="trash_cans">
-              🗑️ Trash Can Cleaning
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="bed_making"
-              type="checkbox"
-              name="add_ons[]"
-              value="Bed Making"
-            >
-            <label for="bed_making">
-              🛏️ Bed Making
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="laundry"
-              type="checkbox"
-              name="add_ons[]"
-              value="Laundry"
-            >
-            <label for="laundry">
-              🧺 Laundry
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="inside_cabinets"
-              type="checkbox"
-              name="add_ons[]"
-              value="Inside Empty Cabinets"
-            >
-            <label for="inside_cabinets">
-              🧼 Inside Empty Cabinets
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="shower"
-              type="checkbox"
-              name="add_ons[]"
-              value="Detailed Shower & Tub"
-            >
-            <label for="shower">
-              🚿 Detailed Shower & Tub
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="wall_spot"
-              type="checkbox"
-              name="add_ons[]"
-              value="Wall Spot Cleaning"
-            >
-            <label for="wall_spot">
-              🧽 Wall Spot Cleaning
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="pet_hair"
-              type="checkbox"
-              name="add_ons[]"
-              value="Extra Pet Hair Removal"
-            >
-            <label for="pet_hair">
-              🐾 Extra Pet Hair Removal
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="floor_detail"
-              type="checkbox"
-              name="add_ons[]"
-              value="Detailed Floor Edges & Corners"
-            >
-            <label for="floor_detail">
-              🧹 Detailed Floor Edges & Corners
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="cobwebs"
-              type="checkbox"
-              name="add_ons[]"
-              value="Cobweb Removal"
-            >
-            <label for="cobwebs">
-              🕸️ Cobweb Removal
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="high_areas"
-              type="checkbox"
-              name="add_ons[]"
-              value="High & Hard-to-Reach Areas"
-            >
-            <label for="high_areas">
-              🪜 High & Hard-to-Reach Areas
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="play_area"
-              type="checkbox"
-              name="add_ons[]"
-              value="Toy & Play Area Reset"
-            >
-            <label for="play_area">
-              🧸 Toy & Play Area Reset
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="storage"
-              type="checkbox"
-              name="add_ons[]"
-              value="Closet & Storage Area Cleaning"
-            >
-            <label for="storage">
-              🧹 Closet & Storage Cleaning
-            </label>
-          </div>
-
-
-          <div class="option">
-            <input
-              id="pet_area"
-              type="checkbox"
-              name="add_ons[]"
-              value="Pet Area Cleaning"
-            >
-            <label for="pet_area">
-              🐕 Pet Area Cleaning
-            </label>
-          </div>
-
-        </div>
-
-
-        <div class="note">
-
-          <strong>🛏️ Bed Making Note:</strong>
-
-          Clean sheets must be provided and left out for the bed-making
-          service. Please remove any soiled sheets before my arrival.
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           06 — MORE INFORMATION
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">06</span>
-
-          <div>
-            <h3>Tell Me More 💕</h3>
-            <p>Anything else you'd like me to know?</p>
-          </div>
-
-        </div>
-
-
-        <div class="field">
-
-          <label for="message">
-            Additional Information
-          </label>
-
-          <textarea
-            id="message"
-            name="message"
-            placeholder="Tell me about pets, heavy buildup, special requests, areas needing extra attention, or anything else that would help me prepare your quote..."
-          ></textarea>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           07 — SCHEDULING
-      ========================= -->
-
-      <section class="form-card">
-
-        <div class="section-heading">
-
-          <span class="number">07</span>
-
-          <div>
-            <h3>Let’s Get You Scheduled</h3>
-            <p>Tell me when you'd ideally like your cleaning.</p>
-          </div>
-
-        </div>
-
-
-        <div class="grid">
-
-          <div class="field">
-
-            <label for="timing">
-              Ideal Timing
-            </label>
-
-            <select
-              id="timing"
-              name="ideal_timing"
-            >
-              <option value="">Choose one</option>
-              <option>As soon as possible</option>
-              <option>Within the next 1–2 weeks</option>
-              <option>Within the next month</option>
-              <option>I'm flexible</option>
-            </select>
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="preferred_days">
-              Preferred Days / Times
-            </label>
-
-            <input
-              id="preferred_days"
-              name="preferred_days"
-              type="text"
-              placeholder="Example: Tuesday mornings"
-            >
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =========================
-           DISCLAIMER
-      ========================= -->
-
-      <div class="disclaimer">
-
-        <strong>Add-On Service Disclaimer:</strong>
-
-        Add-on services are available by request and may be priced
-        individually based on the size, condition, and time required.
-        Some services may require additional preparation by the client
-        before the scheduled cleaning.
-
-      </div>
-
-
-      <!-- =========================
-           SUBMIT
-      ========================= -->
-
-      <section class="submit-card">
-
-        <h3>Ready for a Cleaner Home?</h3>
-
-        <p>
-          Send over your details and I’ll review your request and
-          get back to you with your customized quote.
-        </p>
-
-        <button
-          type="submit"
-          class="submit-button"
-        >
-          ✨ SEND MY FREE QUOTE REQUEST
-        </button>
-
-        <div class="privacy">
-          Your information is used only to respond to your quote request.
-        </div>
-
-      </section>
-
-    </form>
-
-
-    <!-- =========================
-         BRAND MESSAGE
-    ========================= -->
-
-    <section class="brand-message">
-
-      <div class="sparkles">
-        ✨ ✦ ✨
-      </div>
-
-      <h3>
-        A clean home is more than a clean space.
-      </h3>
-
-      <p>
-        It’s a little more time, a little less stress, and one less
-        thing on your to-do list.
-        <br>
-        <strong>— Cleaning by Cassi 💕</strong>
-      </p>
-
-    </section>
-
-  </main>
-
-</body>
-</html>
+<BlogPost
+  title={title}
+  description={description}
+  pubDate={pubDate}
+>
+  <div class="quote-page">
+
+    <section class="quote-hero">
+      <span class="eyebrow">✨ LET'S GET STARTED</span>
+
+      <h1>Let's Get Your Home Sparkling</h1>
+
+      <p>
+        Tell me a little about your home and what you're looking for,
+        and I'll put together a personalized cleaning quote just for you!
+      </p>
+
+      <div class="hero-divider">
+        <span></span>
+        ✦
+        <span></span>
+      </div>
+    </section>
+
+    <form class="quote-form" action="/api/quote" method="POST">
+
+      <!-- ABOUT YOU -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">01</span>
+
+          <div>
+            <h2>About You</h2>
+            <p>First things first — who am I chatting with?</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            Full Name <b>*</b>
+            <input
+              type="text"
+              name="name"
+              placeholder="Your name"
+              required
+            />
+          </label>
+
+          <label>
+            Email <b>*</b>
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              required
+            />
+          </label>
+
+          <label>
+            Phone Number <b>*</b>
+            <input
+              type="tel"
+              name="phone"
+              placeholder="(555) 555-5555"
+              required
+            />
+          </label>
+
+          <label>
+            Preferred Contact Method
+            <select name="contact_method">
+              <option value="">Choose one</option>
+              <option value="email">Email</option>
+              <option value="phone">Phone Call</option>
+              <option value="text">Text Message</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <!-- YOUR HOME -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">02</span>
+
+          <div>
+            <h2>Tell Me About Your Home</h2>
+            <p>A few details help me create the most accurate quote.</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+
+          <label class="full-width">
+            Home Address
+            <input
+              type="text"
+              name="address"
+              placeholder="Street address, city, state"
+            />
+          </label>
+
+          <label>
+            Type of Home
+            <select name="home_type">
+              <option value="">Choose one</option>
+              <option value="house">House</option>
+              <option value="apartment">Apartment</option>
+              <option value="condo">Condo</option>
+              <option value="townhome">Townhome</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label>
+            Bedrooms
+            <select name="bedrooms">
+              <option value="">Choose</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5+">5+</option>
+            </select>
+          </label>
+
+          <label>
+            Bathrooms
+            <select name="bathrooms">
+              <option value="">Choose</option>
+              <option value="1">1</option>
+              <option value="1.5">1.5</option>
+              <option value="2">2</option>
+              <option value="2.5">2.5</option>
+              <option value="3+">3+</option>
+            </select>
+          </label>
+
+          <label>
+            Approx. Square Footage
+            <input
+              type="number"
+              name="square_footage"
+              placeholder="Example: 1,500"
+            />
+          </label>
+
+        </div>
+      </section>
+
+      <!-- CLEANING TYPE -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">03</span>
+
+          <div>
+            <h2>What Kind of Cleaning?</h2>
+            <p>Pick whichever option sounds closest to what you need.</p>
+          </div>
+        </div>
+
+        <div class="choice-grid">
+
+          <label class="choice-card">
+            <input
+              type="radio"
+              name="cleaning_type"
+              value="standard"
+            />
+            <span>
+              <strong>Standard Cleaning</strong>
+              <small>Regular upkeep for your home</small>
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input
+              type="radio"
+              name="cleaning_type"
+              value="deep"
+            />
+            <span>
+              <strong>Deep Cleaning</strong>
+              <small>Extra attention to the details</small>
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input
+              type="radio"
+              name="cleaning_type"
+              value="first-time"
+            />
+            <span>
+              <strong>First-Time Cleaning</strong>
+              <small>A fresh start for your home</small>
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input
+              type="radio"
+              name="cleaning_type"
+              value="move-in"
+            />
+            <span>
+              <strong>Move-In Cleaning</strong>
+              <small>Get your new space ready</small>
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input
+              type="radio"
+              name="cleaning_type"
+              value="move-out"
+            />
+            <span>
+              <strong>Move-Out Cleaning</strong>
+              <small>Leave your old space fresh</small>
+            </span>
+          </label>
+
+          <label class="choice-card">
+            <input
+              type="radio"
+              name="cleaning_type"
+              value="other"
+            />
+            <span>
+              <strong>Something Else</strong>
+              <small>Tell me what you have in mind</small>
+            </span>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- FREQUENCY -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">04</span>
+
+          <div>
+            <h2>How Often?</h2>
+            <p>Not sure yet? No worries!</p>
+          </div>
+        </div>
+
+        <div class="frequency-grid">
+
+          <label>
+            <input type="radio" name="frequency" value="one-time" />
+            <span>One-Time</span>
+          </label>
+
+          <label>
+            <input type="radio" name="frequency" value="weekly" />
+            <span>Weekly</span>
+          </label>
+
+          <label>
+            <input type="radio" name="frequency" value="every-2-weeks" />
+            <span>Every 2 Weeks</span>
+          </label>
+
+          <label>
+            <input type="radio" name="frequency" value="every-3-weeks" />
+            <span>Every 3 Weeks</span>
+          </label>
+
+          <label>
+            <input type="radio" name="frequency" value="monthly" />
+            <span>Monthly</span>
+          </label>
+
+          <label>
+            <input type="radio" name="frequency" value="not-sure" />
+            <span>Not Sure Yet</span>
+          </label>
+
+        </div>
+      </section>
+
+      <!-- ADD ONS -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">05</span>
+
+          <div>
+            <h2>Make It Extra ✨</h2>
+            <p>Select anything you'd like added to your cleaning.</p>
+          </div>
+        </div>
+
+        <div class="addon-grid">
+
+          <label>
+            <input type="checkbox" name="addons" value="window-tracks" />
+            <span>Window Tracks & Sills</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="baseboards" />
+            <span>Baseboards</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="doors" />
+            <span>Doors & Door Frames</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="cabinet-fronts" />
+            <span>Cabinet Fronts</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="inside-oven" />
+            <span>Inside of Oven</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="inside-fridge" />
+            <span>Inside of Refrigerator</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="empty-cabinets" />
+            <span>Inside Empty Cabinets</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="shower-tub" />
+            <span>Detailed Shower & Tub Cleaning</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="trash-cans" />
+            <span>Trash Can Cleaning & Sanitizing</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="bed-making" />
+            <span>Bed Making</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="laundry" />
+            <span>Laundry</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="pet-hair" />
+            <span>Extra Pet Hair Removal</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="wall-spots" />
+            <span>Wall Spot Cleaning</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="cobwebs" />
+            <span>Cobweb Removal</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="floor-edges" />
+            <span>Detailed Floor Edges & Corners</span>
+          </label>
+
+          <label>
+            <input type="checkbox" name="addons" value="high-areas" />
+            <span>High & Hard-to-Reach Areas</span>
+          </label>
+
+        </div>
+
+        <div class="addon-note">
+          <strong>🛏️ Bed Making</strong>
+          <p>
+            Clean sheets must be provided and left out for the bed-making
+            service. Please remove any soiled sheets before my arrival.
+          </p>
+        </div>
+
+        <div class="disclaimer">
+          <strong>Add-On Service Disclaimer</strong>
+          <p>
+            Add-on services are available by request and may be priced
+            individually based on the size, condition, and time required.
+            Some services may require additional preparation before the
+            scheduled cleaning.
+          </p>
+        </div>
+      </section>
+
+      <!-- ADDITIONAL INFO -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">06</span>
+
+          <div>
+            <h2>Tell Me More 💕</h2>
+            <p>Anything else you'd like me to know?</p>
+          </div>
+        </div>
+
+        <label>
+          Additional Information
+          <textarea
+            name="message"
+            rows="6"
+            placeholder="Tell me about your home, pets, specific cleaning needs, or anything else you'd like me to know..."
+          ></textarea>
+        </label>
+      </section>
+
+      <!-- SCHEDULING -->
+      <section class="form-card">
+        <div class="section-heading">
+          <span class="section-number">07</span>
+
+          <div>
+            <h2>Let's Get You Scheduled 🧼</h2>
+            <p>When would you ideally like your cleaning?</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+
+          <label>
+            Preferred Date
+            <input type="date" name="preferred_date" />
+          </label>
+
+          <label>
+            Preferred Time
+            <select name="preferred_time">
+              <option value="">Choose one</option>
+              <option value="morning">Morning</option>
+              <option value="late-morning">Late Morning</option>
+              <option value="afternoon">Afternoon</option>
+              <option value="flexible">Flexible</option>
+            </select>
+          </label>
+
+          <label class="full-width">
+            Preferred Days
+            <input
+              type="text"
+              name="preferred_days"
+              placeholder="Example: Mondays or weekday afternoons"
+            />
+          </label>
+
+        </div>
+      </section>
+
+      <!-- SUBMIT -->
+      <section class="submit-card">
+
+        <div class="sparkle">✦</div>
+
+        <h2>Ready for a Cleaner Home?</h2>
+
+        <p>
+          Send over your details and I'll be in touch with your personalized
+          quote!
+        </p>
+
+        <button type="submit">
+          Request My Free Quote
+          <span>→</span>
+        </button>
+
+        <div class="email-option">
+          Prefer to email me directly?
+          <a href="mailto:cassandramorris@cleaningbycassi.com">
+            cassandramorris@cleaningbycassi.com
+          </a>
+        </div>
+
+      </section>
+
+    </form>
+  </div>
+</BlogPost>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&display=swap');
+
+  .quote-page {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .quote-page h1,
+  .quote-page h2 {
+    font-family: 'DM Serif Display', serif;
+  }
+
+  .quote-hero {
+    padding: 1rem 0 2.5rem;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    background: linear-gradient(
+      135deg,
+      rgba(106, 0, 244, 0.12),
+      rgba(255, 79, 163, 0.15)
+    );
+    color: #5b00d6;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .quote-hero h1 {
+    margin: 1rem 0 0.75rem;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    line-height: 1;
+  }
+
+  .quote-hero > p {
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    max-width: 180px;
+    margin: 1.5rem auto 0;
+    color: #ff4fa3;
+  }
+
+  .hero-divider span {
+    height: 2px;
+    flex: 1;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(106, 0, 244, 0.35)
+    );
+  }
+
+  .hero-divider span:last-child {
+    background: linear-gradient(
+      90deg,
+      rgba(106, 0, 244, 0.35),
+      transparent
+    );
+  }
+
+  .quote-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+
+  .form-card {
+    padding: 1.6rem;
+    border: 1px solid rgba(106, 0, 244, 0.12);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 12px 30px rgba(50, 20, 100, 0.08);
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .section-number {
+    display: grid;
+    place-items: center;
+    flex: 0 0 46px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      #6a00f4,
+      #246bfd,
+      #ff4fa3
+    );
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .section-heading h2 {
+    margin: 0;
+    font-size: 1.75rem;
+    line-height: 1.1;
+  }
+
+  .section-heading p {
+    margin: 0.3rem 0 0;
+    font-size: 0.82rem;
+    opacity: 0.65;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  label b {
+    color: #ff4fa3;
+  }
+
+  .full-width {
+    grid-column: 1 / -1;
+  }
+
+  input,
+  select,
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 2px solid rgba(106, 0, 244, 0.1);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+    font: inherit;
+    transition: 0.2s ease;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #999;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #6a00f4;
+    box-shadow: 0 0 0 4px rgba(106, 0, 244, 0.08);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .choice-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .choice-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem;
+    border: 2px solid rgba(106, 0, 244, 0.1);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.65);
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .choice-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(106, 0, 244, 0.35);
+  }
+
+  .choice-card input {
+    width: auto;
+  }
+
+  .choice-card span {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .choice-card small {
+    margin-top: 0.15rem;
+    font-weight: 400;
+    opacity: 0.6;
+  }
+
+  .frequency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.7rem;
+  }
+
+  .frequency-grid label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.8rem;
+    border-radius: 13px;
+    background: rgba(106, 0, 244, 0.06);
+    cursor: pointer;
+  }
+
+  .frequency-grid input {
+    width: auto;
+  }
+
+  .addon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .addon-grid label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.75rem;
+    border-radius: 12px;
+    background: rgba(255, 79, 163, 0.07);
+    cursor: pointer;
+  }
+
+  .addon-grid input {
+    width: auto;
+  }
+
+  .addon-note,
+  .disclaimer {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 15px;
+    font-size: 0.82rem;
+  }
+
+  .addon-note {
+    background: rgba(36, 107, 253, 0.08);
+  }
+
+  .disclaimer {
+    background: rgba(106, 0, 244, 0.06);
+  }
+
+  .addon-note p,
+  .disclaimer p {
+    margin: 0.3rem 0 0;
+    opacity: 0.75;
+  }
+
+  .submit-card {
+    position: relative;
+    overflow: hidden;
+    padding: 2.2rem 1.5rem;
+    border-radius: 26px;
+    text-align: center;
+    background: linear-gradient(
+      135deg,
+      rgba(106, 0, 244, 0.92),
+      rgba(36, 107, 253, 0.92),
+      rgba(255, 79, 163, 0.92)
+    );
+    color: white;
+    box-shadow: 0 15px 35px rgba(91, 0, 214, 0.2);
+  }
+
+  .sparkle {
+    margin-bottom: 0.4rem;
+    font-size: 1.5rem;
+  }
+
+  .submit-card h2 {
+    margin: 0;
+    font-size: 2.2rem;
+  }
+
+  .submit-card > p {
+    max-width: 500px;
+    margin: 0.6rem auto;
+  }
+
+  button {
+    margin-top: 1rem;
+    padding: 0.95rem 1.5rem;
+    border: 0;
+    border-radius: 999px;
+    background: white;
+    color: #5b00d6;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transition: 0.2s ease;
+  }
+
+  button:hover {
+    transform: translateY(-2px) scale(1.02);
+  }
+
+  button span {
+    margin-left: 0.35rem;
+  }
+
+  .email-option {
+    margin-top: 1rem;
+    font-size: 0.78rem;
+  }
+
+  .email-option a {
+    color: white;
+    font-weight: 700;
+  }
+
+  @media (max-width: 650px) {
+    .form-grid,
+    .choice-grid,
+    .addon-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .full-width {
+      grid-column: auto;
+    }
+
+    .frequency-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-card {
+      padding: 1.25rem;
+    }
+
+    .section-heading h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
