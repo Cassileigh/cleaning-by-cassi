@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Request a Free Quote | Cleaning by Cassi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(
+        135deg,
+        #f7efff 0%,
+        #eef5ff 50%,
+        #fff0f8 100%
+      );
+      color: #333;
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .quote-container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .quote-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .quote-header h1 {
+      font-family: "DM Serif Display", serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      background: linear-gradient(
+        90deg,
+        #8d45c7,
+        #d94c9d,
+        #527edb
+      );
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    .quote-header h2 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .quote-header p {
+      max-width: 650px;
+      margin: 0 auto;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .quote-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 15px 45px rgba(100, 70, 120, 0.12);
+    }
+
+    .section {
+      margin-bottom: 35px;
+    }
+
+    .section-title {
+      font-family: "DM Serif Display", serif;
+      font-size: 1.65rem;
+      font-weight: 400;
+      color: #7439a5;
+      margin-bottom: 18px;
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: -12px;
+      margin-bottom: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-family: "Poppins", sans-serif;
+      font-size: 0.9rem;
+      color: #333;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #a45dcc;
+      box-shadow: 0 0 0 3px rgba(164, 93, 204, 0.12);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .option {
+      position: relative;
+    }
+
+    .option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .option label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 11px 13px;
+      cursor: pointer;
+      font-weight: 500;
+      margin: 0;
+      transition: all 0.2s ease;
+      background: #fff;
+    }
+
+    .option label::before {
+      content: "";
+      width: 18px;
+      height: 18px;
+      border: 2px solid #c5c5c5;
+      border-radius: 5px;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .option input:checked + label {
+      border-color: #a45dcc;
+      background: #faf4ff;
+    }
+
+    .option input:checked + label::before {
+      background: #a45dcc;
+      border-color: #a45dcc;
+      box-shadow: inset 0 0 0 3px #fff;
+    }
+
+    .service-option label::before {
+      border-radius: 50%;
+    }
+
+    .service-option input:checked + label::before {
+      box-shadow: inset 0 0 0 4px #fff;
+    }
+
+    .bed-note {
+      margin-top: 12px;
+      padding: 13px 15px;
+      border-radius: 10px;
+      background: #fff7fb;
+      border-left: 4px solid #d94c9d;
+      font-size: 0.82rem;
+      color: #666;
+    }
+
+    .disclaimer {
+      margin-top: 25px;
+      padding: 15px 17px;
+      background: #f7f7f7;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      color: #666;
+    }
+
+    .submit-area {
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .submit-button {
+      border: none;
+      border-radius: 50px;
+      padding: 15px 38px;
+      font-family: "Poppins", sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(
+        90deg,
+        #8d45c7,
+        #d94c9d,
+        #527edb
+      );
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(141, 69, 199, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(141, 69, 199, 0.3);
+    }
+
+    .privacy-note {
+      margin-top: 12px;
+      font-size: 0.72rem;
+      color: #888;
+    }
+
+    .required {
+      color: #d94c9d;
+    }
+
+    /* Hidden spam protection field */
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 25px 12px;
+      }
+
+      .quote-card {
+        padding: 25px 18px;
+        border-radius: 18px;
+      }
+
+      .form-grid,
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quote-header h1 {
+        font-size: 2.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="quote-container">
+
+    <header class="quote-header">
+      <h1>Let’s Get Your Home Clean!</h1>
+
+      <h2>Request Your Free Quote</h2>
+
+      <p>
+        Every home is different, so every Cleaning by Cassi quote is
+        customized to your home, cleaning needs, and the level of service
+        you're looking for.
+      </p>
+    </header>
+
+
+    <form
+      class="quote-card"
+      action="https://formsubmit.co/cassandramorris@cleaningbycassi.com"
+      method="POST"
+    >
+
+      <!-- FormSubmit settings -->
+      <input type="hidden" name="_subject"
+        value="New Cleaning by Cassi Quote Request">
+
+      <input type="hidden" name="_captcha" value="true">
+
+      <input type="hidden" name="_template" value="table">
+
+      <!-- Sends customer to this page after submitting -->
+      <input type="hidden" name="_next"
+        value="https://YOUR-WEBSITE-DOMAIN.com/thank-you.html">
+
+
+      <!-- Spam protection -->
+      <input
+        type="text"
+        name="_honey"
+        class="honeypot"
+        tabindex="-1"
+        autocomplete="off"
+      >
+
+
+      <!-- YOUR INFORMATION -->
+      <section class="section">
+
+        <h2 class="section-title">👤 Your Information</h2>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="name">
+              Full Name <span class="required">*</span>
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              name="Name"
+              required
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="email">
+              Email Address <span class="required">*</span>
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="Email"
+              required
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="phone">
+              Phone Number <span class="required">*</span>
+            </label>
+
+            <input
+              type="tel"
+              id="phone"
+              name="Phone"
+              required
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="contact">
+              Preferred Contact Method
+            </label>
+
+            <select id="contact" name="Preferred Contact">
+              <option value="">Select one</option>
+              <option value="Email">Email</option>
+              <option value="Phone">Phone</option>
+              <option value="Text">Text</option>
+            </select>
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- HOME INFORMATION -->
+      <section class="section">
+
+        <h2 class="section-title">🏠 Tell Me About Your Home</h2>
+
+        <div class="form-grid">
+
+          <div class="form-group full-width">
+            <label for="address">
+              Home Address
+            </label>
+
+            <input
+              type="text"
+              id="address"
+              name="Home Address"
+              placeholder="Street address, city, state & ZIP"
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="home-type">
+              Type of Home
+            </label>
+
+            <select id="home-type" name="Home Type">
+              <option value="">Select one</option>
+              <option>House</option>
+              <option>Apartment</option>
+              <option>Condo</option>
+              <option>Townhome</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="bedrooms">
+              Number of Bedrooms
+            </label>
+
+            <select id="bedrooms" name="Bedrooms">
+              <option value="">Select one</option>
+              <option>Studio</option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5+</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="bathrooms">
+              Number of Bathrooms
+            </label>
+
+            <select id="bathrooms" name="Bathrooms">
+              <option value="">Select one</option>
+              <option>1</option>
+              <option>1.5</option>
+              <option>2</option>
+              <option>2.5</option>
+              <option>3</option>
+              <option>3.5</option>
+              <option>4+</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="sqft">
+              Approximate Square Footage
+            </label>
+
+            <input
+              type="text"
+              id="sqft"
+              name="Approximate Square Footage"
+              placeholder="Example: 1,500 sq. ft."
+            >
+          </div>
+
+        </div>
+      </section>
+
+
+      <!-- SERVICE -->
+      <section class="section">
+
+        <h2 class="section-title">🧹 What Are You Looking For?</h2>
+
+        <p class="section-subtitle">
+          Select the cleaning service you're interested in.
+        </p>
+
+        <div class="options-grid">
+
+          <div class="option service-option">
+            <input type="radio" id="standard" name="Cleaning Service"
+              value="Standard Cleaning" required>
+            <label for="standard">Standard Cleaning</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="deep" name="Cleaning Service"
+              value="Deep Cleaning">
+            <label for="deep">Deep Cleaning</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="first" name="Cleaning Service"
+              value="First-Time Cleaning">
+            <label for="first">First-Time Cleaning</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="movein" name="Cleaning Service"
+              value="Move-In Cleaning">
+            <label for="movein">Move-In Cleaning</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="moveout" name="Cleaning Service"
+              value="Move-Out Cleaning">
+            <label for="moveout">Move-Out Cleaning</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="other-service" name="Cleaning Service"
+              value="Other">
+            <label for="other-service">Other</label>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- FREQUENCY -->
+      <section class="section">
+
+        <h2 class="section-title">📅 How Often?</h2>
+
+        <div class="options-grid">
+
+          <div class="option service-option">
+            <input type="radio" id="one-time" name="Cleaning Frequency"
+              value="One-Time">
+            <label for="one-time">One-Time</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="weekly" name="Cleaning Frequency"
+              value="Weekly">
+            <label for="weekly">Weekly</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="biweekly" name="Cleaning Frequency"
+              value="Every 2 Weeks">
+            <label for="biweekly">Every 2 Weeks</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="threeweeks" name="Cleaning Frequency"
+              value="Every 3 Weeks">
+            <label for="threeweeks">Every 3 Weeks</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="monthly" name="Cleaning Frequency"
+              value="Monthly">
+            <label for="monthly">Monthly</label>
+          </div>
+
+          <div class="option service-option">
+            <input type="radio" id="unsure" name="Cleaning Frequency"
+              value="Not Sure Yet">
+            <label for="unsure">Not Sure Yet</label>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ADD-ONS -->
+      <section class="section">
+
+        <h2 class="section-title">➕ Add-On Services</h2>
+
+        <p class="section-subtitle">
+          Select any additional services you'd like included in your quote.
+        </p>
+
+        <div class="options-grid">
+
+          <div class="option">
+            <input type="checkbox" id="windows"
+              name="Add-On Services[]" value="Window Tracks & Sills">
+            <label for="windows">🪟 Window Tracks & Sills</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="baseboards"
+              name="Add-On Services[]" value="Baseboards">
+            <label for="baseboards">🧹 Baseboards</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="doors"
+              name="Add-On Services[]" value="Doors & Door Frames">
+            <label for="doors">🚪 Doors & Door Frames</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="cabinets"
+              name="Add-On Services[]" value="Cabinet Fronts">
+            <label for="cabinets">🗄️ Cabinet Fronts</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="trash"
+              name="Add-On Services[]" value="Trash Can Cleaning & Sanitizing">
+            <label for="trash">🗑️ Trash Can Cleaning</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="beds"
+              name="Add-On Services[]" value="Bed Making">
+            <label for="beds">🛏️ Bed Making</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="laundry"
+              name="Add-On Services[]" value="Laundry">
+            <label for="laundry">🧺 Laundry</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="inside-cabinets"
+              name="Add-On Services[]" value="Inside Empty Cabinets">
+            <label for="inside-cabinets">🧼 Inside Empty Cabinets</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="shower"
+              name="Add-On Services[]" value="Detailed Shower & Tub Cleaning">
+            <label for="shower">🚿 Detailed Shower & Tub</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="walls"
+              name="Add-On Services[]" value="Wall Spot Cleaning">
+            <label for="walls">🧽 Wall Spot Cleaning</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="pet-hair"
+              name="Add-On Services[]" value="Extra Pet Hair Removal">
+            <label for="pet-hair">🐾 Extra Pet Hair Removal</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="floors"
+              name="Add-On Services[]" value="Detailed Floor Edges & Corners">
+            <label for="floors">🧹 Detailed Floor Edges & Corners</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="cobwebs"
+              name="Add-On Services[]" value="Cobweb Removal">
+            <label for="cobwebs">🕸️ Cobweb Removal</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="high"
+              name="Add-On Services[]" value="High & Hard-to-Reach Areas">
+            <label for="high">🪜 High & Hard-to-Reach Areas</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="toys"
+              name="Add-On Services[]" value="Toy & Play Area Reset">
+            <label for="toys">🧸 Toy & Play Area Reset</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="closets"
+              name="Add-On Services[]" value="Closet & Storage Area Cleaning">
+            <label for="closets">🧹 Closet & Storage Cleaning</label>
+          </div>
+
+          <div class="option">
+            <input type="checkbox" id="pets"
+              name="Add-On Services[]" value="Pet Area Cleaning">
+            <label for="pets">🐕 Pet Area Cleaning</label>
+          </div>
+
+        </div>
+
+
+        <div class="bed-note">
+          <strong>🛏️ Bed Making Note:</strong>
+          Clean sheets must be provided and left out for the bed-making
+          service. Please remove any soiled sheets before my arrival.
+        </div>
+
+      </section>
+
+
+      <!-- ADDITIONAL INFORMATION -->
+      <section class="section">
+
+        <h2 class="section-title">📝 Tell Me More</h2>
+
+        <p class="section-subtitle">
+          Tell me anything you'd like me to know about your home or cleaning
+          needs.
+        </p>
+
+        <div class="form-group">
+
+          <textarea
+            name="Additional Information"
+            placeholder="Pets, heavy buildup, special requests, areas needing extra attention, or anything else you'd like me to know..."
+          ></textarea>
+
+        </div>
+
+      </section>
+
+
+      <!-- SCHEDULING -->
+      <section class="section">
+
+        <h2 class="section-title">🗓️ Scheduling</h2>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+
+            <label for="timing">
+              When would you ideally like your cleaning?
+            </label>
+
+            <select id="timing" name="Preferred Timing">
+              <option value="">Select one</option>
+              <option>As soon as possible</option>
+              <option>Within the next 1–2 weeks</option>
+              <option>Within the next month</option>
+              <option>I'm flexible</option>
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label for="preferred">
+              Preferred Days / Times
+            </label>
+
+            <input
+              type="text"
+              id="preferred"
+              name="Preferred Days & Times"
+              placeholder="Example: Tuesday mornings"
+            >
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- DISCLAIMER -->
+      <div class="disclaimer">
+        <strong>Add-On Service Disclaimer:</strong>
+        Add-on services are available by request and may be priced
+        individually based on the size, condition, and time required.
+        Some services may require additional preparation by the client
+        before the scheduled cleaning.
+      </div>
+
+
+      <!-- SUBMIT -->
+      <div class="submit-area">
+
+        <button type="submit" class="submit-button">
+          REQUEST MY FREE QUOTE
+        </button>
+
+        <p class="privacy-note">
+          Your information will be sent directly to Cleaning by Cassi
+          for the purpose of preparing your cleaning quote.
+        </p>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</body>
+</html>
