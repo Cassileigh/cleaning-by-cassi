@@ -29,6 +29,27 @@
 	font-style: normal;
 	font-display: swap;
 }
+@font-face {
+	font-family: "DM Serif Display";
+	src: url("/fonts/DMSerifDisplay-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Nunito Sans";
+	src: url("/fonts/NunitoSans-Regular.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Nunito Sans";
+	src: url("/fonts/NunitoSans-Bold.woff2") format("woff2");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
 body {
 	font-family: "Atkinson", sans-serif;
 	margin: 0;
@@ -83,6 +104,11 @@ h6 {
 	color: rgb(var(--black));
 	line-height: 1.2;
 }
+h1,
+h2 {
+	font-family: "DM Serif Display", serif;
+	font-weight: 400;
+}
 h1 {
 	font-size: 3.052em;
 }
@@ -109,6 +135,7 @@ a:hover {
 	color: var(--accent);
 }
 p {
+	font-family: "Nunito Sans", sans-serif;
 	margin-bottom: 1em;
 }
 .prose p {
@@ -150,6 +177,10 @@ blockquote {
 hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
+}
+header {
+	font-family: "Nunito Sans", sans-serif;
+	font-weight: 700;
 }
 @media (max-width: 720px) {
 	body {
