@@ -61,7 +61,7 @@ body {
 	background-size: cover;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
-	color: rgb(220, 224, 232);
+	color: #000;
 	font-size: 20px;
 	line-height: 1.7;
 }
