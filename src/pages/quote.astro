@@ -5,159 +5,304 @@ import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, OWNER_NAME, SERVICE_AREA, CONTACT_EMAIL, getAge, BIRTHDATE } from '../consts';
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Request a Free Quote | Cleaning by Cassi</title>
+  <title>Get a Free Quote | Cleaning by Cassi</title>
 
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link hrel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
+    :root {
+      --purple: #8f4fc7;
+      --light-purple: #eee1fa;
+      --pink: #dc65a6;
+      --light-pink: #fde8f3;
+      --blue: #5b86dc;
+      --light-blue: #e8f0ff;
+      --text: #36333a;
+      --muted: #77717b;
+      --white: #ffffff;
+      --border: rgba(100, 75, 120, 0.12);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
-    body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(
-        135deg,
-        #f7efff 0%,
-        #eef5ff 50%,
-        #fff0f8 100%
-      );
-      color: #333;
-      line-height: 1.6;
-      padding: 40px 20px;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .quote-container {
-      max-width: 850px;
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(220, 101, 166, 0.22),
+          transparent 28%
+        ),
+        radial-gradient(
+          circle at 90% 20%,
+          rgba(91, 134, 220, 0.22),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 50% 100%,
+          rgba(143, 79, 199, 0.18),
+          transparent 35%
+        ),
+        linear-gradient(
+          135deg,
+          #faf4ff,
+          #f4f8ff 50%,
+          #fff5fa
+        );
+
+      padding: 50px 18px 70px;
+    }
+
+    /* =========================
+       PAGE HEADER
+    ========================= */
+
+    .page {
+      max-width: 1050px;
       margin: 0 auto;
     }
 
-    .quote-header {
+    .hero {
       text-align: center;
-      margin-bottom: 35px;
+      max-width: 760px;
+      margin: 0 auto 42px;
     }
 
-    .quote-header h1 {
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+
+      padding: 7px 16px;
+      border-radius: 50px;
+
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(143, 79, 199, 0.14);
+
+      color: var(--purple);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+
+      box-shadow: 0 8px 25px rgba(90, 65, 110, 0.07);
+    }
+
+    .hero h1 {
       font-family: "DM Serif Display", serif;
-      font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 400;
-      line-height: 1.1;
-      background: linear-gradient(
-        90deg,
-        #8d45c7,
-        #d94c9d,
-        #527edb
-      );
+
+      font-size: clamp(3rem, 8vw, 5.2rem);
+      line-height: 1.02;
+
+      margin: 18px 0 15px;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--purple),
+          var(--pink),
+          var(--blue)
+        );
+
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 12px;
     }
 
-    .quote-header h2 {
+    .hero h2 {
       font-size: 1.05rem;
       font-weight: 600;
-      color: #555;
       margin-bottom: 10px;
     }
 
-    .quote-header p {
+    .hero p {
       max-width: 650px;
       margin: 0 auto;
-      color: #666;
-      font-size: 0.95rem;
+
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.8;
     }
 
-    .quote-card {
-      background: rgba(255, 255, 255, 0.96);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 15px 45px rgba(100, 70, 120, 0.12);
+    /* =========================
+       FORM
+    ========================= */
+
+    .quote-form {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
     }
 
-    .section {
-      margin-bottom: 35px;
+    .form-card {
+      position: relative;
+
+      background: rgba(255, 255, 255, 0.84);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      border-radius: 26px;
+
+      padding: 30px;
+
+      box-shadow:
+        0 18px 50px rgba(77, 57, 95, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
 
-    .section-title {
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      margin-bottom: 23px;
+    }
+
+    .number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+
+      border-radius: 13px;
+
+      background: linear-gradient(
+        135deg,
+        var(--purple),
+        var(--pink)
+      );
+
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 700;
+
+      box-shadow: 0 8px 20px rgba(143, 79, 199, 0.22);
+    }
+
+    .section-heading h3 {
       font-family: "DM Serif Display", serif;
       font-size: 1.65rem;
       font-weight: 400;
-      color: #7439a5;
-      margin-bottom: 18px;
     }
 
-    .section-subtitle {
-      font-size: 0.85rem;
-      color: #777;
-      margin-top: -12px;
-      margin-bottom: 18px;
+    .section-heading p {
+      color: var(--muted);
+      font-size: 0.76rem;
+      margin-top: 2px;
     }
 
-    .form-grid {
+    /* =========================
+       INPUTS
+    ========================= */
+
+    .grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
+      gap: 17px;
     }
 
-    .form-group {
+    .field {
       display: flex;
       flex-direction: column;
     }
 
-    .full-width {
+    .full {
       grid-column: 1 / -1;
     }
 
     label {
-      font-size: 0.88rem;
+      color: #4d4751;
+      font-size: 0.78rem;
       font-weight: 600;
-      color: #444;
       margin-bottom: 7px;
+    }
+
+    .required {
+      color: var(--pink);
     }
 
     input,
     select,
     textarea {
       width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 12px 14px;
+
+      padding: 13px 15px;
+
+      border: 1px solid var(--border);
+      border-radius: 13px;
+
+      background: rgba(255, 255, 255, 0.9);
+
+      color: var(--text);
       font-family: "Poppins", sans-serif;
-      font-size: 0.9rem;
-      color: #333;
-      background: #fff;
+      font-size: 0.84rem;
+
       outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #aaa3ad;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: #a45dcc;
-      box-shadow: 0 0 0 3px rgba(164, 93, 204, 0.12);
+      border-color: rgba(143, 79, 199, 0.45);
+
+      box-shadow:
+        0 0 0 4px rgba(143, 79, 199, 0.08);
+
+      transform: translateY(-1px);
     }
 
     textarea {
-      min-height: 130px;
+      min-height: 145px;
       resize: vertical;
     }
 
-    .options-grid {
+    /* =========================
+       SELECTABLE OPTIONS
+    ========================= */
+
+    .options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 11px;
     }
 
     .option {
@@ -174,129 +319,294 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
       display: flex;
       align-items: center;
       gap: 10px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 11px 13px;
-      cursor: pointer;
-      font-weight: 500;
+
+      min-height: 50px;
+
       margin: 0;
-      transition: all 0.2s ease;
-      background: #fff;
+      padding: 11px 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 14px;
+
+      background: rgba(255, 255, 255, 0.76);
+
+      cursor: pointer;
+
+      font-size: 0.78rem;
+      font-weight: 500;
+
+      transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .option label:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 18px rgba(75, 55, 90, 0.07);
     }
 
     .option label::before {
       content: "";
-      width: 18px;
-      height: 18px;
-      border: 2px solid #c5c5c5;
-      border-radius: 5px;
+
+      width: 19px;
+      height: 19px;
       flex-shrink: 0;
-      transition: all 0.2s ease;
+
+      border: 2px solid #d2ccd5;
+      border-radius: 6px;
+
+      background: white;
     }
 
     .option input:checked + label {
-      border-color: #a45dcc;
-      background: #faf4ff;
+      border-color: rgba(143, 79, 199, 0.45);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(238, 225, 250, 0.9),
+          rgba(253, 232, 243, 0.9)
+        );
+
+      box-shadow:
+        0 7px 20px rgba(143, 79, 199, 0.08);
     }
 
     .option input:checked + label::before {
-      background: #a45dcc;
-      border-color: #a45dcc;
-      box-shadow: inset 0 0 0 3px #fff;
+      background: var(--purple);
+      border-color: var(--purple);
+
+      box-shadow:
+        inset 0 0 0 3px white;
     }
 
-    .service-option label::before {
+    .radio label::before {
       border-radius: 50%;
     }
 
-    .service-option input:checked + label::before {
-      box-shadow: inset 0 0 0 4px #fff;
+    .radio input:checked + label::before {
+      background: var(--pink);
+      border-color: var(--pink);
+
+      box-shadow:
+        inset 0 0 0 4px white;
     }
 
-    .bed-note {
-      margin-top: 12px;
-      padding: 13px 15px;
-      border-radius: 10px;
-      background: #fff7fb;
-      border-left: 4px solid #d94c9d;
-      font-size: 0.82rem;
-      color: #666;
+    /* =========================
+       NOTES
+    ========================= */
+
+    .note {
+      margin-top: 15px;
+
+      padding: 14px 16px;
+
+      border-radius: 13px;
+
+      background: linear-gradient(
+        135deg,
+        rgba(253, 232, 243, 0.75),
+        rgba(238, 225, 250, 0.75)
+      );
+
+      color: #665d68;
+
+      font-size: 0.74rem;
+      line-height: 1.65;
     }
+
+    .note strong {
+      color: var(--purple);
+    }
+
+    /* =========================
+       DISCLAIMER
+    ========================= */
 
     .disclaimer {
-      margin-top: 25px;
-      padding: 15px 17px;
-      background: #f7f7f7;
-      border-radius: 10px;
-      font-size: 0.78rem;
-      color: #666;
+      padding: 16px 18px;
+
+      border-radius: 14px;
+
+      background: rgba(246, 244, 247, 0.8);
+
+      color: #77717b;
+
+      font-size: 0.7rem;
+      line-height: 1.7;
     }
 
-    .submit-area {
+    .disclaimer strong {
+      color: #57505b;
+    }
+
+    /* =========================
+       SUBMIT
+    ========================= */
+
+    .submit-card {
       text-align: center;
-      margin-top: 35px;
+
+      padding: 38px 25px;
+
+      border-radius: 28px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(143, 79, 199, 0.95),
+          rgba(220, 101, 166, 0.94),
+          rgba(91, 134, 220, 0.95)
+        );
+
+      box-shadow:
+        0 20px 50px rgba(95, 65, 120, 0.18);
+
+      color: white;
+    }
+
+    .submit-card h3 {
+      font-family: "DM Serif Display", serif;
+      font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .submit-card p {
+      max-width: 550px;
+      margin: 0 auto 22px;
+
+      font-size: 0.78rem;
+      line-height: 1.7;
+
+      opacity: 0.92;
     }
 
     .submit-button {
       border: none;
+
+      padding: 15px 31px;
+
       border-radius: 50px;
-      padding: 15px 38px;
+
+      background: white;
+      color: var(--purple);
+
       font-family: "Poppins", sans-serif;
-      font-size: 1rem;
+      font-size: 0.82rem;
       font-weight: 700;
-      color: white;
-      background: linear-gradient(
-        90deg,
-        #8d45c7,
-        #d94c9d,
-        #527edb
-      );
+
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(141, 69, 199, 0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+      box-shadow:
+        0 10px 25px rgba(50, 30, 70, 0.16);
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .submit-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(141, 69, 199, 0.3);
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 14px 30px rgba(50, 30, 70, 0.22);
     }
 
-    .privacy-note {
-      margin-top: 12px;
-      font-size: 0.72rem;
-      color: #888;
+    .privacy {
+      margin-top: 13px;
+
+      font-size: 0.66rem;
+      opacity: 0.78;
     }
 
-    .required {
-      color: #d94c9d;
+    /* =========================
+       FOOTER BRAND MOMENT
+    ========================= */
+
+    .brand-message {
+      text-align: center;
+
+      max-width: 650px;
+
+      margin: 48px auto 0;
     }
 
-    /* Hidden spam protection field */
-    .honeypot {
-      position: absolute;
-      left: -9999px;
-      opacity: 0;
-      height: 0;
-      width: 0;
+    .brand-message .sparkles {
+      font-size: 1.1rem;
+      letter-spacing: 5px;
+      margin-bottom: 10px;
     }
 
-    @media (max-width: 650px) {
+    .brand-message h3 {
+      font-family: "DM Serif Display", serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+
+      margin-bottom: 7px;
+    }
+
+    .brand-message p {
+      color: var(--muted);
+
+      font-size: 0.78rem;
+      line-height: 1.8;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 680px) {
+
       body {
-        padding: 25px 12px;
+        padding: 32px 12px 50px;
       }
 
-      .quote-card {
-        padding: 25px 18px;
-        border-radius: 18px;
+      .hero {
+        margin-bottom: 28px;
       }
 
-      .form-grid,
-      .options-grid {
+      .hero h1 {
+        font-size: 3rem;
+      }
+
+      .hero p {
+        font-size: 0.82rem;
+      }
+
+      .form-card {
+        padding: 22px 17px;
+        border-radius: 21px;
+      }
+
+      .grid,
+      .options {
         grid-template-columns: 1fr;
       }
 
-      .quote-header h1 {
-        font-size: 2.7rem;
+      .section-heading {
+        margin-bottom: 19px;
+      }
+
+      .section-heading h3 {
+        font-size: 1.45rem;
+      }
+
+      .number {
+        width: 38px;
+        height: 38px;
+      }
+
+      .submit-card {
+        border-radius: 22px;
+        padding: 32px 20px;
+      }
+
+      .submit-card h3 {
+        font-size: 1.8rem;
       }
     }
   </style>
@@ -304,160 +614,208 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
 
 <body>
 
-  <div class="quote-container">
+  <main class="page">
 
-    <header class="quote-header">
-      <h1>Let’s Get Your Home Clean!</h1>
+    <!-- =========================
+         HERO
+    ========================= -->
 
-      <h2>Request Your Free Quote</h2>
+    <header class="hero">
+
+      <span class="eyebrow">
+        ✨ Cleaning by Cassi
+      </span>
+
+      <h1>
+        Let’s Make Your<br>
+        Home Shine!
+      </h1>
+
+      <h2>
+        Request Your Free Quote
+      </h2>
 
       <p>
-        Every home is different, so every Cleaning by Cassi quote is
-        customized to your home, cleaning needs, and the level of service
-        you're looking for.
+        Tell me a little about your home and what you're looking for.
+        Every quote is customized to fit your home, your needs, and
+        the level of cleaning you’re looking for.
       </p>
+
     </header>
 
 
+    <!-- =========================
+         QUOTE FORM
+    ========================= -->
+
     <form
-      class="quote-card"
-      action="https://formsubmit.co/cassandramorris@cleaningbycassi.com"
+      class="quote-form"
+      action="YOUR_CLOUDFLARE_FORM_ENDPOINT"
       method="POST"
     >
 
-      <!-- FormSubmit settings -->
-      <input type="hidden" name="_subject"
-        value="New Cleaning by Cassi Quote Request">
+      <!-- =========================
+           01 — ABOUT YOU
+      ========================= -->
 
-      <input type="hidden" name="_captcha" value="true">
+      <section class="form-card">
 
-      <input type="hidden" name="_template" value="table">
+        <div class="section-heading">
 
-      <!-- Sends customer to this page after submitting -->
-      <input type="hidden" name="_next"
-        value="https://YOUR-WEBSITE-DOMAIN.com/thank-you.html">
+          <span class="number">01</span>
 
+          <div>
+            <h3>About You</h3>
+            <p>Let’s start with the basics.</p>
+          </div>
 
-      <!-- Spam protection -->
-      <input
-        type="text"
-        name="_honey"
-        class="honeypot"
-        tabindex="-1"
-        autocomplete="off"
-      >
+        </div>
 
 
-      <!-- YOUR INFORMATION -->
-      <section class="section">
+        <div class="grid">
 
-        <h2 class="section-title">👤 Your Information</h2>
+          <div class="field">
 
-        <div class="form-grid">
-
-          <div class="form-group">
             <label for="name">
               Full Name <span class="required">*</span>
             </label>
 
             <input
-              type="text"
               id="name"
-              name="Name"
+              name="name"
+              type="text"
+              placeholder="Your name"
               required
             >
+
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
+
             <label for="email">
               Email Address <span class="required">*</span>
             </label>
 
             <input
-              type="email"
               id="email"
-              name="Email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
               required
             >
+
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
+
             <label for="phone">
               Phone Number <span class="required">*</span>
             </label>
 
             <input
-              type="tel"
               id="phone"
-              name="Phone"
+              name="phone"
+              type="tel"
+              placeholder="(555) 555-5555"
               required
             >
+
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
+
             <label for="contact">
               Preferred Contact Method
             </label>
 
-            <select id="contact" name="Preferred Contact">
-              <option value="">Select one</option>
-              <option value="Email">Email</option>
-              <option value="Phone">Phone</option>
-              <option value="Text">Text</option>
+            <select
+              id="contact"
+              name="preferred_contact"
+            >
+              <option value="">Choose one</option>
+              <option>Email</option>
+              <option>Phone</option>
+              <option>Text</option>
             </select>
+
           </div>
 
         </div>
+
       </section>
 
 
-      <!-- HOME INFORMATION -->
-      <section class="section">
+      <!-- =========================
+           02 — YOUR HOME
+      ========================= -->
 
-        <h2 class="section-title">🏠 Tell Me About Your Home</h2>
+      <section class="form-card">
 
-        <div class="form-grid">
+        <div class="section-heading">
 
-          <div class="form-group full-width">
+          <span class="number">02</span>
+
+          <div>
+            <h3>Your Home</h3>
+            <p>A few details help me prepare your quote.</p>
+          </div>
+
+        </div>
+
+
+        <div class="grid">
+
+          <div class="field full">
+
             <label for="address">
               Home Address
             </label>
 
             <input
-              type="text"
               id="address"
-              name="Home Address"
-              placeholder="Street address, city, state & ZIP"
+              name="address"
+              type="text"
+              placeholder="Street, city, state & ZIP"
             >
+
           </div>
 
 
-          <div class="form-group">
-            <label for="home-type">
+          <div class="field">
+
+            <label for="home_type">
               Type of Home
             </label>
 
-            <select id="home-type" name="Home Type">
-              <option value="">Select one</option>
+            <select
+              id="home_type"
+              name="home_type"
+            >
+              <option value="">Choose one</option>
               <option>House</option>
               <option>Apartment</option>
               <option>Condo</option>
               <option>Townhome</option>
               <option>Other</option>
             </select>
+
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
+
             <label for="bedrooms">
-              Number of Bedrooms
+              Bedrooms
             </label>
 
-            <select id="bedrooms" name="Bedrooms">
-              <option value="">Select one</option>
+            <select
+              id="bedrooms"
+              name="bedrooms"
+            >
+              <option value="">Choose one</option>
               <option>Studio</option>
               <option>1</option>
               <option>2</option>
@@ -465,16 +823,21 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
               <option>4</option>
               <option>5+</option>
             </select>
+
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
+
             <label for="bathrooms">
-              Number of Bathrooms
+              Bathrooms
             </label>
 
-            <select id="bathrooms" name="Bathrooms">
-              <option value="">Select one</option>
+            <select
+              id="bathrooms"
+              name="bathrooms"
+            >
+              <option value="">Choose one</option>
               <option>1</option>
               <option>1.5</option>
               <option>2</option>
@@ -483,71 +846,23 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
               <option>3.5</option>
               <option>4+</option>
             </select>
+
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
+
             <label for="sqft">
               Approximate Square Footage
             </label>
 
             <input
-              type="text"
               id="sqft"
-              name="Approximate Square Footage"
+              name="square_footage"
+              type="text"
               placeholder="Example: 1,500 sq. ft."
             >
-          </div>
 
-        </div>
-      </section>
-
-
-      <!-- SERVICE -->
-      <section class="section">
-
-        <h2 class="section-title">🧹 What Are You Looking For?</h2>
-
-        <p class="section-subtitle">
-          Select the cleaning service you're interested in.
-        </p>
-
-        <div class="options-grid">
-
-          <div class="option service-option">
-            <input type="radio" id="standard" name="Cleaning Service"
-              value="Standard Cleaning" required>
-            <label for="standard">Standard Cleaning</label>
-          </div>
-
-          <div class="option service-option">
-            <input type="radio" id="deep" name="Cleaning Service"
-              value="Deep Cleaning">
-            <label for="deep">Deep Cleaning</label>
-          </div>
-
-          <div class="option service-option">
-            <input type="radio" id="first" name="Cleaning Service"
-              value="First-Time Cleaning">
-            <label for="first">First-Time Cleaning</label>
-          </div>
-
-          <div class="option service-option">
-            <input type="radio" id="movein" name="Cleaning Service"
-              value="Move-In Cleaning">
-            <label for="movein">Move-In Cleaning</label>
-          </div>
-
-          <div class="option service-option">
-            <input type="radio" id="moveout" name="Cleaning Service"
-              value="Move-Out Cleaning">
-            <label for="moveout">Move-Out Cleaning</label>
-          </div>
-
-          <div class="option service-option">
-            <input type="radio" id="other-service" name="Cleaning Service"
-              value="Other">
-            <label for="other-service">Other</label>
           </div>
 
         </div>
@@ -555,47 +870,120 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
       </section>
 
 
-      <!-- FREQUENCY -->
-      <section class="section">
+      <!-- =========================
+           03 — CLEANING SERVICE
+      ========================= -->
 
-        <h2 class="section-title">📅 How Often?</h2>
+      <section class="form-card">
 
-        <div class="options-grid">
+        <div class="section-heading">
 
-          <div class="option service-option">
-            <input type="radio" id="one-time" name="Cleaning Frequency"
-              value="One-Time">
-            <label for="one-time">One-Time</label>
+          <span class="number">03</span>
+
+          <div>
+            <h3>Your Cleaning</h3>
+            <p>What type of cleaning are you looking for?</p>
           </div>
 
-          <div class="option service-option">
-            <input type="radio" id="weekly" name="Cleaning Frequency"
-              value="Weekly">
-            <label for="weekly">Weekly</label>
+        </div>
+
+
+        <div class="options">
+
+          <div class="option radio">
+
+            <input
+              id="standard"
+              type="radio"
+              name="cleaning_service"
+              value="Standard Cleaning"
+              required
+            >
+
+            <label for="standard">
+              🧹 Standard Cleaning
+            </label>
+
           </div>
 
-          <div class="option service-option">
-            <input type="radio" id="biweekly" name="Cleaning Frequency"
-              value="Every 2 Weeks">
-            <label for="biweekly">Every 2 Weeks</label>
+
+          <div class="option radio">
+
+            <input
+              id="deep"
+              type="radio"
+              name="cleaning_service"
+              value="Deep Cleaning"
+            >
+
+            <label for="deep">
+              ✨ Deep Cleaning
+            </label>
+
           </div>
 
-          <div class="option service-option">
-            <input type="radio" id="threeweeks" name="Cleaning Frequency"
-              value="Every 3 Weeks">
-            <label for="threeweeks">Every 3 Weeks</label>
+
+          <div class="option radio">
+
+            <input
+              id="first_time"
+              type="radio"
+              name="cleaning_service"
+              value="First-Time Cleaning"
+            >
+
+            <label for="first_time">
+              🏡 First-Time Cleaning
+            </label>
+
           </div>
 
-          <div class="option service-option">
-            <input type="radio" id="monthly" name="Cleaning Frequency"
-              value="Monthly">
-            <label for="monthly">Monthly</label>
+
+          <div class="option radio">
+
+            <input
+              id="move_in"
+              type="radio"
+              name="cleaning_service"
+              value="Move-In Cleaning"
+            >
+
+            <label for="move_in">
+              📦 Move-In Cleaning
+            </label>
+
           </div>
 
-          <div class="option service-option">
-            <input type="radio" id="unsure" name="Cleaning Frequency"
-              value="Not Sure Yet">
-            <label for="unsure">Not Sure Yet</label>
+
+          <div class="option radio">
+
+            <input
+              id="move_out"
+              type="radio"
+              name="cleaning_service"
+              value="Move-Out Cleaning"
+            >
+
+            <label for="move_out">
+              🚚 Move-Out Cleaning
+            </label>
+
+          </div>
+
+
+          <div class="option radio">
+
+            <input
+              id="other"
+              type="radio"
+              name="cleaning_service"
+              value="Other"
+            >
+
+            <label for="other">
+              💕 Other
+            </label>
+
           </div>
 
         </div>
@@ -603,146 +991,409 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
       </section>
 
 
-      <!-- ADD-ONS -->
-      <section class="section">
+      <!-- =========================
+           04 — FREQUENCY
+      ========================= -->
 
-        <h2 class="section-title">➕ Add-On Services</h2>
+      <section class="form-card">
 
-        <p class="section-subtitle">
-          Select any additional services you'd like included in your quote.
-        </p>
+        <div class="section-heading">
 
-        <div class="options-grid">
+          <span class="number">04</span>
 
-          <div class="option">
-            <input type="checkbox" id="windows"
-              name="Add-On Services[]" value="Window Tracks & Sills">
-            <label for="windows">🪟 Window Tracks & Sills</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="baseboards"
-              name="Add-On Services[]" value="Baseboards">
-            <label for="baseboards">🧹 Baseboards</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="doors"
-              name="Add-On Services[]" value="Doors & Door Frames">
-            <label for="doors">🚪 Doors & Door Frames</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="cabinets"
-              name="Add-On Services[]" value="Cabinet Fronts">
-            <label for="cabinets">🗄️ Cabinet Fronts</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="trash"
-              name="Add-On Services[]" value="Trash Can Cleaning & Sanitizing">
-            <label for="trash">🗑️ Trash Can Cleaning</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="beds"
-              name="Add-On Services[]" value="Bed Making">
-            <label for="beds">🛏️ Bed Making</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="laundry"
-              name="Add-On Services[]" value="Laundry">
-            <label for="laundry">🧺 Laundry</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="inside-cabinets"
-              name="Add-On Services[]" value="Inside Empty Cabinets">
-            <label for="inside-cabinets">🧼 Inside Empty Cabinets</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="shower"
-              name="Add-On Services[]" value="Detailed Shower & Tub Cleaning">
-            <label for="shower">🚿 Detailed Shower & Tub</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="walls"
-              name="Add-On Services[]" value="Wall Spot Cleaning">
-            <label for="walls">🧽 Wall Spot Cleaning</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="pet-hair"
-              name="Add-On Services[]" value="Extra Pet Hair Removal">
-            <label for="pet-hair">🐾 Extra Pet Hair Removal</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="floors"
-              name="Add-On Services[]" value="Detailed Floor Edges & Corners">
-            <label for="floors">🧹 Detailed Floor Edges & Corners</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="cobwebs"
-              name="Add-On Services[]" value="Cobweb Removal">
-            <label for="cobwebs">🕸️ Cobweb Removal</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="high"
-              name="Add-On Services[]" value="High & Hard-to-Reach Areas">
-            <label for="high">🪜 High & Hard-to-Reach Areas</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="toys"
-              name="Add-On Services[]" value="Toy & Play Area Reset">
-            <label for="toys">🧸 Toy & Play Area Reset</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="closets"
-              name="Add-On Services[]" value="Closet & Storage Area Cleaning">
-            <label for="closets">🧹 Closet & Storage Cleaning</label>
-          </div>
-
-          <div class="option">
-            <input type="checkbox" id="pets"
-              name="Add-On Services[]" value="Pet Area Cleaning">
-            <label for="pets">🐕 Pet Area Cleaning</label>
+          <div>
+            <h3>How Often?</h3>
+            <p>Choose the cleaning schedule that fits your needs.</p>
           </div>
 
         </div>
 
 
-        <div class="bed-note">
+        <div class="options">
+
+          <div class="option radio">
+
+            <input
+              id="one_time"
+              type="radio"
+              name="frequency"
+              value="One-Time"
+            >
+
+            <label for="one_time">
+              One-Time
+            </label>
+
+          </div>
+
+
+          <div class="option radio">
+
+            <input
+              id="weekly"
+              type="radio"
+              name="frequency"
+              value="Weekly"
+            >
+
+            <label for="weekly">
+              Weekly
+            </label>
+
+          </div>
+
+
+          <div class="option radio">
+
+            <input
+              id="biweekly"
+              type="radio"
+              name="frequency"
+              value="Every 2 Weeks"
+            >
+
+            <label for="biweekly">
+              Every 2 Weeks
+            </label>
+
+          </div>
+
+
+          <div class="option radio">
+
+            <input
+              id="three_weeks"
+              type="radio"
+              name="frequency"
+              value="Every 3 Weeks"
+            >
+
+            <label for="three_weeks">
+              Every 3 Weeks
+            </label>
+
+          </div>
+
+
+          <div class="option radio">
+
+            <input
+              id="monthly"
+              type="radio"
+              name="frequency"
+              value="Monthly"
+            >
+
+            <label for="monthly">
+              Monthly
+            </label>
+
+          </div>
+
+
+          <div class="option radio">
+
+            <input
+              id="not_sure"
+              type="radio"
+              name="frequency"
+              value="Not Sure Yet"
+            >
+
+            <label for="not_sure">
+              Not Sure Yet
+            </label>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           05 — ADD ONS
+      ========================= -->
+
+      <section class="form-card">
+
+        <div class="section-heading">
+
+          <span class="number">05</span>
+
+          <div>
+            <h3>Make It Extra ✨</h3>
+            <p>Select any add-ons you’d like included in your quote.</p>
+          </div>
+
+        </div>
+
+
+        <div class="options">
+
+          <div class="option">
+            <input
+              id="window_tracks"
+              type="checkbox"
+              name="add_ons[]"
+              value="Window Tracks & Sills"
+            >
+            <label for="window_tracks">
+              🪟 Window Tracks & Sills
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="baseboards"
+              type="checkbox"
+              name="add_ons[]"
+              value="Baseboards"
+            >
+            <label for="baseboards">
+              🧹 Baseboards
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="doors"
+              type="checkbox"
+              name="add_ons[]"
+              value="Doors & Door Frames"
+            >
+            <label for="doors">
+              🚪 Doors & Door Frames
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="cabinet_fronts"
+              type="checkbox"
+              name="add_ons[]"
+              value="Cabinet Fronts"
+            >
+            <label for="cabinet_fronts">
+              🗄️ Cabinet Fronts
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="trash_cans"
+              type="checkbox"
+              name="add_ons[]"
+              value="Trash Can Cleaning & Sanitizing"
+            >
+            <label for="trash_cans">
+              🗑️ Trash Can Cleaning
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="bed_making"
+              type="checkbox"
+              name="add_ons[]"
+              value="Bed Making"
+            >
+            <label for="bed_making">
+              🛏️ Bed Making
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="laundry"
+              type="checkbox"
+              name="add_ons[]"
+              value="Laundry"
+            >
+            <label for="laundry">
+              🧺 Laundry
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="inside_cabinets"
+              type="checkbox"
+              name="add_ons[]"
+              value="Inside Empty Cabinets"
+            >
+            <label for="inside_cabinets">
+              🧼 Inside Empty Cabinets
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="shower"
+              type="checkbox"
+              name="add_ons[]"
+              value="Detailed Shower & Tub"
+            >
+            <label for="shower">
+              🚿 Detailed Shower & Tub
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="wall_spot"
+              type="checkbox"
+              name="add_ons[]"
+              value="Wall Spot Cleaning"
+            >
+            <label for="wall_spot">
+              🧽 Wall Spot Cleaning
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="pet_hair"
+              type="checkbox"
+              name="add_ons[]"
+              value="Extra Pet Hair Removal"
+            >
+            <label for="pet_hair">
+              🐾 Extra Pet Hair Removal
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="floor_detail"
+              type="checkbox"
+              name="add_ons[]"
+              value="Detailed Floor Edges & Corners"
+            >
+            <label for="floor_detail">
+              🧹 Detailed Floor Edges & Corners
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="cobwebs"
+              type="checkbox"
+              name="add_ons[]"
+              value="Cobweb Removal"
+            >
+            <label for="cobwebs">
+              🕸️ Cobweb Removal
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="high_areas"
+              type="checkbox"
+              name="add_ons[]"
+              value="High & Hard-to-Reach Areas"
+            >
+            <label for="high_areas">
+              🪜 High & Hard-to-Reach Areas
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="play_area"
+              type="checkbox"
+              name="add_ons[]"
+              value="Toy & Play Area Reset"
+            >
+            <label for="play_area">
+              🧸 Toy & Play Area Reset
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="storage"
+              type="checkbox"
+              name="add_ons[]"
+              value="Closet & Storage Area Cleaning"
+            >
+            <label for="storage">
+              🧹 Closet & Storage Cleaning
+            </label>
+          </div>
+
+
+          <div class="option">
+            <input
+              id="pet_area"
+              type="checkbox"
+              name="add_ons[]"
+              value="Pet Area Cleaning"
+            >
+            <label for="pet_area">
+              🐕 Pet Area Cleaning
+            </label>
+          </div>
+
+        </div>
+
+
+        <div class="note">
+
           <strong>🛏️ Bed Making Note:</strong>
+
           Clean sheets must be provided and left out for the bed-making
           service. Please remove any soiled sheets before my arrival.
+
         </div>
 
       </section>
 
 
-      <!-- ADDITIONAL INFORMATION -->
-      <section class="section">
+      <!-- =========================
+           06 — MORE INFORMATION
+      ========================= -->
 
-        <h2 class="section-title">📝 Tell Me More</h2>
+      <section class="form-card">
 
-        <p class="section-subtitle">
-          Tell me anything you'd like me to know about your home or cleaning
-          needs.
-        </p>
+        <div class="section-heading">
 
-        <div class="form-group">
+          <span class="number">06</span>
+
+          <div>
+            <h3>Tell Me More 💕</h3>
+            <p>Anything else you'd like me to know?</p>
+          </div>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="message">
+            Additional Information
+          </label>
 
           <textarea
-            name="Additional Information"
-            placeholder="Pets, heavy buildup, special requests, areas needing extra attention, or anything else you'd like me to know..."
+            id="message"
+            name="message"
+            placeholder="Tell me about pets, heavy buildup, special requests, areas needing extra attention, or anything else that would help me prepare your quote..."
           ></textarea>
 
         </div>
@@ -750,21 +1401,37 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
       </section>
 
 
-      <!-- SCHEDULING -->
-      <section class="section">
+      <!-- =========================
+           07 — SCHEDULING
+      ========================= -->
 
-        <h2 class="section-title">🗓️ Scheduling</h2>
+      <section class="form-card">
 
-        <div class="form-grid">
+        <div class="section-heading">
 
-          <div class="form-group">
+          <span class="number">07</span>
+
+          <div>
+            <h3>Let’s Get You Scheduled</h3>
+            <p>Tell me when you'd ideally like your cleaning.</p>
+          </div>
+
+        </div>
+
+
+        <div class="grid">
+
+          <div class="field">
 
             <label for="timing">
-              When would you ideally like your cleaning?
+              Ideal Timing
             </label>
 
-            <select id="timing" name="Preferred Timing">
-              <option value="">Select one</option>
+            <select
+              id="timing"
+              name="ideal_timing"
+            >
+              <option value="">Choose one</option>
               <option>As soon as possible</option>
               <option>Within the next 1–2 weeks</option>
               <option>Within the next month</option>
@@ -774,16 +1441,16 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
           </div>
 
 
-          <div class="form-group">
+          <div class="field">
 
-            <label for="preferred">
+            <label for="preferred_days">
               Preferred Days / Times
             </label>
 
             <input
+              id="preferred_days"
+              name="preferred_days"
               type="text"
-              id="preferred"
-              name="Preferred Days & Times"
               placeholder="Example: Tuesday mornings"
             >
 
@@ -794,33 +1461,75 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
       </section>
 
 
-      <!-- DISCLAIMER -->
+      <!-- =========================
+           DISCLAIMER
+      ========================= -->
+
       <div class="disclaimer">
+
         <strong>Add-On Service Disclaimer:</strong>
+
         Add-on services are available by request and may be priced
         individually based on the size, condition, and time required.
         Some services may require additional preparation by the client
         before the scheduled cleaning.
+
       </div>
 
 
-      <!-- SUBMIT -->
-      <div class="submit-area">
+      <!-- =========================
+           SUBMIT
+      ========================= -->
 
-        <button type="submit" class="submit-button">
-          REQUEST MY FREE QUOTE
-        </button>
+      <section class="submit-card">
 
-        <p class="privacy-note">
-          Your information will be sent directly to Cleaning by Cassi
-          for the purpose of preparing your cleaning quote.
+        <h3>Ready for a Cleaner Home?</h3>
+
+        <p>
+          Send over your details and I’ll review your request and
+          get back to you with your customized quote.
         </p>
 
-      </div>
+        <button
+          type="submit"
+          class="submit-button"
+        >
+          ✨ SEND MY FREE QUOTE REQUEST
+        </button>
+
+        <div class="privacy">
+          Your information is used only to respond to your quote request.
+        </div>
+
+      </section>
 
     </form>
 
-  </div>
+
+    <!-- =========================
+         BRAND MESSAGE
+    ========================= -->
+
+    <section class="brand-message">
+
+      <div class="sparkles">
+        ✨ ✦ ✨
+      </div>
+
+      <h3>
+        A clean home is more than a clean space.
+      </h3>
+
+      <p>
+        It’s a little more time, a little less stress, and one less
+        thing on your to-do list.
+        <br>
+        <strong>— Cleaning by Cassi 💕</strong>
+      </p>
+
+    </section>
+
+  </main>
 
 </body>
 </html>
