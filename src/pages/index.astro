@@ -12,15 +12,17 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
 	</head>
 	<body>
 		<Header />
+		<img
+			src="/homepage.jpg"
+			alt="Cleaning By Cassi — accepting new clients. Clean spaces, happier faces. Reliable and trusted. Cleaning you can count on."
+			width="1536"
+			height="1024"
+			class="hero-image"
+		/>
 		<main>
-			<img
-				src="/homepage.jpg"
-				alt="Cleaning By Cassi — accepting new clients. Clean spaces, happier faces. Reliable and trusted. Cleaning you can count on."
-				width="1536"
-				height="1024"
-			/>
-			<p>{SITE_DESCRIPTION}</p>
-			<p>Proudly servicing the {SERVICE_AREA} area.</p>
+			<h1>{SITE_TITLE}</h1>
+			<h2>{SITE_DESCRIPTION}</h2>
+			<h2>Proudly servicing the {SERVICE_AREA} area.</h2>
 			<p>
 				Hi, I'm {OWNER_NAME}. For <span id="business-tenure">{getBusinessTenure()}</span> I've
 				been helping homes and businesses in the Fox Cities area feel like a fresh start again.
@@ -35,12 +37,22 @@ import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, O
 				<li>Recurring service (weekly, biweekly, monthly)</li>
 			</ul>
 			<p>
-				<a href="/services">See the full list of services</a>, <a href="/pricing">pricing</a>, or <a href="/about">learn more about me</a>.
+				<a href="/services">See the full list of services</a>, <a href="/pricing">Pricing</a>, or <a href="/about">learn more about me</a>.
 			</p>
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	.hero-image {
+		display: block;
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: 2em auto 0 auto;
+		border-radius: 12px;
+	}
+</style>
 
 <script define:vars={{ startDate: BUSINESS_START_DATE.toISOString() }}>
 	function getTenure(startISO, from) {
