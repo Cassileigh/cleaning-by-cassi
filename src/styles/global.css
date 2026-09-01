@@ -70,7 +70,7 @@ main {
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
-	background: rgba(20, 22, 30, 0.45);
+	background: rgba(245, 170, 245, 0.45);
 	border-radius: 12px;
 }
 h1,
