@@ -37,21 +37,35 @@
 	font-display: swap;
 }
 @font-face {
-	font-family: "Nunito Sans";
-	src: url("/fonts/NunitoSans-Regular.woff2") format("woff2");
+	font-family: "Poppins";
+	src: url("/fonts/PoppinsRegular.woff2") format("woff2");
 	font-weight: 400;
 	font-style: normal;
 	font-display: swap;
 }
 @font-face {
-	font-family: "Nunito Sans";
-	src: url("/fonts/NunitoSans-Bold.woff2") format("woff2");
+	font-family: "Poppins";
+	src: url("/fonts/PoppinsMedium.woff2") format("woff2");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Poppins";
+	src: url("/fonts/PoppinsSemiBold.woff2") format("woff2");
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Poppins";
+	src: url("/fonts/PoppinsBold.woff2") format("woff2");
 	font-weight: 700;
 	font-style: normal;
 	font-display: swap;
 }
 body {
-	font-family: "Atkinson", sans-serif;
+	font-family: "Poppins", sans-serif;
 	margin: 0;
 	padding: 0;
 	min-height: 100vh;
@@ -135,7 +149,7 @@ a:hover {
 	color: var(--accent);
 }
 p {
-	font-family: "Nunito Sans", sans-serif;
+	font-family: "Poppins", sans-serif;
 	margin-bottom: 1em;
 }
 .prose p {
@@ -179,7 +193,7 @@ hr {
 	border-top: 1px solid rgb(var(--gray-light));
 }
 header {
-	font-family: "Nunito Sans", sans-serif;
+	font-family: "Poppins", sans-serif;
 	font-weight: 700;
 }
 @media (max-width: 720px) {
