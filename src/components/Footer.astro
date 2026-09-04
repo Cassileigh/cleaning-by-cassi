@@ -2,43 +2,82 @@
 const today = new Date();
 ---
 
-<footer>
-	&copy; {today.getFullYear()} Cleaning By Cassi. All rights reserved.
-	<div class="social-links">
-		<a href="https://facebook.com/cleaningbycassi" target="_blank">
-			<span class="sr-only">Follow Cassi on Facebook</span>
-			<svg
-				viewBox="0 0 16 16"
-				aria-hidden="true"
-				width="32"
-				height="32"
-				astro-icon="social/facebook"
-				><path
-					fill="currentColor"
-					d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.219l-.354 2.326H9.25v5.625c3.824-.604 6.75-3.934 6.75-7.951z"
-				></path></svg
-			>
-		</a>
-	</div>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div>
+      <strong>Cleaning by Cassi</strong>
+      <p>A cleaner home, without the stress. 💗</p>
+    </div>
+
+    <div class="footer-links">
+      <a href="/services">Services</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/quote">Free Quote</a>
+      <a href="https://facebook.com/cleaningbycassi" target="_blank" rel="noopener noreferrer">Facebook</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    &copy; {today.getFullYear()} Cleaning by Cassi. All rights reserved.
+  </div>
 </footer>
+
 <style>
-	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
-	}
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
-	}
-	.social-links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
-	}
+  .site-footer {
+    margin-top: 4rem;
+    padding: 3rem 1rem 2rem;
+    color: var(--ink);
+    background: linear-gradient(135deg, rgba(245, 200, 223, 0.55), rgba(230, 220, 248, 0.62), rgba(224, 243, 227, 0.62));
+    border-top: 1px solid rgba(166, 75, 181, 0.12);
+  }
+
+  .footer-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .footer-inner strong {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+  }
+
+  .footer-inner p {
+    margin: 0.4rem 0 0;
+    color: var(--muted);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem 1rem;
+    justify-content: flex-end;
+  }
+
+  .footer-links a {
+    color: var(--purple-dark);
+    font-weight: 600;
+  }
+
+  .footer-bottom {
+    width: min(1180px, 100%);
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(48, 41, 54, 0.1);
+    color: var(--muted);
+    font-size: 0.82rem;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer-links { justify-content: center; }
+  }
 </style>
