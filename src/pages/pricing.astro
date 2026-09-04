@@ -4,803 +4,332 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
-/*
- * ============================================================
- * CLEANING BY CASSI — PRICING
- * ============================================================
- * Change your prices here.
- * You do NOT need to edit the design below.
- */
-
 const cleaningFrequencies = [
-	{
-		name: 'Weekly',
-		price: 'Base Rate',
-	},
-	{
-		name: 'Bi-Weekly',
-		price: 'Base + $5',
-	},
-	{
-		name: 'Monthly',
-		price: 'Base + $10',
-	},
+  { name: 'Weekly', price: 'Base Rate' },
+  { name: 'Bi-Weekly', price: 'Base + $5' },
+  { name: 'Monthly', price: 'Base + $10' },
 ];
 
 const roomRates = [
-	{
-		icon: '🛏️',
-		name: 'Bedroom',
-		unit: 'per room',
-		price: '$15',
-	},
-	{
-		icon: '🛋️',
-		name: 'Living Space',
-		unit: 'per room',
-		price: '$15',
-	},
-	{
-		icon: '🛁',
-		name: 'Full Bathroom',
-		unit: 'per bathroom',
-		price: '$25',
-	},
-	{
-		icon: '🚽',
-		name: 'Half Bathroom',
-		unit: 'per bathroom',
-		price: '$15',
-	},
-	{
-		icon: '🍴',
-		name: 'Kitchen / Dining',
-		unit: 'per room',
-		price: '$35',
-	},
+  { icon: '🛏️', name: 'Bedroom', unit: 'per room', price: '$15' },
+  { icon: '🛋️', name: 'Living Space', unit: 'per room', price: '$15' },
+  { icon: '🛁', name: 'Full Bathroom', unit: 'per bathroom', price: '$25' },
+  { icon: '🚽', name: 'Half Bathroom', unit: 'per bathroom', price: '$15' },
+  { icon: '🍴', name: 'Kitchen / Dining', unit: 'per room', price: '$35' },
 ];
 
-/*
- * Add your actual add-on prices below.
- * "Quoted" can be replaced with a dollar amount whenever
- * you decide on pricing.
- */
-
 const addOns = [
-	{
-		name: 'Window Tracks & Sills',
-		price: 'Quoted',
-	},
-	{
-		name: 'Baseboards',
-		price: 'Quoted',
-	},
-	{
-		name: 'Doors & Door Frames',
-		price: 'Quoted',
-	},
-	{
-		name: 'Cabinet Fronts',
-		price: 'Quoted',
-	},
-	{
-		name: 'Detailed Shower & Tub Cleaning',
-		price: 'Quoted',
-	},
-	{
-		name: 'Trash Can Cleaning & Sanitizing',
-		price: 'Quoted',
-	},
-	{
-		name: 'Bed Making',
-		price: 'Quoted',
-	},
-	{
-		name: 'Laundry',
-		price: 'Quoted',
-	},
-	{
-		name: 'Extra Pet Hair Removal',
-		price: 'Quoted',
-	},
-	{
-		name: 'Wall Spot Cleaning',
-		price: 'Quoted',
-	},
-	{
-		name: 'Cobweb Removal',
-		price: 'Quoted',
-	},
-	{
-		name: 'Detailed Floor Edges & Corners',
-		price: 'Quoted',
-	},
-	{
-		name: 'High & Hard-to-Reach Areas',
-		price: 'Quoted',
-	},
+  'Window Tracks & Sills',
+  'Baseboards',
+  'Doors & Door Frames',
+  'Cabinet Fronts',
+  'Detailed Shower & Tub Cleaning',
+  'Trash Can Cleaning & Sanitizing',
+  'Bed Making',
+  'Laundry',
+  'Extra Pet Hair Removal',
+  'Wall Spot Cleaning',
+  'Cobweb Removal',
+  'Detailed Floor Edges & Corners',
+  'High & Hard-to-Reach Areas',
 ];
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={`Prices | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
-	</head>
+  <head>
+    <BaseHead title={`Pricing | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
 
-	<body>
-		<Header />
+    <main class="pricing-page">
+      <section class="pricing-hero">
+        <p class="eyebrow">Simple, Personalized Pricing</p>
+        <h1>Cleaning prices that fit your home.</h1>
+        <p>
+          Every home is different, so this sheet is a starting point. Your final quote is based on your home's size, condition, rooms, and requested services.
+        </p>
+        <a href="/quote" class="primary-button">Get My Free Quote →</a>
+      </section>
 
-		<main class="pricing-page">
+      <section class="pricing-section soft-pink">
+        <div class="section-heading">
+          <span class="section-icon">📅</span>
+          <div>
+            <p class="eyebrow">Recurring Service</p>
+            <h2>Cleaning Frequency</h2>
+          </div>
+        </div>
 
-			<!-- HERO -->
-			<section class="pricing-hero">
-				<div class="sparkles">✦ ✧ ✦</div>
+        <div class="pricing-list">
+          {cleaningFrequencies.map((item) => (
+            <div class="pricing-row">
+              <span>{item.name}</span>
+              <strong>{item.price}</strong>
+            </div>
+          ))}
+        </div>
+      </section>
 
-				<p class="hero-eyebrow">Cleaning by Cassi</p>
+      <section class="pricing-section soft-lavender">
+        <div class="section-heading">
+          <span class="section-icon">🏠</span>
+          <div>
+            <p class="eyebrow">Base Price Sheet</p>
+            <h2>Base Room Rates</h2>
+          </div>
+        </div>
 
-				<h1>Cleaning Services</h1>
+        <div class="room-grid">
+          {roomRates.map((room) => (
+            <article class="room-card">
+              <span class="room-icon">{room.icon}</span>
+              <div>
+                <h3>{room.name}</h3>
+                <small>{room.unit}</small>
+              </div>
+              <strong>{room.price}</strong>
+            </article>
+          ))}
+        </div>
+      </section>
 
-				<div class="hero-divider">
-					<span>✧</span>
-					<div></div>
-					<span>🌿</span>
-					<div></div>
-					<span>✧</span>
-				</div>
+      <section class="first-cleaning">
+        <div class="big-icon">✨</div>
+        <div>
+          <p class="eyebrow">First Visit</p>
+          <h2>First-Time Cleanings</h2>
+          <p>
+            All first-time cleanings are priced separately so I can get the home to a good base point before regular cleaning rates begin.
+          </p>
+        </div>
+      </section>
 
-				<p class="hero-subtitle">Base Price Sheet</p>
-			</section>
+      <section class="pricing-section soft-green">
+        <div class="section-heading">
+          <span class="section-icon">➕</span>
+          <div>
+            <p class="eyebrow">Customize Your Clean</p>
+            <h2>Add-On Services</h2>
+          </div>
+        </div>
 
+        <p class="section-copy">
+          Add-ons are quoted individually based on the size, condition, and time required.
+        </p>
 
-			<!-- FREQUENCY -->
-			<section class="price-section">
-				<div class="section-title">
-					<div class="section-icon pink-icon">📅</div>
+        <div class="addon-grid">
+          {addOns.map((addon) => (
+            <div class="addon-card"><span>✦</span>{addon}</div>
+          ))}
+        </div>
 
-					<div class="title-content">
-						<p>Cleaning Frequency</p>
-						<div class="title-line"></div>
-					</div>
-				</div>
+        <div class="fine-print">
+          <p><strong>🛏️ Bed Making:</strong> Clean sheets must be provided and left out. Please remove soiled sheets before arrival.</p>
+          <p><strong>🧺 Laundry:</strong> Wash, dry, and fold only.</p>
+        </div>
+      </section>
 
-				<div class="price-card">
-					<div class="table-header">
-						<span>Frequency</span>
-						<span>Base Rate</span>
-					</div>
+      <section class="pricing-note">
+        <span>💗</span>
+        <div>
+          <h2>A Note About Pricing</h2>
+          <p>
+            Pricing may vary based on the size and condition of the home, cleaning needs, and additional services requested. Deep-cleaning tasks and special requests may be quoted separately.
+          </p>
+        </div>
+      </section>
 
-					{cleaningFrequencies.map((frequency) => (
-						<div class="price-row">
-							<span>{frequency.name}</span>
-							<strong>{frequency.price}</strong>
-						</div>
-					))}
-				</div>
-			</section>
+      <section class="pricing-cta">
+        <p class="eyebrow">Ready When You Are</p>
+        <h2>Let's find the right cleaning plan for your home.</h2>
+        <p>No pressure — just a simple, personalized quote.</p>
+        <a href="/quote" class="cta-button">Get a Free Quote →</a>
+      </section>
+    </main>
 
-
-			<!-- ROOM RATES -->
-			<section class="price-section">
-				<div class="section-title">
-					<div class="section-icon pink-icon">🏠</div>
-
-					<div class="title-content">
-						<p>Base Room Rates</p>
-						<div class="title-line"></div>
-					</div>
-				</div>
-
-				<div class="price-card">
-					<div class="table-header pink-header">
-						<span>Service Area</span>
-						<span>Price</span>
-					</div>
-
-					{roomRates.map((room) => (
-						<div class="price-row room-row">
-							<span class="room-name">
-								<span class="room-icon">{room.icon}</span>
-
-								<span>
-									{room.name}
-									<small>— {room.unit}</small>
-								</span>
-							</span>
-
-							<strong>{room.price}</strong>
-						</div>
-					))}
-				</div>
-			</section>
-
-
-			<!-- FIRST TIME CLEANINGS -->
-			<section class="first-cleaning">
-				<div class="cleaning-icon">🧴</div>
-
-				<div class="cleaning-content">
-					<h2>First-Time Cleanings</h2>
-
-					<p>
-						All first-time cleanings are priced separately to get the home
-						to a good base point before regular cleaning rates begin.
-					</p>
-				</div>
-
-				<div class="cleaning-sparkles">✦ ✧ ✦</div>
-			</section>
-
-
-			<!-- ADD ONS -->
-			<section class="price-section add-on-section">
-				<div class="section-title">
-					<div class="section-icon green-icon">✨</div>
-
-					<div class="title-content">
-						<p>Add-On Services</p>
-						<div class="title-line"></div>
-					</div>
-				</div>
-
-				<p class="section-description">
-					Want a little extra attention? Add-on services can be added to
-					your cleaning based on your home's needs.
-				</p>
-
-				<div class="addon-grid">
-					{addOns.map((addon) => (
-						<div class="addon-card">
-							<div class="addon-name">
-								<span>✦</span>
-								{addon.name}
-							</div>
-
-							<strong>{addon.price}</strong>
-						</div>
-					))}
-				</div>
-
-				<div class="addon-note">
-					<strong>Good to know:</strong>
-
-					<span>
-						Bed making requires clean sheets to be provided and left out
-						for the service. Soiled sheets should be removed before arrival.
-						Laundry service is limited to washing, drying, and folding.
-					</span>
-				</div>
-			</section>
-
-
-			<!-- IMPORTANT NOTE -->
-			<section class="important-note">
-				<div class="note-icon">💗</div>
-
-				<div>
-					<h2>A Note About Pricing</h2>
-
-					<p>
-						Every home is different! Pricing may vary based on the size
-						and condition of the home, cleaning needs, and requested
-						additional services.
-					</p>
-
-					<p>
-						Additional deep-cleaning services or special requests may
-						be quoted separately.
-					</p>
-				</div>
-			</section>
-
-
-			<!-- CTA -->
-			<section class="pricing-cta">
-				<div class="cta-sparkles">✦ ✧ ✦</div>
-
-				<h2>Ready for a Cleaner Home?</h2>
-
-				<p>
-					Let's talk about your home and find the cleaning service
-					that works best for you.
-				</p>
-
-				<a href="/quote" class="quote-button">
-					Get a Free Quote
-					<span>→</span>
-				</a>
-			</section>
-
-		</main>
-
-		<Footer />
-	</body>
+    <Footer />
+  </body>
 </html>
 
-
 <style>
-	:global(body) {
-		margin: 0;
-		background:
-			linear-gradient(
-				135deg,
-				#4b0082 0%,
-				#24106f 35%,
-				#101b72 70%,
-				#063b91 100%
-			);
-	}
-
-	.pricing-page {
-		min-height: 100vh;
-		padding: 3rem 1.25rem 5rem;
-		color: #21145f;
-	}
-
-	/* HERO */
-
-	.pricing-hero {
-		max-width: 950px;
-		margin: 0 auto 3rem;
-		text-align: center;
-		color: white;
-	}
-
-	.sparkles {
-		margin-bottom: 0.5rem;
-		color: #ff6fbd;
-		font-size: 1.8rem;
-		letter-spacing: 1rem;
-	}
-
-	.hero-eyebrow {
-		margin: 0 0 0.25rem;
-		color: #ff8acb;
-		font-family: 'Poppins', sans-serif;
-		font-size: 1rem;
-		font-weight: 700;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-	}
-
-	.pricing-hero h1 {
-		margin: 0;
-		font-family: 'DM Serif Display', serif;
-		font-size: clamp(3rem, 8vw, 5.8rem);
-		line-height: 1;
-		text-transform: uppercase;
-		letter-spacing: 0.02em;
-	}
-
-	.hero-divider {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.75rem;
-		margin: 1.25rem auto;
-		max-width: 600px;
-		color: #9fe33b;
-	}
-
-	.hero-divider div {
-		height: 2px;
-		flex: 1;
-		background: #ff75bf;
-	}
-
-	.hero-subtitle {
-		margin: 0;
-		color: #ff8acb;
-		font-family: cursive;
-		font-size: clamp(1.8rem, 5vw, 3rem);
-	}
-
-	/* SECTIONS */
-
-	.price-section {
-		max-width: 850px;
-		margin: 0 auto 4rem;
-	}
-
-	.section-title {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 1rem;
-		color: white;
-	}
-
-	.section-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 65px;
-		height: 65px;
-		flex-shrink: 0;
-		border: 3px solid white;
-		border-radius: 50%;
-		font-size: 1.8rem;
-		box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-	}
-
-	.pink-icon {
-		background: linear-gradient(135deg, #e92d94, #ff5fba);
-	}
-
-	.green-icon {
-		background: linear-gradient(135deg, #7abf20, #a4db39);
-	}
-
-	.title-content {
-		flex: 1;
-	}
-
-	.title-content p {
-		margin: 0;
-		font-family: cursive;
-		font-size: clamp(1.7rem, 4vw, 2.5rem);
-		color: #ff82c5;
-	}
-
-	.title-line {
-		height: 2px;
-		margin-top: 0.35rem;
-		background: linear-gradient(
-			90deg,
-			#ff82c5,
-			#ff82c5,
-			transparent
-		);
-	}
-
-	/* PRICE CARDS */
-
-	.price-card {
-		overflow: hidden;
-		border: 3px solid #ff72bd;
-		border-radius: 1.25rem;
-		background: white;
-		box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-	}
-
-	.table-header,
-	.price-row {
-		display: grid;
-		grid-template-columns: 1fr 0.65fr;
-		align-items: center;
-	}
-
-	.table-header {
-		padding: 1rem 1.5rem;
-		background: #83c92b;
-		color: white;
-		font-weight: 800;
-		font-size: 1rem;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-	}
-
-	.pink-header {
-		background: #df3496;
-	}
-
-	.table-header span:last-child,
-	.price-row strong {
-		text-align: right;
-	}
-
-	.price-row {
-		min-height: 64px;
-		padding: 0 1.5rem;
-		border-bottom: 1px solid #f2c6df;
-		font-size: 1.05rem;
-	}
-
-	.price-row:last-child {
-		border-bottom: 0;
-	}
-
-	.price-row strong {
-		color: #d92b91;
-		font-size: 1.15rem;
-	}
-
-	.room-name {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		font-weight: 700;
-	}
-
-	.room-icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 35px;
-		font-size: 1.4rem;
-	}
-
-	.room-name small {
-		font-weight: 500;
-	}
-
-	/* FIRST CLEANING */
-
-	.first-cleaning {
-		position: relative;
-		display: flex;
-		align-items: center;
-		gap: 1.25rem;
-		max-width: 850px;
-		margin: 0 auto 4rem;
-		padding: 1.5rem;
-		border: 2px solid #8bc82e;
-		border-radius: 1.25rem;
-		background: rgba(15, 24, 104, 0.55);
-		color: white;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-	}
-
-	.cleaning-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 75px;
-		height: 75px;
-		flex-shrink: 0;
-		border-radius: 50%;
-		background: #e7379d;
-		border: 3px solid white;
-		font-size: 2rem;
-	}
-
-	.cleaning-content h2 {
-		margin: 0 0 0.4rem;
-		color: #ff78c0;
-		font-size: 1.35rem;
-		text-transform: uppercase;
-	}
-
-	.cleaning-content p {
-		margin: 0;
-		line-height: 1.6;
-	}
-
-	.cleaning-sparkles {
-		margin-left: auto;
-		color: #a7dc35;
-		font-size: 1.5rem;
-		white-space: nowrap;
-	}
-
-	/* ADD ONS */
-
-	.section-description {
-		margin: -0.25rem 0 1.5rem 81px;
-		color: white;
-		line-height: 1.6;
-	}
-
-	.addon-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 0.75rem;
-	}
-
-	.addon-card {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 1rem;
-		padding: 1rem 1.15rem;
-		border: 2px solid #ff71bc;
-		border-radius: 0.9rem;
-		background: white;
-		box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-	}
-
-	.addon-name {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-weight: 700;
-	}
-
-	.addon-name span {
-		color: #83c92b;
-	}
-
-	.addon-card strong {
-		color: #d92b91;
-		white-space: nowrap;
-	}
-
-	.addon-note {
-		display: flex;
-		gap: 0.5rem;
-		margin-top: 1rem;
-		padding: 1rem 1.25rem;
-		border-radius: 0.9rem;
-		background: rgba(255, 255, 255, 0.1);
-		color: white;
-		font-size: 0.9rem;
-		line-height: 1.6;
-	}
-
-	.addon-note strong {
-		color: #ff8acb;
-		white-space: nowrap;
-	}
-
-	/* IMPORTANT NOTE */
-
-	.important-note {
-		display: flex;
-		align-items: flex-start;
-		gap: 1rem;
-		max-width: 850px;
-		margin: 0 auto 3rem;
-		padding: 1.5rem;
-		border-radius: 1.25rem;
-		background: white;
-		box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
-	}
-
-	.note-icon {
-		font-size: 2rem;
-	}
-
-	.important-note h2 {
-		margin: 0 0 0.5rem;
-		color: #d92b91;
-		font-family: 'DM Serif Display', serif;
-		font-size: 1.7rem;
-	}
-
-	.important-note p {
-		margin: 0 0 0.6rem;
-		line-height: 1.6;
-	}
-
-	.important-note p:last-child {
-		margin-bottom: 0;
-	}
-
-	/* CTA */
-
-	.pricing-cta {
-		max-width: 850px;
-		margin: 0 auto;
-		padding: 3rem 1.5rem;
-		border-radius: 1.5rem;
-		text-align: center;
-		color: white;
-		background:
-			linear-gradient(
-				135deg,
-				rgba(168, 85, 247, 0.45),
-				rgba(236, 72, 153, 0.4)
-			);
-		box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-	}
-
-	.cta-sparkles {
-		margin-bottom: 0.75rem;
-		color: #9fe33b;
-		font-size: 1.5rem;
-		letter-spacing: 0.75rem;
-	}
-
-	.pricing-cta h2 {
-		margin: 0 0 0.75rem;
-		font-family: 'DM Serif Display', serif;
-		font-size: clamp(2rem, 5vw, 3rem);
-	}
-
-	.pricing-cta p {
-		max-width: 550px;
-		margin: 0 auto 1.5rem;
-		line-height: 1.7;
-	}
-
-	.quote-button {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.75rem;
-		padding: 0.9rem 1.6rem;
-		border-radius: 999px;
-		background: #e9369e;
-		color: white;
-		font-weight: 800;
-		text-decoration: none;
-		box-shadow: 0 7px 18px rgba(0, 0, 0, 0.25);
-		transition:
-			transform 0.2s ease,
-			box-shadow 0.2s ease;
-	}
-
-	.quote-button:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
-	}
-
-	.quote-button span {
-		font-size: 1.2rem;
-	}
-
-	/* MOBILE */
-
-	@media (max-width: 650px) {
-		.pricing-page {
-			padding: 2rem 0.9rem 4rem;
-		}
-
-		.section-icon {
-			width: 52px;
-			height: 52px;
-			font-size: 1.4rem;
-		}
-
-		.title-content p {
-			font-size: 1.7rem;
-		}
-
-		.table-header,
-		.price-row {
-			grid-template-columns: 1fr auto;
-		}
-
-		.table-header {
-			padding: 0.9rem 1rem;
-			font-size: 0.8rem;
-		}
-
-		.price-row {
-			padding: 0 1rem;
-			font-size: 0.95rem;
-		}
-
-		.room-name {
-			gap: 0.4rem;
-		}
-
-		.room-name small {
-			display: block;
-		}
-
-		.first-cleaning {
-			align-items: flex-start;
-			padding: 1.25rem;
-		}
-
-		.cleaning-icon {
-			width: 55px;
-			height: 55px;
-			font-size: 1.5rem;
-		}
-
-		.cleaning-sparkles {
-			display: none;
-		}
-
-		.section-description {
-			margin-left: 0;
-		}
-
-		.addon-grid {
-			grid-template-columns: 1fr;
-		}
-
-		.addon-card {
-			padding: 0.9rem 1rem;
-		}
-
-		.addon-note {
-			flex-direction: column;
-		}
-
-		.important-note {
-			padding: 1.25rem;
-		}
-	}
+  .pricing-page { overflow: hidden; }
+
+  .pricing-hero {
+    max-width: 820px;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  .pricing-hero h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(3.2rem, 7vw, 5.6rem);
+  }
+
+  .pricing-hero p:not(.eyebrow) {
+    max-width: 700px;
+    margin: 0 auto 1.8rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .primary-button,
+  .cta-button {
+    display: inline-block;
+    padding: 0.95rem 1.55rem;
+    border-radius: 999px;
+    color: white;
+    background: linear-gradient(135deg, var(--purple), var(--pink));
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(166, 75, 181, 0.2);
+  }
+
+  .pricing-section {
+    margin: 0 0 2rem;
+    padding: clamp(1.5rem, 4vw, 2.4rem);
+    border-radius: 28px;
+  }
+
+  .soft-pink { background: rgba(245, 200, 223, 0.28); }
+  .soft-lavender { background: rgba(232, 224, 248, 0.44); }
+  .soft-green { background: rgba(226, 243, 229, 0.5); }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-icon,
+  .big-icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    border-radius: 18px;
+    background: white;
+    box-shadow: 0 8px 22px rgba(72, 50, 85, 0.08);
+    font-size: 1.6rem;
+  }
+
+  .section-heading h2,
+  .first-cleaning h2,
+  .pricing-note h2,
+  .pricing-cta h2 { margin: 0; }
+
+  .pricing-list {
+    overflow: hidden;
+    border-radius: 20px;
+    background: white;
+    box-shadow: var(--shadow);
+  }
+
+  .pricing-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #eee5f0;
+  }
+
+  .pricing-row:last-child { border-bottom: 0; }
+  .pricing-row strong { color: var(--purple-dark); }
+
+  .room-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .room-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1.1rem;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 8px 24px rgba(72, 50, 85, 0.07);
+  }
+
+  .room-icon { font-size: 1.5rem; }
+  .room-card h3 { margin: 0; font-size: 1.35rem; }
+  .room-card small { color: var(--muted); }
+  .room-card strong { color: var(--purple-dark); font-size: 1.15rem; }
+
+  .first-cleaning,
+  .pricing-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin: 2rem 0;
+    padding: 1.7rem;
+    border-radius: 24px;
+    background: white;
+    box-shadow: var(--shadow);
+  }
+
+  .first-cleaning p:last-child,
+  .pricing-note p { margin-bottom: 0; color: var(--muted); line-height: 1.75; }
+
+  .section-copy { color: var(--muted); }
+
+  .addon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .addon-card {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    background: white;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(72, 50, 85, 0.06);
+  }
+
+  .addon-card span { color: var(--pink); }
+
+  .fine-print {
+    margin-top: 1.2rem;
+    padding: 1rem 1.1rem;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.72);
+  }
+
+  .fine-print p { margin: 0.3rem 0; font-size: 0.9rem; }
+
+  .pricing-note > span { font-size: 1.8rem; }
+
+  .pricing-cta {
+    margin-top: 3rem;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-radius: 30px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(135deg, var(--purple-dark), var(--purple), var(--pink));
+  }
+
+  .pricing-cta .eyebrow,
+  .pricing-cta h2,
+  .pricing-cta p { color: white; }
+
+  .pricing-cta p:not(.eyebrow) { opacity: 0.9; }
+  .pricing-cta .cta-button { background: white; color: var(--purple-dark); }
+
+  @media (max-width: 700px) {
+    .room-grid,
+    .addon-grid { grid-template-columns: 1fr; }
+    .section-heading,
+    .first-cleaning,
+    .pricing-note { align-items: flex-start; }
+    .pricing-row { font-size: 0.92rem; }
+  }
 </style>
