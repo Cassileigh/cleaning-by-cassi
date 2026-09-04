@@ -2,65 +2,68 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, getBusinessTenure, BUSINESS_START_DATE, OWNER_NAME, SERVICE_AREA, CONTACT_EMAIL, getAge, BIRTHDATE } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../consts';
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<img
-			src="/homepage.jpg"
-			alt="Cleaning By Cassi — accepting new clients. Clean spaces, happier faces. Reliable and trusted. Cleaning you can count on."
-			width="1536"
-			height="1024"
-			class="hero-image"
-		/>
-		<main>
-			<h1>{SITE_TITLE}</h1>
-			<h2>{SITE_DESCRIPTION}</h2>
-			<h2>Proudly servicing the {SERVICE_AREA} area.</h2>
-			<p>
-				Hi, I'm {OWNER_NAME}. For <span id="business-tenure">{getBusinessTenure()}</span> I've
-				been helping homes and businesses in the Fox Cities area feel like a fresh start again.
-			</p>
-			<p>
-				From one-time deep cleans to recurring weekly or biweekly visits, I bring the same care
-				and attention to every job — no shortcuts, no surprises.
-			</p>
-			<ul>
-				<li>Standard & deep cleaning</li>
-				<li>Move-in / move-out cleaning</li>
-				<li>Recurring service (weekly, biweekly, monthly)</li>
-			</ul>
-			<p>
-				<a href="/services">See the full list of services</a>, <a href="/pricing">Pricing</a>, or <a href="/about">learn more about me</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head><BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} /></head>
+  <body>
+    <Header />
+    <main class="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Cleaning by Cassi</p>
+          <h1>A cleaner home.<span>A little more breathing room.</span></h1>
+          <p class="lead">Dependable, detailed residential cleaning for busy families throughout the Fox Cities.</p>
+          <div class="actions">
+            <a class="button primary" href="/quote">Get a Free Quote</a>
+            <a class="button secondary" href="/services">Explore Services</a>
+          </div>
+          <div class="trust"><span>✓ Personalized</span><span>✓ Detailed</span><span>✓ Pet-friendly</span></div>
+        </div>
+        <div class="hero-photo"><img src="/homepage.jpg" alt="Cleaning by Cassi" /></div>
+      </section>
+
+      <section class="new-client-banner">
+        <div><p class="eyebrow">✨ Now Accepting New Clients ✨</p><h2>Ready for a cleaner home?</h2><p>I'd love to help make your home a little easier to keep up with.</p></div>
+        <a href="/quote" class="button primary">Get Your Free Quote →</a>
+      </section>
+
+      <section class="split intro">
+        <div class="soft-art">✨<span>Fresh spaces.<br/>More free time.</span></div>
+        <div><p class="eyebrow">Hi, I'm Cassi! 👋</p><h2>More than a clean home — <em>more time for what matters.</em></h2><p>Life gets busy. Between work, family, pets, and everything else on your plate, keeping up with the house can feel overwhelming.</p><p>That's where I come in. My goal isn't just to make your home clean — it's to make your life a little easier.</p><a class="text-link" href="/about">Meet {OWNER_NAME} →</a></div>
+      </section>
+
+      <section class="services">
+        <div class="heading"><p class="eyebrow">What I Do</p><h2>Cleaning that fits <em>your home & your life.</em></h2><p>Every home is different, which is why your cleaning should be, too.</p></div>
+        <div class="cards">
+          <article><span>🧽</span><h3>Standard Cleaning</h3><p>Regular upkeep to keep your home fresh, comfortable, and clean.</p></article>
+          <article class="featured"><span>✨</span><h3>Deep Cleaning</h3><p>A detailed reset for homes that need a little extra TLC.</p></article>
+          <article><span>🏡</span><h3>Recurring Cleaning</h3><p>Weekly, biweekly, or monthly visits to keep your home under control.</p></article>
+          <article><span>➕</span><h3>Add-On Services</h3><p>Customize your clean with extras like baseboards, bed making, laundry, and more.</p></article>
+        </div>
+        <div class="center"><a class="button secondary" href="/services">See All Services →</a></div>
+      </section>
+
+      <section class="why">
+        <div><p class="eyebrow">Why Cleaning by Cassi?</p><h2>Your home deserves <em>personal attention.</em></h2><p>When you invite someone into your home, you want to know you can trust them. I provide dependable, detailed cleaning with a personal touch.</p></div>
+        <div class="features"><div>💗 <strong>Personalized</strong><small>Your home and needs are unique.</small></div><div>✨ <strong>Detail-focused</strong><small>The little things matter.</small></div><div>🐾 <strong>Pet-friendly</strong><small>Four-legged family members are welcome.</small></div><div>🤍 <strong>Personal</strong><small>You'll know who's caring for your home.</small></div></div>
+      </section>
+
+      <section class="testimonials">
+        <div class="heading"><p class="eyebrow">Kind Words 💗</p><h2>Don't just take <em>my word for it.</em></h2></div>
+        <div class="reviews"><article>★★★★★<p>“Cassi does an amazing job and pays attention to the little details that make such a difference.”</p><strong>— Happy Client</strong></article><article>★★★★★<p>“Coming home after a cleaning is the best feeling. Everything feels fresh and cared for.”</p><strong>— Happy Client</strong></article><article>★★★★★<p>“Reliable, thorough, and easy to work with. I absolutely recommend Cleaning by Cassi.”</p><strong>— Happy Client</strong></article></div>
+      </section>
+
+      <section class="final-cta"><p class="eyebrow">Ready for a fresh start?</p><h2>Ready to love <em>coming home again?</em></h2><p>Let's find the cleaning plan that's right for your home in the {SERVICE_AREA} area.</p><a href="/quote" class="button light">Get My Free Quote →</a><small>No pressure. Just a simple quote tailored to your home.</small></section>
+    </main>
+    <Footer />
+  </body>
 </html>
 
 <style>
-	.hero-image {
-		display: block;
-		width: 720px;
-		max-width: calc(100% - 2em);
-		margin: 2em auto 2em auto;
-		border-radius: 12px;
-	}
+.home{padding:0;overflow:hidden}.home section{padding:clamp(3.5rem,7vw,6.5rem)}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center;background:linear-gradient(135deg,#fff8fb,#f7f3ff 55%,#f3fbf7)}.hero h1 span,.home em{display:block;color:var(--purple);font-style:normal}.lead{max-width:620px;font-size:1.08rem;line-height:1.8}.actions,.trust{display:flex;gap:1rem;flex-wrap:wrap}.actions{margin:2rem 0}.trust{font-size:.86rem;font-weight:600}.button{display:inline-block;padding:.9rem 1.5rem;border-radius:999px;font-weight:700}.primary{background:linear-gradient(135deg,var(--purple),var(--pink));color:white}.primary:hover{color:white;transform:translateY(-2px)}.secondary{border:2px solid var(--ink);color:var(--ink)}.hero-photo img{display:block;width:100%;min-height:430px;object-fit:cover;border-radius:32px;box-shadow:var(--shadow)}.new-client-banner{display:flex;align-items:center;justify-content:space-between;gap:2rem;background:linear-gradient(135deg,var(--pink-soft),var(--lavender-soft),var(--green-soft))}.new-client-banner h2{font-size:clamp(2rem,4vw,3rem)}.new-client-banner p{margin-bottom:0}.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center}.soft-art{min-height:380px;border-radius:32px;background:linear-gradient(145deg,var(--green-soft),var(--lavender-soft));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:3rem}.soft-art span{font-family:'DM Serif Display',serif;font-size:2rem;margin-top:1rem}.split p{line-height:1.85}.text-link{font-weight:700}.services,.testimonials{background:#fbf8fd}.heading{max-width:760px;margin:0 auto 3rem;text-align:center}.cards,.reviews{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}.cards article,.reviews article{padding:2rem;border-radius:24px;background:white;box-shadow:0 10px 30px rgba(70,45,80,.06)}.cards article>span{font-size:2rem}.cards .featured{background:linear-gradient(145deg,var(--purple),var(--blue));color:white}.featured h3{color:white}.center{text-align:center;margin-top:2.5rem}.why{display:grid;grid-template-columns:1fr 1fr;gap:4rem;background:var(--green-soft)}.features{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.features div{padding:1.3rem;border-radius:20px;background:rgba(255,255,255,.72)}.features strong,.features small{display:block}.features small{margin-top:.3rem}.reviews{grid-template-columns:repeat(3,1fr)}.reviews article{line-height:1.8}.final-cta{text-align:center;color:white;background:linear-gradient(135deg,var(--purple-dark),var(--purple),var(--pink))}.final-cta h2,.final-cta .eyebrow{color:white}.final-cta em{color:white}.final-cta small{display:block;margin-top:1rem;opacity:.85}.light{margin-top:1rem;background:white;color:var(--purple-dark)}
+@media(max-width:900px){.hero,.split,.why{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.hero-photo{order:-1}.hero-photo img{min-height:300px}.new-client-banner{flex-direction:column;align-items:flex-start}}
+@media(max-width:600px){.home section{padding:3rem 1.4rem}.cards,.reviews,.features{grid-template-columns:1fr}.hero{gap:2rem}.new-client-banner{text-align:center;align-items:center}.soft-art{min-height:280px}}
 </style>
-
-<script define:vars={{ startDate: BUSINESS_START_DATE.toISOString() }}>
-	function getTenure(startISO, from) {
-		const start = new Date(startISO);
-		const months = (from.getFullYear() - start.getFullYear()) * 12 + (from.getMonth() - start.getMonth());
-		if (months < 12) return `${months} month${months === 1 ? '' : 's'}`;
-		const years = Math.floor(months / 12);
-		return `${years} year${years === 1 ? '' : 's'}`;
-	}
-	document.getElementById('business-tenure').textContent = getTenure(startDate, new Date());
-</script>
