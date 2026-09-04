@@ -80,24 +80,46 @@ function hasInvalidSelectValue(formData: FormData) {
   return addons.length > 13 || addons.some((addon) => !ALLOWED.addons.has(addon));
 }
 
-async function verifyTurnstile(request: Request, formData: FormData, secret: string) {
+type TurnstileSiteverifyResponse = {
+  success?: boolean;
+  hostname?: string;
+  action?: string;
+  'error-codes'?: string[];
+};
+
+async function verifyTurnstile(
+  request: Request,
+  formData: FormData,
+  secret: string,
+  expectedHostname: string
+) {
   const token = value(formData, 'cf-turnstile-response');
   if (!token || token.length > 2048) return false;
 
   try {
+    const body = new URLSearchParams({
+      secret,
+      response: token,
+    });
+
+    const remoteIp = request.headers.get('CF-Connecting-IP');
+    if (remoteIp) body.set('remoteip', remoteIp);
+
     const verification = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        secret,
-        response: token,
-        remoteip: request.headers.get('CF-Connecting-IP') || undefined,
-      }),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body,
     });
 
     if (!verification.ok) return false;
-    const result = (await verification.json()) as { success?: boolean };
-    return result.success === true;
+
+    const result = (await verification.json()) as TurnstileSiteverifyResponse;
+
+    return (
+      result.success === true &&
+      result.hostname === expectedHostname &&
+      result.action === 'quote'
+    );
   } catch {
     return false;
   }
@@ -151,10 +173,18 @@ export const POST = async ({ request, locals }: any) => {
 
     const env = locals.runtime.env;
     const resendApiKey = env.RESEND_API_KEY;
-    const turnstileSecret = env.TURNSTILE_SECRET_KEY;
+    // TURNSTILE_SECRET is Cloudflare Spin's canonical binding name.
+    // Keep the old name as a temporary fallback for the earlier integration.
+    const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY;
 
     if (turnstileSecret) {
-      const passedTurnstile = await verifyTurnstile(request, formData, turnstileSecret);
+      const passedTurnstile = await verifyTurnstile(
+        request,
+        formData,
+        turnstileSecret,
+        requestUrl.hostname
+      );
+
       if (!passedTurnstile) {
         return new Response('Please complete the security check and try again.', { status: 403 });
       }
