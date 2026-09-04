@@ -6,282 +6,87 @@ const description = 'Dependable, detailed residential cleaning services from Cle
 const pubDate = new Date();
 
 const standardTasks = [
-  'Dusting surfaces throughout the home',
-  'Vacuuming carpets, rugs & hard floors',
-  'Mopping floors',
-  'Cleaning and sanitizing kitchens',
-  'Cleaning and sanitizing bathrooms',
-  'Wiping sinks, counters, and fixtures',
-  'Disinfecting high-touch surfaces',
-  'Tidying and straightening rooms',
+  'Dusting surfaces throughout the home','Vacuuming carpets, rugs & hard floors','Mopping floors','Cleaning and sanitizing kitchens','Cleaning and sanitizing bathrooms','Wiping sinks, counters, and fixtures','Disinfecting high-touch surfaces','Tidying and straightening rooms',
 ];
-
 const deepTasks = [
-  'Dusting detailed areas',
-  'Cleaning baseboards and trim',
-  'Wiping doors and door frames',
-  'Cleaning cabinet fronts',
-  'Detailing kitchen surfaces',
-  'Detailing bathroom surfaces',
-  'Cleaning hard-to-reach areas',
-  'Removing built-up dirt and grime',
-  'Addressing additional areas based on your home’s needs',
+  'Dusting detailed areas','Cleaning baseboards and trim','Wiping doors and door frames','Cleaning cabinet fronts','Detailing kitchen surfaces','Detailing bathroom surfaces','Cleaning hard-to-reach areas','Removing built-up dirt and grime','Addressing additional areas based on your home’s needs',
 ];
-
-const addOns = [
-  'Window Tracks & Sills',
-  'Baseboards',
-  'Doors & Door Frames',
-  'Cabinet Fronts',
-  'Detailed Shower & Tub Cleaning',
-  'Trash Can Cleaning & Sanitizing',
-  'Bed Making',
-  'Laundry — Wash, Dry & Fold',
-  'Extra Pet Hair Removal',
-  'Wall Spot Cleaning',
-  'Cobweb Removal',
-  'Detailed Floor Edges & Corners',
-  'High & Hard-to-Reach Areas',
-];
+const addOns = ['Window Tracks & Sills','Baseboards','Doors & Door Frames','Cabinet Fronts','Detailed Shower & Tub Cleaning','Trash Can Cleaning & Sanitizing','Bed Making','Laundry — Wash, Dry & Fold','Extra Pet Hair Removal','Wall Spot Cleaning','Cobweb Removal','Detailed Floor Edges & Corners','High & Hard-to-Reach Areas'];
 ---
 
 <BlogPost title={title} description={description} pubDate={pubDate}>
   <div class="services-page">
-    <section class="services-hero">
-      <p class="eyebrow">Cleaning by Cassi ✨</p>
-      <h1>A cleaner home, <span>without the stress.</span></h1>
-      <p>
-        Life gets busy. Between work, family, pets, and everything in between, keeping up with household cleaning can feel like one more thing on an already full list.
-      </p>
-      <p>
-        I provide dependable, detailed residential cleaning designed to help your home feel fresh, comfortable, and truly clean.
-      </p>
-      <div class="hero-actions">
-        <a href="/quote" class="primary-button">Get a Free Quote →</a>
-        <a href="/pricing" class="secondary-button">View Pricing</a>
-      </div>
-    </section>
+    <section class="services-hero"><p class="eyebrow">Cleaning by Cassi ✨</p><h1>A cleaner home, <span>without the stress.</span></h1><p>Life gets busy. Between work, family, pets, and everything in between, keeping up with household cleaning can feel like one more thing on an already full list.</p><p>I provide dependable, detailed residential cleaning designed to help your home feel fresh, comfortable, and truly clean.</p><div class="hero-actions"><a href="/quote" class="primary-button">Get a Free Quote →</a><a href="/pricing" class="secondary-button">View Pricing</a></div></section>
 
-    <section class="service-card pink-card">
-      <div class="service-icon">🧹</div>
-      <div>
-        <p class="eyebrow">Regular Home Care</p>
-        <h2>Standard Cleaning</h2>
-        <p class="intro">The regular upkeep your home needs to stay fresh, tidy, and comfortable.</p>
-        <div class="task-grid">
-          {standardTasks.map((task) => <div class="task"><span>✓</span>{task}</div>)}
-        </div>
-      </div>
-    </section>
+    <section class="service-card pink-card"><div class="service-icon">🧹</div><div><p class="eyebrow">Regular Home Care</p><h2>Standard Cleaning</h2><p class="intro">The regular upkeep your home needs to stay fresh, tidy, and comfortable.</p><div class="task-grid">{standardTasks.map((task) => <div class="task"><span>✓</span>{task}</div>)}</div></div></section>
 
-    <section class="service-card lavender-card">
-      <div class="service-icon">✨</div>
-      <div>
-        <p class="eyebrow">A Little Extra Attention</p>
-        <h2>Deep Cleaning</h2>
-        <p class="intro">
-          A more detailed reset for first-time cleanings, seasonal refreshes, or any time your home needs some extra TLC.
-        </p>
-        <div class="task-grid">
-          {deepTasks.map((task) => <div class="task"><span>✓</span>{task}</div>)}
-        </div>
-      </div>
-    </section>
+    <section class="service-card lavender-card"><div class="service-icon">✨</div><div><p class="eyebrow">A Little Extra Attention</p><h2>Deep Cleaning</h2><p class="intro">A more detailed reset for first-time cleanings, seasonal refreshes, or any time your home needs some extra TLC.</p><div class="task-grid">{deepTasks.map((task) => <div class="task"><span>✓</span>{task}</div>)}</div></div></section>
 
-    <section class="service-card green-card">
-      <div class="service-icon">🏡</div>
-      <div>
-        <p class="eyebrow">A Fresh Start</p>
-        <h2>First-Time & Move-In/Move-Out Cleaning</h2>
-        <p class="intro">
-          Starting fresh? These cleanings are customized based on the home's condition and the level of detail needed.
-        </p>
-        <p>
-          They are ideal when a home hasn't been professionally cleaned in a while, when you're preparing to move in, or when you're getting a space ready for its next chapter.
-        </p>
-      </div>
-    </section>
+    <section class="service-card green-card"><div class="service-icon">🏡</div><div><p class="eyebrow">A Fresh Start</p><h2>First-Time & Move-In/Move-Out Cleaning</h2><p class="intro">Starting fresh? These cleanings are customized based on the home's condition and the level of detail needed.</p><p>They are ideal when a home hasn't been professionally cleaned in a while, when you're preparing to move in, or when you're getting a space ready for its next chapter.</p></div></section>
 
-    <section class="recurring-section">
-      <div>
-        <p class="eyebrow">Keep It Under Control</p>
-        <h2>Recurring Cleaning</h2>
-        <p>
-          Weekly, biweekly, and monthly cleaning options help you stay ahead of the mess without spending your free time catching up.
-        </p>
-      </div>
-      <div class="frequency-pills">
-        <span>Weekly</span>
-        <span>Biweekly</span>
-        <span>Monthly</span>
-      </div>
-    </section>
+    <section class="recurring-section"><div><p class="eyebrow">Keep It Under Control</p><h2>Recurring Cleaning</h2><p>Weekly, biweekly, and monthly cleaning options help you stay ahead of the mess without spending your free time catching up.</p></div><div class="frequency-pills"><span>Weekly</span><span>Biweekly</span><span>Monthly</span></div></section>
 
-    <section class="addons-section">
-      <div class="section-heading">
-        <p class="eyebrow">Customize Your Clean ➕</p>
-        <h2>Add-On Services</h2>
-        <p>Need a little something extra? Add-ons can be included based on your home's needs.</p>
-      </div>
+    <section class="addons-section"><div class="section-heading"><p class="eyebrow">Customize Your Clean ➕</p><h2>Add-On Services</h2><p>Need a little something extra? Add-ons can be included based on your home's needs.</p></div><div class="addon-grid">{addOns.map((addon) => <div class="addon-card"><span>✦</span>{addon}</div>)}</div><div class="notes-grid"><div class="note-card"><strong>🛏️ Bed Making</strong><p>Clean sheets must be provided and left out. Please remove soiled sheets before arrival.</p></div><div class="note-card"><strong>🧺 Laundry</strong><p>Laundry service includes washing, drying, and folding only.</p></div></div></section>
 
-      <div class="addon-grid">
-        {addOns.map((addon) => <div class="addon-card"><span>✦</span>{addon}</div>)}
-      </div>
+    <section class="pricing-note"><div class="service-icon">💗</div><div><p class="eyebrow">Cleaning That Works for You</p><h2>Every Home Is Different</h2><p>Pricing is based on your home's size, the rooms being cleaned, the condition of the space, and the level of service needed. Every quote is customized so you know what to expect.</p></div></section>
 
-      <div class="notes-grid">
-        <div class="note-card">
-          <strong>🛏️ Bed Making</strong>
-          <p>Clean sheets must be provided and left out. Please remove soiled sheets before arrival.</p>
-        </div>
-        <div class="note-card">
-          <strong>🧺 Laundry</strong>
-          <p>Laundry service includes washing, drying, and folding only.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="pricing-note">
-      <div class="service-icon">💗</div>
-      <div>
-        <p class="eyebrow">Cleaning That Works for You</p>
-        <h2>Every Home Is Different</h2>
-        <p>
-          Pricing is based on your home's size, the rooms being cleaned, the condition of the space, and the level of service needed. Every quote is customized so you know what to expect.
-        </p>
-      </div>
-    </section>
-
-    <section class="services-cta">
-      <p class="eyebrow">Ready for a Fresh Start?</p>
-      <h2>Ready to come home to a cleaner space?</h2>
-      <p>Tell me a little about your home and I'll put together a personalized quote.</p>
-      <a href="/quote" class="cta-button">Request a Free Quote →</a>
-    </section>
+    <section class="services-cta"><p class="eyebrow">Ready for a Fresh Start?</p><h2>Ready to come home to a cleaner space?</h2><p>Tell me a little about your home and I'll put together a personalized quote.</p><a href="/quote" class="cta-button">Request a Free Quote →</a></section>
   </div>
 </BlogPost>
 
 <style>
-  .services-page h1 span { display: block; color: var(--purple); }
+  .services-page h1 span { display:block; color:var(--purple); }
+  .services-hero { max-width:820px; margin:0 auto 4rem; text-align:center; }
+  .services-hero h1 { margin-bottom:1rem; }
+  .services-hero > p:not(.eyebrow) { color:var(--muted); line-height:1.85; }
+  .hero-actions { display:flex; justify-content:center; gap:.8rem; flex-wrap:wrap; margin-top:1.5rem; }
+  .primary-button,.secondary-button,.cta-button { display:inline-flex; align-items:center; justify-content:center; padding:.95rem 1.45rem; border-radius:999px; font-weight:700; }
+  .primary-button { color:white; background:var(--brand-gradient); box-shadow:0 10px 28px rgba(111,20,217,.22); }
+  .secondary-button { color:var(--ink); border:1.5px solid var(--purple); background:var(--surface-solid); }
 
-  .services-hero {
-    max-width: 820px;
-    margin: 0 auto 4rem;
-    text-align: center;
+  .service-card { display:grid; grid-template-columns:auto 1fr; gap:1.4rem; margin-bottom:1.5rem; padding:clamp(1.5rem,4vw,2.4rem); border:1px solid var(--border); border-radius:28px; }
+  .pink-card { background:linear-gradient(145deg, rgba(242,75,181,.12), rgba(111,20,217,.05)); }
+  .lavender-card { background:linear-gradient(145deg, rgba(111,20,217,.11), rgba(21,72,245,.07)); }
+  .green-card { background:linear-gradient(145deg, rgba(167,223,36,.13), rgba(21,72,245,.05)); }
+  .service-icon { display:grid; place-items:center; width:64px; height:64px; flex-shrink:0; border:1px solid var(--border); border-radius:20px; background:var(--surface-solid); box-shadow:0 8px 24px rgba(49,24,95,.08); font-size:1.8rem; }
+  .service-card h2,.pricing-note h2 { margin-bottom:.6rem; }
+  .service-card p,.pricing-note p { color:var(--muted); line-height:1.8; }
+  .intro { font-weight:600; color:var(--ink)!important; }
+
+  .task-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; margin-top:1.2rem; }
+  .task { display:flex; align-items:flex-start; gap:.55rem; padding:.8rem .9rem; border:1px solid var(--border); border-radius:14px; background:var(--surface); font-size:.92rem; }
+  .task span { color:var(--green); font-weight:800; }
+
+  .recurring-section { display:grid; grid-template-columns:1.2fr .8fr; align-items:center; gap:2rem; margin:3rem 0; padding:2rem; border:1px solid var(--border); border-radius:26px; background:var(--surface-solid); box-shadow:var(--shadow); }
+  .recurring-section p:not(.eyebrow) { color:var(--muted); line-height:1.8; }
+  .frequency-pills { display:flex; flex-wrap:wrap; gap:.7rem; justify-content:center; }
+  .frequency-pills span { padding:.7rem 1rem; border:1px solid var(--border); border-radius:999px; background:var(--lavender-soft); color:var(--purple); font-weight:700; }
+
+  .addons-section { margin:4rem 0; }
+  .section-heading { max-width:760px; margin-bottom:1.8rem; }
+  .section-heading > p:last-child { color:var(--muted); }
+  .addon-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.8rem; }
+  .addon-card { display:flex; gap:.6rem; align-items:center; padding:.9rem 1rem; border:1px solid var(--border); border-radius:16px; background:var(--surface-solid); box-shadow:0 7px 20px rgba(49,24,95,.06); font-weight:600; }
+  .addon-card span { color:var(--pink); }
+  .notes-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.2rem; }
+  .note-card { padding:1rem 1.1rem; border:1px solid var(--border); border-radius:16px; background:linear-gradient(145deg, rgba(167,223,36,.12), rgba(242,75,181,.05)); }
+  .note-card p { margin:.35rem 0 0; color:var(--muted); font-size:.9rem; }
+
+  .pricing-note { display:grid; grid-template-columns:auto 1fr; gap:1.2rem; margin:3rem 0; padding:2rem; border:1px solid var(--border); border-radius:26px; background:var(--brand-gradient-soft); }
+  .services-cta { padding:clamp(2rem,5vw,4rem); border-radius:30px; text-align:center; color:white; background:var(--brand-gradient); }
+  .services-cta .eyebrow,.services-cta h2,.services-cta p { color:white; }
+  .services-cta p:not(.eyebrow) { max-width:650px; margin:0 auto 1.5rem; opacity:.92; }
+  .cta-button { background:white; color:var(--purple-dark); }
+
+  @media (prefers-color-scheme:dark) {
+    .secondary-button { background:rgba(255,255,255,.04); border-color:#b78cff; }
+    .frequency-pills span { color:#e2ccff; }
   }
-  .services-hero h1 { margin-bottom: 1rem; }
-  .services-hero > p:not(.eyebrow) { color: var(--muted); line-height: 1.85; }
-
-  .hero-actions { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
-  .primary-button, .secondary-button, .cta-button {
-    display: inline-block;
-    padding: 0.95rem 1.45rem;
-    border-radius: 999px;
-    font-weight: 700;
-  }
-  .primary-button { color: white; background: linear-gradient(135deg, var(--purple), var(--pink)); }
-  .secondary-button { color: var(--ink); border: 1.5px solid rgba(48,41,54,0.25); }
-
-  .service-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1.4rem;
-    margin-bottom: 1.5rem;
-    padding: clamp(1.5rem, 4vw, 2.4rem);
-    border-radius: 28px;
-  }
-  .pink-card { background: rgba(245,200,223,0.32); }
-  .lavender-card { background: rgba(232,224,248,0.55); }
-  .green-card { background: rgba(226,243,229,0.6); }
-
-  .service-icon {
-    display: grid;
-    place-items: center;
-    width: 64px;
-    height: 64px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: white;
-    box-shadow: 0 8px 24px rgba(72,50,85,0.08);
-    font-size: 1.8rem;
-  }
-  .service-card h2, .pricing-note h2 { margin-bottom: 0.6rem; }
-  .service-card p, .pricing-note p { color: var(--muted); line-height: 1.8; }
-  .intro { font-weight: 600; color: var(--ink) !important; }
-
-  .task-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0.7rem; margin-top: 1.2rem; }
-  .task {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.55rem;
-    padding: 0.8rem 0.9rem;
-    border-radius: 14px;
-    background: rgba(255,255,255,0.76);
-    font-size: 0.92rem;
-  }
-  .task span { color: var(--green); font-weight: 700; }
-
-  .recurring-section {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    align-items: center;
-    gap: 2rem;
-    margin: 3rem 0;
-    padding: 2rem;
-    border-radius: 26px;
-    background: white;
-    box-shadow: var(--shadow);
-  }
-  .recurring-section p:not(.eyebrow) { color: var(--muted); line-height: 1.8; }
-  .frequency-pills { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
-  .frequency-pills span { padding: 0.7rem 1rem; border-radius: 999px; background: var(--lavender-soft); color: var(--purple-dark); font-weight: 700; }
-
-  .addons-section { margin: 4rem 0; }
-  .section-heading { max-width: 760px; margin-bottom: 1.8rem; }
-  .section-heading > p:last-child { color: var(--muted); }
-  .addon-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0.8rem; }
-  .addon-card {
-    display: flex;
-    gap: 0.6rem;
-    align-items: center;
-    padding: 0.9rem 1rem;
-    border-radius: 16px;
-    background: white;
-    box-shadow: 0 7px 20px rgba(72,50,85,0.06);
-    font-weight: 600;
-  }
-  .addon-card span { color: var(--pink); }
-
-  .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
-  .note-card { padding: 1rem 1.1rem; border-radius: 16px; background: rgba(226,243,229,0.55); }
-  .note-card p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.9rem; }
-
-  .pricing-note {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1.2rem;
-    margin: 3rem 0;
-    padding: 2rem;
-    border-radius: 26px;
-    background: linear-gradient(145deg, rgba(245,200,223,0.28), rgba(232,224,248,0.45));
-  }
-
-  .services-cta {
-    padding: clamp(2rem, 5vw, 4rem);
-    border-radius: 30px;
-    text-align: center;
-    color: white;
-    background: linear-gradient(135deg, var(--purple-dark), var(--purple), var(--pink));
-  }
-  .services-cta .eyebrow, .services-cta h2, .services-cta p { color: white; }
-  .services-cta p:not(.eyebrow) { max-width: 650px; margin: 0 auto 1.5rem; opacity: 0.9; }
-  .cta-button { background: white; color: var(--purple-dark); }
-
-  @media (max-width: 850px) {
-    .task-grid, .addon-grid { grid-template-columns: 1fr 1fr; }
-    .recurring-section { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 600px) {
-    .service-card, .pricing-note { grid-template-columns: 1fr; }
-    .task-grid, .addon-grid, .notes-grid { grid-template-columns: 1fr; }
+  @media (max-width:850px) { .task-grid,.addon-grid { grid-template-columns:1fr 1fr; } .recurring-section { grid-template-columns:1fr; } }
+  @media (max-width:600px) {
+    .service-card,.pricing-note { grid-template-columns:1fr; }
+    .task-grid,.addon-grid,.notes-grid { grid-template-columns:1fr; }
+    .hero-actions a { width:100%; }
+    .service-icon { width:56px; height:56px; }
   }
 </style>
