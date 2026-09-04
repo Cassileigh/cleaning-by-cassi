@@ -4,6 +4,7 @@ import BlogPost from '../layouts/BlogPost.astro';
 const title = 'Get a Free Quote';
 const description = 'Tell Cleaning by Cassi a little about your home and cleaning needs to receive a personalized quote.';
 const pubDate = new Date();
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 
 const addOns = [
   ['window-tracks', 'Window Tracks & Sills'],
@@ -27,9 +28,13 @@ const addOns = [
     <section class="quote-hero"><p class="eyebrow">Let's Get Started ✨</p><h1>Let's get your home sparkling.</h1><p>Tell me a little about your home and what you're looking for, and I'll use those details to put together a personalized cleaning quote.</p></section>
 
     <form class="quote-form" action="/api/quote" method="POST">
-      <section class="form-card"><div class="section-heading"><span class="section-number">01</span><div><h2>About You</h2><p>First things first — who am I chatting with?</p></div></div><div class="form-grid"><label>Full Name <b>*</b><input type="text" name="name" placeholder="Your name" required /></label><label>Email <b>*</b><input type="email" name="email" placeholder="you@example.com" required /></label><label>Phone Number <b>*</b><input type="tel" name="phone" placeholder="(555) 555-5555" required /></label><label>Preferred Contact Method<select name="contactMethod"><option value="">Choose one</option><option value="email">Email</option><option value="phone">Phone Call</option><option value="text">Text Message</option></select></label></div></section>
+      <div class="website-field" aria-hidden="true">
+        <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
 
-      <section class="form-card soft-lavender"><div class="section-heading"><span class="section-number">02</span><div><h2>Tell Me About Your Home</h2><p>A few details help me create the most accurate quote.</p></div></div><div class="form-grid"><label class="full-width">Home Address<input type="text" name="address" placeholder="Street address, city, state" /></label><label>Type of Home<select name="homeType"><option value="">Choose one</option><option value="house">House</option><option value="apartment">Apartment</option><option value="condo">Condo</option><option value="townhome">Townhome</option><option value="other">Other</option></select></label><label>Bedrooms<select name="bedrooms"><option value="">Choose</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select></label><label>Bathrooms<select name="bathrooms"><option value="">Choose</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option><option value="2.5">2.5</option><option value="3+">3+</option></select></label><label>Approx. Square Footage<input type="number" name="squareFootage" placeholder="Example: 1500" /></label></div></section>
+      <section class="form-card"><div class="section-heading"><span class="section-number">01</span><div><h2>About You</h2><p>First things first — who am I chatting with?</p></div></div><div class="form-grid"><label>Full Name <b>*</b><input type="text" name="name" placeholder="Your name" maxlength="100" autocomplete="name" required /></label><label>Email <b>*</b><input type="email" name="email" placeholder="you@example.com" maxlength="254" autocomplete="email" required /></label><label>Phone Number <b>*</b><input type="tel" name="phone" placeholder="(555) 555-5555" maxlength="40" autocomplete="tel" required /></label><label>Preferred Contact Method<select name="contactMethod"><option value="">Choose one</option><option value="email">Email</option><option value="phone">Phone Call</option><option value="text">Text Message</option></select></label></div></section>
+
+      <section class="form-card soft-lavender"><div class="section-heading"><span class="section-number">02</span><div><h2>Tell Me About Your Home</h2><p>A few details help me create the most accurate quote.</p></div></div><div class="form-grid"><label class="full-width">Home Address<input type="text" name="address" placeholder="Street address, city, state" maxlength="250" autocomplete="street-address" /></label><label>Type of Home<select name="homeType"><option value="">Choose one</option><option value="house">House</option><option value="apartment">Apartment</option><option value="condo">Condo</option><option value="townhome">Townhome</option><option value="other">Other</option></select></label><label>Bedrooms<select name="bedrooms"><option value="">Choose</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5+">5+</option></select></label><label>Bathrooms<select name="bathrooms"><option value="">Choose</option><option value="1">1</option><option value="1.5">1.5</option><option value="2">2</option><option value="2.5">2.5</option><option value="3+">3+</option></select></label><label>Approx. Square Footage<input type="number" name="squareFootage" min="1" max="100000" inputmode="numeric" placeholder="Example: 1500" /></label></div></section>
 
       <section class="form-card soft-pink"><div class="section-heading"><span class="section-number">03</span><div><h2>What Kind of Cleaning?</h2><p>Pick whichever option sounds closest to what you need.</p></div></div><div class="choice-grid"><label class="choice-card"><input type="radio" name="cleaningType" value="standard" /><span><strong>Standard Cleaning</strong><small>Regular upkeep for your home</small></span></label><label class="choice-card"><input type="radio" name="cleaningType" value="deep" /><span><strong>Deep Cleaning</strong><small>Extra attention to the details</small></span></label><label class="choice-card"><input type="radio" name="cleaningType" value="first-time" /><span><strong>First-Time Cleaning</strong><small>A fresh start for your home</small></span></label><label class="choice-card"><input type="radio" name="cleaningType" value="move-in" /><span><strong>Move-In Cleaning</strong><small>Get your new space ready</small></span></label><label class="choice-card"><input type="radio" name="cleaningType" value="move-out" /><span><strong>Move-Out Cleaning</strong><small>Leave your old space fresh</small></span></label><label class="choice-card"><input type="radio" name="cleaningType" value="other" /><span><strong>Something Else</strong><small>Tell me what you have in mind</small></span></label></div></section>
 
@@ -37,13 +42,21 @@ const addOns = [
 
       <section class="form-card"><div class="section-heading"><span class="section-number">05</span><div><h2>Make It Extra ✨</h2><p>Select anything you'd like added to your cleaning.</p></div></div><div class="addon-grid">{addOns.map(([value,label]) => <label><input type="checkbox" name="addons" value={value} /><span>{label}</span></label>)}</div><div class="notes-grid"><div class="note-card"><strong>🧺 Laundry Service</strong><p>Washing, drying, and folding only. Please have laundry sorted and ready to be washed.</p></div><div class="note-card"><strong>🛏️ Bed Making</strong><p>Clean sheets must be provided and left out. Please remove soiled bedding before arrival.</p></div></div></section>
 
-      <section class="form-card soft-lavender"><div class="section-heading"><span class="section-number">06</span><div><h2>Tell Me More 💕</h2><p>Anything else you'd like me to know?</p></div></div><label>Additional Information<textarea name="message" rows="6" placeholder="Tell me about your home, pets, specific cleaning needs, or anything else you'd like me to know..."></textarea></label></section>
+      <section class="form-card soft-lavender"><div class="section-heading"><span class="section-number">06</span><div><h2>Tell Me More 💕</h2><p>Anything else you'd like me to know?</p></div></div><label>Additional Information<textarea name="message" rows="6" maxlength="2500" placeholder="Tell me about your home, pets, specific cleaning needs, or anything else you'd like me to know..."></textarea></label></section>
 
-      <section class="form-card soft-green"><div class="section-heading"><span class="section-number">07</span><div><h2>Let's Get You Scheduled 🧼</h2><p>When would you ideally like your cleaning?</p></div></div><div class="form-grid"><label>Preferred Date<input type="date" name="preferredDate" /></label><label>Preferred Time<select name="preferredTime"><option value="">Choose one</option><option value="morning">Morning</option><option value="late-morning">Late Morning</option><option value="afternoon">Afternoon</option><option value="flexible">Flexible</option></select></label><label class="full-width">Preferred Days<input type="text" name="preferredDays" placeholder="Example: Mondays or weekday afternoons" /></label></div></section>
+      <section class="form-card soft-green"><div class="section-heading"><span class="section-number">07</span><div><h2>Let's Get You Scheduled 🧼</h2><p>When would you ideally like your cleaning?</p></div></div><div class="form-grid"><label>Preferred Date<input type="date" name="preferredDate" /></label><label>Preferred Time<select name="preferredTime"><option value="">Choose one</option><option value="morning">Morning</option><option value="late-morning">Late Morning</option><option value="afternoon">Afternoon</option><option value="flexible">Flexible</option></select></label><label class="full-width">Preferred Days<input type="text" name="preferredDays" maxlength="150" placeholder="Example: Mondays or weekday afternoons" /></label></div></section>
 
-      <section class="submit-card"><p class="eyebrow">You're Almost Done ✨</p><h2>Ready for a cleaner home?</h2><p>Send over your details and I'll be in touch with your personalized quote.</p><button type="submit">Request My Free Quote →</button><div class="email-option">Prefer email? <a href="mailto:cassandramorris@cleaningbycassi.com">cassandramorris@cleaningbycassi.com</a></div></section>
+      <section class="submit-card">
+        <p class="eyebrow">You're Almost Done ✨</p>
+        <h2>Ready for a cleaner home?</h2>
+        <p>Send over your details and I'll be in touch with your personalized quote.</p>
+        {turnstileSiteKey && <div class="turnstile-wrap"><div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div></div>}
+        <button type="submit">Request My Free Quote →</button>
+        <div class="email-option">Prefer email? <a href="mailto:cassandramorris@cleaningbycassi.com">cassandramorris@cleaningbycassi.com</a></div>
+      </section>
     </form>
   </div>
+  {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 </BlogPost>
 
 <style>
@@ -51,6 +64,7 @@ const addOns = [
   .quote-hero h1 { margin-bottom:1rem; }
   .quote-hero p:not(.eyebrow) { color:var(--muted); line-height:1.8; }
   .quote-form { display:grid; gap:1.25rem; }
+  .website-field { position:absolute; left:-10000px; width:1px; height:1px; overflow:hidden; }
 
   .form-card { padding:clamp(1.4rem,4vw,2.2rem); border:1px solid var(--border); border-radius:26px; background:var(--surface-solid); box-shadow:0 8px 26px rgba(49,24,95,.07); }
   .soft-pink { background:linear-gradient(145deg, rgba(242,75,181,.11), rgba(111,20,217,.04)); }
@@ -85,6 +99,7 @@ const addOns = [
   .submit-card { padding:clamp(2rem,5vw,4rem); border-radius:30px; text-align:center; color:white; background:var(--brand-gradient); }
   .submit-card .eyebrow,.submit-card h2,.submit-card p { color:white; }
   .submit-card p:not(.eyebrow) { opacity:.92; }
+  .turnstile-wrap { display:flex; justify-content:center; margin:1.25rem 0; }
   .submit-card button { border:0; padding:1rem 1.5rem; border-radius:999px; background:white; color:var(--purple-dark); font-weight:700; cursor:pointer; box-shadow:0 8px 22px rgba(0,0,0,.12); }
   .email-option { margin-top:1rem; font-size:.85rem; }
   .email-option a { color:white; font-weight:700; }
