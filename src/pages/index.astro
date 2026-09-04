@@ -48,7 +48,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
 
       <section class="why">
         <div><p class="eyebrow">Why Cleaning by Cassi?</p><h2>Your home deserves <em>personal attention.</em></h2><p>When you invite someone into your home, you want to know you can trust them. I provide dependable, detailed cleaning with a personal touch.</p></div>
-        <div class="features"><div>💗 <strong>Personalized</strong><small>Your home and needs are unique.</small></div><div>✨ <strong>Detail-focused</strong><small>The little things matter.</small></div><div>🐾 <strong>Pet-friendly</strong><small>Four-legged family members are welcome.</small></div><div>🤍 <strong>Personal</strong><small>You'll know who's caring for your home.</small></div></div>
+        <div class="features"><div>💗 <strong>Personalized</strong><small>Your home and needs are unique.</small></div><div>✨ <strong>Detail-focused</strong><small>The little things matter.</small></div><div>🐾 <strong>Pet-friendly</strong><small>Four-legged family members are welcome.</small></div><div>💚 <strong>Personal</strong><small>You'll know who's caring for your home.</small></div></div>
       </section>
 
       <section class="testimonials">
@@ -63,7 +63,133 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
 </html>
 
 <style>
-.home{padding:0;overflow:hidden}.home section{padding:clamp(3.5rem,7vw,6.5rem)}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:4rem;align-items:center;background:linear-gradient(135deg,#fff8fb,#f7f3ff 55%,#f3fbf7)}.hero h1 span,.home em{display:block;color:var(--purple);font-style:normal}.lead{max-width:620px;font-size:1.08rem;line-height:1.8}.actions,.trust{display:flex;gap:1rem;flex-wrap:wrap}.actions{margin:2rem 0}.trust{font-size:.86rem;font-weight:600}.button{display:inline-block;padding:.9rem 1.5rem;border-radius:999px;font-weight:700}.primary{background:linear-gradient(135deg,var(--purple),var(--pink));color:white}.primary:hover{color:white;transform:translateY(-2px)}.secondary{border:2px solid var(--ink);color:var(--ink)}.hero-photo img{display:block;width:100%;min-height:430px;object-fit:cover;border-radius:32px;box-shadow:var(--shadow)}.new-client-banner{display:flex;align-items:center;justify-content:space-between;gap:2rem;background:linear-gradient(135deg,var(--pink-soft),var(--lavender-soft),var(--green-soft))}.new-client-banner h2{font-size:clamp(2rem,4vw,3rem)}.new-client-banner p{margin-bottom:0}.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center}.soft-art{min-height:380px;border-radius:32px;background:linear-gradient(145deg,var(--green-soft),var(--lavender-soft));display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:3rem}.soft-art span{font-family:'DM Serif Display',serif;font-size:2rem;margin-top:1rem}.split p{line-height:1.85}.text-link{font-weight:700}.services,.testimonials{background:#fbf8fd}.heading{max-width:760px;margin:0 auto 3rem;text-align:center}.cards,.reviews{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}.cards article,.reviews article{padding:2rem;border-radius:24px;background:white;box-shadow:0 10px 30px rgba(70,45,80,.06)}.cards article>span{font-size:2rem}.cards .featured{background:linear-gradient(145deg,var(--purple),var(--blue));color:white}.featured h3{color:white}.center{text-align:center;margin-top:2.5rem}.why{display:grid;grid-template-columns:1fr 1fr;gap:4rem;background:var(--green-soft)}.features{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.features div{padding:1.3rem;border-radius:20px;background:rgba(255,255,255,.72)}.features strong,.features small{display:block}.features small{margin-top:.3rem}.reviews{grid-template-columns:repeat(3,1fr)}.reviews article{line-height:1.8}.final-cta{text-align:center;color:white;background:linear-gradient(135deg,var(--purple-dark),var(--purple),var(--pink))}.final-cta h2,.final-cta .eyebrow{color:white}.final-cta em{color:white}.final-cta small{display:block;margin-top:1rem;opacity:.85}.light{margin-top:1rem;background:white;color:var(--purple-dark)}
-@media(max-width:900px){.hero,.split,.why{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.hero-photo{order:-1}.hero-photo img{min-height:300px}.new-client-banner{flex-direction:column;align-items:flex-start}}
-@media(max-width:600px){.home section{padding:3rem 1.4rem}.cards,.reviews,.features{grid-template-columns:1fr}.hero{gap:2rem}.new-client-banner{text-align:center;align-items:center}.soft-art{min-height:280px}}
+  .home { padding: 0; overflow: hidden; }
+  .home section { padding: clamp(3.5rem, 7vw, 6.5rem); }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 4rem;
+    align-items: center;
+    background:
+      radial-gradient(circle at 8% 15%, rgba(242,75,181,.13), transparent 25%),
+      radial-gradient(circle at 92% 15%, rgba(21,72,245,.12), transparent 30%),
+      var(--surface-solid);
+  }
+  .hero h1 span, .home em { display: block; color: var(--purple); font-style: normal; }
+  .lead { max-width: 620px; color: var(--muted); font-size: 1.08rem; line-height: 1.8; }
+  .actions, .trust { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .actions { margin: 2rem 0; }
+  .trust { color: var(--muted); font-size: .86rem; font-weight: 600; }
+
+  .button { display: inline-flex; align-items: center; justify-content: center; padding: .9rem 1.5rem; border-radius: 999px; font-weight: 700; transition: .2s ease; }
+  .primary { background: var(--brand-gradient); color: white; box-shadow: 0 10px 28px rgba(111,20,217,.24); }
+  .primary:hover { color: white; transform: translateY(-2px); }
+  .secondary { border: 2px solid var(--purple); color: var(--ink); background: var(--surface-solid); }
+  .secondary:hover { color: var(--purple); background: var(--lavender-soft); }
+
+  .hero-photo img { display: block; width: 100%; min-height: 430px; object-fit: cover; border-radius: 32px; box-shadow: var(--shadow); }
+
+  .new-client-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    background: var(--brand-gradient-soft);
+    border-block: 1px solid var(--border);
+  }
+  .new-client-banner h2 { font-size: clamp(2rem,4vw,3rem); }
+  .new-client-banner p { margin-bottom: 0; }
+
+  .split { display: grid; grid-template-columns: .85fr 1.15fr; gap: 4rem; align-items: center; }
+  .soft-art {
+    min-height: 380px;
+    border-radius: 32px;
+    background:
+      radial-gradient(circle at 25% 25%, rgba(167,223,36,.20), transparent 30%),
+      linear-gradient(145deg, var(--lavender-soft), var(--surface-soft));
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 3rem;
+  }
+  .soft-art span { font-family: 'DM Serif Display', serif; font-size: 2rem; margin-top: 1rem; }
+  .split p { color: var(--muted); line-height: 1.85; }
+  .text-link { font-weight: 700; }
+
+  .services, .testimonials { background: var(--surface-soft); }
+  .heading { max-width: 760px; margin: 0 auto 3rem; text-align: center; }
+  .heading > p:last-child { color: var(--muted); }
+  .cards, .reviews { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; }
+  .cards article, .reviews article {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--surface-solid);
+    box-shadow: 0 10px 30px rgba(49,24,95,.08);
+  }
+  .cards article > span { font-size: 2rem; }
+  .cards article p, .reviews article p { color: var(--muted); }
+  .cards .featured { background: var(--brand-gradient); color: white; border-color: transparent; }
+  .featured h3, .featured p { color: white !important; }
+  .center { text-align: center; margin-top: 2.5rem; }
+
+  .why {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    background: linear-gradient(145deg, rgba(167,223,36,.14), rgba(111,20,217,.08));
+  }
+  .why > div > p:not(.eyebrow) { color: var(--muted); }
+  .features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .features div { padding: 1.3rem; border: 1px solid var(--border); border-radius: 20px; background: var(--surface); }
+  .features strong, .features small { display: block; }
+  .features small { margin-top: .3rem; color: var(--muted); }
+
+  .reviews { grid-template-columns: repeat(3,1fr); }
+  .reviews article { line-height: 1.8; }
+  .reviews article { color: var(--pink); }
+  .reviews article p, .reviews article strong { color: var(--ink); }
+
+  .final-cta { text-align: center; color: white; background: var(--brand-gradient); }
+  .final-cta h2, .final-cta .eyebrow, .final-cta p { color: white; }
+  .final-cta em { color: var(--green-bright); }
+  .final-cta small { display: block; margin-top: 1rem; opacity: .88; }
+  .light { margin-top: 1rem; background: white; color: var(--purple-dark); }
+
+  @media (prefers-color-scheme: dark) {
+    .hero {
+      background:
+        radial-gradient(circle at 8% 15%, rgba(242,75,181,.18), transparent 27%),
+        radial-gradient(circle at 92% 15%, rgba(21,72,245,.22), transparent 32%),
+        var(--surface-solid);
+    }
+    .secondary { background: rgba(255,255,255,.04); border-color: #b78cff; }
+    .cards article, .reviews article { box-shadow: 0 10px 30px rgba(0,0,0,.22); }
+  }
+
+  @media (max-width: 900px) {
+    .hero, .split, .why { grid-template-columns: 1fr; }
+    .cards { grid-template-columns: 1fr 1fr; }
+    .hero-photo { order: -1; }
+    .hero-photo img { min-height: 300px; max-height: 520px; }
+    .new-client-banner { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 600px) {
+    .home section { padding: 3rem 1.25rem; }
+    .cards, .reviews, .features { grid-template-columns: 1fr; }
+    .hero { gap: 2rem; }
+    .hero h1 span { margin-top: .25rem; }
+    .actions .button { width: 100%; }
+    .trust { display: grid; gap: .55rem; }
+    .new-client-banner { text-align: center; align-items: center; }
+    .new-client-banner .button { width: 100%; }
+    .soft-art { min-height: 260px; }
+    .soft-art span { font-size: 1.7rem; }
+    .final-cta .button { width: 100%; }
+  }
 </style>
