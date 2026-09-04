@@ -65,40 +65,23 @@
 	font-display: swap;
 }
 body {
-	font-family: "Poppins", sans-serif;
-	margin: 0;
-	padding: 0;
-	min-height: 100vh;
-	text-align: left;
-	background:
-		radial-gradient(
-			circle at 15% 20%,
-			rgba(255, 79, 163, 0.75),
-			transparent 35%
-		),
-		radial-gradient(
-			circle at 85% 25%,
-			rgba(106, 0, 244, 0.85),
-			transparent 40%
-		),
-		radial-gradient(
-			circle at 50% 90%,
-			rgba(36, 107, 253, 0.85),
-			transparent 45%
-		),
-		linear-gradient(
-			135deg,
-			#5B00D6,
-			#246BFD 50%,
-			#FF4FA3
-		);
-	background-attachment: fixed;
-	background-size: cover;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: #000;
-	font-size: 20px;
-	line-height: 1.7;
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(255, 79, 163, 0.16),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(106, 0, 244, 0.14),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(36, 107, 253, 0.14),
+      transparent 40%
+    ),
+    #faf8ff;
 }
 main {
 	width: 720px;
