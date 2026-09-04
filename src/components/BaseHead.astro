@@ -24,20 +24,12 @@ const socialImageURL = new URL(image, Astro.site ?? Astro.url);
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="generator" content={Astro.generator} />
-
-<!-- Preload only the fonts used immediately above the fold. -->
 <link rel="preload" href="/fonts/DMSerifDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/fonts/PoppinsRegular.woff2" as="font" type="font/woff2" crossorigin />
-
-<!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
-
-<!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
-
-<!-- Open Graph / Facebook / Messages -->
 <meta property="og:type" content="website" />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
@@ -48,8 +40,6 @@ const socialImageURL = new URL(image, Astro.site ?? Astro.url);
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Cleaning by Cassi business card" />
-
-<!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
