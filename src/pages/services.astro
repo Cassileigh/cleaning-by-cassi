@@ -2,950 +2,286 @@
 import BlogPost from '../layouts/BlogPost.astro';
 
 const title = 'Our Cleaning Services';
-const description =
-  'Dependable, detailed residential cleaning services from Cleaning by Cassi.';
+const description = 'Dependable, detailed residential cleaning services from Cleaning by Cassi.';
 const pubDate = new Date();
+
+const standardTasks = [
+  'Dusting surfaces throughout the home',
+  'Vacuuming carpets, rugs & hard floors',
+  'Mopping floors',
+  'Cleaning and sanitizing kitchens',
+  'Cleaning and sanitizing bathrooms',
+  'Wiping sinks, counters, and fixtures',
+  'Disinfecting high-touch surfaces',
+  'Tidying and straightening rooms',
+];
+
+const deepTasks = [
+  'Dusting detailed areas',
+  'Cleaning baseboards and trim',
+  'Wiping doors and door frames',
+  'Cleaning cabinet fronts',
+  'Detailing kitchen surfaces',
+  'Detailing bathroom surfaces',
+  'Cleaning hard-to-reach areas',
+  'Removing built-up dirt and grime',
+  'Addressing additional areas based on your home’s needs',
+];
+
+const addOns = [
+  'Window Tracks & Sills',
+  'Baseboards',
+  'Doors & Door Frames',
+  'Cabinet Fronts',
+  'Detailed Shower & Tub Cleaning',
+  'Trash Can Cleaning & Sanitizing',
+  'Bed Making',
+  'Laundry — Wash, Dry & Fold',
+  'Extra Pet Hair Removal',
+  'Wall Spot Cleaning',
+  'Cobweb Removal',
+  'Detailed Floor Edges & Corners',
+  'High & Hard-to-Reach Areas',
+];
 ---
 
-<BlogPost
-  title={title}
-  description={description}
-  pubDate={pubDate}
->
+<BlogPost title={title} description={description} pubDate={pubDate}>
   <div class="services-page">
-
-    <!-- HERO -->
     <section class="services-hero">
-
-      <div class="floating-sparkles" aria-hidden="true">
-        <span>✦</span>
-        <span>✧</span>
-        <span>✦</span>
+      <p class="eyebrow">Cleaning by Cassi ✨</p>
+      <h1>A cleaner home, <span>without the stress.</span></h1>
+      <p>
+        Life gets busy. Between work, family, pets, and everything in between, keeping up with household cleaning can feel like one more thing on an already full list.
+      </p>
+      <p>
+        I provide dependable, detailed residential cleaning designed to help your home feel fresh, comfortable, and truly clean.
+      </p>
+      <div class="hero-actions">
+        <a href="/quote" class="primary-button">Get a Free Quote →</a>
+        <a href="/pricing" class="secondary-button">View Pricing</a>
       </div>
-
-      <span class="eyebrow">✨ CLEANING BY CASSI</span>
-
-      <h1>
-        A cleaner home,
-        <span>without the stress.</span>
-      </h1>
-
-      <p>
-        Life gets busy. Between work, family, and everything in between,
-        keeping up with household cleaning can feel like one more task on
-        an already full list.
-      </p>
-
-      <p>
-        That’s where <strong>Cleaning by Cassi</strong> comes in. I provide
-        dependable, detailed residential cleaning services to help your
-        home feel fresh, comfortable, and truly clean.
-      </p>
-
-      <p>
-        Whether you need regular help maintaining your space or a more
-        thorough reset, I’m here to make cleaning easier.
-      </p>
-
-      <div class="hero-divider">
-        <span></span>
-        <b>✦</b>
-        <span></span>
-      </div>
-
     </section>
 
-
-    <!-- STANDARD CLEANING -->
-    <section class="service-card standard-card">
-
-      <div class="service-icon">
-        <span>🧹</span>
-      </div>
-
-      <div class="service-content">
-
-        <span class="service-label">REGULAR HOME CARE</span>
-
+    <section class="service-card pink-card">
+      <div class="service-icon">🧹</div>
+      <div>
+        <p class="eyebrow">Regular Home Care</p>
         <h2>Standard Cleaning</h2>
-
-        <p class="service-intro">
-          Our standard cleaning service helps keep your home fresh, tidy,
-          and comfortable on a regular basis.
-        </p>
-
-        <div class="includes">
-
-          <h3>Services may include:</h3>
-
-          <ul>
-            <li>Dusting surfaces throughout the home</li>
-            <li>Vacuuming carpets, rugs & hard floors</li>
-            <li>Mopping floors</li>
-            <li>Cleaning and sanitizing kitchens</li>
-            <li>Cleaning and sanitizing bathrooms</li>
-            <li>Wiping sinks, counters, and fixtures</li>
-            <li>Disinfecting high-touch surfaces</li>
-            <li>Tidying and straightening rooms</li>
-          </ul>
-
+        <p class="intro">The regular upkeep your home needs to stay fresh, tidy, and comfortable.</p>
+        <div class="task-grid">
+          {standardTasks.map((task) => <div class="task"><span>✓</span>{task}</div>)}
         </div>
-
       </div>
-
-      <div class="card-sparkle" aria-hidden="true">✦</div>
-
     </section>
 
-
-    <!-- DEEP CLEANING -->
-    <section class="service-card deep-card">
-
-      <div class="service-icon">
-        <span>✨</span>
-      </div>
-
-      <div class="service-content">
-
-        <span class="service-label">A LITTLE EXTRA ATTENTION</span>
-
+    <section class="service-card lavender-card">
+      <div class="service-icon">✨</div>
+      <div>
+        <p class="eyebrow">A Little Extra Attention</p>
         <h2>Deep Cleaning</h2>
-
-        <p class="service-intro">
-          Sometimes your home needs more than a standard cleaning.
+        <p class="intro">
+          A more detailed reset for first-time cleanings, seasonal refreshes, or any time your home needs some extra TLC.
         </p>
-
-        <p>
-          Deep cleaning focuses on areas that may be overlooked during
-          routine service. It’s a great option for a first-time cleaning,
-          seasonal refresh, or any time your home needs extra attention.
-        </p>
-
-        <div class="includes">
-
-          <h3>Deep-cleaning tasks may include:</h3>
-
-          <ul>
-            <li>Dusting detailed areas</li>
-            <li>Cleaning baseboards and trim</li>
-            <li>Wiping door frames and doors</li>
-            <li>Cleaning cabinet fronts</li>
-            <li>Detailing kitchen surfaces</li>
-            <li>Detailing bathroom surfaces</li>
-            <li>Cleaning hard-to-reach areas</li>
-            <li>Removing built-up dirt and grime</li>
-            <li>Addressing additional areas based on your home’s needs</li>
-          </ul>
-
+        <div class="task-grid">
+          {deepTasks.map((task) => <div class="task"><span>✓</span>{task}</div>)}
         </div>
-
       </div>
-
-      <div class="card-sparkle" aria-hidden="true">✧</div>
-
     </section>
 
-
-    <!-- FIRST TIME / MOVE -->
-    <section class="service-card fresh-card">
-
-      <div class="service-icon">
-        <span>🏡</span>
-      </div>
-
-      <div class="service-content">
-
-        <span class="service-label">A FRESH START</span>
-
+    <section class="service-card green-card">
+      <div class="service-icon">🏡</div>
+      <div>
+        <p class="eyebrow">A Fresh Start</p>
         <h2>First-Time & Move-In/Move-Out Cleaning</h2>
-
-        <p class="service-intro">
-          Starting fresh? Let me help make the transition easier.
+        <p class="intro">
+          Starting fresh? These cleanings are customized based on the home's condition and the level of detail needed.
         </p>
-
         <p>
-          First-time and move-in/move-out cleanings are customized based
-          on your home’s condition and the level of cleaning needed.
+          They are ideal when a home hasn't been professionally cleaned in a while, when you're preparing to move in, or when you're getting a space ready for its next chapter.
         </p>
-
-        <p>
-          These services address extra buildup and overlooked details,
-          whether your home hasn’t been professionally cleaned in a while
-          or is being prepared for its next chapter.
-        </p>
-
       </div>
-
-      <div class="card-sparkle" aria-hidden="true">✦</div>
-
     </section>
 
-
-    <!-- ADD-ONS -->
-    <section class="addons-section">
-
-      <div class="section-intro">
-
-        <span class="eyebrow">➕ CUSTOMIZE YOUR CLEAN</span>
-
-        <h2>Add-On Services</h2>
-
+    <section class="recurring-section">
+      <div>
+        <p class="eyebrow">Keep It Under Control</p>
+        <h2>Recurring Cleaning</h2>
         <p>
-          Need a little something extra? Add-on services can be requested
-          when you need a little more attention in specific areas of your
-          home.
+          Weekly, biweekly, and monthly cleaning options help you stay ahead of the mess without spending your free time catching up.
         </p>
+      </div>
+      <div class="frequency-pills">
+        <span>Weekly</span>
+        <span>Biweekly</span>
+        <span>Monthly</span>
+      </div>
+    </section>
 
+    <section class="addons-section">
+      <div class="section-heading">
+        <p class="eyebrow">Customize Your Clean ➕</p>
+        <h2>Add-On Services</h2>
+        <p>Need a little something extra? Add-ons can be included based on your home's needs.</p>
       </div>
 
       <div class="addon-grid">
-
-        <div class="addon-item">
-          <span>🪟</span>
-          <div>
-            <strong>Window Tracks</strong>
-            <small>Detailed cleaning of window tracks</small>
-          </div>
-        </div>
-
-        <div class="addon-item">
-          <span>🛏️</span>
-          <div>
-            <strong>Bed Making</strong>
-            <small>
-              Clean sheets provided and soiled sheets removed before arrival
-            </small>
-          </div>
-        </div>
-
-        <div class="addon-item">
-          <span>✨</span>
-          <div>
-            <strong>Detailed Areas</strong>
-            <small>
-              Extra attention to specific areas of your home
-            </small>
-          </div>
-        </div>
-
-        <div class="addon-item">
-          <span>💕</span>
-          <div>
-            <strong>Special Requests</strong>
-            <small>
-              Have something specific in mind? Just ask!
-            </small>
-          </div>
-        </div>
-
+        {addOns.map((addon) => <div class="addon-card"><span>✦</span>{addon}</div>)}
       </div>
 
-      <div class="addon-disclaimer">
-
-        <strong>🧼 A Quick Note About Add-Ons</strong>
-
-        <p>
-          Add-on services are available by request and may be priced
-          individually based on the size, condition, and time required.
-          Some services may require additional preparation before your
-          scheduled cleaning.
-        </p>
-
-        <p>
-          If there’s something specific you’d like cleaned, just ask.
-          I’ll let you know whether it’s something I can take care of.
-        </p>
-
+      <div class="notes-grid">
+        <div class="note-card">
+          <strong>🛏️ Bed Making</strong>
+          <p>Clean sheets must be provided and left out. Please remove soiled sheets before arrival.</p>
+        </div>
+        <div class="note-card">
+          <strong>🧺 Laundry</strong>
+          <p>Laundry service includes washing, drying, and folding only.</p>
+        </div>
       </div>
-
     </section>
 
-
-    <!-- PRICING -->
-    <section class="pricing-card">
-
-      <div class="pricing-decoration" aria-hidden="true">
-        <span>✦</span>
-        <span>💕</span>
-        <span>✦</span>
+    <section class="pricing-note">
+      <div class="service-icon">💗</div>
+      <div>
+        <p class="eyebrow">Cleaning That Works for You</p>
+        <h2>Every Home Is Different</h2>
+        <p>
+          Pricing is based on your home's size, the rooms being cleaned, the condition of the space, and the level of service needed. Every quote is customized so you know what to expect.
+        </p>
       </div>
-
-      <div class="pricing-icon">💕</div>
-
-      <span class="service-label">CLEANING THAT WORKS FOR YOU</span>
-
-      <h2>Every Home Is Different</h2>
-
-      <p>
-        Every home is different, which is why I don’t believe in a
-        one-size-fits-all approach.
-      </p>
-
-      <p>
-        Pricing is based on your home’s size, the rooms being cleaned,
-        and the level of service needed. Every quote is customized to
-        your home so you know exactly what to expect.
-      </p>
-
     </section>
 
-
-    <!-- FINAL CTA -->
     <section class="services-cta">
-
-      <div class="cta-sparkles" aria-hidden="true">
-        <span>✦</span>
-        <span>✧</span>
-        <span>✦</span>
-      </div>
-
-      <div class="cta-sparkle">✦</div>
-
-      <h2>Ready to Come Home to a Cleaner Space?</h2>
-
-      <p>
-        Let’s get your cleaning on the calendar! 🧼✨
-      </p>
-
-      <a href="/quote" class="cta-button">
-        Request a Free Quote
-        <span>→</span>
-      </a>
-
-      <div class="cta-note">
-        <span>✨</span>
-        Your cleaner home is just a click away!
-        <span>✨</span>
-      </div>
-
+      <p class="eyebrow">Ready for a Fresh Start?</p>
+      <h2>Ready to come home to a cleaner space?</h2>
+      <p>Tell me a little about your home and I'll put together a personalized quote.</p>
+      <a href="/quote" class="cta-button">Request a Free Quote →</a>
     </section>
-
   </div>
 </BlogPost>
 
-
 <style>
-
-  /* ================================
-     SERVICES PAGE
-  ================================= */
-
-  .services-page {
-    position: relative;
-    font-family: 'Poppins', sans-serif;
-    color: #222;
-  }
-
-  .services-page h1,
-  .services-page h2,
-  .services-page h3 {
-    font-family: 'DM Serif Display', serif;
-  }
-
-
-  /* ================================
-     HERO
-  ================================= */
+  .services-page h1 span { display: block; color: var(--purple); }
 
   .services-hero {
-    position: relative;
-    padding: 1rem 0 2.8rem;
+    max-width: 820px;
+    margin: 0 auto 4rem;
     text-align: center;
   }
+  .services-hero h1 { margin-bottom: 1rem; }
+  .services-hero > p:not(.eyebrow) { color: var(--muted); line-height: 1.85; }
 
-  .eyebrow {
+  .hero-actions { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .primary-button, .secondary-button, .cta-button {
     display: inline-block;
-    padding: 0.45rem 1rem;
+    padding: 0.95rem 1.45rem;
     border-radius: 999px;
-    background: linear-gradient(
-      135deg,
-      rgba(106, 0, 244, 0.12),
-      rgba(255, 79, 163, 0.15)
-    );
-    color: #5b00d6;
-    font-size: 0.76rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
   }
-
-  .services-hero h1 {
-    margin: 1rem 0 1.2rem;
-    font-size: clamp(2.7rem, 7vw, 4.4rem);
-    line-height: 1;
-  }
-
-  .services-hero h1 span {
-    display: block;
-    background: linear-gradient(
-      90deg,
-      #6a00f4,
-      #246bfd,
-      #ff4fa3
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .services-hero p {
-    max-width: 680px;
-    margin: 0.8rem auto;
-    line-height: 1.75;
-  }
-
-  .services-hero strong {
-    color: #5b00d6;
-  }
-
-  .hero-divider {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    max-width: 180px;
-    margin: 1.7rem auto 0;
-    color: #ff4fa3;
-  }
-
-  .hero-divider span {
-    height: 2px;
-    flex: 1;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(106, 0, 244, 0.35)
-    );
-  }
-
-  .hero-divider span:last-child {
-    background: linear-gradient(
-      90deg,
-      rgba(106, 0, 244, 0.35),
-      transparent
-    );
-  }
-
-  .hero-divider b {
-    animation: twinkle 2s ease-in-out infinite;
-  }
-
-
-  /* ================================
-     FLOATING SPARKLES
-  ================================= */
-
-  .floating-sparkles span {
-    position: absolute;
-    font-size: 1.2rem;
-    animation: floatSparkle 4s ease-in-out infinite;
-    opacity: 0.55;
-  }
-
-  .floating-sparkles span:nth-child(1) {
-    top: 10%;
-    left: 3%;
-  }
-
-  .floating-sparkles span:nth-child(2) {
-    top: 45%;
-    right: 3%;
-    animation-delay: 1s;
-  }
-
-  .floating-sparkles span:nth-child(3) {
-    bottom: 8%;
-    left: 8%;
-    animation-delay: 2s;
-  }
-
-
-  /* ================================
-     SERVICE CARDS
-  ================================= */
+  .primary-button { color: white; background: linear-gradient(135deg, var(--purple), var(--pink)); }
+  .secondary-button { color: var(--ink); border: 1.5px solid rgba(48,41,54,0.25); }
 
   .service-card {
-    position: relative;
     display: grid;
-    grid-template-columns: 85px 1fr;
-    gap: 1.3rem;
-    margin-bottom: 1.4rem;
-    padding: 1.7rem;
-    border: 1px solid rgba(106, 0, 244, 0.12);
-    border-radius: 26px;
-    background: rgba(255, 255, 255, 0.84);
-    box-shadow: 0 12px 30px rgba(50, 20, 100, 0.08);
-    overflow: hidden;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease,
-      border-color 0.3s ease;
+    grid-template-columns: auto 1fr;
+    gap: 1.4rem;
+    margin-bottom: 1.5rem;
+    padding: clamp(1.5rem, 4vw, 2.4rem);
+    border-radius: 28px;
   }
-
-  .service-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(
-      90deg,
-      #6a00f4,
-      #246bfd,
-      #ff4fa3
-    );
-    background-size: 200% 100%;
-    animation: gradientMove 5s ease infinite;
-  }
-
-  .service-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(106, 0, 244, 0.22);
-    box-shadow:
-      0 18px 40px rgba(50, 20, 100, 0.13),
-      0 0 25px rgba(255, 79, 163, 0.06);
-  }
+  .pink-card { background: rgba(245,200,223,0.32); }
+  .lavender-card { background: rgba(232,224,248,0.55); }
+  .green-card { background: rgba(226,243,229,0.6); }
 
   .service-icon {
     display: grid;
     place-items: center;
-    width: 72px;
-    height: 72px;
-    border-radius: 22px;
-    background: linear-gradient(
-      135deg,
-      rgba(106, 0, 244, 0.12),
-      rgba(36, 107, 253, 0.1),
-      rgba(255, 79, 163, 0.12)
-    );
-    font-size: 2rem;
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 8px 24px rgba(72,50,85,0.08);
+    font-size: 1.8rem;
   }
+  .service-card h2, .pricing-note h2 { margin-bottom: 0.6rem; }
+  .service-card p, .pricing-note p { color: var(--muted); line-height: 1.8; }
+  .intro { font-weight: 600; color: var(--ink) !important; }
 
-  .service-card:hover .service-icon {
-    transform: rotate(-5deg) scale(1.08);
-    box-shadow: 0 8px 20px rgba(106, 0, 244, 0.12);
+  .task-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 0.7rem; margin-top: 1.2rem; }
+  .task {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 0.8rem 0.9rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.76);
+    font-size: 0.92rem;
   }
+  .task span { color: var(--green); font-weight: 700; }
 
-  .service-content {
-    min-width: 0;
+  .recurring-section {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: 2rem;
+    margin: 3rem 0;
+    padding: 2rem;
+    border-radius: 26px;
+    background: white;
+    box-shadow: var(--shadow);
   }
+  .recurring-section p:not(.eyebrow) { color: var(--muted); line-height: 1.8; }
+  .frequency-pills { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center; }
+  .frequency-pills span { padding: 0.7rem 1rem; border-radius: 999px; background: var(--lavender-soft); color: var(--purple-dark); font-weight: 700; }
 
-  .service-label {
-    display: block;
-    margin-bottom: 0.35rem;
-    color: #6a00f4;
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.09em;
-  }
-
-  .service-content h2 {
-    margin: 0 0 0.6rem;
-    font-size: clamp(1.9rem, 4vw, 2.5rem);
-    line-height: 1.1;
-  }
-
-  .service-intro {
+  .addons-section { margin: 4rem 0; }
+  .section-heading { max-width: 760px; margin-bottom: 1.8rem; }
+  .section-heading > p:last-child { color: var(--muted); }
+  .addon-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0.8rem; }
+  .addon-card {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 7px 20px rgba(72,50,85,0.06);
     font-weight: 600;
   }
+  .addon-card span { color: var(--pink); }
 
-  .service-content p {
-    line-height: 1.7;
-  }
+  .notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.2rem; }
+  .note-card { padding: 1rem 1.1rem; border-radius: 16px; background: rgba(226,243,229,0.55); }
+  .note-card p { margin: 0.35rem 0 0; color: var(--muted); font-size: 0.9rem; }
 
-  .card-sparkle {
-    position: absolute;
-    right: 1.3rem;
-    bottom: 0.8rem;
-    color: #ff4fa3;
-    opacity: 0.2;
-    font-size: 2rem;
-    animation: twinkle 2.5s ease-in-out infinite;
-  }
-
-
-  /* ================================
-     INCLUDED SERVICES
-  ================================= */
-
-  .includes {
-    margin-top: 1.3rem;
-    padding: 1rem 1.1rem;
-    border-radius: 18px;
-    background: rgba(106, 0, 244, 0.045);
-  }
-
-  .includes h3 {
-    margin: 0 0 0.7rem;
-    font-size: 1.25rem;
-  }
-
-  .includes ul {
+  .pricing-note {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.45rem 1.2rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .includes li {
-    position: relative;
-    padding-left: 1.35rem;
-    font-size: 0.88rem;
-    line-height: 1.5;
-    transition:
-      transform 0.2s ease,
-      color 0.2s ease;
-  }
-
-  .includes li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    color: #ff4fa3;
-    font-weight: 700;
-    transition: transform 0.2s ease;
-  }
-
-  .includes li:hover {
-    transform: translateX(4px);
-    color: #5b00d6;
-  }
-
-  .includes li:hover::before {
-    transform: scale(1.2);
-  }
-
-
-  /* ================================
-     ADD-ONS
-  ================================= */
-
-  .addons-section {
-    margin-top: 2.5rem;
-  }
-
-  .section-intro {
-    margin-bottom: 1.2rem;
-    text-align: center;
-  }
-
-  .section-intro h2 {
-    margin: 0.8rem 0 0.5rem;
-    font-size: clamp(2.2rem, 5vw, 3rem);
-  }
-
-  .section-intro p {
-    max-width: 620px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
-
-  .addon-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.9rem;
-  }
-
-  .addon-item {
-    display: grid;
-    grid-template-columns: 45px 1fr;
-    column-gap: 0.7rem;
-    padding: 1rem;
-    border: 1px solid rgba(255, 79, 163, 0.15);
-    border-radius: 18px;
-    background: rgba(255, 255, 255, 0.78);
-    transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease,
-      border-color 0.25s ease;
-  }
-
-  .addon-item:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255, 79, 163, 0.35);
-    box-shadow: 0 12px 25px rgba(255, 79, 163, 0.1);
-  }
-
-  .addon-item > span {
-    grid-row: span 2;
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 13px;
-    background: rgba(255, 79, 163, 0.1);
-    font-size: 1.25rem;
-    transition: transform 0.25s ease;
-  }
-
-  .addon-item:hover > span {
-    transform: rotate(6deg) scale(1.1);
-  }
-
-  .addon-item strong {
-    align-self: end;
-    font-size: 0.9rem;
-  }
-
-  .addon-item small {
-    margin-top: 0.15rem;
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1.45;
-    opacity: 0.65;
-  }
-
-  .addon-disclaimer {
-    margin-top: 1rem;
-    padding: 1.2rem;
-    border-radius: 18px;
-    background: rgba(106, 0, 244, 0.06);
-    font-size: 0.82rem;
-  }
-
-  .addon-disclaimer p {
-    margin: 0.45rem 0 0;
-    line-height: 1.6;
-    opacity: 0.75;
-  }
-
-
-  /* ================================
-     PRICING
-  ================================= */
-
-  .pricing-card {
-    position: relative;
-    overflow: hidden;
-    margin-top: 2.5rem;
-    padding: 2rem 1.5rem;
-    border: 1px solid rgba(106, 0, 244, 0.1);
+    grid-template-columns: auto 1fr;
+    gap: 1.2rem;
+    margin: 3rem 0;
+    padding: 2rem;
     border-radius: 26px;
-    background: rgba(255, 255, 255, 0.82);
-    text-align: center;
-    box-shadow: 0 12px 30px rgba(50, 20, 100, 0.07);
-    transition:
-      transform 0.3s ease,
-      box-shadow 0.3s ease;
+    background: linear-gradient(145deg, rgba(245,200,223,0.28), rgba(232,224,248,0.45));
   }
-
-  .pricing-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 35px rgba(50, 20, 100, 0.11);
-  }
-
-  .pricing-decoration {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-
-  .pricing-decoration span {
-    position: absolute;
-    color: #ff4fa3;
-    opacity: 0.18;
-    animation: floatSparkle 4s ease-in-out infinite;
-  }
-
-  .pricing-decoration span:nth-child(1) {
-    top: 15%;
-    left: 8%;
-  }
-
-  .pricing-decoration span:nth-child(2) {
-    top: 22%;
-    right: 8%;
-    animation-delay: 1s;
-  }
-
-  .pricing-decoration span:nth-child(3) {
-    bottom: 15%;
-    right: 15%;
-    animation-delay: 2s;
-  }
-
-  .pricing-icon {
-    margin-bottom: 0.5rem;
-    font-size: 2rem;
-  }
-
-  .pricing-card h2 {
-    margin: 0.3rem 0 0.8rem;
-    font-size: clamp(2rem, 5vw, 2.8rem);
-  }
-
-  .pricing-card p {
-    max-width: 650px;
-    margin: 0.7rem auto;
-    line-height: 1.7;
-  }
-
-
-  /* ================================
-     FINAL CTA
-  ================================= */
 
   .services-cta {
-    position: relative;
-    overflow: hidden;
-    margin-top: 1.5rem;
-    padding: 2.5rem 1.5rem;
-    border-radius: 28px;
-    background: linear-gradient(
-      135deg,
-      rgba(106, 0, 244, 0.94),
-      rgba(36, 107, 253, 0.94),
-      rgba(255, 79, 163, 0.94)
-    );
-    background-size: 200% 200%;
-    color: white;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-radius: 30px;
     text-align: center;
-    box-shadow: 0 15px 35px rgba(91, 0, 214, 0.2);
-    animation: gradientMove 8s ease infinite;
+    color: white;
+    background: linear-gradient(135deg, var(--purple-dark), var(--purple), var(--pink));
   }
+  .services-cta .eyebrow, .services-cta h2, .services-cta p { color: white; }
+  .services-cta p:not(.eyebrow) { max-width: 650px; margin: 0 auto 1.5rem; opacity: 0.9; }
+  .cta-button { background: white; color: var(--purple-dark); }
 
-  .services-cta h2 {
-    max-width: 650px;
-    margin: 0.4rem auto 0.5rem;
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.1;
+  @media (max-width: 850px) {
+    .task-grid, .addon-grid { grid-template-columns: 1fr 1fr; }
+    .recurring-section { grid-template-columns: 1fr; }
   }
-
-  .services-cta p {
-    margin: 0.5rem 0 1.3rem;
+  @media (max-width: 600px) {
+    .service-card, .pricing-note { grid-template-columns: 1fr; }
+    .task-grid, .addon-grid, .notes-grid { grid-template-columns: 1fr; }
   }
-
-  .cta-sparkle {
-    font-size: 1.5rem;
-    animation: twinkle 2s ease-in-out infinite;
-  }
-
-  .cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.95rem 1.5rem;
-    border-radius: 999px;
-    background: white;
-    color: #5b00d6;
-    font-weight: 700;
-    text-decoration: none;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-    transition:
-      transform 0.25s ease,
-      box-shadow 0.25s ease;
-  }
-
-  .cta-button:hover {
-    color: #5b00d6;
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
-  }
-
-  .cta-button span {
-    transition: transform 0.25s ease;
-  }
-
-  .cta-button:hover span {
-    transform: translateX(4px);
-  }
-
-  .cta-note {
-    margin-top: 1.2rem;
-    font-size: 0.75rem;
-    opacity: 0.85;
-  }
-
-
-  /* ================================
-     ANIMATIONS
-  ================================= */
-
-  @keyframes floatSparkle {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0deg);
-    }
-
-    50% {
-      transform: translateY(-8px) rotate(8deg);
-    }
-  }
-
-  @keyframes twinkle {
-    0%,
-    100% {
-      opacity: 0.4;
-      transform: scale(0.9);
-    }
-
-    50% {
-      opacity: 1;
-      transform: scale(1.15);
-    }
-  }
-
-  @keyframes gradientMove {
-    0% {
-      background-position: 0% 50%;
-    }
-
-    50% {
-      background-position: 100% 50%;
-    }
-
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-
-
-  /* ================================
-     MOBILE
-  ================================= */
-
-  @media (max-width: 650px) {
-
-    .services-hero {
-      padding-top: 0.5rem;
-    }
-
-    .floating-sparkles span {
-      display: none;
-    }
-
-    .service-card {
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-      padding: 1.3rem;
-    }
-
-    .service-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 18px;
-    }
-
-    .includes ul {
-      grid-template-columns: 1fr;
-    }
-
-    .addon-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .pricing-card {
-      padding: 1.6rem 1.2rem;
-    }
-
-    .services-cta {
-      padding: 2rem 1.2rem;
-    }
-
-  }
-
 </style>
