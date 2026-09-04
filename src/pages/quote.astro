@@ -4,7 +4,7 @@ import BlogPost from '../layouts/BlogPost.astro';
 const title = 'Get a Free Quote';
 const description = 'Tell Cleaning by Cassi a little about your home and cleaning needs to receive a personalized quote.';
 const pubDate = new Date();
-const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+const turnstileSiteKey = '0x4AAAAAAEmmOovf3yTuy_Ua';
 
 const addOns = [
   ['window-tracks', 'Window Tracks & Sills'],
@@ -50,13 +50,21 @@ const addOns = [
         <p class="eyebrow">You're Almost Done ✨</p>
         <h2>Ready for a cleaner home?</h2>
         <p>Send over your details and I'll be in touch with your personalized quote.</p>
-        {turnstileSiteKey && <div class="turnstile-wrap"><div class="cf-turnstile" data-sitekey={turnstileSiteKey}></div></div>}
+        <div class="turnstile-wrap">
+          <div
+            class="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-action="quote"
+            data-theme="auto"
+            data-response-field-name="cf-turnstile-response"
+          ></div>
+        </div>
         <button type="submit">Request My Free Quote →</button>
         <div class="email-option">Prefer email? <a href="mailto:cassandramorris@cleaningbycassi.com">cassandramorris@cleaningbycassi.com</a></div>
       </section>
     </form>
   </div>
-  {turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </BlogPost>
 
 <style>
@@ -99,7 +107,7 @@ const addOns = [
   .submit-card { padding:clamp(2rem,5vw,4rem); border-radius:30px; text-align:center; color:white; background:var(--brand-gradient); }
   .submit-card .eyebrow,.submit-card h2,.submit-card p { color:white; }
   .submit-card p:not(.eyebrow) { opacity:.92; }
-  .turnstile-wrap { display:flex; justify-content:center; margin:1.25rem 0; }
+  .turnstile-wrap { display:flex; justify-content:center; margin:1.25rem 0; min-height:65px; }
   .submit-card button { border:0; padding:1rem 1.5rem; border-radius:999px; background:white; color:var(--purple-dark); font-weight:700; cursor:pointer; box-shadow:0 8px 22px rgba(0,0,0,.12); }
   .email-option { margin-top:1rem; font-size:.85rem; }
   .email-option a { color:white; font-weight:700; }
