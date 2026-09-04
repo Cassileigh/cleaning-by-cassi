@@ -18,19 +18,8 @@ import { SITE_TITLE } from '../consts';
       <HeaderLink href="/quote">Get a Quote</HeaderLink>
     </div>
 
-    <a
-      href="https://facebook.com/cleaningbycassi"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="facebook-link"
-      aria-label="Follow Cleaning by Cassi on Facebook"
-    >
-      <svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22">
-        <path
-          fill="currentColor"
-          d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.219l-.354 2.326H9.25v5.625c3.824-.604 6.75-3.934 6.75-7.951z"
-        />
-      </svg>
+    <a href="https://facebook.com/cleaningbycassi" target="_blank" rel="noopener noreferrer" class="facebook-link" aria-label="Follow Cleaning by Cassi on Facebook">
+      <svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22"><path fill="currentColor" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.219l-.354 2.326H9.25v5.625c3.824-.604 6.75-3.934 6.75-7.951z" /></svg>
     </a>
   </nav>
 </header>
@@ -40,98 +29,36 @@ import { SITE_TITLE } from '../consts';
     position: sticky;
     top: 0;
     z-index: 100;
-    padding: 0.75rem 1rem;
-    background: rgba(255, 250, 251, 0.9);
-    border-bottom: 1px solid rgba(166, 75, 181, 0.12);
-    box-shadow: 0 6px 24px rgba(72, 50, 85, 0.06);
+    padding: .75rem 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 6px 24px rgba(49,24,95,.08);
     backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
+  .site-nav { width:min(1240px,100%); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1.2rem; }
+  .brand { display:inline-flex; align-items:center; gap:.65rem; padding:.25rem; color:var(--ink); font-family:'DM Serif Display',serif; font-size:clamp(1.15rem,2vw,1.45rem); white-space:nowrap; }
+  .brand:hover { color:var(--purple); }
+  .site-logo { width:34px; height:34px; flex-shrink:0; }
+  .internal-links { display:flex; align-items:center; justify-content:center; gap:.2rem; flex-wrap:wrap; }
+  :global(.internal-links a) { padding:.65rem .8rem; border-radius:999px; color:var(--ink); font-size:.9rem; font-weight:600; transition:.2s ease; }
+  :global(.internal-links a:hover) { color:var(--purple); background:var(--lavender-soft); }
+  :global(.internal-links a.active) { color:white; background:var(--brand-gradient); }
+  .facebook-link { display:grid; place-items:center; width:40px; height:40px; flex-shrink:0; border:1px solid var(--border); border-radius:50%; color:var(--purple); background:var(--surface-solid); box-shadow:0 7px 20px rgba(49,24,95,.08); }
 
-  .site-nav {
-    width: min(1240px, 100%);
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.2rem;
+  @media (prefers-color-scheme:dark) {
+    .site-header { box-shadow:0 6px 24px rgba(0,0,0,.28); }
+    .facebook-link { color:#d7baff; }
   }
-
-  .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.25rem;
-    color: var(--ink);
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(1.15rem, 2vw, 1.45rem);
-    white-space: nowrap;
+  @media (max-width:860px) {
+    .site-nav { flex-wrap:wrap; }
+    .internal-links { order:3; width:100%; overflow-x:auto; justify-content:flex-start; flex-wrap:nowrap; padding-bottom:.15rem; scrollbar-width:none; }
+    .internal-links::-webkit-scrollbar { display:none; }
   }
-
-  .brand:hover { color: var(--purple); }
-
-  .site-logo {
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-  }
-
-  .internal-links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.2rem;
-    flex-wrap: wrap;
-  }
-
-  :global(.internal-links a) {
-    padding: 0.65rem 0.8rem;
-    border-radius: 999px;
-    color: var(--ink);
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: 0.2s ease;
-  }
-
-  :global(.internal-links a:hover) {
-    color: var(--purple-dark);
-    background: var(--lavender-soft);
-  }
-
-  :global(.internal-links a.active) {
-    color: white;
-    background: linear-gradient(135deg, var(--purple), var(--pink));
-  }
-
-  .facebook-link {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    color: var(--purple-dark);
-    background: white;
-    box-shadow: 0 7px 20px rgba(72, 50, 85, 0.08);
-  }
-
-  @media (max-width: 860px) {
-    .site-nav { flex-wrap: wrap; }
-    .internal-links {
-      order: 3;
-      width: 100%;
-      overflow-x: auto;
-      justify-content: flex-start;
-      flex-wrap: nowrap;
-      padding-bottom: 0.15rem;
-    }
-  }
-
-  @media (max-width: 520px) {
-    .site-header { padding-inline: 0.7rem; }
-    .facebook-link { display: none; }
-    :global(.internal-links a) {
-      font-size: 0.82rem;
-      padding: 0.55rem 0.65rem;
-    }
+  @media (max-width:520px) {
+    .site-header { padding-inline:.7rem; }
+    .facebook-link { display:none; }
+    .brand span { font-size:1.05rem; }
+    :global(.internal-links a) { font-size:.82rem; padding:.55rem .65rem; white-space:nowrap; }
   }
 </style>
