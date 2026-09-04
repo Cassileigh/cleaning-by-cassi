@@ -1,346 +1,363 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
-import {
-  SITE_TITLE,
-  SITE_DESCRIPTION,
-  getBusinessTenure,
-  BUSINESS_START_DATE,
-  OWNER_NAME,
-  SERVICE_AREA,
-  CONTACT_EMAIL,
-  getAge,
-  BIRTHDATE
-} from '../consts';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, OWNER_NAME } from '../consts';
+
+const title = 'About Me';
+const description =
+  'Meet the person behind Cleaning by Cassi and learn how a lifetime of cleaning experience turned into a business built on heart, hard work, and helping others.';
 ---
-<Layout
-  title="About Me"
-  description="Meet the person behind Cleaning by Cassi and learn how a lifetime of cleaning experience turned into a business built on heart, hard work, and helping others."
-  pubDate={new Date('July 03 2025')}
-  heroImage="/blog-placeholder-about.jpg"
->
-  <div class="about-page">
-    <!-- INTRO -->
-    <section class="about-intro">
-      <p class="eyebrow">The Person Behind the Clean ✨</p>
-      <h1>Meet {OWNER_NAME}</h1>
-      <p class="intro-text">
-        Hi, I’m {OWNER_NAME}—the owner and the person behind {SITE_TITLE}!
-      </p>
-    </section>
-    <!-- MY STORY -->
-    <section class="about-section">
-      <div class="section-heading">
-        <span class="section-number">01</span>
-        <div>
-          <p class="eyebrow">My Story</p>
-          <h2>Cleaning has always been a part of my life.</h2>
-        </div>
-      </div>
-      <div class="section-content">
-        <p>
-          Cleaning has been a part of my life for as long as I can remember.
-          I grew up watching my mom build and run her own cleaning business,
-          and I spent my summers helping her. Without realizing it at the time,
-          those experiences gave me the foundation for what would eventually
-          become my own business.
-        </p>
-        <p>
-          After my mom retired, I spent two years working for two different
-          cleaning companies. Those experiences taught me a lot about the
-          industry, but eventually I realized I wanted to take everything I
-          had learned and create something of my own.
-        </p>
-        <div class="highlight-box">
-          <span>✨</span>
-          <div>
-            <strong>A dream turned into something real.</strong>
-            <p>
-              In July 2025, I took the leap and started {SITE_TITLE}.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- WHY CLEANING -->
-    <section class="about-section">
-      <div class="section-heading">
-        <span class="section-number">02</span>
-        <div>
-          <p class="eyebrow">Why Cleaning?</p>
-          <h2>I genuinely love what I do.</h2>
-        </div>
-      </div>
-      <div class="section-content">
-        <p>
-          I chose cleaning because I genuinely enjoy it. There’s something
-          incredibly satisfying—and honestly, relaxing—about taking a space
-          that needs some attention and turning it into a clean, refreshed
-          home.
-        </p>
-        <p>
-          I love seeing the transformation and knowing that the work I do can
-          make someone’s life just a little bit easier.
-        </p>
-        <p>
-          Owning my own business also allows me to create a schedule that works
-          with my family and my children’s school schedules. That flexibility
-          means I can do work that I love while still making time for the people
-          who matter most to me.
-        </p>
-      </div>
-    </section>
-    <!-- CLIENTS -->
-    <section class="about-section client-section">
-      <div class="section-heading">
-        <span class="section-number">03</span>
-        <div>
-          <p class="eyebrow">The Best Part</p>
-          <h2>My clients. 💗</h2>
-        </div>
-      </div>
-      <div class="section-content">
-        <p>
-          But my favorite part?
-        </p>
-        <p class="big-text">
-          <strong>My clients.</strong>
-        </p>
-        <p>
-          There’s nothing better than leaving a home knowing my client is happy
-          with the work I’ve done. That feeling of accomplishment is one of the
-          biggest reasons I love what I do.
-        </p>
-        <p>
-          And if you have pets, there’s a pretty good chance I’ll love them too!
-          🐾 I’m an animal lover, so meeting my clients’ furry family members
-          is definitely one of the perks of the job.
-        </p>
-      </div>
-    </section>
-    <!-- ABOUT THE BUSINESS -->
-    <section class="about-section business-section">
-      <div class="section-heading">
-        <span class="section-number">04</span>
-        <div>
-          <p class="eyebrow">About the Business</p>
-          <h2>More than just a cleaning service.</h2>
-        </div>
-      </div>
-      <div class="section-content">
-        <p>
-          {SITE_TITLE} was built on experience, hard work, and a genuine love
-          for helping people feel better in their homes.
-        </p>
-        <p>
-          I understand that life gets busy. Sometimes cleaning falls to the
-          bottom of the list, and that’s okay.
-        </p>
-        <p class="big-text">
-          <strong>That’s where I come in.</strong>
-        </p>
-        <p>
-          My goal isn’t just to clean your home—it’s to give you back time,
-          take something off your plate, and leave you with a space you can
-          enjoy.
-        </p>
-      </div>
-    </section>
-    <!-- MY APPROACH -->
-    <section class="about-section">
-      <div class="section-heading">
-        <span class="section-number">05</span>
-        <div>
-          <p class="eyebrow">My Approach</p>
-          <h2>Your home is unique. Your cleaning should be too.</h2>
-        </div>
-      </div>
-      <div class="section-content">
-        <p>
-          Every home is different, and every client has different needs. I
-          believe your cleaning service should reflect that, which is why I
-          take the time to understand what matters most to you and your home.
-        </p>
-        <div class="quote-box">
-          <p>
-            “I’m not just cleaning houses. I’m building relationships,
-            one home at a time.”
-          </p>
-        </div>
-      </div>
-    </section>
-    <!-- THANK YOU -->
-    <section class="about-goodbye">
-      <div class="goodbye-inner">
-        <p class="eyebrow">From Me to You</p>
-        <h2>Thank you for trusting Cleaning by Cassi. 💗</h2>
-        <p>
-          Thank you for considering {SITE_TITLE} and for trusting me with your
-          home. I truly appreciate every client who gives me the opportunity
-          to do what I love.
-        </p>
-        <p class="signature">
-          — {OWNER_NAME}
-        </p>
-      </div>
-    </section>
-  </div>
-</Layout>
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<Header />
+		<img
+			src="/blog-placeholder-about.jpg"
+			alt="About Cleaning By Cassi"
+			width="1020"
+			height="510"
+			class="hero-image"
+		/>
+		<main>
+			<div class="about-page">
+				<!-- INTRO -->
+				<section class="about-intro">
+					<p class="eyebrow">The Person Behind the Clean ✨</p>
+					<h1>Meet {OWNER_NAME}</h1>
+					<p class="intro-text">
+						Hi, I'm {OWNER_NAME}—the owner and the person behind {SITE_TITLE}!
+					</p>
+				</section>
+				<!-- MY STORY -->
+				<section class="about-section">
+					<div class="section-heading">
+						<span class="section-number">01</span>
+						<div>
+							<p class="eyebrow">My Story</p>
+							<h2>Cleaning has always been a part of my life.</h2>
+						</div>
+					</div>
+					<div class="section-content">
+						<p>
+							Cleaning has been a part of my life for as long as I can remember.
+							I grew up watching my mom build and run her own cleaning business,
+							and I spent my summers helping her. Without realizing it at the time,
+							those experiences gave me the foundation for what would eventually
+							become my own business.
+						</p>
+						<p>
+							After my mom retired, I spent two years working for two different
+							cleaning companies. Those experiences taught me a lot about the
+							industry, but eventually I realized I wanted to take everything I
+							had learned and create something of my own.
+						</p>
+						<div class="highlight-box">
+							<span>✨</span>
+							<div>
+								<strong>A dream turned into something real.</strong>
+								<p>
+									In July 2025, I took the leap and started {SITE_TITLE}.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- WHY CLEANING -->
+				<section class="about-section">
+					<div class="section-heading">
+						<span class="section-number">02</span>
+						<div>
+							<p class="eyebrow">Why Cleaning?</p>
+							<h2>I genuinely love what I do.</h2>
+						</div>
+					</div>
+					<div class="section-content">
+						<p>
+							I chose cleaning because I genuinely enjoy it. There's something
+							incredibly satisfying—and honestly, relaxing—about taking a space
+							that needs some attention and turning it into a clean, refreshed
+							home.
+						</p>
+						<p>
+							I love seeing the transformation and knowing that the work I do can
+							make someone's life just a little bit easier.
+						</p>
+						<p>
+							Owning my own business also allows me to create a schedule that works
+							with my family and my children's school schedules. That flexibility
+							means I can do work that I love while still making time for the people
+							who matter most to me.
+						</p>
+					</div>
+				</section>
+				<!-- CLIENTS -->
+				<section class="about-section client-section">
+					<div class="section-heading">
+						<span class="section-number">03</span>
+						<div>
+							<p class="eyebrow">The Best Part</p>
+							<h2>My clients. 💗</h2>
+						</div>
+					</div>
+					<div class="section-content">
+						<p>
+							But my favorite part?
+						</p>
+						<p class="big-text">
+							<strong>My clients.</strong>
+						</p>
+						<p>
+							There's nothing better than leaving a home knowing my client is happy
+							with the work I've done. That feeling of accomplishment is one of the
+							biggest reasons I love what I do.
+						</p>
+						<p>
+							And if you have pets, there's a pretty good chance I'll love them too!
+							🐾 I'm an animal lover, so meeting my clients' furry family members
+							is definitely one of the perks of the job.
+						</p>
+					</div>
+				</section>
+				<!-- ABOUT THE BUSINESS -->
+				<section class="about-section business-section">
+					<div class="section-heading">
+						<span class="section-number">04</span>
+						<div>
+							<p class="eyebrow">About the Business</p>
+							<h2>More than just a cleaning service.</h2>
+						</div>
+					</div>
+					<div class="section-content">
+						<p>
+							{SITE_TITLE} was built on experience, hard work, and a genuine love
+							for helping people feel better in their homes.
+						</p>
+						<p>
+							I understand that life gets busy. Sometimes cleaning falls to the
+							bottom of the list, and that's okay.
+						</p>
+						<p class="big-text">
+							<strong>That's where I come in.</strong>
+						</p>
+						<p>
+							My goal isn't just to clean your home—it's to give you back time,
+							take something off your plate, and leave you with a space you can
+							enjoy.
+						</p>
+					</div>
+				</section>
+				<!-- MY APPROACH -->
+				<section class="about-section">
+					<div class="section-heading">
+						<span class="section-number">05</span>
+						<div>
+							<p class="eyebrow">My Approach</p>
+							<h2>Your home is unique. Your cleaning should be too.</h2>
+						</div>
+					</div>
+					<div class="section-content">
+						<p>
+							Every home is different, and every client has different needs. I
+							believe your cleaning service should reflect that, which is why I
+							take the time to understand what matters most to you and your home.
+						</p>
+						<div class="quote-box">
+							<p>
+								"I'm not just cleaning houses. I'm building relationships,
+								one home at a time."
+							</p>
+						</div>
+					</div>
+				</section>
+				<!-- THANK YOU -->
+				<section class="about-goodbye">
+					<div class="goodbye-inner">
+						<p class="eyebrow">From Me to You</p>
+						<h2>Thank you for trusting Cleaning by Cassi. 💗</h2>
+						<p>
+							Thank you for considering {SITE_TITLE} and for trusting me with your
+							home. I truly appreciate every client who gives me the opportunity
+							to do what I love.
+						</p>
+						<p class="signature">
+							— {OWNER_NAME}
+						</p>
+					</div>
+				</section>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
 <style>
-  .about-page {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem 1.25rem 4rem;
-  }
-  .about-intro {
-    text-align: center;
-    padding: 3rem 0 5rem;
-  }
-  .eyebrow {
-    margin: 0 0 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: white;
-  }
-  .about-intro h1 {
-    margin: 0;
-    font-size: clamp(2.7rem, 7vw, 5rem);
-    line-height: 1;
-  }
-  .intro-text {
-    max-width: 650px;
-    margin: 1.5rem auto 0;
-    font-size: 1.2rem;
-    line-height: 1.8;
-  }
-  .about-section {
-    margin: 0 0 5rem;
-  }
-  .section-heading {
-    display: flex;
-    gap: 1.25rem;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-  }
-  .section-number {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #a855f7, #ec4899);
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 700;
-  }
-  .section-heading h2 {
-    margin: 0;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    line-height: 1.15;
-  }
-  .section-content {
-    padding-left: 73px;
-  }
-  .section-content p {
-    margin: 0 0 1.25rem;
-    font-size: 1.05rem;
-    line-height: 1.85;
-  }
-  .highlight-box {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    margin-top: 2rem;
-    padding: 1.5rem;
-    border-radius: 1rem;
-    background: linear-gradient(
-      135deg,
-      rgba(168, 85, 247, 0.1),
-      rgba(236, 72, 153, 0.1)
-    );
-  }
-  .highlight-box > span {
-    font-size: 1.5rem;
-  }
-  .highlight-box strong {
-    font-size: 1.05rem;
-  }
-  .highlight-box p {
-    margin: 0.35rem 0 0;
-    font-size: 0.95rem;
-  }
-  .big-text {
-    font-size: 1.4rem !important;
-  }
-  .quote-box {
-    margin-top: 2rem;
-    padding: 2rem;
-    border-left: 4px solid #ec4899;
-    border-radius: 0 1rem 1rem 0;
-    background: rgba(236, 72, 153, 0.08);
-  }
-  .quote-box p {
-    margin: 0;
-    font-size: 1.25rem;
-    font-style: italic;
-    line-height: 1.6;
-  }
-  .about-goodbye {
-    margin-top: 2rem;
-    padding: 4rem 2rem;
-    border-radius: 1.5rem;
-    text-align: center;
-    background: linear-gradient(
-      135deg,
-      rgba(168, 85, 247, 0.12),
-      rgba(59, 130, 246, 0.08),
-      rgba(236, 72, 153, 0.12)
-    );
-  }
-  .goodbye-inner {
-    max-width: 650px;
-    margin: 0 auto;
-  }
-  .about-goodbye h2 {
-    margin: 0 0 1.25rem;
-    font-size: clamp(2rem, 5vw, 3rem);
-    line-height: 1.15;
-  }
-  .about-goodbye p:not(.eyebrow):not(.signature) {
-    font-size: 1.05rem;
-    line-height: 1.8;
-  }
-  .signature {
-    margin-top: 2rem;
-    font-family: cursive;
-    font-size: 1.6rem;
-  }
-  @media (max-width: 600px) {
-    .about-page {
-      padding-inline: 1rem;
-    }
-    .section-heading {
-      gap: 0.9rem;
-    }
-    .section-number {
-      width: 40px;
-      height: 40px;
-      font-size: 0.75rem;
-    }
-    .section-content {
-      padding-left: 0;
-    }
-    .about-section {
-      margin-bottom: 4rem;
-    }
-    .about-intro {
-      padding-bottom: 3.5rem;
-    }
-    .highlight-box {
-      padding: 1.25rem;
-    }
-  }
+	.hero-image {
+		display: block;
+		width: 720px;
+		max-width: calc(100% - 2em);
+		margin: 2em auto 0 auto;
+		border-radius: 12px;
+	}
+	.about-page {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: 2rem 1.25rem 4rem;
+	}
+	.about-intro {
+		text-align: center;
+		padding: 3rem 0 5rem;
+	}
+	.eyebrow {
+		margin: 0 0 0.5rem;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: white;
+	}
+	.about-intro h1 {
+		margin: 0;
+		font-size: clamp(2.7rem, 7vw, 5rem);
+		line-height: 1;
+	}
+	.intro-text {
+		max-width: 650px;
+		margin: 1.5rem auto 0;
+		font-size: 1.2rem;
+		line-height: 1.8;
+	}
+	.about-section {
+		margin: 0 0 5rem;
+	}
+	.section-heading {
+		display: flex;
+		gap: 1.25rem;
+		align-items: flex-start;
+		margin-bottom: 2rem;
+	}
+	.section-number {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: linear-gradient(135deg, #a855f7, #ec4899);
+		color: white;
+		font-size: 0.85rem;
+		font-weight: 700;
+	}
+	.section-heading h2 {
+		margin: 0;
+		font-size: clamp(1.8rem, 4vw, 2.8rem);
+		line-height: 1.15;
+	}
+	.section-content {
+		padding-left: 73px;
+	}
+	.section-content p {
+		margin: 0 0 1.25rem;
+		font-size: 1.05rem;
+		line-height: 1.85;
+	}
+	.highlight-box {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-start;
+		margin-top: 2rem;
+		padding: 1.5rem;
+		border-radius: 1rem;
+		background: linear-gradient(
+			135deg,
+			rgba(168, 85, 247, 0.1),
+			rgba(236, 72, 153, 0.1)
+		);
+	}
+	.highlight-box > span {
+		font-size: 1.5rem;
+	}
+	.highlight-box strong {
+		font-size: 1.05rem;
+	}
+	.highlight-box p {
+		margin: 0.35rem 0 0;
+		font-size: 0.95rem;
+	}
+	.big-text {
+		font-size: 1.4rem !important;
+	}
+	.quote-box {
+		margin-top: 2rem;
+		padding: 2rem;
+		border-left: 4px solid #ec4899;
+		border-radius: 0 1rem 1rem 0;
+		background: rgba(236, 72, 153, 0.08);
+	}
+	.quote-box p {
+		margin: 0;
+		font-size: 1.25rem;
+		font-style: italic;
+		line-height: 1.6;
+	}
+	.about-goodbye {
+		margin-top: 2rem;
+		padding: 4rem 2rem;
+		border-radius: 1.5rem;
+		text-align: center;
+		background: linear-gradient(
+			135deg,
+			rgba(168, 85, 247, 0.12),
+			rgba(59, 130, 246, 0.08),
+			rgba(236, 72, 153, 0.12)
+		);
+	}
+	.goodbye-inner {
+		max-width: 650px;
+		margin: 0 auto;
+	}
+	.about-goodbye h2 {
+		margin: 0 0 1.25rem;
+		font-size: clamp(2rem, 5vw, 3rem);
+		line-height: 1.15;
+	}
+	.about-goodbye p:not(.eyebrow):not(.signature) {
+		font-size: 1.05rem;
+		line-height: 1.8;
+	}
+	.signature {
+		margin-top: 2rem;
+		font-family: cursive;
+		font-size: 1.6rem;
+	}
+	@media (max-width: 600px) {
+		.about-page {
+			padding-inline: 1rem;
+		}
+		.section-heading {
+			gap: 0.9rem;
+		}
+		.section-number {
+			width: 40px;
+			height: 40px;
+			font-size: 0.75rem;
+		}
+		.section-content {
+			padding-left: 0;
+		}
+		.about-section {
+			margin-bottom: 4rem;
+		}
+		.about-intro {
+			padding-bottom: 3.5rem;
+		}
+		.highlight-box {
+			padding: 1.25rem;
+		}
+	}
 </style>
