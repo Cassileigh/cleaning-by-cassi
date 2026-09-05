@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Cleaning by Cassi</title>
+  <desc id="desc">Done with precision. Peace of mind delivered.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#43108f"/>
+      <stop offset=".42" stop-color="#1548f5"/>
+      <stop offset="1" stop-color="#f24bb5"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#211631" flood-opacity=".3"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="420" rx="34" fill="url(#bg)"/>
+  <circle cx="120" cy="70" r="190" fill="url(#glow)" opacity=".42"/>
+  <circle cx="1100" cy="365" r="240" fill="url(#glow)" opacity=".34"/>
+  <path d="M0 330C180 265 310 410 510 338s315-42 410 0 190 34 280-22v104H0Z" fill="#ffffff" opacity=".1"/>
+  <g fill="#c5f238">
+    <path d="M106 130l8 22 22 8-22 8-8 22-8-22-22-8 22-8z"/>
+    <circle cx="1038" cy="105" r="9"/>
+    <circle cx="1080" cy="138" r="5"/>
+  </g>
+  <g fill="#ffffff" opacity=".92">
+    <path d="M1014 174l6 17 17 6-17 6-6 17-6-17-17-6 17-6z"/>
+    <path d="M167 286l5 14 14 5-14 5-5 14-5-14-14-5 14-5z"/>
+  </g>
+  <g filter="url(#shadow)" text-anchor="middle" fill="#ffffff">
+    <text x="600" y="174" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="700">Cleaning by Cassi</text>
+    <text x="600" y="231" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="600" letter-spacing="4">RESIDENTIAL CLEANING • FOX CITIES</text>
+  </g>
+  <rect x="363" y="275" width="474" height="58" rx="29" fill="#ffffff" opacity=".95"/>
+  <text x="600" y="312" text-anchor="middle" fill="#43108f" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700">Done with precision. Peace of mind delivered.</text>
+</svg>
