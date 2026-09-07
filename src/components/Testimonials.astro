@@ -33,203 +33,366 @@ const testimonials = [
 ];
 ---
 
-<section class="testimonials" id="reviews">
+<section class="testimonials" id="reviews" aria-labelledby="testimonials-heading">
   <div class="section-heading">
-    <p class="eyebrow">Kind Words</p>
-
-    <h2>What My Clients Say</h2>
-
-    <p class="intro">
-      Real words from real Cleaning by Cassi clients. 💜
-    </p>
+    <p class="eyebrow">Kind Words 💗</p>
+    <h2 id="testimonials-heading">What My Clients <em>Say</em></h2>
+    <p class="intro">Real words from real Cleaning by Cassi clients.</p>
   </div>
 
-  <div class="testimonial-grid">
+  <div class="testimonial-grid" role="list" aria-label="Client testimonials">
     {testimonials.map((testimonial) => (
-      <article class="testimonial-card">
-        <div class="stars" aria-label="5 out of 5 stars">
-          ★★★★★
+      <article class="testimonial-card" role="listitem">
+        <div class="quote-mark" aria-hidden="true">“</div>
+
+        <div class="rating">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span class="sr-only">5 out of 5 stars</span>
         </div>
 
-        <p class="review">
-          “{testimonial.review}”
-        </p>
+        <blockquote>
+          <p>{testimonial.review}</p>
+        </blockquote>
 
-        <div class="client">
-          <div class="client-initial">
+        <footer class="client">
+          <div class="client-initial" aria-hidden="true">
             {testimonial.name.charAt(0)}
           </div>
 
-          <div>
+          <div class="client-details">
             <p class="client-name">{testimonial.name}</p>
             <p class="client-location">{testimonial.location}</p>
           </div>
-        </div>
+        </footer>
       </article>
     ))}
   </div>
 
   <div class="review-cta">
-    <p>Already a Cleaning by Cassi client?</p>
+    <div>
+      <p class="cta-kicker">Already a Cleaning by Cassi client?</p>
+      <p class="cta-copy">Your feedback helps other local families feel confident choosing Cleaning by Cassi.</p>
+    </div>
 
-    <a
-      href="/review"
-      class="review-button"
-      aria-label="Leave a review for Cleaning by Cassi"
-    >
-      Leave a Review →
+    <a href="/review" class="review-button" aria-label="Leave a review for Cleaning by Cassi">
+      Leave a Review <span aria-hidden="true">→</span>
     </a>
   </div>
 </section>
 
 <style>
   .testimonials {
-    padding: 90px 20px;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(4rem, 8vw, 6.5rem) clamp(1.25rem, 5vw, 4rem);
+    background:
+      radial-gradient(circle at 8% 18%, rgba(242, 75, 181, .13), transparent 25%),
+      radial-gradient(circle at 94% 12%, rgba(21, 72, 245, .12), transparent 28%),
+      radial-gradient(circle at 50% 100%, rgba(167, 223, 36, .12), transparent 30%),
+      var(--surface-soft);
+  }
+
+  .testimonials::before,
+  .testimonials::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 999px;
+    pointer-events: none;
+    filter: blur(2px);
+  }
+
+  .testimonials::before {
+    width: 190px;
+    height: 190px;
+    top: 7%;
+    left: -85px;
+    background: rgba(242, 75, 181, .10);
+  }
+
+  .testimonials::after {
+    width: 240px;
+    height: 240px;
+    right: -125px;
+    bottom: 5%;
+    background: rgba(21, 72, 245, .09);
   }
 
   .section-heading {
-    max-width: 700px;
-    margin: 0 auto 50px;
+    max-width: 760px;
+    margin: 0 auto clamp(2.5rem, 5vw, 3.75rem);
     text-align: center;
   }
 
-  .eyebrow {
-    margin: 0 0 8px;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+  .section-heading h2 {
+    margin-bottom: 1rem;
   }
 
-  h2 {
-    margin: 0 0 15px;
-    font-family: "DM Serif Display", serif;
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
-    font-weight: 400;
+  .section-heading h2 em {
+    color: var(--purple);
+    font-style: normal;
   }
 
   .intro {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 1.02rem;
     line-height: 1.8;
   }
 
   .testimonial-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1.25rem;
     max-width: 1150px;
     margin: 0 auto;
   }
 
   .testimonial-card {
+    position: relative;
     display: flex;
+    grid-column: span 2;
     flex-direction: column;
-    padding: 30px;
-    border-radius: 22px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 10px 30px rgba(30, 10, 70, 0.18);
+    min-width: 0;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    background: var(--surface-solid);
+    box-shadow: 0 12px 32px rgba(49, 24, 95, .10);
+  }
+
+  .testimonial-card:nth-child(4),
+  .testimonial-card:nth-child(5) {
+    grid-column: span 3;
+  }
+
+  .testimonial-card::after {
+    content: "";
+    position: absolute;
+    width: 115px;
+    height: 115px;
+    right: -52px;
+    bottom: -58px;
+    border-radius: 50%;
+    background: var(--brand-gradient-soft);
+    pointer-events: none;
+  }
+
+  .quote-mark {
+    position: absolute;
+    top: .2rem;
+    right: 1rem;
+    color: var(--lavender-soft);
+    font-family: "DM Serif Display", serif;
+    font-size: 6.5rem;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .rating {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.15rem;
   }
 
   .stars {
-    margin-bottom: 18px;
-    font-size: 1.1rem;
-    letter-spacing: 3px;
+    color: var(--pink);
+    font-size: 1.05rem;
+    letter-spacing: .18em;
   }
 
-  .review {
+  blockquote {
+    position: relative;
+    z-index: 1;
     flex: 1;
-    margin: 0 0 28px;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.95rem;
-    line-height: 1.8;
+    margin: 0;
+  }
+
+  blockquote p {
+    margin: 0 0 1.75rem;
+    color: var(--ink);
+    font-size: .97rem;
+    line-height: 1.85;
   }
 
   .client {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(120, 70, 160, 0.15);
+    gap: .85rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--border);
   }
 
   .client-initial {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    flex-shrink: 0;
+    display: grid;
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    place-items: center;
+    border: 2px solid rgba(255, 255, 255, .7);
     border-radius: 50%;
-    background: linear-gradient(135deg, #7b2cbf, #d946b8);
-    color: white;
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
+    background: var(--brand-gradient);
+    box-shadow: 0 7px 18px rgba(111, 20, 217, .20);
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  .client-details {
+    min-width: 0;
+  }
+
+  .client-name,
+  .client-location {
+    margin: 0;
   }
 
   .client-name {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.9rem;
-    font-weight: 600;
+    color: var(--ink);
+    font-size: .9rem;
+    font-weight: 700;
   }
 
   .client-location {
-    margin: 2px 0 0;
-    font-family: "Poppins", sans-serif;
-    font-size: 0.78rem;
-    opacity: 0.65;
+    margin-top: .1rem;
+    color: var(--muted);
+    font-size: .78rem;
   }
 
   .review-cta {
-    margin-top: 45px;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    max-width: 920px;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+    padding: 1.35rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: 0 10px 28px rgba(49, 24, 95, .08);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  .review-cta p {
-    margin-bottom: 14px;
+  .cta-kicker {
+    margin: 0 0 .25rem;
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .cta-copy {
+    max-width: 590px;
+    margin: 0;
+    color: var(--muted);
+    font-size: .88rem;
+    line-height: 1.6;
   }
 
   .review-button {
-    display: inline-block;
-    padding: 13px 24px;
+    display: inline-flex;
+    min-height: 48px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .85rem 1.35rem;
     border-radius: 999px;
-    background: linear-gradient(
-      90deg,
-      #7b2cbf,
-      #5b6ee1,
-      #d946b8
-    );
-    color: white;
+    background: var(--brand-gradient);
+    box-shadow: 0 10px 26px rgba(111, 20, 217, .22);
+    color: var(--white);
+    font-weight: 700;
     text-decoration: none;
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
+    transition: transform .2s ease, box-shadow .2s ease;
   }
 
   .review-button:hover {
+    color: var(--white);
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(123, 44, 191, 0.3);
+    box-shadow: 0 14px 30px rgba(111, 20, 217, .28);
+  }
+
+  .review-button:focus-visible {
+    outline: 3px solid var(--green-bright);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .testimonials {
+      background:
+        radial-gradient(circle at 8% 18%, rgba(242, 75, 181, .18), transparent 27%),
+        radial-gradient(circle at 94% 12%, rgba(21, 72, 245, .20), transparent 30%),
+        radial-gradient(circle at 50% 100%, rgba(167, 223, 36, .08), transparent 30%),
+        var(--surface-soft);
+    }
+
+    .testimonial-card {
+      box-shadow: 0 12px 32px rgba(0, 0, 0, .22);
+    }
+
+    .quote-mark {
+      color: rgba(208, 175, 255, .13);
+    }
+
+    .review-cta {
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .18);
+    }
   }
 
   @media (max-width: 900px) {
     .testimonial-grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .testimonial-card,
+    .testimonial-card:nth-child(4),
+    .testimonial-card:nth-child(5) {
+      grid-column: auto;
+    }
+
+    .testimonial-card:last-child {
+      grid-column: 1 / -1;
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
     .testimonials {
-      padding: 65px 18px;
+      padding-inline: 1.1rem;
     }
 
     .testimonial-grid {
       grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .testimonial-card:last-child {
+      grid-column: auto;
+    }
+
+    .review-cta {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+
+    .review-button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .testimonial-card {
+      padding: 1.35rem;
+      border-radius: 22px;
+    }
+
+    .quote-mark {
+      right: .65rem;
+      font-size: 5.4rem;
     }
   }
 </style>
