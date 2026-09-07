@@ -72,17 +72,18 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
 <style>
   .about-page { overflow: hidden; }
   .about-hero { display: grid; grid-template-columns: 1fr .9fr; align-items: center; gap: clamp(2rem,6vw,5rem); margin-bottom: 5rem; }
+  .hero-copy { min-width:0; }
   .hero-copy h1 { margin-bottom: 1rem; }
   .hero-copy > p:not(.eyebrow) { color: var(--muted); font-size: 1.08rem; line-height: 1.85; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
-  .primary-button,.secondary-button,.cta-button { display: inline-flex; align-items:center; justify-content:center; padding:.95rem 1.45rem; border-radius:999px; font-weight:700; transition:.2s ease; }
+  .primary-button,.secondary-button,.cta-button { display: inline-flex; align-items:center; justify-content:center; min-height:44px; padding:.95rem 1.45rem; border-radius:999px; font-weight:700; transition:.2s ease; text-align:center; }
   .primary-button { color:white; background:var(--brand-gradient); box-shadow:0 10px 28px rgba(111,20,217,.22); }
   .primary-button:hover { color:white; transform:translateY(-2px); }
   .secondary-button { color:var(--ink); border:1.5px solid var(--purple); background:var(--surface-solid); }
 
-  .hero-photo-wrap { position:relative; aspect-ratio:4 / 3; }
+  .hero-photo-wrap { position:relative; min-width:0; aspect-ratio:4 / 3; }
   .hero-photo-wrap picture { display:block; width:100%; height:100%; }
-  .hero-photo { width:100%; height:100%; min-height:430px; object-fit:cover; border-radius:32px; box-shadow:var(--shadow); }
+  .hero-photo { display:block; width:100%; height:100%; min-height:430px; object-fit:cover; border-radius:32px; box-shadow:var(--shadow); }
   .photo-note { position:absolute; left:1rem; right:1rem; bottom:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:16px; text-align:center; background:var(--surface); box-shadow:0 8px 20px rgba(49,24,95,.12); font-weight:700; backdrop-filter:blur(10px); }
 
   .section-heading { max-width:760px; margin-bottom:2rem; }
@@ -92,7 +93,7 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
 
   .story-section { margin-bottom:4rem; }
   .story-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
-  .story-card { padding:1.5rem; border:1px solid var(--border); border-radius:22px; background:var(--surface-solid); box-shadow:0 8px 25px rgba(49,24,95,.08); }
+  .story-card { min-width:0; padding:1.5rem; border:1px solid var(--border); border-radius:22px; background:var(--surface-solid); box-shadow:0 8px 25px rgba(49,24,95,.08); }
   .story-number { color:var(--purple); font-weight:700; font-size:.8rem; letter-spacing:.1em; }
   .story-card p { margin-top:1rem; color:var(--muted); line-height:1.75; }
   .highlight-card { background:var(--brand-gradient-soft); }
@@ -110,7 +111,7 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
 
   .values-section { margin:5rem 0; }
   .values-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
-  .values-grid article { padding:1.4rem; border:1px solid var(--border); border-radius:20px; background:var(--surface-solid); box-shadow:0 8px 24px rgba(49,24,95,.08); }
+  .values-grid article { min-width:0; padding:1.4rem; border:1px solid var(--border); border-radius:20px; background:var(--surface-solid); box-shadow:0 8px 24px rgba(49,24,95,.08); }
   .values-grid article > span { font-size:1.7rem; }
   .values-grid h3 { margin-top:.7rem; }
   .values-grid p { color:var(--muted); font-size:.9rem; line-height:1.7; }
@@ -134,13 +135,39 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
     .story-grid { grid-template-columns:1fr; }
     .values-grid { grid-template-columns:repeat(2,1fr); }
     .about-hero { margin-bottom:3.5rem; }
+    .hero-photo-wrap { max-width:720px; width:100%; margin-inline:auto; }
   }
+
   @media (max-width:560px) {
-    .values-grid { grid-template-columns:1fr; }
-    .hero-photo-wrap { aspect-ratio:4 / 3; }
-    .hero-photo { min-height:300px; }
+    .about-page { overflow:visible; }
+    .about-hero { gap:1.6rem; margin-bottom:3rem; }
+    .hero-copy h1 { font-size:clamp(2.7rem,14vw,3.7rem); line-height:1.02; overflow-wrap:normal; word-break:normal; }
+    .hero-copy > p:not(.eyebrow) { font-size:1rem; line-height:1.7; }
+    .hero-actions { display:grid; grid-template-columns:1fr; gap:.7rem; }
     .hero-actions a { width:100%; }
-    .photo-note { position:static; margin-top:.75rem; }
+
+    .hero-photo-wrap { aspect-ratio:auto; }
+    .hero-photo-wrap picture { aspect-ratio:4 / 3; height:auto; }
+    .hero-photo { width:100%; height:100%; min-height:0; object-fit:cover; border-radius:24px; }
+    .photo-note { position:static; margin-top:.75rem; padding:.8rem .9rem; font-size:.92rem; }
+
+    .section-heading { margin-bottom:1.5rem; }
+    .section-heading h2 { font-size:clamp(2rem,10vw,2.7rem); }
+    .story-section,.values-section { margin-block:3rem; }
+    .story-card { padding:1.25rem; }
     .split-section,.pet-card,.quote-box { padding:1.35rem; }
+    .split-section,.best-part { gap:1.4rem; margin-block:3rem; }
+    .values-grid { grid-template-columns:1fr; }
+    .values-grid article { padding:1.25rem; }
+    .quote-box { margin-block:3rem; border-left-width:4px; }
+    .about-cta { padding:2rem 1.25rem; border-radius:24px; }
+    .about-cta h2 { font-size:clamp(2rem,10vw,2.7rem); }
+    .cta-button { width:100%; }
+  }
+
+  @media (max-width:390px) {
+    .hero-copy h1 { font-size:2.55rem; }
+    .photo-note { font-size:.86rem; }
+    .story-card,.values-grid article,.pet-card { border-radius:18px; }
   }
 </style>
