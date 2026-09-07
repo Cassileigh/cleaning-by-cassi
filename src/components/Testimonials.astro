@@ -1,0 +1,235 @@
+---
+const testimonials = [
+  {
+    name: "Tania K.",
+    location: "Seymour, WI",
+    review:
+      "Cassandra was friendly, efficient and really paid attention to detail! Amazing job 😁 She was also really great with my dog 💗",
+  },
+  {
+    name: "Darcie W.",
+    location: "Winneconne, WI",
+    review:
+      "Cassandra M has done another great job with our house. she always does the parts that I tell her to do and it’s very thorough!",
+  },
+  {
+    name: "Jessie G.",
+    location: "Oshkosh, WI",
+    review:
+      "Cassie is probably the best thing that has happened to my apartment. We are slowly but surely getting my place to an organized place!!",
+  },
+  {
+    name: "Kailee S.",
+    location: "Berlin, WI",
+    review:
+      "She was great. She did a great job with cleaning. She was great with our dogs and kids.",
+  },
+  {
+    name: "James R.",
+    location: "Green Bay, WI",
+    review:
+      "she’s always on time and her work is spectacular",
+  },
+];
+---
+
+<section class="testimonials" id="reviews">
+  <div class="section-heading">
+    <p class="eyebrow">Kind Words</p>
+
+    <h2>What My Clients Say</h2>
+
+    <p class="intro">
+      Real words from real Cleaning by Cassi clients. 💜
+    </p>
+  </div>
+
+  <div class="testimonial-grid">
+    {testimonials.map((testimonial) => (
+      <article class="testimonial-card">
+        <div class="stars" aria-label="5 out of 5 stars">
+          ★★★★★
+        </div>
+
+        <p class="review">
+          “{testimonial.review}”
+        </p>
+
+        <div class="client">
+          <div class="client-initial">
+            {testimonial.name.charAt(0)}
+          </div>
+
+          <div>
+            <p class="client-name">{testimonial.name}</p>
+            <p class="client-location">{testimonial.location}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="review-cta">
+    <p>Already a Cleaning by Cassi client?</p>
+
+    <a
+      href="/review"
+      class="review-button"
+      aria-label="Leave a review for Cleaning by Cassi"
+    >
+      Leave a Review →
+    </a>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding: 90px 20px;
+  }
+
+  .section-heading {
+    max-width: 700px;
+    margin: 0 auto 50px;
+    text-align: center;
+  }
+
+  .eyebrow {
+    margin: 0 0 8px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0 0 15px;
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 400;
+  }
+
+  .intro {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    line-height: 1.8;
+  }
+
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1150px;
+    margin: 0 auto;
+  }
+
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 10px 30px rgba(30, 10, 70, 0.18);
+  }
+
+  .stars {
+    margin-bottom: 18px;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+  }
+
+  .review {
+    flex: 1;
+    margin: 0 0 28px;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+
+  .client {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(120, 70, 160, 0.15);
+  }
+
+  .client-initial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7b2cbf, #d946b8);
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+  }
+
+  .client-name {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .client-location {
+    margin: 2px 0 0;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.78rem;
+    opacity: 0.65;
+  }
+
+  .review-cta {
+    margin-top: 45px;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .review-cta p {
+    margin-bottom: 14px;
+  }
+
+  .review-button {
+    display: inline-block;
+    padding: 13px 24px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      #7b2cbf,
+      #5b6ee1,
+      #d946b8
+    );
+    color: white;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .review-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(123, 44, 191, 0.3);
+  }
+
+  @media (max-width: 900px) {
+    .testimonial-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .testimonials {
+      padding: 65px 18px;
+    }
+
+    .testimonial-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
