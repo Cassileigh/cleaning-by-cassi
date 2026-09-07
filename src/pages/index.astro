@@ -15,32 +15,45 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     <main class="home">
       <section class="hero">
         <div class="hero-brand-art" aria-hidden="true">
-          <svg class="hero-overlay" viewBox="0 0 1200 760" preserveAspectRatio="none" focusable="false">
+          <svg class="hero-overlay" viewBox="0 0 1400 820" preserveAspectRatio="none" focusable="false">
             <g class="overlay-sparkles">
-              <path d="M1045 70c7 34 22 49 56 56-34 7-49 22-56 56-7-34-22-49-56-56 34-7 49-22 56-56Z" />
-              <path d="M1135 155c4 20 13 29 33 33-20 4-29 13-33 33-4-20-13-29-33-33 20-4 29-13 33-33Z" />
-              <path d="M930 112c3 15 10 22 25 25-15 3-22 10-25 25-3-15-10-22-25-25 15-3 22-10 25-25Z" />
+              <path d="M92 105c6 30 19 43 49 49-30 6-43 19-49 49-6-30-19-43-49-49 30-6 43-19 49-49Z" />
+              <path d="M188 168c4 18 11 25 29 29-18 4-25 11-29 29-4-18-11-25-29-29 18-4 25-11 29-29Z" />
+              <path d="M1185 74c7 34 22 49 56 56-34 7-49 22-56 56-7-34-22-49-56-56 34-7 49-22 56-56Z" />
+              <path d="M1293 154c4 19 12 27 31 31-19 4-27 12-31 31-4-19-12-27-31-31 19-4 27-12 31-31Z" />
+              <path d="M1085 142c3 13 9 19 22 22-13 3-19 9-22 22-3-13-9-19-22-22 13-3 19-9 22-22Z" />
             </g>
 
             <g class="overlay-spray">
-              <path d="M1010 260h74l36 25-15 27-40-18-14 38v27c30 10 50 37 50 69v31H981v-31c0-32 20-59 50-69v-25l-21-74Z" />
-              <path d="M1026 230h64v30h-64z" />
-              <path d="M1090 245h44" />
-              <path d="M1135 245l27-14M1135 245l30 4M1135 245l23 22" />
+              <path d="M1180 290h77l38 27-16 29-42-19-15 40v28c31 10 52 39 52 72v33h-125v-33c0-33 21-62 52-72v-27l-21-78Z" />
+              <path d="M1197 258h66v32h-66z" />
+              <path d="M1263 274h46" />
+              <path d="M1310 274l28-15M1310 274l32 4M1310 274l24 23" />
+              <path d="M1167 435h90" />
             </g>
 
             <g class="overlay-leaves">
-              <path d="M850 735c86-76 165-141 272-210" />
-              <path d="M920 655c-48-3-78-27-84-62 53-3 88 17 104 57" />
-              <path d="M993 594c-12-41 11-74 50-91 24 42 11 76-33 102" />
-              <path d="M1082 535c27-32 65-43 103-27-18 44-54 62-99 49" />
+              <path d="M1042 776c78-72 156-139 272-212" />
+              <path d="M1110 692c-48-2-79-26-86-62 54-3 89 18 105 59" />
+              <path d="M1183 630c-12-42 12-76 52-93 25 43 11 78-34 105" />
+              <path d="M1272 569c28-33 67-45 106-28-18 45-55 64-101 51" />
+            </g>
+
+            <g class="overlay-swoop">
+              <path d="M145 660c188-35 358-39 531-19 138 16 264 54 384 68 111 13 212 4 319-35" />
+              <path d="M156 661c-24 31-29 56-15 73 22 26 66 17 91-19" />
+              <circle cx="540" cy="653" r="7" />
+              <path d="M497 653h-52M583 653h52" />
+              <path d="M540 635c6 12 13 18 22 18-9 0-16 6-22 18-6-12-13-18-22-18 9 0 16-6 22-18Z" />
             </g>
 
             <g class="overlay-flourish">
-              <path d="M640 704c93-66 181-42 243-2 63 41 134 41 208-2 41-24 79-30 117-25" />
-              <path d="M650 712c39 28 86 24 115-10" />
-              <path d="M1180 706c-24 13-50 15-78 6" />
-              <circle cx="946" cy="701" r="8" />
+              <path d="M190 760c55-38 111-35 163-2 34 21 69 22 105 3" />
+              <path d="M205 769c-27 10-43 2-50-22" />
+              <path d="M458 761c28-18 56-18 83 0" />
+              <circle cx="376" cy="762" r="5" />
+              <circle cx="397" cy="762" r="5" />
+              <circle cx="418" cy="762" r="5" />
             </g>
           </svg>
         </div>
@@ -159,10 +172,11 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .hero > :not(.hero-brand-art) { position:relative; z-index:2; }
   .hero-brand-art { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
   .hero-overlay { position:absolute; inset:0; width:100%; height:100%; fill:none; stroke-linecap:round; stroke-linejoin:round; }
-  .overlay-sparkles { color:var(--pink); stroke:currentColor; stroke-width:4; opacity:.14; }
-  .overlay-spray { color:var(--pink); stroke:currentColor; stroke-width:4; opacity:.075; }
-  .overlay-leaves { color:var(--green-bright); stroke:currentColor; stroke-width:5; opacity:.10; }
-  .overlay-flourish { color:var(--green-bright); stroke:currentColor; stroke-width:4; opacity:.08; }
+  .overlay-sparkles { color:var(--pink); stroke:currentColor; stroke-width:4; opacity:.13; }
+  .overlay-spray { color:var(--pink); stroke:currentColor; stroke-width:4; opacity:.065; }
+  .overlay-leaves { color:var(--green-bright); stroke:currentColor; stroke-width:5; opacity:.085; }
+  .overlay-swoop { color:var(--green-bright); stroke:currentColor; stroke-width:4; opacity:.085; }
+  .overlay-flourish { color:var(--pink); stroke:currentColor; stroke-width:4; opacity:.075; }
 
   .hero-copy { align-self:center; min-width:0; }
   .hero h1 span,.home em { display:block; color:var(--purple); font-style:normal; }
@@ -229,9 +243,10 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     .secondary { background:rgba(255,255,255,.04); border-color:#b78cff; }
     .cards article { box-shadow:0 10px 30px rgba(0,0,0,.22); }
     .visual-note { background:rgba(255,255,255,.05); }
-    .overlay-sparkles { opacity:.20; }
-    .overlay-spray { opacity:.10; }
-    .overlay-leaves { opacity:.14; }
+    .overlay-sparkles { opacity:.19; }
+    .overlay-spray { opacity:.09; }
+    .overlay-leaves { opacity:.12; }
+    .overlay-swoop { opacity:.12; }
     .overlay-flourish { opacity:.11; }
   }
 
@@ -241,9 +256,9 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     .hero-visual { order:-1; padding:0; }
     .visual-note { display:none; }
     .new-client-banner { flex-direction:column; align-items:flex-start; }
-    .hero-overlay { transform:translateX(8%) scale(1.05); transform-origin:center; }
-    .overlay-spray { opacity:.05; }
-    .overlay-flourish { opacity:.06; }
+    .hero-overlay { transform:translateX(5%) scale(1.03); transform-origin:center; }
+    .overlay-spray { opacity:.04; }
+    .overlay-flourish { opacity:.055; }
   }
 
   @media (max-width:600px) {
@@ -265,11 +280,12 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     .soft-art { min-height:260px; }
     .soft-art span { font-size:1.7rem; }
     .final-cta .button { width:100%; }
-    .hero-overlay { transform:translateX(16%) scale(1.12); }
+    .hero-overlay { transform:translateX(9%) scale(1.08); }
     .overlay-spray { display:none; }
-    .overlay-leaves { opacity:.06; }
-    .overlay-flourish { opacity:.04; }
-    .overlay-sparkles { opacity:.08; }
+    .overlay-leaves { opacity:.045; }
+    .overlay-swoop { opacity:.045; }
+    .overlay-flourish { opacity:.035; }
+    .overlay-sparkles { opacity:.07; }
   }
 
   @media (max-width:390px) {
