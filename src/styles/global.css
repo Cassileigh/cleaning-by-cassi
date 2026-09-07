@@ -222,6 +222,50 @@ table {
   border: 0;
 }
 
+/* Hero decoration guardrails: business-card style, but never through the copy. */
+.home .hero {
+  background:
+    radial-gradient(circle at 3.5% 19%, transparent 0 24px, rgba(111,20,217,.16) 25px 27px, transparent 28px),
+    radial-gradient(circle at 4% 72%, transparent 0 38px, rgba(242,75,181,.13) 39px 42px, transparent 43px),
+    radial-gradient(circle at 96% 63%, transparent 0 32px, rgba(111,20,217,.14) 33px 36px, transparent 37px),
+    var(--surface-solid) !important;
+}
+
+.home .hero::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  width: 58%;
+  height: 190px;
+  right: 3%;
+  top: 7%;
+  border-top: 6px solid rgba(76,126,55,.58);
+  border-radius: 50% 50% 0 0;
+  transform: rotate(3deg);
+}
+
+.home .hero .hero-overlay {
+  clip-path: inset(0 0 0 58%) !important;
+}
+
+.home .hero .overlay-swoop,
+.home .hero .overlay-flourish {
+  display: none !important;
+}
+
+.home .hero .overlay-sparkles {
+  opacity: .30 !important;
+}
+
+.home .hero .overlay-spray {
+  opacity: .20 !important;
+}
+
+.home .hero .overlay-leaves {
+  opacity: .24 !important;
+}
+
 /* Automatic dark mode: follows iPhone/Android/system appearance */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -272,6 +316,18 @@ table {
     outline: 2px solid rgba(242, 75, 181, .45);
     outline-offset: 1px;
   }
+
+  .home .hero {
+    background:
+      radial-gradient(circle at 3.5% 19%, transparent 0 24px, rgba(183,140,255,.20) 25px 27px, transparent 28px),
+      radial-gradient(circle at 4% 72%, transparent 0 38px, rgba(255,91,200,.18) 39px 42px, transparent 43px),
+      radial-gradient(circle at 96% 63%, transparent 0 32px, rgba(183,140,255,.18) 33px 36px, transparent 37px),
+      var(--surface-solid) !important;
+  }
+
+  .home .hero::before {
+    border-top-color: rgba(167,223,36,.46);
+  }
 }
 
 /* Tablet */
@@ -279,6 +335,16 @@ table {
   main {
     width: min(100% - 1.25rem, 1180px);
     padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  /* Keep the mobile/tablet hero clean; the desktop decals are intentionally omitted. */
+  .home .hero .hero-brand-art,
+  .home .hero::before {
+    display: none !important;
+  }
+
+  .home .hero {
+    background: var(--surface-solid) !important;
   }
 }
 
