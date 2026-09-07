@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Testimonials from '../components/Testimonials.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../consts';
 ---
 
@@ -57,10 +58,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
         <div class="features"><div>💗 <strong>Personalized</strong><small>Your home and needs are unique.</small></div><div>✨ <strong>Detail-focused</strong><small>The little things matter.</small></div><div>🐾 <strong>Pet-friendly</strong><small>Four-legged family members are welcome.</small></div><div>💚 <strong>Personal</strong><small>You'll know who's caring for your home.</small></div></div>
       </section>
 
-      <section class="testimonials">
-        <div class="heading"><p class="eyebrow">Kind Words 💗</p><h2>Don't just take <em>my word for it.</em></h2></div>
-        <div class="reviews"><article>★★★★★<p>“Cassi does an amazing job and pays attention to the little details that make such a difference.”</p><strong>— Happy Client</strong></article><article>★★★★★<p>“Coming home after a cleaning is the best feeling. Everything feels fresh and cared for.”</p><strong>— Happy Client</strong></article><article>★★★★★<p>“Reliable, thorough, and easy to work with. I absolutely recommend Cleaning by Cassi.”</p><strong>— Happy Client</strong></article></div>
-      </section>
+      <Testimonials />
 
       <section class="final-cta"><p class="eyebrow">Ready for a fresh start?</p><h2>Ready to love <em>coming home again?</em></h2><p>Let's find the cleaning plan that's right for your home in the {SERVICE_AREA} area.</p><a href="/quote" class="button light">Get My Free Quote →</a><small>No pressure. Just a simple quote tailored to your home.</small></section>
     </main>
@@ -93,13 +91,13 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .soft-art span { font-family:'DM Serif Display',serif; font-size:2rem; margin-top:1rem; }
   .split p { color:var(--muted); line-height:1.85; }
   .text-link { font-weight:700; }
-  .services,.testimonials { background:var(--surface-soft); }
+  .services { background:var(--surface-soft); }
   .heading { max-width:760px; margin:0 auto 3rem; text-align:center; }
   .heading>p:last-child { color:var(--muted); }
-  .cards,.reviews { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
-  .cards article,.reviews article { padding:2rem; border:1px solid var(--border); border-radius:24px; background:var(--surface-solid); box-shadow:0 10px 30px rgba(49,24,95,.08); }
+  .cards { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; }
+  .cards article { padding:2rem; border:1px solid var(--border); border-radius:24px; background:var(--surface-solid); box-shadow:0 10px 30px rgba(49,24,95,.08); }
   .cards article>span { font-size:2rem; }
-  .cards article p,.reviews article p { color:var(--muted); }
+  .cards article p { color:var(--muted); }
   .cards .featured { background:var(--brand-gradient); color:white; border-color:transparent; }
   .featured h3,.featured p { color:white!important; }
   .center { text-align:center; margin-top:2.5rem; }
@@ -109,15 +107,12 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .features div { padding:1.3rem; border:1px solid var(--border); border-radius:20px; background:var(--surface); }
   .features strong,.features small { display:block; }
   .features small { margin-top:.3rem; color:var(--muted); }
-  .reviews { grid-template-columns:repeat(3,1fr); }
-  .reviews article { line-height:1.8; color:var(--pink); }
-  .reviews article p,.reviews article strong { color:var(--ink); }
   .final-cta { text-align:center; color:white; background:var(--brand-gradient); }
   .final-cta h2,.final-cta .eyebrow,.final-cta p { color:white; }
   .final-cta em { color:var(--green-bright); }
   .final-cta small { display:block; margin-top:1rem; opacity:.88; }
   .light { margin-top:1rem; background:white; color:var(--purple-dark); }
-  @media (prefers-color-scheme:dark) { .hero { background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.18),transparent 27%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.22),transparent 32%),var(--surface-solid); } .secondary { background:rgba(255,255,255,.04); border-color:#b78cff; } .cards article,.reviews article { box-shadow:0 10px 30px rgba(0,0,0,.22); } }
+  @media (prefers-color-scheme:dark) { .hero { background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.18),transparent 27%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.22),transparent 32%),var(--surface-solid); } .secondary { background:rgba(255,255,255,.04); border-color:#b78cff; } .cards article { box-shadow:0 10px 30px rgba(0,0,0,.22); } }
   @media (max-width:900px) { .hero,.split,.why { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } .hero-photo { order:-1; aspect-ratio:auto; } .hero-photo img { min-height:0; height:auto; max-height:none; object-fit:contain; } .new-client-banner { flex-direction:column; align-items:flex-start; } }
   @media (max-width:600px) {
     .home section { padding:2.25rem 1.25rem; }
@@ -132,7 +127,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     .actions { margin:1.5rem 0; gap:.75rem; }
     .actions .button { width:100%; min-height:52px; }
     .trust { display:grid; grid-template-columns:repeat(3,auto); justify-content:center; gap:.45rem .8rem; font-size:.78rem; }
-    .cards,.reviews,.features { grid-template-columns:1fr; }
+    .cards,.features { grid-template-columns:1fr; }
     .new-client-banner { text-align:center; align-items:center; }
     .new-client-banner .button { width:100%; }
     .soft-art { min-height:260px; }
