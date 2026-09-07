@@ -81,10 +81,10 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
   .primary-button:hover { color:white; transform:translateY(-2px); }
   .secondary-button { color:var(--ink); border:1.5px solid var(--purple); background:var(--surface-solid); }
 
-  .hero-photo-wrap { position:relative; min-width:0; aspect-ratio:4 / 3; }
-  .hero-photo-wrap picture { display:block; width:100%; height:100%; }
-  .hero-photo { display:block; width:100%; height:100%; min-height:430px; object-fit:cover; border-radius:32px; box-shadow:var(--shadow); }
-  .photo-note { position:absolute; left:1rem; right:1rem; bottom:1rem; padding:.9rem 1rem; border:1px solid var(--border); border-radius:16px; text-align:center; background:var(--surface); box-shadow:0 8px 20px rgba(49,24,95,.12); font-weight:700; backdrop-filter:blur(10px); }
+  .hero-photo-wrap { position:relative; min-width:0; width:100%; overflow:hidden; border-radius:32px; box-shadow:var(--shadow); }
+  .hero-photo-wrap picture { display:block; width:100%; }
+  .hero-photo { display:block; width:100%; height:auto; min-height:0; object-fit:contain; border-radius:32px; }
+  .photo-note { position:absolute; left:.45rem; right:.45rem; bottom:.45rem; z-index:2; padding:.82rem 1rem; border:1px solid var(--border); border-radius:16px; text-align:center; background:var(--surface); box-shadow:0 8px 20px rgba(49,24,95,.12); font-weight:700; line-height:1.3; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
 
   .section-heading { max-width:760px; margin-bottom:2rem; }
   .section-heading h2 { margin-bottom:.7rem; }
@@ -146,10 +146,9 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
     .hero-actions { display:grid; grid-template-columns:1fr; gap:.7rem; }
     .hero-actions a { width:100%; }
 
-    .hero-photo-wrap { aspect-ratio:auto; }
-    .hero-photo-wrap picture { aspect-ratio:4 / 3; height:auto; }
-    .hero-photo { width:100%; height:100%; min-height:0; object-fit:cover; border-radius:24px; }
-    .photo-note { position:static; margin-top:.75rem; padding:.8rem .9rem; font-size:.92rem; }
+    .hero-photo-wrap { border-radius:24px; }
+    .hero-photo { width:100%; height:auto; min-height:0; object-fit:contain; border-radius:24px; }
+    .photo-note { left:.3rem; right:.3rem; bottom:.3rem; margin:0; padding:.68rem .7rem; border-radius:13px; font-size:clamp(.78rem,3.7vw,.92rem); }
 
     .section-heading { margin-bottom:1.5rem; }
     .section-heading h2 { font-size:clamp(2rem,10vw,2.7rem); }
@@ -167,7 +166,7 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
 
   @media (max-width:390px) {
     .hero-copy h1 { font-size:2.55rem; }
-    .photo-note { font-size:.86rem; }
+    .photo-note { font-size:.78rem; }
     .story-card,.values-grid article,.pet-card { border-radius:18px; }
   }
 </style>
