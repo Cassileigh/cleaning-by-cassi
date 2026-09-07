@@ -80,9 +80,9 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .primary:hover { color:white; transform:translateY(-2px); }
   .secondary { border:2px solid var(--purple); color:var(--ink); background:var(--surface-solid); }
   .secondary:hover { color:var(--purple); background:var(--lavender-soft); }
-  .hero-photo { aspect-ratio:4 / 3; min-width:0; }
-  .hero-photo picture { display:block; width:100%; height:100%; }
-  .hero-photo img { display:block; width:100%; height:100%; min-height:430px; object-fit:cover; border-radius:32px; box-shadow:var(--shadow); }
+  .hero-photo { min-width:0; width:100%; }
+  .hero-photo picture { display:block; width:100%; }
+  .hero-photo img { display:block; width:100%; height:auto; min-height:0; object-fit:contain; border-radius:32px; box-shadow:var(--shadow); }
   .new-client-banner { display:flex; align-items:center; justify-content:space-between; gap:2rem; background:var(--brand-gradient-soft); border-block:1px solid var(--border); }
   .new-client-banner h2 { font-size:clamp(2rem,4vw,3rem); }
   .new-client-banner p { margin-bottom:0; }
@@ -113,7 +113,7 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .final-cta small { display:block; margin-top:1rem; opacity:.88; }
   .light { margin-top:1rem; background:white; color:var(--purple-dark); }
   @media (prefers-color-scheme:dark) { .hero { background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.18),transparent 27%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.22),transparent 32%),var(--surface-solid); } .secondary { background:rgba(255,255,255,.04); border-color:#b78cff; } .cards article { box-shadow:0 10px 30px rgba(0,0,0,.22); } }
-  @media (max-width:900px) { .hero,.split,.why { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } .hero-photo { order:-1; aspect-ratio:auto; } .hero-photo img { min-height:0; height:auto; max-height:none; object-fit:contain; } .new-client-banner { flex-direction:column; align-items:flex-start; } }
+  @media (max-width:900px) { .hero,.split,.why { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } .hero-photo { order:-1; } .new-client-banner { flex-direction:column; align-items:flex-start; } }
   @media (max-width:600px) {
     .home section { padding:2.25rem 1.25rem; }
     .hero { gap:1.6rem; padding-top:1.25rem!important; }
