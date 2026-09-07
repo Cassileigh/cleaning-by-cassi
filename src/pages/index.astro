@@ -23,12 +23,25 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
           </div>
           <div class="trust"><span>✓ Personalized</span><span>✓ Detailed</span><span>✓ Pet-friendly</span></div>
         </div>
-        <div class="hero-photo">
-          <picture>
-            <source srcset="/homepage-optimized.avif" type="image/avif" />
-            <source srcset="/homepage-optimized.webp" type="image/webp" />
-            <img src="/homepage.jpg" alt="Cleaning by Cassi accepting new clients" loading="eager" fetchpriority="high" decoding="async" />
-          </picture>
+
+        <div class="hero-visual">
+          <div class="visual-note visual-note-top">
+            <span aria-hidden="true">✨</span>
+            <div><strong>Detailed care, done personally.</strong><small>One cleaner. One familiar face. One home at a time.</small></div>
+          </div>
+
+          <div class="hero-photo">
+            <picture>
+              <source srcset="/homepage-optimized.avif" type="image/avif" />
+              <source srcset="/homepage-optimized.webp" type="image/webp" />
+              <img src="/homepage.jpg" alt="Cleaning by Cassi accepting new clients" loading="eager" fetchpriority="high" decoding="async" />
+            </picture>
+          </div>
+
+          <div class="visual-note visual-note-bottom">
+            <span aria-hidden="true">💗</span>
+            <div><strong>Locally owned in the Fox Cities</strong><small>Personalized • dependable • pet-friendly</small></div>
+          </div>
         </div>
       </section>
 
@@ -69,7 +82,8 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
 <style>
   .home { padding: 0; overflow: hidden; }
   .home section { padding: clamp(3.5rem, 7vw, 6.5rem); }
-  .hero { display:grid; grid-template-columns:1.05fr .95fr; gap:4rem; align-items:center; background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.13),transparent 25%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.12),transparent 30%),var(--surface-solid); }
+  .hero { display:grid; grid-template-columns:1.05fr .95fr; gap:4rem; align-items:stretch; background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.13),transparent 25%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.12),transparent 30%),var(--surface-solid); }
+  .hero-copy { align-self:center; }
   .hero h1 span,.home em { display:block; color:var(--purple); font-style:normal; }
   .lead { max-width:620px; color:var(--muted); font-size:1.08rem; line-height:1.8; }
   .actions,.trust { display:flex; gap:1rem; flex-wrap:wrap; }
@@ -80,9 +94,19 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .primary:hover { color:white; transform:translateY(-2px); }
   .secondary { border:2px solid var(--purple); color:var(--ink); background:var(--surface-solid); }
   .secondary:hover { color:var(--purple); background:var(--lavender-soft); }
+
+  .hero-visual { min-width:0; display:flex; flex-direction:column; justify-content:center; gap:1rem; padding:.5rem 0; }
   .hero-photo { min-width:0; width:100%; }
   .hero-photo picture { display:block; width:100%; }
   .hero-photo img { display:block; width:100%; height:auto; min-height:0; object-fit:contain; border-radius:32px; box-shadow:var(--shadow); }
+  .visual-note { display:flex; align-items:center; gap:.85rem; padding:.95rem 1rem; border:1px solid var(--border); border-radius:20px; background:var(--surface); box-shadow:0 10px 26px rgba(49,24,95,.08); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+  .visual-note > span { display:grid; place-items:center; width:42px; height:42px; flex:0 0 42px; border-radius:50%; background:var(--brand-gradient-soft); font-size:1.2rem; }
+  .visual-note div { min-width:0; }
+  .visual-note strong,.visual-note small { display:block; }
+  .visual-note strong { color:var(--ink); font-size:.92rem; line-height:1.35; }
+  .visual-note small { margin-top:.18rem; color:var(--muted); font-size:.76rem; line-height:1.45; }
+  .visual-note-bottom { margin-inline:1.25rem; }
+
   .new-client-banner { display:flex; align-items:center; justify-content:space-between; gap:2rem; background:var(--brand-gradient-soft); border-block:1px solid var(--border); }
   .new-client-banner h2 { font-size:clamp(2rem,4vw,3rem); }
   .new-client-banner p { margin-bottom:0; }
@@ -112,8 +136,22 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
   .final-cta em { color:var(--green-bright); }
   .final-cta small { display:block; margin-top:1rem; opacity:.88; }
   .light { margin-top:1rem; background:white; color:var(--purple-dark); }
-  @media (prefers-color-scheme:dark) { .hero { background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.18),transparent 27%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.22),transparent 32%),var(--surface-solid); } .secondary { background:rgba(255,255,255,.04); border-color:#b78cff; } .cards article { box-shadow:0 10px 30px rgba(0,0,0,.22); } }
-  @media (max-width:900px) { .hero,.split,.why { grid-template-columns:1fr; } .cards { grid-template-columns:1fr 1fr; } .hero-photo { order:-1; } .new-client-banner { flex-direction:column; align-items:flex-start; } }
+
+  @media (prefers-color-scheme:dark) {
+    .hero { background:radial-gradient(circle at 8% 15%,rgba(242,75,181,.18),transparent 27%),radial-gradient(circle at 92% 15%,rgba(21,72,245,.22),transparent 32%),var(--surface-solid); }
+    .secondary { background:rgba(255,255,255,.04); border-color:#b78cff; }
+    .cards article { box-shadow:0 10px 30px rgba(0,0,0,.22); }
+    .visual-note { background:rgba(255,255,255,.04); }
+  }
+
+  @media (max-width:900px) {
+    .hero,.split,.why { grid-template-columns:1fr; }
+    .cards { grid-template-columns:1fr 1fr; }
+    .hero-visual { order:-1; padding:0; }
+    .visual-note { display:none; }
+    .new-client-banner { flex-direction:column; align-items:flex-start; }
+  }
+
   @media (max-width:600px) {
     .home section { padding:2.25rem 1.25rem; }
     .hero { gap:1.6rem; padding-top:1.25rem!important; }
@@ -134,5 +172,9 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     .soft-art span { font-size:1.7rem; }
     .final-cta .button { width:100%; }
   }
-  @media (max-width:390px) { .hero h1 { font-size:2.45rem; } .trust { grid-template-columns:1fr; justify-items:center; } }
+
+  @media (max-width:390px) {
+    .hero h1 { font-size:2.45rem; }
+    .trust { grid-template-columns:1fr; justify-items:center; }
+  }
 </style>
