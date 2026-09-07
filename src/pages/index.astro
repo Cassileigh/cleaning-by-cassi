@@ -15,78 +15,89 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     <main class="home">
       <section class="hero">
         <div class="hero-brand-art" aria-hidden="true">
-          <svg class="hero-overlay" viewBox="0 0 1600 820" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <svg class="hero-overlay" viewBox="0 0 1600 820" preserveAspectRatio="none" focusable="false">
             <defs>
-              <radialGradient id="bubbleFill" cx="30%" cy="25%" r="75%">
-                <stop offset="0%" stop-color="#fff" stop-opacity=".72"/>
-                <stop offset="28%" stop-color="#fff" stop-opacity=".16"/>
-                <stop offset="70%" stop-color="#d8c7f4" stop-opacity=".08"/>
-                <stop offset="100%" stop-color="#8f70ca" stop-opacity=".02"/>
+              <radialGradient id="bubbleFill" cx="32%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity=".82" />
+                <stop offset="30%" stop-color="#ffffff" stop-opacity=".18" />
+                <stop offset="68%" stop-color="#d8c7f4" stop-opacity=".11" />
+                <stop offset="100%" stop-color="#8f70ca" stop-opacity=".025" />
               </radialGradient>
             </defs>
 
-            <!-- left edge foliage -->
-            <g class="decal leaf left-leaf">
-              <path d="M-38 470C18 431 61 382 102 320"/>
-              <path d="M15 426C-4 380 8 342 46 316c17 45 5 82-31 110Z"/>
-              <path d="M57 375c-8-45 13-79 55-96 15 45-4 80-55 96Z"/>
-              <path d="M-2 454c-44-6-72-31-78-70 48-1 79 22 78 70Z"/>
+            <g class="hero-decal left-foliage">
+              <path class="stem" d="M-28 435C15 407 54 366 91 305" />
+              <path class="leaf-fill" d="M8 401C-14 361-2 326 37 305c18 43 8 77-29 96Z" />
+              <path class="leaf-fill" d="M48 358c-10-42 10-74 50-91 17 42 1 75-50 91Z" />
+              <path class="leaf-fill" d="M-1 430c-43-7-68-31-72-67 46 0 75 22 72 67Z" />
             </g>
 
-            <!-- long top flourish, kept in open space -->
-            <g class="decal flourish top-flourish">
-              <path d="M555 174C720 58 1035 66 1270 132c89 25 167 20 219-27"/>
-              <path d="M558 174c-29 23-39 48-24 62 20 19 52 1 67-29"/>
-              <path d="M1452 117c24-30 25-58 3-78 39 1 58 25 44 58"/>
-              <path d="M1465 102c30-22 60-22 89 1-30 23-61 23-89-1Z"/>
-              <path d="M1490 79c10-34 34-53 68-54-5 38-28 58-68 54Z"/>
+            <g class="hero-decal top-swoop">
+              <path d="M530 160C720 57 1020 58 1250 118c105 27 183 18 247-37" />
+              <path d="M532 160c-29 23-38 48-23 61 20 18 49 0 66-27" />
+              <path d="M1470 91c24-27 25-52 5-72 35 3 51 24 40 52" />
+              <path class="leaf-fill" d="M1465 86c29-22 59-23 88-2-27 25-59 26-88 2Z" />
+              <path class="leaf-fill" d="M1494 65c10-31 32-48 63-49-5 35-27 53-63 49Z" />
             </g>
 
-            <!-- small heart + dots, like the card ornament -->
-            <g class="decal ornament">
-              <path d="M718 136c-14-18-43-8-43 14 0 24 43 49 43 49s43-25 43-49c0-22-29-32-43-14Z"/>
-              <circle cx="642" cy="158" r="7"/><circle cx="615" cy="158" r="5"/>
-              <path d="M579 158h-45M579 158l-24-10M579 158l-24 10"/>
-              <circle cx="794" cy="158" r="7"/><circle cx="821" cy="158" r="5"/>
-              <path d="M857 158h45M857 158l24-10M857 158l24 10"/>
+            <g class="hero-decal top-ornament">
+              <path class="pink-stroke" d="M620 151h42M780 151h42" />
+              <circle class="green-dot" cx="690" cy="151" r="7" />
+              <circle class="green-dot" cx="753" cy="151" r="7" />
+              <path class="heart" d="M721 137c-12-16-38-7-38 13 0 22 38 44 38 44s38-22 38-44c0-20-26-29-38-13Z" />
             </g>
 
-            <!-- sparkles stay around the outside, never behind the promo image -->
-            <g class="decal sparkles">
-              <path d="M505 225c5 26 16 37 42 42-26 5-37 16-42 42-5-26-16-37-42-42 26-5 37-16 42-42Z"/>
-              <path d="M1498 174c6 30 19 43 49 49-30 6-43 19-49 49-6-30-19-43-49-49 30-6 43-19 49-49Z"/>
-              <path d="M1538 304c4 20 12 28 32 32-20 4-28 12-32 32-4-20-12-28-32-32 20-4 28-12 32-32Z"/>
-              <path d="M1464 612c4 20 12 28 32 32-20 4-28 12-32 32-4-20-12-28-32-32 20-4 28-12 32-32Z"/>
+            <g class="hero-decal right-cleaning">
+              <g class="sparkles">
+                <path d="M1412 158c6 31 19 44 50 50-31 6-44 19-50 50-6-31-19-44-50-50 31-6 44-19 50-50Z" />
+                <path d="M1510 214c4 21 12 29 33 33-21 4-29 12-33 33-4-21-12-29-33-33 21-4 29-12 33-33Z" />
+                <path d="M1365 290c4 18 11 25 29 29-18 4-25 11-29 29-4-18-11-25-29-29 18-4 25-11 29-29Z" />
+                <path d="M1490 518c4 20 12 28 32 32-20 4-28 12-32 32-4-20-12-28-32-32 20-4 28-12 32-32Z" />
+              </g>
+
+              <g class="spray">
+                <path d="M1395 273h72l39 28-17 28-44-18-13 38v24c29 10 49 38 49 70v70h-116v-70c0-32 20-60 49-70v-25l-19-75Z" />
+                <path d="M1409 242h62v31h-62z" />
+                <path d="M1471 257h47M1519 257l31-15M1519 257l34 4M1519 257l25 24" />
+              </g>
+
+              <g class="right-foliage">
+                <path class="stem" d="M1618 682C1548 647 1505 598 1472 531" />
+                <path class="leaf-fill" d="M1534 626c-43-8-68-34-68-74 47 4 75 28 68 74Z" />
+                <path class="leaf-fill" d="M1498 571c-28-30-33-65-10-98 35 29 40 63 10 98Z" />
+                <path class="leaf-fill" d="M1541 648c12-40 40-62 79-61-8 45-36 68-79 61Z" />
+                <path class="leaf-fill" d="M1576 688c16-37 45-55 83-49-13 42-43 61-83 49Z" />
+              </g>
+
+              <path class="pink-curl" d="M1265 736c91 33 163 18 211-40 23-27 40-29 54-10 13 18 3 40-18 43M1265 736c-35 4-53-11-53-37" />
             </g>
 
-            <!-- right side floral frame -->
-            <g class="decal leaf right-leaf">
-              <path d="M1615 720c-86-69-117-150-110-250"/>
-              <path d="M1533 629c-46-8-72-36-73-78 50 4 79 29 73 78Z"/>
-              <path d="M1512 560c-32-31-37-69-13-105 38 31 44 67 13 105Z"/>
-              <path d="M1544 655c11-43 40-68 82-69-7 49-35 74-82 69Z"/>
-              <path d="M1572 703c15-40 47-61 88-56-12 46-43 68-88 56Z"/>
-            </g>
-            <g class="decal pink-curl">
-              <path d="M1265 760c79 30 147 17 194-35 25-28 40-30 55-11 14 18 3 43-21 45"/>
-              <path d="M1265 760c-37 3-55-13-54-42"/>
-            </g>
-
-            <!-- real soap bubbles, distributed into negative space -->
-            <g class="bubbles">
-              <g transform="translate(45 170)"><circle r="24"/><path d="M-10-10c6-7 14-9 22-5"/></g>
-              <g transform="translate(78 560)"><circle r="39"/><path d="M-16-17c10-11 23-14 36-7"/></g>
-              <g transform="translate(50 690)"><circle r="27"/><path d="M-11-12c7-8 16-10 25-5"/></g>
-              <g transform="translate(1500 410)"><circle r="27"/><path d="M-11-12c7-8 16-10 25-5"/></g>
-              <g transform="translate(1545 520)"><circle r="42"/><path d="M-17-18c10-12 24-15 38-8"/></g>
-              <g transform="translate(1435 735)"><circle r="22"/><path d="M-9-10c6-7 13-8 20-4"/></g>
+            <g class="hero-bubbles">
+              <g transform="translate(44 126)"><circle r="22"/><path d="M-9-10c6-7 13-8 21-5"/></g>
+              <g transform="translate(72 430)"><circle r="37"/><path d="M-15-16c10-11 22-13 34-7"/></g>
+              <g transform="translate(46 560)"><circle r="25"/><path d="M-10-11c7-8 15-9 23-5"/></g>
+              <g transform="translate(1434 340)"><circle r="27"/><path d="M-11-12c7-8 16-10 25-5"/></g>
+              <g transform="translate(1510 448)"><circle r="39"/><path d="M-16-17c10-11 23-14 35-7"/></g>
+              <g transform="translate(1472 600)"><circle r="21"/><path d="M-8-9c5-6 12-8 19-4"/></g>
             </g>
           </svg>
         </div>
 
-        <div class="hero-copy"><p class="eyebrow">Cleaning by Cassi</p><h1>A cleaner home.<span>A little more breathing room.</span></h1><p class="lead">Dependable, detailed residential cleaning for busy families throughout the Fox Cities.</p><div class="actions"><a class="button primary" href="/quote">Get a Free Quote</a><a class="button secondary" href="/services">Explore Services</a></div><div class="trust"><span>✓ Personalized</span><span>✓ Detailed</span><span>✓ Pet-friendly</span></div></div>
-        <div class="hero-visual"><div class="visual-note visual-note-top"><span aria-hidden="true">✨</span><div><strong>Detailed care, done personally.</strong><small>One cleaner. One familiar face. One home at a time.</small></div></div><div class="hero-photo"><picture><source srcset="/homepage-optimized.avif" type="image/avif"/><source srcset="/homepage-optimized.webp" type="image/webp"/><img src="/homepage.jpg" alt="Cleaning by Cassi accepting new clients" loading="eager" fetchpriority="high" decoding="async"/></picture></div><div class="visual-note visual-note-bottom"><span aria-hidden="true">💗</span><div><strong>Locally owned in the Fox Cities</strong><small>Personalized • dependable • pet-friendly</small></div></div></div>
+        <div class="hero-copy">
+          <p class="eyebrow">Cleaning by Cassi</p>
+          <h1>A cleaner home.<span>A little more breathing room.</span></h1>
+          <p class="lead">Dependable, detailed residential cleaning for busy families throughout the Fox Cities.</p>
+          <div class="actions"><a class="button primary" href="/quote">Get a Free Quote</a><a class="button secondary" href="/services">Explore Services</a></div>
+          <div class="trust"><span>✓ Personalized</span><span>✓ Detailed</span><span>✓ Pet-friendly</span></div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-note visual-note-top"><span aria-hidden="true">✨</span><div><strong>Detailed care, done personally.</strong><small>One cleaner. One familiar face. One home at a time.</small></div></div>
+          <div class="hero-photo"><picture><source srcset="/homepage-optimized.avif" type="image/avif"/><source srcset="/homepage-optimized.webp" type="image/webp"/><img src="/homepage.jpg" alt="Cleaning by Cassi accepting new clients" loading="eager" fetchpriority="high" decoding="async"/></picture></div>
+          <div class="visual-note visual-note-bottom"><span aria-hidden="true">💗</span><div><strong>Locally owned in the Fox Cities</strong><small>Personalized • dependable • pet-friendly</small></div></div>
+        </div>
       </section>
+
       <section class="new-client-banner"><div><p class="eyebrow">✨ Now Accepting New Clients ✨</p><h2>Ready for a cleaner home?</h2><p>I'd love to help make your home a little easier to keep up with.</p></div><a href="/quote" class="button primary">Get Your Free Quote →</a></section>
       <section class="split intro"><div class="soft-art">✨<span>Fresh spaces.<br/>More free time.</span></div><div><p class="eyebrow">Hi, I'm Cassi! 👋</p><h2>More than a clean home — <em>more time for what matters.</em></h2><p>Life gets busy. Between work, family, pets, and everything else on your plate, keeping up with the house can feel overwhelming.</p><p>That's where I come in. My goal isn't just to make your home clean — it's to make your life a little easier.</p><a class="text-link" href="/about">Meet {OWNER_NAME} →</a></div></section>
       <section class="services"><div class="heading"><p class="eyebrow">What I Do</p><h2>Cleaning that fits <em>your home & your life.</em></h2><p>Every home is different, which is why your cleaning should be, too.</p></div><div class="cards"><article><span>🧽</span><h3>Standard Cleaning</h3><p>Regular upkeep to keep your home fresh, comfortable, and clean.</p></article><article class="featured"><span>✨</span><h3>Deep Cleaning</h3><p>A detailed reset for homes that need a little extra TLC.</p></article><article><span>🏡</span><h3>Recurring Cleaning</h3><p>Weekly, biweekly, or monthly visits to keep your home under control.</p></article><article><span>➕</span><h3>Add-On Services</h3><p>Customize your clean with extras like baseboards, bed making, laundry, and more.</p></article></div><div class="center"><a class="button secondary" href="/services">See All Services →</a></div></section>
@@ -96,19 +107,20 @@ import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../const
     </main><Footer />
   </body>
 </html>
+
 <style>
 .home{padding:0;overflow:visible}.home section{padding:clamp(3.5rem,7vw,6.5rem)}
-.hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(2.5rem,5vw,6rem);align-items:center;overflow:hidden;background:var(--surface-solid);width:100vw;margin-inline:calc(50% - 50vw);padding:clamp(3.75rem,6vw,6.5rem) clamp(5.5rem,9vw,10rem)!important;min-height:min(780px,calc(100vh - 90px))}
+.hero{position:relative;isolation:isolate;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:clamp(2rem,4vw,5rem);align-items:center;overflow:hidden;background:var(--surface-solid);width:100vw;margin-inline:calc(50% - 50vw);padding:clamp(3.25rem,5vw,5.75rem) clamp(4.5rem,8vw,8.5rem)!important;min-height:700px}
 .hero>:not(.hero-brand-art){position:relative;z-index:2}.hero-brand-art{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}.hero-overlay{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.decal{vector-effect:non-scaling-stroke}.leaf{color:#65a24d;stroke:currentColor;stroke-width:6;opacity:.48}.flourish{color:#65a24d;stroke:currentColor;stroke-width:6;opacity:.5}.ornament{color:#ef5aad;stroke:currentColor;stroke-width:5;fill:none;opacity:.5}.ornament circle{fill:#8fcf66;stroke:none}.sparkles{color:#c74ab4;stroke:currentColor;stroke-width:5;opacity:.45}.pink-curl{color:#ef5aad;stroke:currentColor;stroke-width:6;opacity:.46}.bubbles circle{fill:url(#bubbleFill);stroke:#aa8bd7;stroke-width:3;opacity:.55}.bubbles path{fill:none;stroke:#fff;stroke-width:3;opacity:.72}
-.hero-copy{align-self:center;min-width:0;max-width:650px}.hero h1 span,.home em{display:block;color:var(--purple);font-style:normal}.lead{max-width:620px;color:var(--muted);font-size:1.08rem;line-height:1.8}.actions,.trust{display:flex;gap:1rem;flex-wrap:wrap}.actions{margin:2rem 0}.trust{color:var(--muted);font-size:.86rem;font-weight:600}
+.hero-decal{vector-effect:non-scaling-stroke}.stem,.top-swoop>path{stroke:#65a24d;stroke-width:7}.leaf-fill{fill:#8ccf73;stroke:#65a24d;stroke-width:3}.top-swoop{opacity:.56}.left-foliage,.right-foliage{opacity:.58}.pink-stroke,.pink-curl{stroke:#ef5aad;stroke-width:6}.green-dot{fill:#8ccf73}.heart{fill:#ef5aad;stroke:none}.sparkles{stroke:#c84bb2;stroke-width:5;opacity:.55}.spray{stroke:#ef6ab6;stroke-width:6;opacity:.62}.pink-curl{opacity:.62}.hero-bubbles circle{fill:url(#bubbleFill);stroke:#b397dd;stroke-width:3;opacity:.7}.hero-bubbles path{stroke:#fff;stroke-width:3;opacity:.78}
+.hero-copy{align-self:center;min-width:0;max-width:620px}.hero h1 span,.home em{display:block;color:var(--purple);font-style:normal}.lead{max-width:600px;color:var(--muted);font-size:1.08rem;line-height:1.8}.actions,.trust{display:flex;gap:1rem;flex-wrap:wrap}.actions{margin:2rem 0}.trust{color:var(--muted);font-size:.86rem;font-weight:600}
 .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.9rem 1.5rem;border-radius:999px;font-weight:700;transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease,color .2s ease}.primary{background:var(--brand-gradient);color:white;box-shadow:0 10px 28px rgba(111,20,217,.24)}.primary:hover{color:white;transform:translateY(-2px)}.secondary{border:2px solid var(--purple);color:var(--ink);background:var(--surface-solid)}.secondary:hover{color:var(--purple);background:var(--lavender-soft)}.button:focus-visible,.text-link:focus-visible{outline:3px solid var(--pink);outline-offset:4px}
-.hero-visual{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:1rem;padding:.5rem 0;max-width:620px;justify-self:end;width:100%}.hero-photo,.hero-photo picture{display:block;width:100%;min-width:0}.hero-photo img{display:block;width:100%;height:auto;object-fit:contain;border-radius:32px;box-shadow:var(--shadow)}
+.hero-visual{min-width:0;display:flex;flex-direction:column;justify-content:center;gap:1rem;padding:.5rem 0;max-width:590px;justify-self:end;width:100%}.hero-photo,.hero-photo picture{display:block;width:100%;min-width:0}.hero-photo img{display:block;width:100%;height:auto;object-fit:contain;border-radius:32px;box-shadow:var(--shadow)}
 .visual-note{display:flex;align-items:center;gap:.85rem;padding:.95rem 1rem;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:0 10px 26px rgba(49,24,95,.08);backdrop-filter:blur(10px)}.visual-note>span{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;border-radius:50%;background:var(--brand-gradient-soft);font-size:1.2rem}.visual-note strong,.visual-note small{display:block}.visual-note strong{color:var(--ink);font-size:.92rem}.visual-note small{margin-top:.18rem;color:var(--muted);font-size:.76rem}.visual-note-bottom{margin-inline:1.25rem}
 .new-client-banner{display:flex;align-items:center;justify-content:space-between;gap:2rem;background:var(--brand-gradient-soft);border-block:1px solid var(--border)}.new-client-banner h2{font-size:clamp(2rem,4vw,3rem)}.new-client-banner p{margin-bottom:0}.split{display:grid;grid-template-columns:.85fr 1.15fr;gap:4rem;align-items:center}.soft-art{min-height:380px;border-radius:32px;background:radial-gradient(circle at 25% 25%,rgba(167,223,36,.20),transparent 30%),linear-gradient(145deg,var(--lavender-soft),var(--surface-soft));border:1px solid var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:3rem}.soft-art span{font-family:'DM Serif Display',serif;font-size:2rem;margin-top:1rem}.split p{color:var(--muted);line-height:1.85}.text-link{font-weight:700}.services{background:var(--surface-soft)}.heading{max-width:760px;margin:0 auto 3rem;text-align:center}.heading>p:last-child{color:var(--muted)}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}.cards article{padding:2rem;border:1px solid var(--border);border-radius:24px;background:var(--surface-solid);box-shadow:0 10px 30px rgba(49,24,95,.08)}.cards article>span{font-size:2rem}.cards article p{color:var(--muted)}.cards .featured{background:var(--brand-gradient);color:white;border-color:transparent}.featured h3,.featured p{color:white!important}.center{text-align:center;margin-top:2.5rem}.why{display:grid;grid-template-columns:1fr 1fr;gap:4rem;background:linear-gradient(145deg,rgba(167,223,36,.14),rgba(111,20,217,.08))}.why>div>p:not(.eyebrow){color:var(--muted)}.features{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.features div{padding:1.3rem;border:1px solid var(--border);border-radius:20px;background:var(--surface)}.features strong,.features small{display:block}.features small{margin-top:.3rem;color:var(--muted)}.final-cta{text-align:center;color:white;background:var(--brand-gradient)}.final-cta h2,.final-cta .eyebrow,.final-cta p{color:white}.final-cta em{color:var(--green-bright)}.final-cta small{display:block;margin-top:1rem;opacity:.9}.light{margin-top:1rem;background:white;color:var(--purple-dark)}
-@media(prefers-color-scheme:dark){.secondary{background:rgba(255,255,255,.04);border-color:#b78cff}.cards article{box-shadow:0 10px 30px rgba(0,0,0,.22)}.visual-note{background:rgba(255,255,255,.05)}.leaf,.flourish{color:#9dcc64;opacity:.44}.ornament,.pink-curl{color:#ff6fc1;opacity:.48}.sparkles{color:#ef6bc6;opacity:.46}.bubbles circle{stroke:#b79ae6;opacity:.58}}
-@media(max-width:1100px){.hero{padding-inline:clamp(2rem,5vw,4rem)!important;gap:2.5rem}.left-leaf{transform:translateX(-40px)}.right-leaf{transform:translateX(30px)}.ornament{opacity:.35}.hero-visual{max-width:560px}}
-@media(max-width:900px){.hero,.split,.why{grid-template-columns:1fr}.hero{width:100vw;margin-inline:calc(50% - 50vw);padding:2.5rem clamp(1.5rem,5vw,3rem)!important;min-height:0}.cards{grid-template-columns:1fr 1fr}.hero-visual{order:-1;padding:0;justify-self:stretch;max-width:none}.visual-note{display:none}.new-client-banner{flex-direction:column;align-items:flex-start}.hero-overlay{opacity:.55}.top-flourish,.ornament{transform:translateY(-30px)}.left-leaf{transform:translate(-55px,120px)}.right-leaf{transform:translate(35px,40px)}}
+@media(prefers-color-scheme:dark){.secondary{background:rgba(255,255,255,.04);border-color:#b78cff}.cards article{box-shadow:0 10px 30px rgba(0,0,0,.22)}.visual-note{background:rgba(255,255,255,.05)}.stem,.top-swoop>path{stroke:#a7d86c}.leaf-fill{fill:#78af60;stroke:#a7d86c}.top-swoop{opacity:.62}.left-foliage,.right-foliage{opacity:.66}.sparkles{stroke:#ff76c8;opacity:.7}.spray,.pink-stroke,.pink-curl{stroke:#ff7ac8}.heart{fill:#ff7ac8}.hero-bubbles circle{stroke:#d4c2f3;opacity:.82}}
+@media(max-width:1100px){.hero{padding-inline:clamp(2rem,5vw,4rem)!important;gap:2.5rem}.hero-visual{max-width:545px}.left-foliage{transform:translateX(-28px)}.right-cleaning{transform:translateX(18px)}.top-swoop{opacity:.42}.top-ornament{opacity:.5}}
+@media(max-width:900px){.hero,.split,.why{grid-template-columns:1fr}.hero{width:100vw;margin-inline:calc(50% - 50vw);padding:2.5rem clamp(1.5rem,5vw,3rem)!important;min-height:0}.cards{grid-template-columns:1fr 1fr}.hero-visual{order:-1;padding:0;justify-self:stretch;max-width:none}.visual-note{display:none}.new-client-banner{flex-direction:column;align-items:flex-start}.hero-overlay{opacity:.52}.top-swoop{transform:translateY(-35px)}.left-foliage{transform:translate(-35px,120px)}.right-cleaning{transform:translate(25px,30px)}}
 @media(max-width:600px){.home{overflow:hidden}.home section{padding:2.25rem 1.25rem}.hero{width:100%;margin-inline:0;gap:1.6rem;padding:1.25rem 1.25rem 2.25rem!important}.hero-photo img{border-radius:24px}.hero-copy .eyebrow{display:none}.hero h1{font-size:clamp(2.55rem,12vw,4rem);line-height:1.02;margin:0}.hero h1 span{margin-top:.35rem}.lead{font-size:1.05rem;line-height:1.65;margin-top:1.25rem}.actions{margin:1.5rem 0;gap:.75rem}.actions .button{width:100%;min-height:52px}.trust{display:grid;grid-template-columns:repeat(3,auto);justify-content:center;gap:.45rem .8rem;font-size:.78rem}.cards,.features{grid-template-columns:1fr}.new-client-banner{text-align:center;align-items:center}.new-client-banner .button,.final-cta .button{width:100%}.soft-art{min-height:260px}.soft-art span{font-size:1.7rem}.hero-brand-art{display:none}}
 @media(max-width:390px){.hero h1{font-size:2.45rem}.trust{grid-template-columns:1fr;justify-items:center}}@media(prefers-reduced-motion:reduce){.button{transition:none}}
 </style>
