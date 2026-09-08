@@ -6,38 +6,7 @@ import { SITE_TITLE } from '../consts';
 <header class="site-header">
   <nav class="site-nav">
     <a href="/" class="brand" aria-label={`${SITE_TITLE} home`}>
-      <svg class="brand-logo" viewBox="0 0 330 120" role="img" aria-label="Cleaning by Cassi">
-        <defs>
-          <linearGradient id="roofPink" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#ff8ad8" />
-            <stop offset="100%" stop-color="#f536b7" />
-          </linearGradient>
-          <linearGradient id="bubbleMint" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#72f0d0" />
-            <stop offset="100%" stop-color="#2fd7c0" />
-          </linearGradient>
-        </defs>
-
-        <g aria-hidden="true">
-          <path d="M98 28 L128 5 L158 28" fill="none" stroke="url(#roofPink)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
-          <rect x="122" y="20" width="7" height="7" rx="1" fill="#ff6fca" />
-          <rect x="131" y="20" width="7" height="7" rx="1" fill="#ff6fca" />
-          <rect x="122" y="29" width="7" height="7" rx="1" fill="#ff6fca" />
-          <rect x="131" y="29" width="7" height="7" rx="1" fill="#ff6fca" />
-
-          <text x="16" y="73" class="logo-script">Cleaning</text>
-          <text x="74" y="100" class="logo-by">BY CASSI</text>
-
-          <circle cx="248" cy="46" r="10" fill="url(#bubbleMint)" opacity=".98" />
-          <circle cx="235" cy="59" r="6" fill="url(#bubbleMint)" opacity=".95" />
-          <circle cx="252" cy="68" r="5" fill="url(#bubbleMint)" opacity=".95" />
-          <circle cx="238" cy="77" r="3.8" fill="url(#bubbleMint)" opacity=".9" />
-
-          <path d="M265 20l4 11 11 4-11 4-4 11-4-11-11-4 11-4 4-11Z" fill="#ff58c5" />
-          <path d="M288 37l3.5 8.5 8.5 3.5-8.5 3.5-3.5 8.5-3.5-8.5-8.5-3.5 8.5-3.5 3.5-8.5Z" fill="#7a5cff" />
-          <path d="M300 64l3.7 9 9 3.7-9 3.7-3.7 9-3.7-9-9-3.7 9-3.7 3.7-9Z" fill="#55dfc4" />
-        </g>
-      </svg>
+      <img src="/header-lockup.svg" alt="" class="brand-logo" decoding="async" />
     </a>
 
     <div class="internal-links">
@@ -56,11 +25,9 @@ import { SITE_TITLE } from '../consts';
 
 <style>
   .site-header { position:sticky; top:0; z-index:100; padding:.5rem 1rem; background:linear-gradient(90deg,rgba(12,25,96,.96),rgba(24,59,193,.96),rgba(84,23,132,.96)); border-bottom:1px solid rgba(255,255,255,.12); box-shadow:0 6px 24px rgba(0,0,0,.18); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
-  .site-nav { width:min(1240px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(230px,310px) 1fr 44px; align-items:center; gap:1.1rem; min-width:0; }
-  .brand { display:inline-flex; align-items:center; width:min(300px,100%); min-width:0; padding:.1rem; text-decoration:none; }
-  .brand-logo { display:block; width:100%; height:auto; max-height:82px; overflow:visible; }
-  .logo-script { font-family:'DM Serif Display',Georgia,serif; font-size:46px; font-style:italic; fill:#fff; letter-spacing:-1.2px; }
-  .logo-by { font-family:'Poppins',Arial,sans-serif; font-size:11px; font-weight:800; letter-spacing:5px; fill:#ff65c7; }
+  .site-nav { width:min(1240px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(250px,330px) 1fr 44px; align-items:center; gap:1.1rem; min-width:0; }
+  .brand { display:inline-flex; align-items:center; width:min(320px,100%); min-width:0; padding:.1rem; text-decoration:none; }
+  .brand-logo { display:block; width:100%; height:auto; max-height:86px; object-fit:contain; object-position:left center; }
   .internal-links { display:flex; align-items:center; justify-content:center; gap:.2rem; flex-wrap:wrap; min-width:0; }
   :global(.internal-links a) { padding:.65rem .8rem; border-radius:999px; color:#fff; font-size:.9rem; font-weight:600; transition:.2s ease; }
   :global(.internal-links a:hover) { color:#fff; background:rgba(255,255,255,.1); }
@@ -69,17 +36,17 @@ import { SITE_TITLE } from '../consts';
   .brand:focus-visible,.facebook-link:focus-visible,:global(.internal-links a:focus-visible){outline:3px solid #ff8ad8;outline-offset:4px}
 
   @media (max-width:860px) {
-    .site-nav { grid-template-columns:minmax(210px,260px) 1fr 42px; }
+    .site-nav { grid-template-columns:minmax(225px,285px) 1fr 42px; }
     .internal-links { order:3; grid-column:1/-1; width:100%; overflow-x:auto; justify-content:flex-start; flex-wrap:nowrap; padding-bottom:.15rem; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
     .internal-links::-webkit-scrollbar { display:none; }
-    .brand-logo { max-height:72px; }
+    .brand-logo { max-height:76px; }
   }
 
   @media (max-width:520px) {
     .site-header { padding:.45rem .7rem .35rem; }
     .site-nav { grid-template-columns:1fr 40px; gap:.4rem; }
-    .brand { width:210px; }
-    .brand-logo { max-height:64px; }
+    .brand { width:225px; }
+    .brand-logo { max-height:66px; }
     .facebook-link { display:none; }
     .internal-links { grid-column:1/-1; margin-inline:-.7rem; width:calc(100% + 1.4rem); padding:.2rem .7rem .35rem; scroll-padding-inline:.7rem; gap:.15rem; }
     :global(.internal-links a) { flex:0 0 auto; font-size:.84rem; padding:.55rem .7rem; white-space:nowrap; }
