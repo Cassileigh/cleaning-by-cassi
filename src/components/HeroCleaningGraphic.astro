@@ -1,20 +1,24 @@
-<img
-  class="cleaning-graphic"
-  src="/cleaning-hero-graphic.webp"
-  alt="Glowing house with a spray bottle, mop, bucket, bubbles, and sparkles"
-  width="720"
-  height="755"
-  loading="eager"
-  fetchpriority="high"
-  decoding="async"
-/>
+<picture>
+  <source srcset="https://raw.githubusercontent.com/Cassileigh/cleaning-by-cassi/main/public/cleaning-hero-graphic.webp" type="image/webp" />
+  <img
+    class="cleaning-graphic"
+    src="https://raw.githubusercontent.com/Cassileigh/cleaning-by-cassi/main/public/cleaning-hero-graphic.webp"
+    alt="Glowing house with a spray bottle, mop, bucket, bubbles, and sparkles"
+    width="720"
+    height="755"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+  />
+</picture>
 
 <style>
+  picture { display:block; width:100%; }
   .cleaning-graphic {
-    display: block;
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 18px 30px rgba(35, 15, 92, .28));
+    display:block;
+    width:100%;
+    height:auto;
+    object-fit:contain;
+    filter:drop-shadow(0 18px 34px rgba(35,15,92,.32));
   }
 </style>
