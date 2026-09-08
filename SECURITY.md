@@ -1,21 +1,33 @@
 # Security Policy
 
-## Reporting a Vulnerability
+## Reporting a vulnerability
 
-If you discover a security vulnerability in the Cleaning by Cassi website, please report it privately by emailing [cassi@cleaningbycassi.com](mailto:cassi@cleaningbycassi.com).
+If you discover a security vulnerability in Cleaning By Cassi, please report it privately rather than opening a public GitHub issue.
 
-Please include:
+Email security reports to **cassi@cleaningbycassi.com**.
 
-- A clear description of the vulnerability
+Please include, when possible:
+
+- A clear description of the vulnerability and its potential impact
+- The affected page, endpoint, component, or dependency
 - Steps to reproduce the issue
-- The affected page, URL, or component
-- Any screenshots, logs, or proof-of-concept details that may help
-- Your contact information for follow-up
+- Any relevant request/response details, logs, screenshots, or proof of concept
+- A suggested mitigation, if you have one
 
-Please do not open a public GitHub issue or disclose the vulnerability publicly before it has been reviewed and addressed.
+Please do not include passwords, API keys, tokens, personal data, or other secrets in the report unless they are necessary to demonstrate the vulnerability. Redact sensitive values whenever possible.
 
-## What to Expect
+## Response process
 
-We will acknowledge your report as soon as reasonably possible, investigate the issue, and provide updates when appropriate. Please act in good faith and avoid accessing, changing, downloading, or deleting data that does not belong to you.
+We will acknowledge security reports as soon as reasonably possible, investigate the report, and work toward a fix or mitigation. Reports will be handled privately while the issue is being evaluated and remediated.
 
-Thank you for helping keep Cleaning by Cassi and its visitors safe.
+If a report is determined to be a false positive or outside the project's security scope, we will provide an explanation where appropriate.
+
+## Scope
+
+This policy covers the AlienX SmartHome website, its application code, deployment configuration, and project dependencies maintained in this repository.
+
+Third-party services and infrastructure are outside the project's direct control. Vulnerabilities in those services should also be reported to their respective providers when appropriate.
+
+## Supported versions
+
+Only the current `main` branch is actively maintained. Security fixes are applied to the current production codebase.
