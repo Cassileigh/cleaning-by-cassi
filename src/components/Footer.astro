@@ -3,6 +3,46 @@ const today = new Date();
 ---
 
 <footer class="site-footer">
+  <div class="footer-ornament" aria-hidden="true">
+    <svg viewBox="0 0 520 120" role="presentation" focusable="false">
+      <defs>
+        <linearGradient id="footerPink" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#f24bb5" />
+          <stop offset="55%" stop-color="#ff5bc8" />
+          <stop offset="100%" stop-color="#f24bb5" />
+        </linearGradient>
+        <linearGradient id="footerGreen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#c5f238" />
+          <stop offset="100%" stop-color="#74b92d" />
+        </linearGradient>
+      </defs>
+
+      <g fill="none" stroke="url(#footerPink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 67c32-29 71-33 110-8 19 12 39 17 62 16" />
+        <path d="M22 67c-13 8-17 22-9 32 10 12 27 8 35-5 7-11 3-23-8-28" />
+        <path d="M498 67c-32-29-71-33-110-8-19 12-39 17-62 16" />
+        <path d="M498 67c13 8 17 22 9 32-10 12-27 8-35-5-7-11-3-23 8-28" />
+      </g>
+
+      <g>
+        <circle cx="183" cy="72" r="4.5" fill="#f7c45b" />
+        <circle cx="198" cy="75" r="5" fill="#a7df24" />
+        <circle cx="214" cy="76" r="4" fill="#f24bb5" />
+        <circle cx="306" cy="76" r="4" fill="#f24bb5" />
+        <circle cx="322" cy="75" r="5" fill="#a7df24" />
+        <circle cx="337" cy="72" r="4.5" fill="#f7c45b" />
+      </g>
+
+      <g fill="url(#footerGreen)" stroke="#74b92d" stroke-width="1.5">
+        <path d="M260 87c-4-31-1-53 0-66 11 16 15 38 0 66Z" />
+        <path d="M252 90c-24-6-39-19-47-39 25 2 42 13 47 39Z" />
+        <path d="M268 90c24-6 39-19 47-39-25 2-42 13-47 39Z" />
+      </g>
+
+      <path d="M260 88V44" stroke="#6fae28" stroke-width="2" stroke-linecap="round" />
+    </svg>
+  </div>
+
   <div class="footer-inner">
     <div>
       <strong>Cleaning by Cassi</strong>
@@ -25,7 +65,7 @@ const today = new Date();
 <style>
   .site-footer {
     margin-top:4rem;
-    padding:3rem 1rem 2rem;
+    padding:2.2rem 1rem 2rem;
     color:var(--ink);
     background:
       radial-gradient(circle at 15% 20%, rgba(242,75,181,.14), transparent 28%),
@@ -33,20 +73,39 @@ const today = new Date();
       linear-gradient(135deg, rgba(111,20,217,.09), rgba(167,223,36,.08));
     border-top:1px solid var(--border);
   }
+
+  .footer-ornament {
+    width:min(420px,78vw);
+    margin:0 auto 1.15rem;
+    line-height:0;
+  }
+
+  .footer-ornament svg {
+    display:block;
+    width:100%;
+    height:auto;
+    overflow:visible;
+    filter:drop-shadow(0 5px 12px rgba(111,20,217,.14));
+  }
+
   .footer-inner { width:min(1180px,100%); margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:2rem; }
   .footer-inner strong { font-family:'DM Serif Display',serif; font-size:1.6rem; font-weight:400; }
   .footer-inner p { margin:.4rem 0 0; color:var(--muted); }
   .footer-links { display:flex; flex-wrap:wrap; gap:.65rem 1rem; justify-content:flex-end; }
   .footer-links a { color:var(--purple); font-weight:600; }
   .footer-links a:hover { color:var(--pink); }
+  .footer-links a:focus-visible { outline:3px solid var(--pink); outline-offset:4px; border-radius:4px; }
   .footer-bottom { width:min(1180px,100%); margin:2rem auto 0; padding-top:1.5rem; border-top:1px solid var(--border); color:var(--muted); font-size:.82rem; text-align:center; }
 
   @media (prefers-color-scheme:dark) {
     .site-footer { background:linear-gradient(135deg, rgba(111,20,217,.16), rgba(21,72,245,.10), rgba(242,75,181,.11)); }
     .footer-links a { color:#d7baff; }
+    .footer-ornament svg { filter:drop-shadow(0 6px 14px rgba(242,75,181,.16)); }
   }
+
   @media (max-width:700px) {
-    .site-footer { margin-top:2.5rem; padding-top:2.25rem; }
+    .site-footer { margin-top:2.5rem; padding-top:1.8rem; }
+    .footer-ornament { width:min(340px,88vw); margin-bottom:1rem; }
     .footer-inner { flex-direction:column; text-align:center; }
     .footer-links { justify-content:center; }
   }
