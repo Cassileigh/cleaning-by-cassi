@@ -21,42 +21,66 @@ const today = new Date();
     <span class="footer-divider"></span>
 
     <div class="footer-ornament">
-      <svg viewBox="0 0 520 120" role="presentation" focusable="false">
+      <svg viewBox="0 0 700 160" role="presentation" focusable="false">
         <defs>
-          <linearGradient id="footerPink" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#f24bb5" />
-            <stop offset="55%" stop-color="#ff5bc8" />
-            <stop offset="100%" stop-color="#f24bb5" />
+          <linearGradient id="ornPink" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ff6bc5" />
+            <stop offset="52%" stop-color="#f24bb5" />
+            <stop offset="100%" stop-color="#d92db1" />
           </linearGradient>
-          <linearGradient id="footerGreen" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#c5f238" />
-            <stop offset="100%" stop-color="#74b92d" />
+          <linearGradient id="ornGreen" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#d7ff4b" />
+            <stop offset="48%" stop-color="#a7df24" />
+            <stop offset="100%" stop-color="#67a824" />
           </linearGradient>
+          <filter id="ornGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2.4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
 
-        <g fill="none" stroke="url(#footerPink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 67c32-29 71-33 110-8 19 12 39 17 62 16" />
-          <path d="M22 67c-13 8-17 22-9 32 10 12 27 8 35-5 7-11 3-23-8-28" />
-          <path d="M498 67c-32-29-71-33-110-8-19 12-39 17-62 16" />
-          <path d="M498 67c13 8 17 22 9 32-10 12-27 8-35-5-7-11-3-23 8-28" />
+        <!-- Left double flourish, matching the card's curled ornamental stroke -->
+        <g fill="none" stroke="url(#ornPink)" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke-width="8" d="M22 88c28-30 70-38 112-19 32 14 51 36 83 37 24 1 43-11 63-28" />
+          <path stroke-width="5" d="M38 95c20 22 48 22 69 5 17-13 14-35-5-43-17-7-35 2-38 18-3 15 8 26 22 26" />
+          <path stroke-width="5" d="M101 58c29-16 62-13 91 7 25 18 42 27 67 26" />
+          <path stroke-width="3.5" d="M126 68c27-8 53-2 76 17 16 13 32 18 51 18" opacity=".75" />
         </g>
 
-        <g>
-          <circle cx="183" cy="72" r="4.5" fill="#f7c45b" />
-          <circle cx="198" cy="75" r="5" fill="#a7df24" />
-          <circle cx="214" cy="76" r="4" fill="#f24bb5" />
-          <circle cx="306" cy="76" r="4" fill="#f24bb5" />
-          <circle cx="322" cy="75" r="5" fill="#a7df24" />
-          <circle cx="337" cy="72" r="4.5" fill="#f7c45b" />
+        <!-- Right flourish mirrors the business card -->
+        <g fill="none" stroke="url(#ornPink)" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke-width="8" d="M678 88c-28-30-70-38-112-19-32 14-51 36-83 37-24 1-43-11-63-28" />
+          <path stroke-width="5" d="M662 95c-20 22-48 22-69 5-17-13-14-35 5-43 17-7 35 2 38 18 3 15-8 26-22 26" />
+          <path stroke-width="5" d="M599 58c-29-16-62-13-91 7-25 18-42 27-67 26" />
+          <path stroke-width="3.5" d="M574 68c-27-8-53-2-76 17-16 13-32 18-51 18" opacity=".75" />
         </g>
 
-        <g fill="url(#footerGreen)" stroke="#74b92d" stroke-width="1.5">
-          <path d="M260 87c-4-31-1-53 0-66 11 16 15 38 0 66Z" />
-          <path d="M252 90c-24-6-39-19-47-39 25 2 42 13 47 39Z" />
-          <path d="M268 90c24-6 39-19 47-39-25 2-42 13-47 39Z" />
+        <!-- Colored bead details from the business card -->
+        <g filter="url(#ornGlow)">
+          <circle cx="246" cy="103" r="4" fill="#ff79c8" />
+          <circle cx="262" cy="108" r="5" fill="#f7bf4a" />
+          <circle cx="279" cy="112" r="5.5" fill="#a7df24" />
+          <circle cx="297" cy="114" r="4.5" fill="#d7ff4b" />
+          <circle cx="403" cy="114" r="4.5" fill="#d7ff4b" />
+          <circle cx="421" cy="112" r="5.5" fill="#a7df24" />
+          <circle cx="438" cy="108" r="5" fill="#f7bf4a" />
+          <circle cx="454" cy="103" r="4" fill="#ff79c8" />
         </g>
 
-        <path d="M260 88V44" stroke="#6fae28" stroke-width="2" stroke-linecap="round" />
+        <!-- Three-leaf center motif -->
+        <g fill="url(#ornGreen)" stroke="#7fba22" stroke-width="2" filter="url(#ornGlow)">
+          <path d="M350 124c-7-37-5-72 0-97 19 22 26 55 0 97Z" />
+          <path d="M337 126c-36-8-59-30-69-61 37 1 63 21 69 61Z" />
+          <path d="M363 126c36-8 59-30 69-61-37 1-63 21-69 61Z" />
+        </g>
+        <g fill="none" stroke="#f5ffd8" stroke-width="2.2" stroke-linecap="round" opacity=".65">
+          <path d="M350 111V47" />
+          <path d="M331 114c-18-15-33-29-49-40" />
+          <path d="M369 114c18-15 33-29 49-40" />
+        </g>
       </svg>
     </div>
 
@@ -134,9 +158,8 @@ const today = new Date();
   }
 
   .footer-ornament {
-    width:min(360px,42vw);
+    width:min(430px,48vw);
     line-height:0;
-    transform:translateY(2px);
   }
 
   .footer-ornament svg {
@@ -144,12 +167,12 @@ const today = new Date();
     width:100%;
     height:auto;
     overflow:visible;
-    filter:drop-shadow(0 5px 12px rgba(111,20,217,.14));
+    filter:drop-shadow(0 6px 14px rgba(111,20,217,.12));
   }
 
   .footer-bottom {
     width:min(1180px,100%);
-    margin:1rem auto 0;
+    margin:.75rem auto 0;
     color:var(--muted);
     font-size:.82rem;
     text-align:center;
@@ -160,14 +183,14 @@ const today = new Date();
       background:linear-gradient(135deg, rgba(111,20,217,.16), rgba(21,72,245,.10), rgba(242,75,181,.11));
     }
     .footer-links a { color:#d7baff; }
-    .footer-ornament svg { filter:drop-shadow(0 6px 14px rgba(242,75,181,.16)); }
+    .footer-ornament svg { filter:drop-shadow(0 7px 16px rgba(242,75,181,.18)); }
   }
 
   @media (max-width:700px) {
     .site-footer { margin-top:2.5rem; padding:2.5rem 1rem 2rem; }
     .footer-inner { flex-direction:column; text-align:center; align-items:center; }
     .footer-links { justify-content:center; gap:.65rem 1rem; }
-    .footer-divider-row { gap:.6rem; margin-top:1.5rem; }
-    .footer-ornament { width:min(300px,66vw); }
+    .footer-divider-row { gap:.45rem; margin-top:1.5rem; }
+    .footer-ornament { width:min(360px,76vw); }
   }
 </style>
