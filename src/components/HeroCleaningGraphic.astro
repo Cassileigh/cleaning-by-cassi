@@ -1,0 +1,90 @@
+<svg class="cleaning-graphic" viewBox="0 0 520 500" role="img" aria-labelledby="cleaningGraphicTitle cleaningGraphicDesc" xmlns="http://www.w3.org/2000/svg">
+  <title id="cleaningGraphicTitle">House and cleaning supplies illustration</title>
+  <desc id="cleaningGraphicDesc">A glowing house with a spray bottle, mop, bucket, bubbles, and sparkles.</desc>
+  <defs>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff8bd8" />
+      <stop offset="1" stop-color="#f24bb5" />
+    </linearGradient>
+    <linearGradient id="lime" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d8ff39" />
+      <stop offset="1" stop-color="#8fd500" />
+    </linearGradient>
+    <linearGradient id="bucket" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff80d0" />
+      <stop offset="1" stop-color="#df299c" />
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8d7cff" stop-opacity=".9" />
+      <stop offset="1" stop-color="#5632bd" stop-opacity=".55" />
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b" />
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#32116f" flood-opacity=".28" />
+    </filter>
+  </defs>
+
+  <g filter="url(#softShadow)">
+    <!-- oversized house -->
+    <path d="M82 260 255 84 430 260" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M389 220V130h44v134" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M107 258v112M402 258v112" fill="none" stroke="#fff" stroke-width="14" stroke-linecap="round" />
+
+    <!-- green window panes -->
+    <g filter="url(#glow)" stroke="#f6ffd0" stroke-width="3">
+      <rect x="214" y="180" width="42" height="42" rx="8" fill="url(#lime)" />
+      <rect x="267" y="180" width="42" height="42" rx="8" fill="url(#lime)" />
+      <rect x="214" y="232" width="42" height="42" rx="8" fill="url(#lime)" />
+      <rect x="267" y="232" width="42" height="42" rx="8" fill="url(#lime)" />
+    </g>
+
+    <!-- spray bottle -->
+    <g transform="translate(132 278)">
+      <path d="M60 42h45l26 25-16 16H81l-7 11H54l-7-14 17-20z" fill="none" stroke="url(#pink)" stroke-width="10" stroke-linejoin="round" />
+      <path d="M52 42H29v22h22" fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round" />
+      <rect x="55" y="39" width="30" height="30" rx="8" fill="url(#pink)" stroke="#fff" stroke-width="4" />
+      <rect x="76" y="92" width="38" height="25" rx="8" fill="url(#pink)" stroke="#fff" stroke-width="4" />
+      <path d="M80 117h31l16 96H59l15-96z" fill="url(#glass)" stroke="#fff" stroke-width="9" stroke-linejoin="round" />
+      <g fill="#fff" opacity=".92">
+        <circle cx="15" cy="54" r="5"/><circle cx="1" cy="67" r="4"/><circle cx="17" cy="78" r="4"/><circle cx="-3" cy="88" r="3"/><circle cx="28" cy="93" r="3"/>
+      </g>
+    </g>
+
+    <!-- bucket -->
+    <g transform="translate(313 326)">
+      <ellipse cx="75" cy="30" rx="65" ry="17" fill="#31166f" stroke="#fff" stroke-width="8" />
+      <path d="M18 36h114l-15 91H35z" fill="url(#bucket)" stroke="#fff" stroke-width="8" stroke-linejoin="round" />
+      <path d="M31 58c17 16 72 19 96-2" fill="none" stroke="#ffb6e8" stroke-width="6" opacity=".7" />
+      <path d="M131 57c31 5 29 55 1 61" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" />
+    </g>
+
+    <!-- mop -->
+    <g transform="translate(358 252) rotate(18 50 125)">
+      <rect x="45" y="0" width="12" height="210" rx="6" fill="#b8dcff" stroke="#fff" stroke-width="5" />
+      <rect x="39" y="-14" width="24" height="46" rx="10" fill="url(#pink)" stroke="#fff" stroke-width="4" />
+      <rect x="35" y="190" width="33" height="35" rx="8" fill="url(#pink)" stroke="#fff" stroke-width="4" />
+      <path d="M51 220c-10 15-23 38-33 51M51 220c-2 21-4 39-5 61M52 220c8 18 16 39 22 60M52 220c18 19 31 38 43 56M51 220c-21 18-38 36-53 50" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" />
+    </g>
+
+    <!-- bubbles -->
+    <g fill="none" stroke="#fff" stroke-width="4" opacity=".95">
+      <circle cx="338" cy="315" r="16"/><circle cx="291" cy="426" r="22"/><circle cx="121" cy="435" r="13"/>
+    </g>
+
+    <!-- sparkles -->
+    <g filter="url(#glow)">
+      <path d="M86 121c8 25 13 30 38 38-25 8-30 13-38 38-8-25-13-30-38-38 25-8 30-13 38-38z" fill="url(#pink)" />
+      <path d="M356 83c9 29 15 35 44 44-29 9-35 15-44 44-9-29-15-35-44-44 29-9 35-15 44-44z" fill="url(#pink)" />
+      <path d="M448 155c5 17 9 21 26 26-17 5-21 9-26 26-5-17-9-21-26-26 17-5 21-9 26-26z" fill="url(#lime)" />
+      <path d="M116 262c5 18 9 22 27 27-18 5-22 9-27 27-5-18-9-22-27-27 18-5 22-9 27-27z" fill="url(#pink)" />
+      <path d="M331 241c4 14 7 17 21 21-14 4-17 7-21 21-4-14-7-17-21-21 14-4 17-7 21-21z" fill="url(#lime)" />
+    </g>
+  </g>
+</svg>
+
+<style>
+  .cleaning-graphic { display:block; width:100%; height:auto; overflow:visible; }
+</style>
