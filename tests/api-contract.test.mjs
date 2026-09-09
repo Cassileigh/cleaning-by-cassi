@@ -114,3 +114,21 @@ test('status hides implementation metadata and returns real failure codes', asyn
     assert.equal(api.calls.length, 0);
   }
 });
+
+test('middleware preserves status policy and limits both quote URL forms', async () => {
+  const source = readFileSync(new URL('../src/middleware.ts', import.meta.url), 'utf8')
+    .replace("import { defineMiddleware } from 'astro:middleware';", 'const defineMiddleware = (handler) => handler;');
+  const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
+  const exports = {};
+  vm.runInNewContext(compiled, { exports, Response, Headers, URL, crypto });
+  const status = route('status');
+  const response = await exports.onRequest({ request: new Request('https://cleaningbycassi.com/api/status') }, () => status.GET({}));
+  assert.equal(response.headers.get('referrer-policy'), 'no-referrer');
+  assert.ok(response.headers.get('content-security-policy').includes("default-src 'none'"));
+  let reached = 0;
+  for (let i = 0; i < 9; i++) {
+    const response = await exports.onRequest({ request: new Request(`https://cleaningbycassi.com/api/quote${i % 2 ? '/' : ''}`, { method: 'POST', headers: { 'CF-Connecting-IP': '192.0.2.1' } }) }, () => { reached++; return Response.json({ ok: true }); });
+    assert.equal(response.status, i < 8 ? 200 : 429);
+  }
+  assert.equal(reached, 8);
+});

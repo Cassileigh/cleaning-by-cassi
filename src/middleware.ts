@@ -31,9 +31,13 @@ const securityHeaders = {
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
 
-const secure = (response: Response) => {
+const secure = (response: Response, statusRoute = false) => {
   const headers = new Headers(response.headers);
   for (const [name, value] of Object.entries(securityHeaders)) headers.set(name, value);
+  if (statusRoute) {
+    headers.set('Content-Security-Policy', "default-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    headers.set('Referrer-Policy', 'no-referrer');
+  }
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -61,7 +65,8 @@ const pruneAttempts = (now: number) => {
 
 export const onRequest = defineMiddleware(async ({ request }, next) => {
   const requestUrl = new URL(request.url);
-  if (request.method === 'POST' && requestUrl.pathname === '/api/quote') {
+  const pathname = requestUrl.pathname.replace(/\/+$/, '');
+  if (request.method === 'POST' && pathname === '/api/quote') {
     const requestId = `CBC-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
     const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown';
     const now = Date.now();
@@ -76,9 +81,15 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
       }, 429, requestId);
     }
 
+    // Keep isolate-local bookkeeping bounded even during a many-IP burst.
+    if (!attempts.has(ip) && attempts.size >= MAX_TRACKED_IPS) {
+      const oldest = attempts.keys().next().value;
+      if (oldest !== undefined) attempts.delete(oldest);
+    }
+
     recent.push(now);
     attempts.set(ip, recent);
   }
 
-  return secure(await next());
+  return secure(await next(), pathname === '/api/status');
 });

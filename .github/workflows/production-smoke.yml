@@ -68,11 +68,22 @@ jobs:
           headers_file="$(mktemp)"
           trap 'rm -f "$status_file" "$headers_file"' EXIT
 
-          curl --fail --silent --show-error --location \
-            --connect-timeout 10 --max-time 30 \
-            --retry 12 --retry-delay 5 --retry-all-errors \
-            --dump-header "$headers_file" \
-            --output "$status_file" https://cleaningbycassi.com/api/status
+          # Push workflows can start before the independently managed Worker
+          # deployment finishes. Retry the contract, not just HTTP failures.
+          ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error --location \
+              --connect-timeout 5 --max-time 10 \
+              --dump-header "$headers_file" \
+              --output "$status_file" https://cleaningbycassi.com/api/status &&
+              grep -qi '^cross-origin-resource-policy: *same-origin' "$headers_file" &&
+              node -e 'const v=JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")); process.exit(v.ok===true && v.checks?.protection && v.checks?.delivery && !("runtime" in v) ? 0 : 1)' "$status_file"; then
+              ready=true
+              break
+            fi
+            sleep 5
+          done
+          test "$ready" = true
 
           grep -qi '^content-type:.*application/json' "$headers_file"
           grep -qi '^cache-control:.*no-store' "$headers_file"
