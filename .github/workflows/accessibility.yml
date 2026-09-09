@@ -1,0 +1,131 @@
+name: Accessibility & Theme Compatibility
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: accessibility-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  accessibility:
+    name: Light, dark, and accessibility checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Cloudflare preview
+        run: npx wrangler dev --port 4321 > /tmp/cleaning-by-cassi-accessibility.log 2>&1 &
+
+      - name: Wait for preview
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error http://127.0.0.1:4321/ > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/cleaning-by-cassi-accessibility.log
+          exit 1
+
+      - name: Install browser accessibility tooling
+        run: |
+          npm install --no-save --package-lock=false @playwright/test@1.55.0 axe-core@4.10.3
+          npx playwright install --with-deps chromium
+
+      - name: Test light and dark themes with axe
+        run: |
+          cat > tests-accessibility.spec.cjs <<'TEST'
+          const { test, expect } = require('@playwright/test');
+          const axe = require('axe-core');
+
+          const baseURL = 'http://127.0.0.1:4321';
+          const routes = ['/', '/services/', '/pricing/', '/about/', '/quote/', '/quote-success/'];
+          const themes = ['light', 'dark'];
+
+          test.describe.configure({ mode: 'serial' });
+
+          for (const theme of themes) {
+            for (const route of routes) {
+              test(`${theme} theme: ${route}`, async ({ page }) => {
+                await page.emulateMedia({ colorScheme: theme, reducedMotion: 'reduce' });
+                await page.goto(`${baseURL}${route}`, { waitUntil: 'domcontentloaded' });
+                await page.waitForTimeout(500);
+                await page.addScriptTag({ content: axe.source });
+
+                const results = await page.evaluate(async () => window.axe.run(document, {
+                  runOnly: ['wcag2a', 'wcag2aa']
+                }));
+
+                expect(
+                  results.violations,
+                  `${theme} accessibility violations: ${JSON.stringify(results.violations)}`
+                ).toEqual([]);
+              });
+            }
+          }
+          TEST
+
+          npx playwright test tests-accessibility.spec.cjs --reporter=line
+
+      - name: Run Lighthouse accessibility audit
+        run: |
+          cat > lighthouserc.cjs <<'LIGHTHOUSE'
+          module.exports = {
+            ci: {
+              collect: {
+                url: [
+                  'http://127.0.0.1:4321/',
+                  'http://127.0.0.1:4321/services/',
+                  'http://127.0.0.1:4321/pricing/',
+                  'http://127.0.0.1:4321/about/',
+                  'http://127.0.0.1:4321/quote/',
+                  'http://127.0.0.1:4321/quote-success/'
+                ],
+                numberOfRuns: 1,
+                settings: { onlyCategories: ['accessibility'] }
+              },
+              assert: {
+                assertions: {
+                  'categories:accessibility': ['error', { minScore: 0.95 }]
+                }
+              },
+              upload: { target: 'filesystem', outputDir: '.lighthouseci' }
+            }
+          };
+          LIGHTHOUSE
+
+          npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.cjs
+
+      - name: Upload diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-diagnostics
+          path: |
+            /tmp/cleaning-by-cassi-accessibility.log
+            .lighthouseci
+            test-results
+          if-no-files-found: ignore
