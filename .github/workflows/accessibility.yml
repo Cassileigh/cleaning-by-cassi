@@ -65,8 +65,6 @@ jobs:
           const routes = ['/', '/services/', '/pricing/', '/about/', '/quote/', '/quote-success/'];
           const themes = ['light', 'dark'];
 
-          test.describe.configure({ mode: 'serial' });
-
           for (const theme of themes) {
             for (const route of routes) {
               test(`${theme} theme: ${route}`, async ({ page }) => {
