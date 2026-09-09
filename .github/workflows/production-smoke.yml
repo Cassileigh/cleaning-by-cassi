@@ -96,6 +96,7 @@ jobs:
           status="$(curl --silent --show-error --output "$body_file" \
             --write-out '%{http_code}' --request POST \
             --header 'Accept: application/json' \
+            --header 'Origin: https://cleaningbycassi.com' \
             --form 'name=Production Smoke Test' \
             --form 'email=smoke@example.com' \
             --form 'phone=5555555555' \
