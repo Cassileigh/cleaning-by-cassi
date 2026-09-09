@@ -50,8 +50,11 @@ jobs:
           cat /tmp/cleaning-by-cassi-preview.log
           exit 1
 
+      - name: Install Playwright test runner
+        run: npm install --no-save --package-lock=false @playwright/test@1.55.0
+
       - name: Install Playwright Chromium
-        run: npx --yes @playwright/test@1.55.0 install --with-deps chromium
+        run: npx playwright install --with-deps chromium
 
       - name: Run responsive compatibility matrix
         run: |
@@ -117,7 +120,7 @@ jobs:
           }
           TEST
 
-          npx --yes @playwright/test@1.55.0 test tests-responsive.spec.cjs --reporter=line
+          npx playwright test tests-responsive.spec.cjs --reporter=line
 
       - name: Upload preview log on failure
         if: failure()
