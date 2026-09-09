@@ -77,6 +77,7 @@ jobs:
               --dump-header "$headers_file" \
               --output "$status_file" https://cleaningbycassi.com/api/status &&
               grep -qi '^cross-origin-resource-policy: *same-origin' "$headers_file" &&
+              grep -qi '^referrer-policy: *no-referrer' "$headers_file" &&
               node -e 'const v=JSON.parse(require("node:fs").readFileSync(process.argv[1],"utf8")); process.exit(v.ok===true && v.checks?.protection && v.checks?.delivery && !("runtime" in v) ? 0 : 1)' "$status_file"; then
               ready=true
               break
