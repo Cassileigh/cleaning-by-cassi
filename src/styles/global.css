@@ -258,6 +258,10 @@ table {
     color: var(--pink-bright);
   }
 
+  .eyebrow {
+    color: #d7baff;
+  }
+
   input,
   textarea,
   select {
