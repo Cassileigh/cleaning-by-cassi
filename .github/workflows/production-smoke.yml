@@ -109,6 +109,8 @@ jobs:
 
           method_status="$(curl --silent --show-error --output /dev/null \
             --write-out '%{http_code}' --request POST \
+            --header 'Origin: https://cleaningbycassi.com' \
+            --header 'Content-Type: application/json' \
             https://cleaningbycassi.com/api/status)"
           test "$method_status" = 405
 
