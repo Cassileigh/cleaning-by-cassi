@@ -90,6 +90,17 @@ type TurnstileSiteverifyResponse = {
 const TURNSTILE_SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const TURNSTILE_ACTION = 'quote';
 
+function json(body: Record<string, unknown>, status = 200, requestId?: string) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
+      ...(requestId ? { 'X-Request-ID': requestId } : {}),
+    },
+  });
+}
+
 async function verifyTurnstile(
   request: Request,
   formData: FormData,
@@ -131,6 +142,8 @@ async function verifyTurnstile(
 }
 
 export const POST = async ({ request, locals }: any) => {
+  const requestId = `CBC-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
+
   try {
     const contentLength = Number(request.headers.get('content-length') || 0);
     if (contentLength && contentLength > MAX_REQUEST_BYTES) {
@@ -188,8 +201,8 @@ export const POST = async ({ request, locals }: any) => {
 
     // Never accept quote requests without a configured Turnstile destination.
     if (!turnstileSecret || expectedHostnames.size === 0) {
-      console.error('Turnstile is not configured.');
-      return new Response('Security verification is temporarily unavailable.', { status: 503 });
+      console.error('Turnstile is not configured.', { requestId });
+      return json({ error: 'Security verification is temporarily unavailable.', code: 'turnstile-not-configured', requestId }, 503, requestId);
     }
 
     const passedTurnstile = await verifyTurnstile(
@@ -200,12 +213,12 @@ export const POST = async ({ request, locals }: any) => {
     );
 
     if (!passedTurnstile) {
-      return new Response('The security check expired or could not be verified. Please complete it again.', { status: 403 });
+      return json({ error: 'The security check expired or could not be verified. Please complete it again.', code: 'turnstile-failed', requestId }, 403, requestId);
     }
 
     if (!resendApiKey) {
-      console.error('RESEND_API_KEY is missing.');
-      return new Response('Email service is not configured.', { status: 500 });
+      console.error('RESEND_API_KEY is missing.', { requestId });
+      return json({ error: 'Email service is not configured.', code: 'email-not-configured', requestId }, 503, requestId);
     }
 
     const fields = [
@@ -258,49 +271,97 @@ export const POST = async ({ request, locals }: any) => {
         <p><strong>Cassi</strong><br />Cleaning by Cassi</p>
       </div>`;
 
-    const resendResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [BUSINESS_EMAIL],
-        reply_to: email,
-        subject: `🧼 New Quote Request — ${name}`,
-        html: businessEmailHtml,
-      }),
-    });
-
-    if (!resendResponse.ok) {
-      console.error('Resend business email failed with status:', resendResponse.status);
-      return new Response('Unable to send quote request.', { status: 500 });
+    let resendResponse: Response;
+    try {
+      resendResponse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: [BUSINESS_EMAIL],
+          reply_to: email,
+          subject: `🧼 New Quote Request — ${name}`,
+          html: businessEmailHtml,
+        }),
+        signal: AbortSignal.timeout(10_000),
+      });
+    } catch (error) {
+      console.error('Resend business email request failed.', {
+        requestId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+      return json({ error: 'Unable to send your quote request. Please try again.', code: 'email-unavailable', requestId }, 502, requestId);
     }
 
-    const customerResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: FROM_EMAIL,
-        to: [email],
-        reply_to: BUSINESS_EMAIL,
-        subject: '✨ We received your quote request — Cleaning by Cassi',
-        html: customerEmailHtml,
-      }),
+    if (!resendResponse.ok) {
+      const errorBody = await resendResponse.text().catch(() => '');
+      console.error('Resend business email request was rejected.', {
+        requestId,
+        status: resendResponse.status,
+        body: errorBody.slice(0, 1_000),
+      });
+      return json({ error: 'Unable to send your quote request. Please try again.', code: 'email-rejected', requestId }, 502, requestId);
+    }
+
+    let resendResult: { id?: unknown };
+    try {
+      resendResult = (await resendResponse.json()) as { id?: unknown };
+    } catch {
+      resendResult = {};
+    }
+
+    if (typeof resendResult.id !== 'string' || !resendResult.id) {
+      console.error('Resend returned success without an email ID.', { requestId });
+      return json({ error: 'Your quote request could not be confirmed. Please try again.', code: 'email-unconfirmed', requestId }, 502, requestId);
+    }
+
+    console.info('Business quote email accepted by Resend.', {
+      requestId,
+      emailId: resendResult.id,
     });
 
-    if (!customerResponse.ok) {
-      console.error('Resend customer email failed with status:', customerResponse.status);
-      // The business already received the request, so don't make the visitor resubmit it.
+    try {
+      const customerResponse = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${resendApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from: FROM_EMAIL,
+          to: [email],
+          reply_to: BUSINESS_EMAIL,
+          subject: '✨ We received your quote request — Cleaning by Cassi',
+          html: customerEmailHtml,
+        }),
+        signal: AbortSignal.timeout(10_000),
+      });
+
+      if (!customerResponse.ok) {
+        const errorBody = await customerResponse.text().catch(() => '');
+        console.error('Resend customer confirmation was rejected.', {
+          requestId,
+          status: customerResponse.status,
+          body: errorBody.slice(0, 1_000),
+        });
+      }
+    } catch (error) {
+      console.error('Resend customer confirmation failed.', {
+        requestId,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+
+    if (request.headers.get('accept')?.includes('application/json')) {
+      return json({ ok: true, requestId }, 200, requestId);
     }
 
     return Response.redirect(new URL('/quote-success', request.url), 303);
   } catch (error) {
-    console.error('Quote form error:', error instanceof Error ? error.message : 'Unknown error');
-    return new Response('Something went wrong while submitting your quote request.', { status: 500 });
+    console.error('Quote form error:', error instanceof Error ? error.message : 'Unknown error', { requestId });
+    return json({ error: 'Something went wrong while submitting your quote request.', code: 'quote-failed', requestId }, 500, requestId);
   }
 };

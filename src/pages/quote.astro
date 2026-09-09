@@ -138,12 +138,23 @@ const addOns = [
         button.textContent = 'Sending…';
 
         try {
-          const response = await fetch(form.action, { method: 'POST', body: formData });
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: formData,
+          });
+          const responseBody = await response.json().catch(() => ({}));
           if (!response.ok) {
-            const message = (await response.text()).trim();
-            throw new Error(message || 'Your quote request could not be sent. Please try again.');
+            throw new Error(
+              typeof responseBody.error === 'string'
+                ? responseBody.error
+                : 'Your quote request could not be sent. Please try again.'
+            );
           }
-          window.location.assign(response.url || '/quote-success');
+          if (responseBody.ok !== true) {
+            throw new Error('Your quote request could not be confirmed. Please try again.');
+          }
+          window.location.assign('/quote-success');
         } catch (error) {
           resetTurnstile();
           setStatus(error instanceof Error ? error.message : 'Something went wrong. Please try again.', 'failure');
