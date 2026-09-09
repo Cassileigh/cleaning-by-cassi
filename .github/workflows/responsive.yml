@@ -81,8 +81,8 @@ jobs:
                 });
 
                 await page.setViewportSize({ width, height });
-                await page.goto(`${baseURL}${route}`, { waitUntil: 'networkidle' });
-                await page.waitForTimeout(150);
+                await page.goto(`${baseURL}${route}`, { waitUntil: 'domcontentloaded' });
+                await page.waitForTimeout(500);
 
                 const result = await page.evaluate(() => {
                   const offenders = [];
