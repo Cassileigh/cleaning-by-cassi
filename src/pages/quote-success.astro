@@ -1,12 +1,11 @@
 ---
-import BlogPost from '../layouts/BlogPost.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 
 const title = 'Quote Request Received';
 const description = 'Thank you for requesting a quote from Cleaning by Cassi — I will be in touch soon!';
-const pubDate = new Date();
 ---
 
-<BlogPost title={title} description={description} pubDate={pubDate}>
+<PageLayout title={title} description={description}>
   <div class="success-page">
     <section class="success-card">
       <div class="success-icon">✨</div>
@@ -20,7 +19,7 @@ const pubDate = new Date();
       <div class="email-option">Need to reach me sooner?<br /><a href="mailto:cassandramorris@cleaningbycassi.com">cassandramorris@cleaningbycassi.com</a></div>
     </section>
   </div>
-</BlogPost>
+</PageLayout>
 
 <style>
   .success-page { display:flex; justify-content:center; padding:3rem 0; }

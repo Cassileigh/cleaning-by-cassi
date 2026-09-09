@@ -1,6 +1,6 @@
 {
 	"name": "cleaning-by-cassi",
-	"description": "Build a personal website, blog, or portfolio with Astro.",
+	"description": "Public website and quote request service for Cleaning by Cassi.",
 	"cloudflare": {
 		"label": "Astro Framework Starter",
 		"products": [
@@ -12,15 +12,13 @@
 		"publish": true
 	},
 	"dependencies": {
-		"@astrojs/cloudflare": "12.6.12",
-		"@astrojs/mdx": "4.3.13",
-		"@astrojs/rss": "4.0.14",
-		"@astrojs/sitemap": "3.6.1",
-		"astro": "5.16.9",
+		"@astrojs/cloudflare": "14.3.1",
+		"@astrojs/sitemap": "3.7.4",
+		"astro": "7.3.2",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
-		"wrangler": "4.88.0"
+		"wrangler": "4.130.0"
 	},
 	"engines": {
 		"node": ">=22"
@@ -30,10 +28,14 @@
 		"astro": "astro",
 		"build": "node scripts/optimize-images.mjs && astro build",
 		"cf-typegen": "wrangler types",
-		"check": "npm run build && tsc && wrangler deploy --dry-run",
+		"check": "npm run build && tsc --noEmit && wrangler deploy --dry-run",
+		"audit": "npm audit --audit-level=high",
 		"deploy": "wrangler deploy",
 		"dev": "node scripts/optimize-images.mjs && astro dev",
 		"preview": "npm run build && wrangler dev"
+	},
+	"overrides": {
+		"sharp": "0.35.4"
 	},
 	"type": "module"
 }

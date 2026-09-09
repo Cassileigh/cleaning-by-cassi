@@ -1,5 +1,10 @@
+import type { APIRoute } from 'astro';
+import { env } from 'cloudflare:workers';
+
+export const prerender = false;
+
 const BUSINESS_EMAIL = 'cassandramorris@cleaningbycassi.com';
-const FROM_EMAIL = 'Cleaning by Cassi <cassandramorris@cleaningbycassi.com>';
+const FROM_EMAIL = 'Cleaning by Cassi <quotes@cleaningbycassi.com>';
 
 const MAX_REQUEST_BYTES = 30_000;
 const MAX_LENGTHS: Record<string, number> = {
@@ -141,26 +146,41 @@ async function verifyTurnstile(
   }
 }
 
-export const POST = async ({ request, locals }: any) => {
+type Bindings = {
+  RESEND_API_KEY?: string;
+  TURNSTILE_SECRET?: string;
+  TURNSTILE_HOSTNAMES?: string;
+};
+
+export const POST: APIRoute = async ({ request }) => {
   const requestId = `CBC-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
 
   try {
     const contentLength = Number(request.headers.get('content-length') || 0);
-    if (contentLength && contentLength > MAX_REQUEST_BYTES) {
-      return new Response('Request too large.', { status: 413 });
+    if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES) {
+      return json({ error: 'Request too large.', code: 'request-too-large', requestId }, 413, requestId);
     }
 
     const requestUrl = new URL(request.url);
     const origin = request.headers.get('origin');
     if (origin && origin !== requestUrl.origin) {
-      return new Response('Invalid request origin.', { status: 403 });
+      return json({ error: 'Invalid request origin.', code: 'invalid-origin', requestId }, 403, requestId);
     }
 
-    const formData = await request.formData();
+    const rawBody = await request.arrayBuffer();
+    if (rawBody.byteLength > MAX_REQUEST_BYTES) {
+      return json({ error: 'Request too large.', code: 'request-too-large', requestId }, 413, requestId);
+    }
+
+    const formData = await new Request(request.url, {
+      method: 'POST',
+      headers: request.headers,
+      body: rawBody,
+    }).formData();
 
     // Honeypot: real visitors never fill this hidden field.
-    if (value(formData, 'website')) {
-      return new Response(null, { status: 204 });
+    if (value(formData, 'faxNumber')) {
+      return json({ error: 'We could not verify this quote request.', code: 'quote-rejected', requestId }, 403, requestId);
     }
 
     const name = value(formData, 'name');
@@ -168,34 +188,34 @@ export const POST = async ({ request, locals }: any) => {
     const phone = value(formData, 'phone');
 
     if (!name || !email || !phone) {
-      return new Response('Please fill out your name, email, and phone number.', { status: 400 });
+      return json({ error: 'Please fill out your name, email, and phone number.', code: 'missing-fields', requestId }, 400, requestId);
     }
 
     if (exceedsLength(formData) || name.length < 2 || !isValidEmail(email) || !isReasonablePhone(phone)) {
-      return new Response('Please check the information you entered.', { status: 400 });
+      return json({ error: 'Please check the information you entered.', code: 'invalid-fields', requestId }, 400, requestId);
     }
 
     if (hasInvalidSelectValue(formData)) {
-      return new Response('One or more submitted values were invalid.', { status: 400 });
+      return json({ error: 'One or more submitted values were invalid.', code: 'invalid-selection', requestId }, 400, requestId);
     }
 
     const squareFootage = value(formData, 'squareFootage');
     if (squareFootage && (!/^\d{1,7}$/.test(squareFootage) || Number(squareFootage) > 100000)) {
-      return new Response('Please enter a valid square footage.', { status: 400 });
+      return json({ error: 'Please enter a valid square footage.', code: 'invalid-square-footage', requestId }, 400, requestId);
     }
 
     const preferredDate = value(formData, 'preferredDate');
     if (preferredDate && !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)) {
-      return new Response('Please enter a valid preferred date.', { status: 400 });
+      return json({ error: 'Please enter a valid preferred date.', code: 'invalid-date', requestId }, 400, requestId);
     }
 
-    const env = locals.runtime.env;
-    const resendApiKey = env.RESEND_API_KEY;
-    const turnstileSecret = env.TURNSTILE_SECRET;
+    const bindings = env as unknown as Bindings;
+    const resendApiKey = bindings.RESEND_API_KEY;
+    const turnstileSecret = bindings.TURNSTILE_SECRET;
     const expectedHostnames = new Set(
-      String(env.TURNSTILE_HOSTNAMES || '')
+      String(bindings.TURNSTILE_HOSTNAMES || '')
         .split(',')
-        .map((hostname) => hostname.trim())
+        .map((hostname) => hostname.trim().toLowerCase())
         .filter(Boolean)
     );
 
@@ -365,3 +385,6 @@ export const POST = async ({ request, locals }: any) => {
     return json({ error: 'Something went wrong while submitting your quote request.', code: 'quote-failed', requestId }, 500, requestId);
   }
 };
+
+export const ALL: APIRoute = async () =>
+  json({ error: 'Method not allowed.', code: 'method-not-allowed' }, 405);

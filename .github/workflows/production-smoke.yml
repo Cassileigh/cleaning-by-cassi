@@ -1,0 +1,112 @@
+name: Cleaning by Cassi Production Smoke
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Check production pages
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_html() {
+            local url="$1"
+            local marker="$2"
+            local body_file
+            local headers_file
+            body_file="$(mktemp)"
+            headers_file="$(mktemp)"
+
+            if ! curl --fail --silent --show-error --location \
+              --connect-timeout 10 --max-time 30 \
+              --retry 6 --retry-delay 5 --retry-all-errors \
+              --dump-header "$headers_file" --output "$body_file" "$url"; then
+              echo "Request failed for $url"
+              cat "$headers_file" 2>/dev/null || true
+              head -c 2000 "$body_file" 2>/dev/null || true
+              rm -f "$body_file" "$headers_file"
+              exit 1
+            fi
+
+            grep -qi '^content-type:.*text/html' "$headers_file"
+            grep -q "$marker" "$body_file"
+            ! grep -q '\[object Object\]' "$body_file"
+            echo "PASS: $url"
+            rm -f "$body_file" "$headers_file"
+          }
+
+          check_html "https://cleaningbycassi.com/" "Cleaning by Cassi"
+          check_html "https://www.cleaningbycassi.com/" "Cleaning by Cassi"
+          check_html "https://cleaningbycassi.com/quote" "0x4AAAAAAEmmOovf3yTuy_Ua"
+          check_html "https://cleaningbycassi.com/quote-success" "Quote Request Received"
+
+      - name: Check runtime configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+          status_file="$(mktemp)"
+          trap 'rm -f "$status_file"' EXIT
+
+          curl --fail --silent --show-error --location \
+            --connect-timeout 10 --max-time 30 \
+            --retry 12 --retry-delay 5 --retry-all-errors \
+            --output "$status_file" https://cleaningbycassi.com/api/status
+
+          node - "$status_file" <<'NODE'
+          const fs = require('node:fs');
+          const value = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+          const required = ['worker', 'quote', 'turnstile', 'resend'];
+          const valid = value.ok === true && value.status === 'operational' &&
+            value.runtime === 'Cloudflare Workers' &&
+            required.every((key) => ['operational', 'configured'].includes(value.checks?.[key]?.status));
+          if (!valid) {
+            console.error(JSON.stringify(value, null, 2));
+            throw new Error('Production runtime is degraded');
+          }
+          console.log(value.summary);
+          NODE
+
+      - name: Check rejected quote contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          body_file="$(mktemp)"
+          trap 'rm -f "$body_file"' EXIT
+
+          status="$(curl --silent --show-error --output "$body_file" \
+            --write-out '%{http_code}' --request POST \
+            --header 'Accept: application/json' \
+            --form 'name=Production Smoke Test' \
+            --form 'email=smoke@example.com' \
+            --form 'phone=5555555555' \
+            --form 'cf-turnstile-response=invalid-smoke-token' \
+            https://cleaningbycassi.com/api/quote)"
+
+          test "$status" = 403
+          node - "$body_file" <<'NODE'
+          const fs = require('node:fs');
+          const value = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+          if (value.code !== 'turnstile-failed' || typeof value.requestId !== 'string') {
+            throw new Error('Unexpected quote rejection response');
+          }
+          NODE

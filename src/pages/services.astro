@@ -1,9 +1,8 @@
 ---
-import BlogPost from '../layouts/BlogPost.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 
 const title = 'Our Cleaning Services';
 const description = 'Dependable, detailed residential cleaning services from Cleaning by Cassi.';
-const pubDate = new Date();
 
 const standardTasks = [
   'Dusting surfaces throughout the home','Vacuuming carpets, rugs & hard floors','Mopping floors','Cleaning and sanitizing kitchens','Cleaning and sanitizing bathrooms','Wiping sinks, counters, and fixtures','Disinfecting high-touch surfaces','Tidying and straightening rooms',
@@ -14,7 +13,7 @@ const deepTasks = [
 const addOns = ['Window Tracks & Sills','Baseboards','Doors & Door Frames','Cabinet Fronts','Detailed Shower & Tub Cleaning','Trash Can Cleaning & Sanitizing','Bed Making','Laundry — Wash, Dry & Fold','Extra Pet Hair Removal','Wall Spot Cleaning','Cobweb Removal','Detailed Floor Edges & Corners','High & Hard-to-Reach Areas'];
 ---
 
-<BlogPost title={title} description={description} pubDate={pubDate}>
+<PageLayout title={title} description={description}>
   <div class="services-page">
     <section class="services-hero"><p class="eyebrow">Cleaning by Cassi ✨</p><h1>A cleaner home, <span>without the stress.</span></h1><p>Life gets busy. Between work, family, pets, and everything in between, keeping up with household cleaning can feel like one more thing on an already full list.</p><p>I provide dependable, detailed residential cleaning designed to help your home feel fresh, comfortable, and truly clean.</p><div class="hero-actions"><a href="/quote" class="primary-button">Get a Free Quote →</a><a href="/pricing" class="secondary-button">View Pricing</a></div></section>
 
@@ -32,7 +31,7 @@ const addOns = ['Window Tracks & Sills','Baseboards','Doors & Door Frames','Cabi
 
     <section class="services-cta"><p class="eyebrow">Ready for a Fresh Start?</p><h2>Ready to come home to a cleaner space?</h2><p>Tell me a little about your home and I'll put together a personalized quote.</p><a href="/quote" class="cta-button">Request a Free Quote →</a></section>
   </div>
-</BlogPost>
+</PageLayout>
 
 <style>
   .services-page h1 span { display:block; color:var(--purple); }

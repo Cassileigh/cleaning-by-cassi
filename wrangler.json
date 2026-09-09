@@ -1,8 +1,8 @@
 {
 	"name": "cleaning-by-cassi",
 	"compatibility_date": "2025-10-08",
-	"compatibility_flags": ["nodejs_compat"],
-	"main": "./dist/_worker.js/index.js",
+	"compatibility_flags": ["nodejs_compat", "disable_nodejs_process_v2"],
+	"main": "@astrojs/cloudflare/entrypoints/server",
 	"vars": {
 		"TURNSTILE_HOSTNAMES": "cleaningbycassi.com,www.cleaningbycassi.com"
 	},
@@ -10,6 +10,16 @@
 		"directory": "./dist",
 		"binding": "ASSETS"
 	},
+	"routes": [
+		{
+			"pattern": "cleaningbycassi.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.cleaningbycassi.com",
+			"custom_domain": true
+		}
+	],
 	"observability": {
 		"enabled": true
 	},

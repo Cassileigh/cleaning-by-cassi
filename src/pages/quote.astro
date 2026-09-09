@@ -1,9 +1,8 @@
 ---
-import BlogPost from '../layouts/BlogPost.astro';
+import PageLayout from '../layouts/PageLayout.astro';
 
 const title = 'Get a Free Quote';
 const description = 'Tell Cleaning by Cassi a little about your home and cleaning needs to receive a personalized quote.';
-const pubDate = new Date();
 const turnstileSiteKey = '0x4AAAAAAEmmOovf3yTuy_Ua';
 
 const addOns = [
@@ -23,13 +22,13 @@ const addOns = [
 ];
 ---
 
-<BlogPost title={title} description={description} pubDate={pubDate}>
+<PageLayout title={title} description={description}>
   <div class="quote-page">
     <section class="quote-hero"><p class="eyebrow">Let's Get Started ✨</p><h1>Let's get your home sparkling.</h1><p>Tell me a little about your home and what you're looking for, and I'll use those details to put together a personalized cleaning quote.</p></section>
 
     <form class="quote-form" action="/api/quote" method="POST">
       <div class="website-field" aria-hidden="true">
-        <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+        <label>Fax number<input type="text" name="faxNumber" tabindex="-1" autocomplete="off" /></label>
       </div>
 
       <section class="form-card"><div class="section-heading"><span class="section-number">01</span><div><h2>About You</h2><p>First things first — who am I chatting with?</p></div></div><div class="form-grid"><label>Full Name <b>*</b><input type="text" name="name" placeholder="Your name" maxlength="100" autocomplete="name" required /></label><label>Email <b>*</b><input type="email" name="email" placeholder="you@example.com" maxlength="254" autocomplete="email" required /></label><label>Phone Number <b>*</b><input type="tel" name="phone" placeholder="(555) 555-5555" maxlength="40" autocomplete="tel" required /></label><label>Preferred Contact Method<select name="contactMethod"><option value="">Choose one</option><option value="email">Email</option><option value="phone">Phone Call</option><option value="text">Text Message</option></select></label></div></section>
@@ -165,7 +164,7 @@ const addOns = [
     })();
   </script>
   <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=cleaningByCassiTurnstileLoad"></script>
-</BlogPost>
+</PageLayout>
 
 <style>
   .quote-hero { max-width:780px; margin:0 auto 3rem; text-align:center; }
