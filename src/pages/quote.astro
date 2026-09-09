@@ -52,19 +52,108 @@ const addOns = [
         <p>Send over your details and I'll be in touch with your personalized quote.</p>
         <div class="turnstile-wrap">
           <div
-            class="cf-turnstile"
+            id="quote-turnstile"
             data-sitekey={turnstileSiteKey}
-            data-action="quote"
-            data-theme="auto"
-            data-response-field-name="cf-turnstile-response"
           ></div>
         </div>
-        <button type="submit">Request My Free Quote →</button>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+        <button id="quote-submit" type="submit">Request My Free Quote →</button>
         <div class="email-option">Prefer email? <a href="mailto:cassandramorris@cleaningbycassi.com">cassandramorris@cleaningbycassi.com</a></div>
       </section>
     </form>
   </div>
-  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <script is:inline>
+    (() => {
+      const state = window.__cleaningByCassiTurnstile ??= { widgetId: null, intervalId: null };
+
+      const getElements = () => ({
+        container: document.querySelector('#quote-turnstile'),
+        form: document.querySelector('.quote-form'),
+        status: document.querySelector('#form-status'),
+        button: document.querySelector('#quote-submit'),
+      });
+
+      const setStatus = (message, kind = '') => {
+        const { status } = getElements();
+        if (!status) return;
+        status.textContent = message;
+        status.className = `form-status ${kind}`.trim();
+      };
+
+      const resetTurnstile = () => {
+        if (state.widgetId === null || !window.turnstile) return;
+        try { window.turnstile.reset(state.widgetId); } catch {}
+      };
+
+      const renderTurnstile = () => {
+        const { container } = getElements();
+        if (!container || !window.turnstile) return;
+        if (state.widgetId !== null) {
+          try { window.turnstile.remove(state.widgetId); } catch {}
+          state.widgetId = null;
+        }
+        container.innerHTML = '';
+        state.widgetId = window.turnstile.render(container, {
+          sitekey: container.dataset.sitekey,
+          action: 'quote',
+          theme: 'auto',
+          size: 'flexible',
+          'response-field-name': 'cf-turnstile-response',
+          'refresh-expired': 'auto',
+          'refresh-timeout': 'auto',
+          callback: () => setStatus(''),
+          'expired-callback': () => setStatus('The security check expired. Please complete it again.', 'failure'),
+          'error-callback': () => setStatus('The security check could not load. Please refresh the page and try again.', 'failure'),
+        });
+      };
+
+      window.cleaningByCassiTurnstileLoad = renderTurnstile;
+      document.addEventListener('astro:page-load', renderTurnstile);
+      renderTurnstile();
+
+      if (state.intervalId === null) {
+        state.intervalId = window.setInterval(() => {
+          if (state.widgetId === null || !window.turnstile) return;
+          try { if (window.turnstile.isExpired(state.widgetId)) resetTurnstile(); } catch {}
+        }, 240000);
+      }
+
+      const { form, button } = getElements();
+      if (!form || !button || form.dataset.turnstileBound === 'true') return;
+      form.dataset.turnstileBound = 'true';
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        setStatus('');
+        if (!form.reportValidity()) return;
+
+        const formData = new FormData(form);
+        if (!String(formData.get('cf-turnstile-response') || '').trim()) {
+          setStatus('Please complete the security check before submitting.', 'failure');
+          return;
+        }
+
+        button.disabled = true;
+        const originalLabel = button.textContent;
+        button.textContent = 'Sending…';
+
+        try {
+          const response = await fetch(form.action, { method: 'POST', body: formData });
+          if (!response.ok) {
+            const message = (await response.text()).trim();
+            throw new Error(message || 'Your quote request could not be sent. Please try again.');
+          }
+          window.location.assign(response.url || '/quote-success');
+        } catch (error) {
+          resetTurnstile();
+          setStatus(error instanceof Error ? error.message : 'Something went wrong. Please try again.', 'failure');
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      });
+    })();
+  </script>
+  <script is:inline async defer src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=cleaningByCassiTurnstileLoad"></script>
 </BlogPost>
 
 <style>
@@ -108,7 +197,11 @@ const addOns = [
   .submit-card .eyebrow,.submit-card h2,.submit-card p { color:white; }
   .submit-card p:not(.eyebrow) { opacity:.92; }
   .turnstile-wrap { display:flex; justify-content:center; margin:1.25rem 0; min-height:65px; }
+  #quote-turnstile { width:min(100%, 300px); }
+  .form-status { min-height:1.4em; margin:.25rem auto 1rem; font-size:.9rem; font-weight:700; }
+  .form-status.failure { padding:.75rem 1rem; border-radius:12px; color:#64112f; background:#fff1f5; }
   .submit-card button { border:0; padding:1rem 1.5rem; border-radius:999px; background:white; color:var(--purple-dark); font-weight:700; cursor:pointer; box-shadow:0 8px 22px rgba(0,0,0,.12); }
+  .submit-card button:disabled { cursor:wait; opacity:.7; }
   .email-option { margin-top:1rem; font-size:.85rem; }
   .email-option a { color:white; font-weight:700; }
 

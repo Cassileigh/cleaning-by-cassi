@@ -87,11 +87,14 @@ type TurnstileSiteverifyResponse = {
   'error-codes'?: string[];
 };
 
+const TURNSTILE_SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const TURNSTILE_ACTION = 'quote';
+
 async function verifyTurnstile(
   request: Request,
   formData: FormData,
   secret: string,
-  expectedHostname: string
+  expectedHostnames: Set<string>
 ) {
   const token = value(formData, 'cf-turnstile-response');
   if (!token || token.length > 2048) return false;
@@ -105,10 +108,11 @@ async function verifyTurnstile(
     const remoteIp = request.headers.get('CF-Connecting-IP');
     if (remoteIp) body.set('remoteip', remoteIp);
 
-    const verification = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    const verification = await fetch(TURNSTILE_SITEVERIFY_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body,
+      signal: AbortSignal.timeout(10_000),
     });
 
     if (!verification.ok) return false;
@@ -117,8 +121,9 @@ async function verifyTurnstile(
 
     return (
       result.success === true &&
-      result.hostname === expectedHostname &&
-      result.action === 'quote'
+      typeof result.hostname === 'string' &&
+      expectedHostnames.has(result.hostname) &&
+      result.action === TURNSTILE_ACTION
     );
   } catch {
     return false;
@@ -173,21 +178,29 @@ export const POST = async ({ request, locals }: any) => {
 
     const env = locals.runtime.env;
     const resendApiKey = env.RESEND_API_KEY;
-    // TURNSTILE_SECRET is Cloudflare Spin's canonical binding name.
-    // Keep the old name as a temporary fallback for the earlier integration.
-    const turnstileSecret = env.TURNSTILE_SECRET || env.TURNSTILE_SECRET_KEY;
+    const turnstileSecret = env.TURNSTILE_SECRET;
+    const expectedHostnames = new Set(
+      String(env.TURNSTILE_HOSTNAMES || '')
+        .split(',')
+        .map((hostname) => hostname.trim())
+        .filter(Boolean)
+    );
 
-    if (turnstileSecret) {
-      const passedTurnstile = await verifyTurnstile(
-        request,
-        formData,
-        turnstileSecret,
-        requestUrl.hostname
-      );
+    // Never accept quote requests without a configured Turnstile destination.
+    if (!turnstileSecret || expectedHostnames.size === 0) {
+      console.error('Turnstile is not configured.');
+      return new Response('Security verification is temporarily unavailable.', { status: 503 });
+    }
 
-      if (!passedTurnstile) {
-        return new Response('Please complete the security check and try again.', { status: 403 });
-      }
+    const passedTurnstile = await verifyTurnstile(
+      request,
+      formData,
+      turnstileSecret,
+      expectedHostnames
+    );
+
+    if (!passedTurnstile) {
+      return new Response('The security check expired or could not be verified. Please complete it again.', { status: 403 });
     }
 
     if (!resendApiKey) {
