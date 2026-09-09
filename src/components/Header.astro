@@ -25,7 +25,7 @@ import { SITE_TITLE } from '../consts';
 
 <style>
   .site-header { position:sticky; top:0; z-index:100; padding:.5rem 1rem; background:linear-gradient(90deg,rgba(12,25,96,.96),rgba(24,59,193,.96),rgba(84,23,132,.96)); border-bottom:1px solid rgba(255,255,255,.12); box-shadow:0 6px 24px rgba(0,0,0,.18); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
-  .site-nav { width:min(1240px,100%); margin:0 auto; display:grid; grid-template-columns:minmax(250px,330px) minmax(0,1fr) 44px; align-items:center; gap:1.1rem; min-width:0; }
+  .site-nav { width:100%; max-width:none; margin:0; display:grid; grid-template-columns:minmax(250px,330px) minmax(0,1fr) 44px; align-items:center; gap:1.1rem; min-width:0; }
   .brand { display:inline-flex; align-items:center; width:min(320px,100%); min-width:0; padding:.1rem; text-decoration:none; }
   .brand-logo { display:block; width:100%; height:auto; max-height:86px; object-fit:contain; object-position:left center; }
   .internal-links { display:flex; align-items:center; justify-content:center; gap:.2rem; flex-wrap:wrap; min-width:0; }
