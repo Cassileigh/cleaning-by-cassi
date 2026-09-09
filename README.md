@@ -1,178 +1,210 @@
 <div align="center">
 
-<img src="./docs/readme-banner.svg" alt="Cleaning by Cassi — residential cleaning throughout the Fox Cities" width="100%" />
+<a href="https://cleaningbycassi.com">
+  <img src="./docs/readme-banner.svg" alt="Cleaning by Cassi — residential cleaning throughout the Fox Cities" width="100%" />
+</a>
 
-<br />
+<br /><br />
 
-[![Visit the website](https://img.shields.io/badge/Visit-cleaningbycassi.com-6f14d9?style=for-the-badge&logo=googlechrome&logoColor=white)](https://cleaningbycassi.com)
-[![Get a free quote](https://img.shields.io/badge/Get_a-Free_Quote-f24bb5?style=for-the-badge&logo=sparkles&logoColor=white)](https://cleaningbycassi.com/quote)
-[![Built with Astro](https://img.shields.io/badge/Built_with-Astro-1548f5?style=for-the-badge&logo=astro&logoColor=white)](https://astro.build)
-[![Deployed on Cloudflare](https://img.shields.io/badge/Deployed_on-Cloudflare-a7df24?style=for-the-badge&logo=cloudflare&logoColor=211631)](https://www.cloudflare.com)
+[![Live Website](https://img.shields.io/badge/LIVE_WEBSITE-cleaningbycassi.com-6F14D9?style=for-the-badge&logo=googlechrome&logoColor=white)](https://cleaningbycassi.com)
+[![Free Quote](https://img.shields.io/badge/GET_A-FREE_QUOTE-F24BB5?style=for-the-badge&logo=maildotru&logoColor=white)](https://cleaningbycassi.com/quote)
+
+[![Quality](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml)
+[![Production Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml)
+[![Astro 7](https://img.shields.io/badge/Astro-7.3.2-1548F5?logo=astro&logoColor=white)](https://astro.build)
+[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-A7DF24?logo=cloudflare&logoColor=211631)](https://workers.cloudflare.com)
 
 ### A cleaner home. A little more breathing room.
 
 Dependable, detailed residential cleaning for busy families throughout the  
-**Fox Cities & surrounding areas.**
+**Fox Cities and surrounding areas.**
 
-[Explore Services](https://cleaningbycassi.com/services) · [View Pricing](https://cleaningbycassi.com/pricing) · [Meet Cassi](https://cleaningbycassi.com/about)
+[Services](https://cleaningbycassi.com/services) · [Pricing](https://cleaningbycassi.com/pricing) · [About Cassi](https://cleaningbycassi.com/about) · [Request a Quote](https://cleaningbycassi.com/quote)
 
 </div>
 
 ---
 
-## ✨ About Cleaning by Cassi
+## ✨ Welcome
 
-Cleaning by Cassi is a locally owned residential cleaning business built around one simple goal: making home feel lighter.
+Cleaning by Cassi is a locally owned residential cleaning business built around personal service, careful attention to detail, and making home feel lighter.
 
-Every clean is personal, detailed, and shaped around the home—not a one-size-fits-all checklist. The website makes it easy for clients to explore services, understand starting prices, and request a personalized quote from any device.
+This repository contains the production website and its secure quote-request system. The experience is responsive, accessible, and designed around the same purple, blue, pink, and green identity used across Cleaning by Cassi's printed materials.
 
 <table>
 <tr>
-<td width="50%">
+<td width="50%" valign="top">
 
-### What clients can find
+### For clients
 
-- Standard and deep cleaning options
-- Recurring cleaning plans
-- Flexible add-on services
-- Clear starting-price information
-- A simple, personalized quote form
-- Real client experiences and reviews
+- Clear service and starting-price information
+- Personalized quote requests
+- Mobile-friendly pages and forms
+- Light and dark color-scheme support
+- Friendly, straightforward communication
 
 </td>
-<td width="50%">
+<td width="50%" valign="top">
 
-### What the brand stands for
+### Built on trust
 
-- 💗 Personal, friendly service
-- ✨ Careful attention to detail
-- 🐾 A pet-friendly approach
-- 💚 Cleaning shaped around each home
-- 🏡 More time for what matters
-- 📱 A smooth mobile experience
+- Protected by Cloudflare Turnstile
+- Server-side form validation
+- Confirmed email acceptance before success
+- Rate limiting and request-size limits
+- Automated production health checks
 
 </td>
 </tr>
 </table>
 
----
-
-## 🏡 Website Preview
+## 🏡 Website preview
 
 <div align="center">
   <a href="https://cleaningbycassi.com">
     <img src="./public/homepage.jpg" alt="Cleaning by Cassi website and accepting new clients artwork" width="820" />
   </a>
   <br />
-  <sub>Tap the image to visit the live website.</sub>
+  <sub>Select the preview to visit the production website.</sub>
 </div>
 
----
+## 🧽 Services at a glance
 
-## 🧽 Services
-
-| Service | Best for |
+| Service | Designed for |
 | :--- | :--- |
-| **Standard Cleaning** | Regular upkeep that keeps the home fresh, tidy, and comfortable |
+| **Standard Cleaning** | Regular upkeep that keeps a home fresh, tidy, and comfortable |
 | **Deep Cleaning** | A detailed reset for spaces that need extra care |
 | **Recurring Cleaning** | Weekly, biweekly, every-three-weeks, or monthly support |
-| **Move-In / Move-Out** | Helping a home feel ready for its next chapter |
+| **Move-In / Move-Out** | Preparing a home for its next chapter |
 | **Add-On Services** | Custom extras such as baseboards, bed making, laundry, and more |
 
 > Every home is different. Final quotes are based on the home's size, condition, rooms, and requested services.
 
 <div align="center">
 
-### Ready for a cleaner home?
-
-[![Request your personalized quote](https://img.shields.io/badge/Request_Your-Personalized_Quote-f24bb5?style=for-the-badge&logo=homeassistant&logoColor=white)](https://cleaningbycassi.com/quote)
+[![Request a personalized quote](https://img.shields.io/badge/REQUEST_A-PERSONALIZED_QUOTE-F24BB5?style=for-the-badge&logo=sparkles&logoColor=white)](https://cleaningbycassi.com/quote)
 
 </div>
 
----
+## 💌 How a quote request works
 
-## 🎨 Brand & Design
+```mermaid
+flowchart LR
+    A[Quote form] --> B[Turnstile check]
+    B --> C[Worker validation]
+    C --> D[Resend acceptance]
+    D --> E[Success page]
+```
 
-The site uses the same bold, welcoming palette as Cleaning by Cassi's printed business materials.
+The success page appears only after the business notification has been accepted by the email provider. Failed validation or delivery stays on the form and gives the visitor a useful error instead of reporting a false success.
 
-| Color | Hex | Use |
+## 🛡️ Security and reliability
+
+The production safeguards follow the same checks-and-balances approach used for the AlienX SmartHome project:
+
+- Turnstile token, hostname, and action verification
+- Same-origin submission enforcement
+- Honeypot spam detection and per-IP rate limiting
+- Field allowlists, length limits, and HTML escaping
+- Real request-body size enforcement
+- Resend response-ID confirmation
+- Strict browser security headers
+- Hourly production smoke monitoring
+- Build, TypeScript, Cloudflare dry-run, and dependency-audit gates
+- GitHub CodeQL analysis
+- Grouped Dependabot maintenance
+
+Please report vulnerabilities privately according to the [security policy](./SECURITY.md) or email **cassi@cleaningbycassi.com**.
+
+## 🎨 Brand system
+
+| Color | Hex | Role |
 | :--- | :---: | :--- |
-| 🟣 Royal Purple | `#6F14D9` | Primary brand color and calls to action |
-| 🔵 Bright Blue | `#1548F5` | Gradient depth and visual balance |
-| 🩷 Vibrant Pink | `#F24BB5` | Highlights, warmth, and personality |
-| 🟢 Fresh Green | `#A7DF24` | Accent color and energetic details |
-| ⚫ Deep Plum | `#211631` | Readable text and contrast |
+| 🟣 Royal Purple | `#6F14D9` | Primary identity and calls to action |
+| 🔵 Bright Blue | `#1548F5` | Gradient depth and balance |
+| 🩷 Vibrant Pink | `#F24BB5` | Warmth, highlights, and personality |
+| 🟢 Fresh Green | `#A7DF24` | Energetic accent details |
+| ⚫ Deep Plum | `#211631` | Text and strong contrast |
 
 **Display type:** DM Serif Display  
 **Body type:** Poppins
 
-The interface automatically follows the visitor's light or dark device setting and is designed for phones, tablets, and desktop screens.
+## ⚙️ Technology
 
----
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| Framework | [Astro 7](https://astro.build) | Pages, routing, and server rendering |
+| Runtime | [Cloudflare Workers](https://workers.cloudflare.com) | Production hosting and quote processing |
+| Language | [TypeScript](https://www.typescriptlang.org) | Safer application code |
+| Spam protection | [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) | Private, server-verified bot protection |
+| Email | [Resend](https://resend.com) | Business and customer notifications |
+| Monitoring | GitHub Actions | Quality gates and hourly production checks |
 
-## ⚙️ Built With
+Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion support, and mobile-first styling keep the site fast and comfortable to use.
 
-- [Astro 5](https://astro.build) for the website framework
-- [TypeScript](https://www.typescriptlang.org) for safer development
-- [Cloudflare](https://www.cloudflare.com) for hosting and server-side delivery
-- Local WOFF2 font files for fast, consistent typography
-- Responsive images in AVIF, WebP, and JPG formats
-- Semantic HTML, reduced-motion support, and mobile-first breakpoints
+## ✅ Automated checks
 
----
+| Check | When it runs | What it protects |
+| :--- | :--- | :--- |
+| **Quality** | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit |
+| **Production smoke** | Every push to `main` and hourly | Both domains, quote page, success page, runtime bindings, and rejection behavior |
+| **CodeQL** | GitHub security analysis | JavaScript, TypeScript, and workflow vulnerabilities |
+| **Workers Build** | Every production update | Cloudflare production deployment |
 
-## 📁 Project Structure
+Only **`main`** is maintained and deployed to production.
+
+## 📁 Project map
 
 ```text
 /
-├── public/              Static images, icons, and local fonts
-├── scripts/             Image optimization utilities
+├── .github/
+│   ├── dependabot.yml             Grouped dependency updates
+│   └── workflows/                 Quality and production monitoring
+├── docs/                          Repository artwork
+├── public/                        Images, icons, and local fonts
+├── scripts/                       Image optimization
 ├── src/
-│   ├── components/      Shared header, footer, and metadata
-│   ├── layouts/         Reusable page layouts
-│   ├── pages/           Home, About, Services, Pricing, and Quote
-│   └── styles/          Global palette, typography, and responsive styles
-├── astro.config.mjs     Astro and Cloudflare configuration
-└── package.json         Commands and dependencies
+│   ├── components/                Header, footer, metadata, and shared UI
+│   ├── layouts/                   Shared page structure
+│   ├── pages/                     Website routes and API endpoints
+│   └── styles/                    Brand, typography, and responsive styles
+├── astro.config.mjs               Astro and Cloudflare adapter
+├── wrangler.json                  Production Worker configuration
+└── package.json                   Commands and pinned dependencies
 ```
 
----
+## 🚀 Local development
 
-## 🚀 Local Development
-
-This project requires **Node.js 22 or newer**.
+The project requires **Node.js 22 or newer**.
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open [http://localhost:4321](http://localhost:4321) to view the local site.
+Then open [localhost:4321](http://localhost:4321).
 
 | Command | Purpose |
 | :--- | :--- |
-| `npm run dev` | Optimize images and start the development server |
+| `npm run dev` | Optimize images and start the local development server |
 | `npm run build` | Create the production build |
-| `npm run preview` | Build and preview with Cloudflare locally |
-| `npm run check` | Build, type-check, and run a dry deployment |
-| `npm run deploy` | Deploy through Wrangler |
+| `npm run check` | Build, type-check, and test a Cloudflare deployment bundle |
+| `npm run audit` | Check dependencies for high-severity vulnerabilities |
+| `npm run preview` | Build and preview with the Cloudflare runtime |
+| `npm run deploy` | Deploy the current `main` release through Wrangler |
 
 ---
-
-## 🌐 Live Site
-
-The production website is available at **[cleaningbycassi.com](https://cleaningbycassi.com)**.
 
 <div align="center">
 
 <img src="./public/header-logo.png" alt="Cleaning by Cassi logo" width="150" />
 
-**Cleaning by Cassi**  
+### Cleaning by Cassi
+
 *Done with precision. Peace of mind delivered.*
 
-[Website](https://cleaningbycassi.com) · [Free Quote](https://cleaningbycassi.com/quote) · [Email](mailto:cassandramorris@cleaningbycassi.com)
+[Website](https://cleaningbycassi.com) · [Free Quote](https://cleaningbycassi.com/quote) · [Email Cassi](mailto:cassandramorris@cleaningbycassi.com)
 
-<sub>Serving the Fox Cities & surrounding areas.</sub>
+<sub>Serving the Fox Cities and surrounding areas.</sub>
 
 </div>
-
