@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462 184" role="img" aria-labelledby="title">
+<title id="title">Cleaning by Cassi</title>
+<defs>
+  <radialGradient id="bubbleGloss" cx="30%" cy="22%" r="80%">
+    <stop offset="0%" stop-color="#c7fff6"/>
+    <stop offset="34%" stop-color="#62ecd7"/>
+    <stop offset="100%" stop-color="#22d8c5"/>
+  </radialGradient>
+  <linearGradient id="pinkSparkle" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#ffd8f5"/>
+    <stop offset="38%" stop-color="#ff66cf"/>
+    <stop offset="100%" stop-color="#ef2bb4"/>
+  </linearGradient>
+  <linearGradient id="violetSparkle" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#e0c8ff"/>
+    <stop offset="100%" stop-color="#8c63ff"/>
+  </linearGradient>
+  <linearGradient id="tealSparkle" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#b6fff4"/>
+    <stop offset="100%" stop-color="#43e7d1"/>
+  </linearGradient>
+  <filter id="softGlow" x="-45%" y="-45%" width="190%" height="190%">
+    <feGaussianBlur stdDeviation="2.1" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<g fill-rule="evenodd" clip-rule="evenodd">
+  <path d="M 249 78 L 245 78 L 241 84 L 242 89 L 245 89 L 250 83 L 251 80 Z M 0 143 L 3 153 L 10 160 L 16 163 L 23 164 L 35 163 L 50 158 L 69 147 L 80 138 L 96 121 L 97 127 L 101 131 L 108 129 L 116 121 L 119 128 L 124 131 L 132 130 L 144 121 L 146 122 L 147 129 L 153 131 L 168 116 L 168 129 L 174 131 L 183 123 L 184 129 L 189 131 L 194 121 L 202 111 L 212 102 L 214 104 L 205 122 L 205 128 L 207 130 L 213 130 L 222 122 L 223 128 L 226 131 L 230 131 L 239 123 L 240 128 L 245 131 L 246 127 L 253 117 L 263 106 L 269 102 L 270 104 L 261 121 L 261 128 L 264 131 L 268 131 L 277 123 L 279 128 L 285 131 L 302 114 L 303 117 L 295 132 L 274 142 L 267 147 L 255 160 L 250 171 L 250 178 L 252 181 L 256 183 L 265 182 L 274 176 L 287 161 L 299 141 L 303 131 L 308 128 L 306 125 L 315 107 L 312 103 L 309 102 L 306 108 L 289 125 L 286 126 L 285 123 L 289 114 L 302 99 L 310 97 L 312 100 L 316 101 L 315 95 L 313 95 L 312 98 L 309 95 L 304 94 L 295 98 L 287 105 L 279 118 L 271 126 L 269 126 L 268 121 L 279 101 L 279 97 L 276 95 L 271 97 L 253 115 L 252 113 L 260 100 L 260 97 L 256 95 L 245 114 L 235 125 L 231 127 L 229 125 L 230 121 L 242 98 L 237 95 L 224 117 L 213 126 L 211 124 L 213 118 L 224 99 L 221 95 L 215 97 L 198 114 L 197 112 L 205 99 L 200 95 L 198 96 L 187 117 L 176 127 L 174 125 L 174 122 L 182 107 L 178 103 L 176 103 L 169 113 L 157 125 L 154 126 L 153 121 L 157 112 L 168 100 L 174 97 L 180 101 L 183 100 L 183 97 L 181 95 L 180 99 L 177 96 L 168 95 L 157 102 L 149 114 L 138 124 L 132 127 L 126 127 L 124 125 L 125 118 L 127 116 L 131 116 L 139 112 L 144 108 L 147 103 L 147 98 L 144 95 L 139 95 L 128 101 L 117 117 L 108 126 L 104 127 L 103 121 L 108 108 L 123 80 L 130 71 L 129 68 L 124 67 L 110 89 L 99 115 L 78 135 L 59 148 L 44 155 L 26 159 L 16 156 L 13 153 L 10 145 L 10 137 L 14 123 L 25 103 L 43 82 L 63 66 L 77 59 L 87 56 L 98 57 L 101 60 L 102 64 L 99 72 L 93 79 L 86 83 L 82 82 L 83 78 L 81 80 L 81 87 L 84 89 L 89 89 L 93 87 L 103 75 L 105 70 L 104 60 L 98 55 L 83 54 L 70 57 L 52 66 L 37 77 L 21 93 L 5 118 L 1 130 Z M 293 134 L 294 136 L 278 163 L 264 177 L 256 179 L 254 177 L 254 172 L 261 159 L 281 140 Z M 142 98 L 143 102 L 141 106 L 134 113 L 128 115 L 127 114 L 132 106 L 139 99 Z" fill="#fff"/>
+
+  <!-- roof + windows + chimney -->
+  <path d="M 235 148 L 235 166 L 238 166 L 238 148 Z M 217 148 L 213 152 L 214 155 L 224 161 L 221 164 L 218 164 L 216 162 L 214 162 L 213 164 L 217 166 L 223 166 L 227 163 L 227 159 L 219 155 L 217 152 L 219 150 L 225 152 L 226 150 L 224 148 Z M 197 148 L 193 151 L 193 155 L 203 161 L 200 164 L 193 162 L 193 164 L 197 166 L 203 166 L 206 163 L 206 159 L 198 155 L 196 152 L 198 150 L 205 152 L 206 150 L 203 148 Z M 175 148 L 168 165 L 171 166 L 173 162 L 180 162 L 183 166 L 186 165 L 179 148 Z M 177 153 L 180 157 L 178 160 L 174 158 Z M 149 149 L 146 153 L 147 163 L 152 166 L 160 165 L 160 161 L 155 164 L 152 163 L 149 159 L 149 154 L 154 150 L 158 152 L 161 152 L 161 150 L 158 148 Z M 127 148 L 124 148 L 119 154 L 114 148 L 111 148 L 117 158 L 118 166 L 120 165 L 120 158 Z M 90 148 L 89 165 L 102 165 L 104 161 L 101 156 L 103 154 L 103 151 L 100 148 Z M 93 159 L 98 158 L 100 162 L 95 164 L 93 162 Z M 93 151 L 96 150 L 100 153 L 97 156 L 95 156 L 93 154 Z M 199 64 L 198 77 L 211 79 L 213 76 L 212 64 Z M 180 64 L 179 77 L 181 79 L 191 79 L 193 77 L 194 66 L 192 64 Z M 199 44 L 199 59 L 212 59 L 212 44 Z M 193 44 L 190 43 L 179 45 L 180 59 L 193 58 Z M 130 54 L 130 58 L 133 62 L 136 63 L 140 61 L 195 14 L 254 65 L 259 65 L 262 62 L 262 56 L 197 0 L 191 1 Z" fill="#ff4fc2"/>
+  <path d="M160 31 V10 H172 V21 L181 29 L174 35 L168 30 L168 43 H160 Z" fill="#ff4fc2"/>
+
+  <!-- bubble/sparkle cluster integrated like the approved mockup -->
+  <g filter="url(#softGlow)">
+    <!-- teal bubbles arc tightly from the end of the g -->
+    <circle cx="355" cy="86" r="16.5" fill="url(#bubbleGloss)"/>
+    <ellipse cx="349" cy="79" rx="5.8" ry="2.7" fill="#fff" opacity=".9" transform="rotate(-38 349 79)"/>
+    <circle cx="338" cy="106" r="6.2" fill="url(#bubbleGloss)"/>
+    <circle cx="358" cy="116" r="4.8" fill="url(#bubbleGloss)"/>
+    <circle cx="344" cy="127" r="3.9" fill="url(#bubbleGloss)"/>
+    <circle cx="367" cy="137" r="6.8" fill="url(#bubbleGloss)"/>
+    <ellipse cx="365" cy="134" rx="2.4" ry="1.2" fill="#fff" opacity=".85" transform="rotate(-38 365 134)"/>
+
+    <!-- exact relative sparkle hierarchy from mockup -->
+    <path d="M338 36 C342 51 351 60 366 64 C351 68 342 77 338 92 C334 77 325 68 310 64 C325 60 334 51 338 36 Z" fill="url(#pinkSparkle)"/>
+    <path d="M322 89 C325 99 331 105 341 108 C331 111 325 117 322 127 C319 117 313 111 303 108 C313 105 319 99 322 89 Z" fill="url(#violetSparkle)"/>
+    <path d="M384 54 C387 63 392 68 401 71 C392 74 387 79 384 88 C381 79 376 74 367 71 C376 68 381 63 384 54 Z" fill="url(#tealSparkle)"/>
+    <path d="M410 102 C414 117 423 126 438 130 C423 134 414 143 410 158 C406 143 397 134 382 130 C397 126 406 117 410 102 Z" fill="url(#pinkSparkle)"/>
+    <path d="M385 133 C388 142 393 147 402 150 C393 153 388 158 385 167 C382 158 377 153 368 150 C377 147 382 142 385 133 Z" fill="url(#violetSparkle)"/>
+  </g>
+</g>
+</svg>
