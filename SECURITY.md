@@ -24,7 +24,7 @@ If a report is determined to be a false positive or outside the project's securi
 
 ## Scope
 
-This policy covers the AlienX SmartHome website, its application code, deployment configuration, and project dependencies maintained in this repository.
+This policy covers the Cleaning By Cassi website, its application code, deployment configuration, and project dependencies maintained in this repository.
 
 Third-party services and infrastructure are outside the project's direct control. Vulnerabilities in those services should also be reported to their respective providers when appropriate.
 
