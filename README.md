@@ -11,6 +11,7 @@
 
 [![Quality](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml)
 [![Production Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml)
+[![Responsive](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml)
 [![Astro 7](https://img.shields.io/badge/Astro-7.3.2-1548F5?logo=astro&logoColor=white)](https://astro.build)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-A7DF24?logo=cloudflare&logoColor=211631)](https://workers.cloudflare.com)
 
@@ -110,6 +111,7 @@ The production safeguards follow the same checks-and-balances approach used for 
 - Resend response-ID confirmation
 - Strict browser security headers
 - Hourly production smoke monitoring
+- Automated responsive compatibility testing across 72 page and viewport combinations
 - Build, TypeScript, Cloudflare dry-run, and dependency-audit gates
 - GitHub CodeQL analysis
 - Grouped Dependabot maintenance
@@ -148,6 +150,7 @@ Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion
 | :--- | :--- | :--- |
 | **Quality** | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit |
 | **Production smoke** | Every push to `main` and hourly | Both domains, quote page, success page, runtime bindings, and rejection behavior |
+| **Responsive compatibility** | Every push and pull request to `main` | Six public pages at 12 viewport sizes for overflow and browser runtime errors |
 | **CodeQL** | GitHub security analysis | JavaScript, TypeScript, and workflow vulnerabilities |
 | **Workers Build** | Every production update | Cloudflare production deployment |
 
@@ -159,7 +162,7 @@ Only **`main`** is maintained and deployed to production.
 /
 ├── .github/
 │   ├── dependabot.yml             Grouped dependency updates
-│   └── workflows/                 Quality and production monitoring
+│   └── workflows/                 Quality, production, and responsive monitoring
 ├── docs/                          Repository artwork
 ├── public/                        Images, icons, and local fonts
 ├── scripts/                       Image optimization
