@@ -28,7 +28,8 @@ const addOns = [
 
     <form class="quote-form" action="/api/quote" method="POST">
       <div class="website-field" aria-hidden="true">
-        <label>Fax number<input type="text" name="faxNumber" tabindex="-1" autocomplete="off" /></label>
+        <!-- Spam trap, not a contact field. Must remain empty. -->
+        <label>Leave this field empty<input type="text" name="faxNumber" tabindex="-1" autocomplete="off" /></label>
       </div>
 
       <section class="form-card"><div class="section-heading"><span class="section-number">01</span><div><h2>About You</h2><p>First things first — who am I chatting with?</p></div></div><div class="form-grid"><label>Full Name <b>*</b><input type="text" name="name" placeholder="Your name" maxlength="100" autocomplete="name" required /></label><label>Email <b>*</b><input type="email" name="email" placeholder="you@example.com" maxlength="254" autocomplete="email" required /></label><label>Phone Number <b>*</b><input type="tel" name="phone" placeholder="(555) 555-5555" maxlength="40" autocomplete="tel" required /></label><label>Preferred Contact Method<select name="contactMethod"><option value="">Choose one</option><option value="email">Email</option><option value="phone">Phone Call</option><option value="text">Text Message</option></select></label></div></section>
@@ -123,6 +124,7 @@ const addOns = [
 
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
+        if (button.disabled) return;
         setStatus('');
         if (!form.reportValidity()) return;
 

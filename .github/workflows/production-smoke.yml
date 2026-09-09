@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Setup Node
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
 
@@ -65,26 +65,40 @@ jobs:
         run: |
           set -euo pipefail
           status_file="$(mktemp)"
-          trap 'rm -f "$status_file"' EXIT
+          headers_file="$(mktemp)"
+          trap 'rm -f "$status_file" "$headers_file"' EXIT
 
           curl --fail --silent --show-error --location \
             --connect-timeout 10 --max-time 30 \
             --retry 12 --retry-delay 5 --retry-all-errors \
+            --dump-header "$headers_file" \
             --output "$status_file" https://cleaningbycassi.com/api/status
+
+          grep -qi '^content-type:.*application/json' "$headers_file"
+          grep -qi '^cache-control:.*no-store' "$headers_file"
+          grep -qi '^x-content-type-options: *nosniff' "$headers_file"
+          grep -qi '^cross-origin-resource-policy: *same-origin' "$headers_file"
+          grep -qi '^referrer-policy: *no-referrer' "$headers_file"
 
           node - "$status_file" <<'NODE'
           const fs = require('node:fs');
           const value = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
-          const required = ['worker', 'quote', 'turnstile', 'resend'];
+          const required = ['worker', 'quote', 'protection', 'delivery'];
+          const forbidden = ['turnstile', 'resend', 'generatedAt', 'requestId', 'runtime'];
           const valid = value.ok === true && value.status === 'operational' &&
-            value.runtime === 'Cloudflare Workers' &&
-            required.every((key) => ['operational', 'configured'].includes(value.checks?.[key]?.status));
+            required.every((key) => value.checks?.[key]?.status === 'operational') &&
+            forbidden.every((key) => !(key in value) && !(key in (value.checks ?? {})));
           if (!valid) {
             console.error(JSON.stringify(value, null, 2));
             throw new Error('Production runtime is degraded');
           }
           console.log(value.summary);
           NODE
+
+          method_status="$(curl --silent --show-error --output /dev/null \
+            --write-out '%{http_code}' --request POST \
+            https://cleaningbycassi.com/api/status)"
+          test "$method_status" = 405
 
       - name: Check rejected quote contract
         shell: bash

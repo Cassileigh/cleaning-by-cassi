@@ -52,7 +52,34 @@ function escapeHtml(value: string) {
 }
 
 function value(formData: FormData, key: string) {
-  return String(formData.get(key) || '').trim();
+  const entry = formData.get(key);
+  return typeof entry === 'string' ? entry.trim() : '';
+}
+
+// Read no more than the permitted bytes, including requests without Content-Length.
+async function readBody(request: Request) {
+  const reader = request.body?.getReader();
+  if (!reader) return new Uint8Array();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const part = await reader.read();
+      if (part.done) break;
+      size += part.value.byteLength;
+      if (size > MAX_REQUEST_BYTES) {
+        await reader.cancel();
+        return null;
+      }
+      chunks.push(part.value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const body = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) { body.set(chunk, offset); offset += chunk.byteLength; }
+  return body;
 }
 
 function isValidEmail(email: string) {
@@ -101,6 +128,8 @@ function json(body: Record<string, unknown>, status = 200, requestId?: string) {
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+      ...(status === 405 ? { Allow: 'POST' } : {}),
       ...(requestId ? { 'X-Request-ID': requestId } : {}),
     },
   });
@@ -167,20 +196,41 @@ export const POST: APIRoute = async ({ request }) => {
       return json({ error: 'Invalid request origin.', code: 'invalid-origin', requestId }, 403, requestId);
     }
 
-    const rawBody = await request.arrayBuffer();
-    if (rawBody.byteLength > MAX_REQUEST_BYTES) {
+    const mediaType = request.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
+    if (!['application/x-www-form-urlencoded', 'multipart/form-data'].includes(mediaType || '')) {
+      return json({ error: 'Unsupported content type.', code: 'unsupported-media-type', requestId }, 415, requestId);
+    }
+
+    const rawBody = await readBody(request);
+    if (rawBody === null) {
       return json({ error: 'Request too large.', code: 'request-too-large', requestId }, 413, requestId);
     }
 
-    const formData = await new Request(request.url, {
-      method: 'POST',
-      headers: request.headers,
-      body: rawBody,
-    }).formData();
+    let formData: FormData;
+    try {
+      formData = await new Response(rawBody, {
+        headers: { 'Content-Type': request.headers.get('content-type')! },
+      }).formData();
+    } catch {
+      return json({ error: 'Invalid form submission.', code: 'invalid-form', requestId }, 400, requestId);
+    }
 
-    // Honeypot: real visitors never fill this hidden field.
-    if (value(formData, 'faxNumber')) {
+    // Empty/absent passes. ANY populated value (even whitespace or a file)
+    // rejects before verification or email. Never return success for this trap.
+    if (formData.getAll('faxNumber').some((entry) => typeof entry !== 'string' || entry.length > 0)) {
       return json({ error: 'We could not verify this quote request.', code: 'quote-rejected', requestId }, 403, requestId);
+    }
+
+    const seen = new Set<string>();
+    for (const [key, entry] of formData) {
+      if (typeof entry !== 'string' || (key !== 'addons' && seen.has(key))) {
+        return json({ error: 'Invalid form submission.', code: 'invalid-form', requestId }, 400, requestId);
+      }
+      seen.add(key);
+      const controls = key === 'message' ? /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/ : /[\u0000-\u001f\u007f]/;
+      if (controls.test(entry)) {
+        return json({ error: 'Please check the information you entered.', code: 'invalid-fields', requestId }, 400, requestId);
+      }
     }
 
     const name = value(formData, 'name');
@@ -200,18 +250,19 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const squareFootage = value(formData, 'squareFootage');
-    if (squareFootage && (!/^\d{1,7}$/.test(squareFootage) || Number(squareFootage) > 100000)) {
+    if (squareFootage && (!/^\d{1,7}$/.test(squareFootage) || Number(squareFootage) < 1 || Number(squareFootage) > 100000)) {
       return json({ error: 'Please enter a valid square footage.', code: 'invalid-square-footage', requestId }, 400, requestId);
     }
 
     const preferredDate = value(formData, 'preferredDate');
-    if (preferredDate && !/^\d{4}-\d{2}-\d{2}$/.test(preferredDate)) {
+    const parsedDate = new Date(`${preferredDate}T00:00:00.000Z`);
+    if (preferredDate && (!/^\d{4}-\d{2}-\d{2}$/.test(preferredDate) || !Number.isFinite(parsedDate.getTime()) || parsedDate.toISOString().slice(0, 10) !== preferredDate)) {
       return json({ error: 'Please enter a valid preferred date.', code: 'invalid-date', requestId }, 400, requestId);
     }
 
     const bindings = env as unknown as Bindings;
-    const resendApiKey = bindings.RESEND_API_KEY;
-    const turnstileSecret = bindings.TURNSTILE_SECRET;
+    const resendApiKey = bindings.RESEND_API_KEY?.trim();
+    const turnstileSecret = bindings.TURNSTILE_SECRET?.trim();
     const expectedHostnames = new Set(
       String(bindings.TURNSTILE_HOSTNAMES || '')
         .split(',')
@@ -317,23 +368,21 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     if (!resendResponse.ok) {
-      const errorBody = await resendResponse.text().catch(() => '');
       console.error('Resend business email request was rejected.', {
         requestId,
         status: resendResponse.status,
-        body: errorBody.slice(0, 1_000),
       });
       return json({ error: 'Unable to send your quote request. Please try again.', code: 'email-rejected', requestId }, 502, requestId);
     }
 
-    let resendResult: { id?: unknown };
+    let resendResult: { id?: unknown } | null;
     try {
       resendResult = (await resendResponse.json()) as { id?: unknown };
     } catch {
       resendResult = {};
     }
 
-    if (typeof resendResult.id !== 'string' || !resendResult.id) {
+    if (typeof resendResult?.id !== 'string' || !resendResult.id.trim()) {
       console.error('Resend returned success without an email ID.', { requestId });
       return json({ error: 'Your quote request could not be confirmed. Please try again.', code: 'email-unconfirmed', requestId }, 502, requestId);
     }
@@ -361,11 +410,9 @@ export const POST: APIRoute = async ({ request }) => {
       });
 
       if (!customerResponse.ok) {
-        const errorBody = await customerResponse.text().catch(() => '');
         console.error('Resend customer confirmation was rejected.', {
           requestId,
           status: customerResponse.status,
-          body: errorBody.slice(0, 1_000),
         });
       }
     } catch (error) {
@@ -379,7 +426,11 @@ export const POST: APIRoute = async ({ request }) => {
       return json({ ok: true, requestId }, 200, requestId);
     }
 
-    return Response.redirect(new URL('/quote-success', request.url), 303);
+    return new Response(null, { status: 303, headers: {
+      Location: new URL('/quote-success', request.url).href,
+      'Cache-Control': 'no-store',
+      'X-Request-ID': requestId,
+    } });
   } catch (error) {
     console.error('Quote form error:', error instanceof Error ? error.message : 'Unknown error', { requestId });
     return json({ error: 'Something went wrong while submitting your quote request.', code: 'quote-failed', requestId }, 500, requestId);
