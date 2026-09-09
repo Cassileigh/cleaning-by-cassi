@@ -12,6 +12,7 @@
 [![Quality](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml)
 [![Production Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml)
 [![Responsive](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml)
+[![Accessibility](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml)
 [![Astro 7](https://img.shields.io/badge/Astro-7.3.2-1548F5?logo=astro&logoColor=white)](https://astro.build)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-A7DF24?logo=cloudflare&logoColor=211631)](https://workers.cloudflare.com)
 
@@ -112,11 +113,25 @@ The production safeguards follow the same checks-and-balances approach used for 
 - Strict browser security headers
 - Hourly production smoke monitoring
 - Automated responsive compatibility testing across 72 page and viewport combinations
+- Automated light/dark WCAG and contrast testing across every public page
 - Build, TypeScript, Cloudflare dry-run, and dependency-audit gates
 - GitHub CodeQL analysis
 - Grouped Dependabot maintenance
 
 Please report vulnerabilities privately according to the [security policy](./SECURITY.md) or email **cassi@cleaningbycassi.com**.
+
+## ♿ Accessibility and theme contract
+
+Accessibility is a release requirement for Cleaning by Cassi. The website must remain readable and usable whether a visitor's device uses a light or dark appearance.
+
+- Text and controls must maintain WCAG AA foreground/background contrast.
+- Links, form fields, headings, body copy, and interactive controls must remain distinguishable in both themes.
+- Keyboard focus indicators must remain clearly visible.
+- Color must not be the only way a state or message is communicated.
+- Semantic structure, labels, page titles, and language metadata must remain valid.
+- `prefers-reduced-motion` must be respected.
+
+The accessibility workflow tests all six public routes in both light and dark modes with axe WCAG A/AA rules, then requires a Lighthouse accessibility score of at least 95 on every route.
 
 ## 🎨 Brand system
 
@@ -140,7 +155,7 @@ Please report vulnerabilities privately according to the [security policy](./SEC
 | Language | [TypeScript](https://www.typescriptlang.org) | Safer application code |
 | Spam protection | [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) | Private, server-verified bot protection |
 | Email | [Resend](https://resend.com) | Business and customer notifications |
-| Monitoring | GitHub Actions | Quality gates and hourly production checks |
+| Validation | GitHub Actions | Build, security, responsive, accessibility, and production health gates |
 
 Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion support, and mobile-first styling keep the site fast and comfortable to use.
 
@@ -151,6 +166,7 @@ Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion
 | **Quality** | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit |
 | **Production smoke** | Every push to `main` and hourly | Both domains, quote page, success page, runtime bindings, and rejection behavior |
 | **Responsive compatibility** | Every push and pull request to `main` | Six public pages at 12 viewport sizes for overflow and browser runtime errors |
+| **Accessibility & theme** | Every push and pull request to `main` | 12 light/dark axe checks plus Lighthouse accessibility scores of 95 or higher |
 | **CodeQL** | GitHub security analysis | JavaScript, TypeScript, and workflow vulnerabilities |
 | **Workers Build** | Every production update | Cloudflare production deployment |
 
@@ -162,7 +178,7 @@ Only **`main`** is maintained and deployed to production.
 /
 ├── .github/
 │   ├── dependabot.yml             Grouped dependency updates
-│   └── workflows/                 Quality, production, and responsive monitoring
+│   └── workflows/                 Quality, production, responsive, and accessibility checks
 ├── docs/                          Repository artwork
 ├── public/                        Images, icons, and local fonts
 ├── scripts/                       Image optimization
@@ -193,6 +209,8 @@ Then open [localhost:4321](http://localhost:4321).
 | `npm run build` | Create the production build |
 | `npm run check` | Build, type-check, and test a Cloudflare deployment bundle |
 | `npm run audit` | Check dependencies for high-severity vulnerabilities |
+
+For a quick local accessibility review, run Chrome DevTools Lighthouse in both light and dark system appearances. The GitHub workflow remains the repeatable release gate.
 | `npm run preview` | Build and preview with the Cloudflare runtime |
 | `npm run deploy` | Deploy the current `main` release through Wrangler |
 
