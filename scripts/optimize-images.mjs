@@ -8,7 +8,7 @@ const jobs = [
     width: 1600,
   },
   {
-    input: 'public/blog-placeholder-about.jpg',
+    input: 'public/cassi-family.jpg',
     webp: 'public/about-optimized.webp',
     avif: 'public/about-optimized.avif',
     width: 1400,

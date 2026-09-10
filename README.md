@@ -179,18 +179,22 @@ Only **`main`** is maintained and deployed to production.
 ├── .github/
 │   ├── dependabot.yml             Grouped dependency updates
 │   └── workflows/                 Quality, production, responsive, and accessibility checks
-├── docs/                          Repository artwork
+├── docs/                          Security contract and repository artwork
 ├── public/                        Images, icons, and local fonts
 ├── scripts/                       Image optimization
 ├── src/
 │   ├── components/                Header, footer, metadata, and shared UI
-│   ├── layouts/                   Shared page structure
+│   ├── layouts/                   PageLayout: document shell for all six pages
 │   ├── pages/                     Website routes and API endpoints
 │   └── styles/                    Brand, typography, and responsive styles
 ├── astro.config.mjs               Astro and Cloudflare adapter
 ├── wrangler.json                  Production Worker configuration
 └── package.json                   Commands and pinned dependencies
 ```
+
+All six business pages use `PageLayout.astro` for metadata, navigation, and footer, with shared spacing and system light/dark colors in `global.css`. The homepage keeps its own section artwork. The About photo is `public/cassi-family.jpg`; `scripts/optimize-images.mjs` generates its AVIF/WebP versions and the accepting-new-clients images.
+
+The Astro starter blog routes, content collections, RSS/MDX integrations, placeholder images, and unused fonts are removed. Only referenced website assets and their font licenses belong in `public/`; repository-only artwork belongs in `docs/`.
 
 ## 🚀 Local development
 
@@ -218,7 +222,7 @@ For a quick local accessibility review, run Chrome DevTools Lighthouse in both l
 
 <div align="center">
 
-<img src="./public/header-logo.png" alt="Cleaning by Cassi logo" width="150" />
+<img src="./public/header-logo-user.webp" alt="Cleaning by Cassi logo" width="150" />
 
 ### Cleaning by Cassi
 
