@@ -35,21 +35,36 @@ import { SITE_TITLE } from '../consts';
   .facebook-link { display:grid; place-items:center; width:40px; height:40px; justify-self:end; margin-left:auto; flex-shrink:0; border:1px solid rgba(255,255,255,.22); border-radius:50%; color:#ff8ad8; background:rgba(255,255,255,.08); }
   .brand:focus-visible,.facebook-link:focus-visible,:global(.internal-links a:focus-visible){outline:3px solid #ff8ad8;outline-offset:4px}
 
-  @media (max-width:860px) {
-    .site-nav { grid-template-columns:minmax(225px,285px) minmax(0,1fr) 42px; }
-    .internal-links { order:3; grid-column:1/-1; width:100%; overflow-x:auto; justify-content:flex-start; flex-wrap:nowrap; padding-bottom:.15rem; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
-    .internal-links::-webkit-scrollbar { display:none; }
+  @media (max-width:1024px) {
+    .site-nav { grid-template-columns:minmax(0,1fr) 44px; gap:.4rem .75rem; }
+    .brand { grid-column:1; grid-row:1; width:min(225px,100%); }
     .brand-logo { max-height:76px; }
-    .facebook-link { justify-self:end; }
+    .facebook-link { grid-column:2; grid-row:1; }
+    .internal-links {
+      grid-column:1/-1;
+      grid-row:2;
+      width:100%;
+      max-width:100%;
+      min-width:0;
+      margin:0;
+      overflow-x:auto;
+      overscroll-behavior-x:contain;
+      justify-content:flex-start;
+      flex-wrap:nowrap;
+      padding:.4rem .25rem;
+      scroll-padding-inline:.25rem;
+      -webkit-overflow-scrolling:touch;
+    }
+    :global(.internal-links a) { flex:0 0 auto; min-height:44px; white-space:nowrap; }
+    :global(.internal-links a:focus-visible) { outline-offset:-3px; }
   }
 
   @media (max-width:520px) {
     .site-header { padding:.45rem .7rem .35rem; }
-    .site-nav { grid-template-columns:1fr 40px; gap:.4rem; }
-    .brand { width:225px; }
+    .site-nav { grid-template-columns:minmax(0,1fr); }
     .brand-logo { max-height:66px; }
     .facebook-link { display:none; }
-    .internal-links { grid-column:1/-1; margin-inline:-.7rem; width:calc(100% + 1.4rem); padding:.2rem .7rem .35rem; scroll-padding-inline:.7rem; gap:.15rem; }
-    :global(.internal-links a) { flex:0 0 auto; font-size:.84rem; padding:.55rem .7rem; white-space:nowrap; }
+    .internal-links { gap:.15rem; }
+    :global(.internal-links a) { font-size:.84rem; padding:.55rem .7rem; }
   }
 </style>
