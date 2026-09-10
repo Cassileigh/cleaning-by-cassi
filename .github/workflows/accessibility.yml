@@ -86,7 +86,15 @@ jobs:
           }
           TEST
 
-          npx playwright test tests-accessibility.spec.cjs --reporter=line
+          npx playwright test tests-accessibility.spec.cjs tests/theme-assets.spec.cjs --reporter=line
+
+      - name: Upload theme screenshots
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: theme-screenshots
+          path: test-results/**/*.png
+          if-no-files-found: ignore
 
       - name: Run Lighthouse accessibility audit
         run: |

@@ -1,4 +1,12 @@
 import sharp from 'sharp';
+import { readdir } from 'node:fs/promises';
+
+// Decode every shipped raster, not just its metadata: a file can exist and still be corrupt.
+for (const file of await readdir('public', { recursive: true })) {
+  if (/\.(png|jpe?g|webp|avif)$/i.test(file)) {
+    await sharp(`public/${file}`).raw().toBuffer();
+  }
+}
 
 const jobs = [
   {

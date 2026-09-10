@@ -4,6 +4,8 @@
   /* Cleaning by Cassi business-card palette */
   --purple: #6f14d9;
   --purple-dark: #43108f;
+  --accent: #6215bb;
+  --emphasis: #a01377;
   --blue: #1548f5;
   --blue-deep: #0929a8;
   --pink: #f24bb5;
@@ -18,7 +20,7 @@
   --surface-solid: #ffffff;
   --surface-soft: #f9f5ff;
   --ink: #211631;
-  --muted: #71667d;
+  --muted: #62566f;
   --border: rgba(111, 20, 217, 0.14);
   --white: #ffffff;
   --shadow: 0 16px 42px rgba(49, 24, 95, 0.12);
@@ -225,6 +227,8 @@ table {
 /* Automatic dark mode: follows iPhone/Android/system appearance */
 @media (prefers-color-scheme: dark) {
   :root {
+    --accent: #d7baff;
+    --emphasis: #ff8ad8;
     --cream: #090b20;
     --surface: rgba(18, 19, 52, 0.90);
     --surface-solid: #17183a;
