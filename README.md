@@ -233,3 +233,7 @@ For a quick local accessibility review, run Chrome DevTools Lighthouse in both l
 <sub>Serving the Fox Cities and surrounding areas.</sub>
 
 </div>
+
+### Recent maintenance reference
+
+Relevant changes from AlienX SmartHome commits `3aed304`, `9a20a0f`, and `0065127` are adapted here: pinned Astro diagnostics alongside TypeScript, scoped Worker declarations, active-navigation accessibility, a same-origin quote script with bounded requests, and maintained WCAG 2.1/browser retry tests. Cleaning by Cassi retains system-controlled themes and its own form/security contract. Browser quote tests mock verification and delivery; they send no email.

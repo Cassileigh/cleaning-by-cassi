@@ -34,7 +34,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Type check
-        run: npx tsc --noEmit
+        run: npm run typecheck
       - name: Cloudflare deploy dry run
         run: npx wrangler deploy --dry-run
       - name: Dependency audit

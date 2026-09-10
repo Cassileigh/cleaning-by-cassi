@@ -57,36 +57,7 @@ jobs:
 
       - name: Test light and dark themes with axe
         run: |
-          cat > tests-accessibility.spec.cjs <<'TEST'
-          const { test, expect } = require('@playwright/test');
-          const axe = require('axe-core');
-
-          const baseURL = 'http://127.0.0.1:4321';
-          const routes = ['/', '/services/', '/pricing/', '/about/', '/quote/', '/quote-success/'];
-          const themes = ['light', 'dark'];
-
-          for (const theme of themes) {
-            for (const route of routes) {
-              test(`${theme} theme: ${route}`, async ({ page }) => {
-                await page.emulateMedia({ colorScheme: theme, reducedMotion: 'reduce' });
-                await page.goto(`${baseURL}${route}`, { waitUntil: 'domcontentloaded' });
-                await page.waitForTimeout(500);
-                await page.addScriptTag({ content: axe.source });
-
-                const results = await page.evaluate(async () => window.axe.run(document, {
-                  runOnly: ['wcag2a', 'wcag2aa']
-                }));
-
-                expect(
-                  results.violations,
-                  `${theme} accessibility violations: ${JSON.stringify(results.violations)}`
-                ).toEqual([]);
-              });
-            }
-          }
-          TEST
-
-          npx playwright test tests-accessibility.spec.cjs tests/theme-assets.spec.cjs --reporter=line
+          npx playwright test tests/accessibility.spec.cjs tests/theme-assets.spec.cjs tests/quote-interactions.spec.cjs --reporter=line
 
       - name: Upload theme screenshots
         if: always()
@@ -95,6 +66,7 @@ jobs:
           name: theme-screenshots
           path: test-results/**/*.png
           if-no-files-found: ignore
+          include-hidden-files: true
 
       - name: Run Lighthouse accessibility audit
         run: |
@@ -135,3 +107,4 @@ jobs:
             .lighthouseci
             test-results
           if-no-files-found: ignore
+          include-hidden-files: true

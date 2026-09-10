@@ -8,6 +8,7 @@
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
+		"@astrojs/check": "0.9.10",
 		"wrangler": "4.130.0"
 	},
 	"engines": {
@@ -17,12 +18,13 @@
 	"scripts": {
 		"astro": "astro",
 		"build": "node scripts/optimize-images.mjs && astro build",
-		"cf-typegen": "wrangler types",
-		"check": "npm run build && tsc --noEmit && wrangler deploy --dry-run",
+		"cf-typegen": "wrangler types && node scripts/scope-worker-types.mjs",
+		"check": "npm run typecheck && npm run build && wrangler deploy --dry-run",
 		"audit": "npm audit --audit-level=high",
 		"deploy": "wrangler deploy",
 		"dev": "node scripts/optimize-images.mjs && astro dev",
-		"preview": "npm run build && wrangler dev"
+		"preview": "npm run build && wrangler dev",
+		"typecheck": "astro check && tsc --noEmit"
 	},
 	"overrides": {
 		"sharp": "0.35.4"
