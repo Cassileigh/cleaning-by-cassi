@@ -46,3 +46,9 @@ The local browser download endpoint timed out/returned 502, and the environment 
 ## References
 
 [Resend's idempotency contract](https://resend.com/docs/dashboard/emails/idempotency-keys) documents the 24-hour retry window. [Cloudflare deployments](https://developers.cloudflare.com/workers/versions-and-deployments/) describes version/deployment separation. Neither substitutes for inspection of this account's settings.
+
+## Additional verification from connected services
+
+Resend reports the sending domain, DKIM and SPF as verified. The ten recent transactional messages inspected show delivered status. These are historical delivery records, not an end-to-end test of this new revision. No delivery-event webhooks are configured. No customer identities or email bodies are included here, and no messages were sent.
+
+The first CI run passed build/type checks, dependency audit, CodeQL, Worker deployment and the exact-revision production smoke. Its responsive test caught Astro inlining the header script under the stricter CSP. The header now explicitly loads `/navigation.js` as an external script; the active-tab behavior is retained without restoring `unsafe-inline`.
