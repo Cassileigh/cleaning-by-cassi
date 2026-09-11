@@ -2,8 +2,9 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import { SITE_TITLE, OWNER_NAME } from '../consts';
 
-const title = 'About Me';
-const description = 'Meet the person behind Cleaning by Cassi and learn how experience, heart, and hard work shaped the business.';
+const title = 'About Cassi | Cleaning by Cassi';
+const description =
+  'Meet the person behind Cleaning by Cassi and learn how experience, heart, and hard work shaped the business.';
 ---
 
 <PageLayout title={title} description={description} class="about-page">
@@ -11,7 +12,10 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
     <div class="hero-copy">
       <p class="eyebrow">The Person Behind the Clean ✨</p>
       <h1>Hi, I'm {OWNER_NAME}.</h1>
-      <p>I'm the owner and the person behind {SITE_TITLE} — and I genuinely love helping people feel better in their homes.</p>
+      <p>
+        I'm the owner and the person behind {SITE_TITLE} — and I genuinely love helping
+        people feel better in their homes.
+      </p>
       <div class="hero-actions">
         <a href="/quote" class="primary-button">Get a Free Quote →</a>
         <a href="/services" class="secondary-button">Explore Services</a>
@@ -21,141 +25,558 @@ const description = 'Meet the person behind Cleaning by Cassi and learn how expe
       <picture>
         <source srcset="/about-optimized.avif" type="image/avif" />
         <source srcset="/about-optimized.webp" type="image/webp" />
-        <img src="/cassi-family.jpg" alt={`${OWNER_NAME}, owner of Cleaning by Cassi`} class="hero-photo" loading="eager" fetchpriority="high" decoding="async" />
+        <img
+          src="/cassi-family.jpg"
+          alt={`${OWNER_NAME}, owner of Cleaning by Cassi`}
+          class="hero-photo"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
       </picture>
       <div class="photo-note">💗 Locally owned & personally cared for</div>
     </div>
   </section>
 
   <section class="story-section">
-    <div class="section-heading"><p class="eyebrow">My Story</p><h2>Cleaning has always been a part of my life.</h2></div>
+    <div class="section-heading">
+      <p class="eyebrow">My Story</p><h2>
+        Cleaning has always been a part of my life.
+      </h2>
+    </div>
     <div class="story-grid">
-      <div class="story-card"><span class="story-number">01</span><p>I grew up watching my mom build and run her own cleaning business, and I spent my summers helping her. Without realizing it at the time, those experiences gave me the foundation for what would eventually become my own business.</p></div>
-      <div class="story-card"><span class="story-number">02</span><p>After my mom retired, I spent two years working for two different cleaning companies. I learned a lot about the industry, but eventually realized I wanted to take that experience and create something of my own.</p></div>
-      <div class="story-card highlight-card"><span class="story-number">03</span><p><strong>In July 2025, I took the leap and started {SITE_TITLE}.</strong></p><p>A dream turned into something real. ✨</p></div>
+      <div class="story-card">
+        <span class="story-number">01</span><p>
+          I grew up watching my mom build and run her own cleaning business, and
+          I spent my summers helping her. Without realizing it at the time,
+          those experiences gave me the foundation for what would eventually
+          become my own business.
+        </p>
+      </div>
+      <div class="story-card">
+        <span class="story-number">02</span><p>
+          After my mom retired, I spent two years working for two different
+          cleaning companies. I learned a lot about the industry, but eventually
+          realized I wanted to take that experience and create something of my
+          own.
+        </p>
+      </div>
+      <div class="story-card highlight-card">
+        <span class="story-number">03</span><p>
+          <strong
+            >In July 2025, I took the leap and started {SITE_TITLE}.</strong
+          >
+        </p><p>A dream turned into something real. ✨</p>
+      </div>
     </div>
   </section>
 
   <section class="split-section soft-green">
-    <div><p class="eyebrow">Why Cleaning?</p><h2>I genuinely love what I do.</h2></div>
-    <div class="copy-block"><p>There's something incredibly satisfying — and honestly, relaxing — about taking a space that needs some attention and turning it into a clean, refreshed home.</p><p>I love seeing the transformation and knowing that the work I do can make someone's life just a little bit easier.</p><p>Owning my own business also gives me flexibility to create a schedule that works with my family while still doing work I truly enjoy.</p></div>
+    <div>
+      <p class="eyebrow">Why Cleaning?</p><h2>I genuinely love what I do.</h2>
+    </div>
+    <div class="copy-block">
+      <p>
+        There's something incredibly satisfying — and honestly, relaxing — about
+        taking a space that needs some attention and turning it into a clean,
+        refreshed home.
+      </p><p>
+        I love seeing the transformation and knowing that the work I do can make
+        someone's life just a little bit easier.
+      </p><p>
+        Owning my own business also gives me flexibility to create a schedule
+        that works with my family while still doing work I truly enjoy.
+      </p>
+    </div>
   </section>
 
   <section class="best-part">
-    <div class="best-part-copy"><p class="eyebrow">The Best Part</p><h2>My clients. <span>And their pets. 🐾</span></h2><p>There's nothing better than leaving a home knowing my client is happy with the work I've done. That feeling of accomplishment is one of the biggest reasons I love what I do.</p><p>And if you have pets, there's a pretty good chance I'll love them too! I'm an animal lover, so meeting my clients' furry family members is definitely one of the perks of the job.</p></div>
-    <div class="pet-card"><div class="paw">🐾</div><h3>Pet-friendly homes are welcome.</h3><p>Your four-legged family members are part of the family too.</p></div>
+    <div class="best-part-copy">
+      <p class="eyebrow">The Best Part</p><h2>
+        My clients. <span>And their pets. 🐾</span>
+      </h2><p>
+        There's nothing better than leaving a home knowing my client is happy
+        with the work I've done. That feeling of accomplishment is one of the
+        biggest reasons I love what I do.
+      </p><p>
+        And if you have pets, there's a pretty good chance I'll love them too!
+        I'm an animal lover, so meeting my clients' furry family members is
+        definitely one of the perks of the job.
+      </p>
+    </div>
+    <div class="pet-card">
+      <div class="paw">🐾</div><h3>Pet-friendly homes are welcome.</h3><p>
+        Your four-legged family members are part of the family too.
+      </p>
+    </div>
   </section>
 
   <section class="values-section">
-    <div class="section-heading centered"><p class="eyebrow">My Approach</p><h2>Your home is unique. Your cleaning should be too.</h2><p>I take the time to understand what matters most to you so your cleaning service feels personal, dependable, and right for your home.</p></div>
-    <div class="values-grid"><article><span>💗</span><h3>Personal</h3><p>You'll know exactly who is caring for your home.</p></article><article><span>✨</span><h3>Detail-focused</h3><p>The little things matter, and I notice them.</p></article><article><span>🏡</span><h3>Customized</h3><p>Cleaning plans are shaped around your home's needs.</p></article><article><span>💚</span><h3>Dependable</h3><p>Clear expectations, consistent care, and no shortcuts.</p></article></div>
+    <div class="section-heading centered">
+      <p class="eyebrow">My Approach</p><h2>
+        Your home is unique. Your cleaning should be too.
+      </h2><p>
+        I take the time to understand what matters most to you so your cleaning
+        service feels personal, dependable, and right for your home.
+      </p>
+    </div>
+    <div class="values-grid">
+      <article>
+        <span>💗</span><h3>Personal</h3><p>
+          You'll know exactly who is caring for your home.
+        </p>
+      </article><article>
+        <span>✨</span><h3>Detail-focused</h3><p>
+          The little things matter, and I notice them.
+        </p>
+      </article><article>
+        <span>🏡</span><h3>Customized</h3><p>
+          Cleaning plans are shaped around your home's needs.
+        </p>
+      </article><article>
+        <span>💚</span><h3>Dependable</h3><p>
+          Clear expectations, consistent care, and no shortcuts.
+        </p>
+      </article>
+    </div>
   </section>
 
-  <section class="quote-box"><p>“I'm not just cleaning houses. I'm building relationships, one home at a time.”</p></section>
+  <section class="quote-box">
+    <p>
+      “I'm not just cleaning houses. I'm building relationships, one home at a
+      time.”
+    </p>
+  </section>
 
-  <section class="about-cta"><p class="eyebrow">From Me to You</p><h2>Thank you for considering Cleaning by Cassi. 💗</h2><p>I truly appreciate every client who gives me the opportunity to do what I love. If you're ready for a little more breathing room at home, I'd love to hear from you.</p><a href="/quote" class="cta-button">Let's Talk About Your Home →</a><div class="signature">— {OWNER_NAME}</div></section>
+  <section class="about-cta">
+    <p class="eyebrow">From Me to You</p><h2>
+      Thank you for considering Cleaning by Cassi. 💗
+    </h2><p>
+      I truly appreciate every client who gives me the opportunity to do what I
+      love. If you're ready for a little more breathing room at home, I'd love
+      to hear from you.
+    </p><a href="/quote" class="cta-button">Let's Talk About Your Home →</a><div
+      class="signature"
+    >
+      — {OWNER_NAME}
+    </div>
+  </section>
 </PageLayout>
 
 <style>
-  :global(.about-page) { overflow: hidden; }
-  .about-hero { display: grid; grid-template-columns: 1fr .9fr; align-items: center; gap: clamp(2rem,6vw,5rem); margin-bottom: 5rem; }
-  .hero-copy { min-width:0; }
-  .hero-copy h1 { margin-bottom: 1rem; }
-  .hero-copy > p:not(.eyebrow) { color: var(--muted); font-size: 1.08rem; line-height: 1.85; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
-  .primary-button,.secondary-button,.cta-button { display: inline-flex; align-items:center; justify-content:center; min-height:44px; padding:.95rem 1.45rem; border-radius:999px; font-weight:700; transition:.2s ease; text-align:center; }
-  .primary-button { color:white; background:var(--brand-gradient); box-shadow:0 10px 28px rgba(111,20,217,.22); }
-  .primary-button:hover { color:white; transform:translateY(-2px); }
-  .secondary-button { color:var(--ink); border:1.5px solid var(--purple); background:var(--surface-solid); }
-
-  .hero-photo-wrap { position:relative; min-width:0; width:100%; aspect-ratio:4 / 3; overflow:hidden; border-radius:32px; box-shadow:var(--shadow); }
-  .hero-photo-wrap picture { display:block; width:100%; height:100%; }
-  .hero-photo { display:block; width:100%; height:100%; min-height:0; object-fit:cover; object-position:center 58%; border-radius:32px; }
-  .photo-note { position:absolute; left:.45rem; right:.45rem; bottom:.45rem; z-index:2; padding:.82rem 1rem; border:1px solid var(--border); border-radius:16px; text-align:center; background:var(--surface); box-shadow:0 8px 20px rgba(49,24,95,.12); font-weight:700; line-height:1.3; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
-
-  .section-heading { max-width:760px; margin-bottom:2rem; }
-  .section-heading h2 { margin-bottom:.7rem; }
-  .section-heading > p:last-child { color:var(--muted); line-height:1.8; }
-  .centered { margin-inline:auto; text-align:center; }
-
-  .story-section { margin-bottom:4rem; }
-  .story-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
-  .story-card { min-width:0; padding:1.5rem; border:1px solid var(--border); border-radius:22px; background:var(--surface-solid); box-shadow:0 8px 25px rgba(49,24,95,.08); }
-  .story-number { color:var(--purple); font-weight:700; font-size:.8rem; letter-spacing:.1em; }
-  .story-card p { margin-top:1rem; color:var(--muted); line-height:1.75; }
-  .highlight-card { background:var(--brand-gradient-soft); }
-
-  .split-section { display:grid; grid-template-columns:.8fr 1.2fr; gap:3rem; margin:4rem 0; padding:clamp(1.7rem,5vw,3rem); border:1px solid var(--border); border-radius:28px; }
-  .soft-green { background:linear-gradient(145deg, rgba(167,223,36,.14), rgba(21,72,245,.07)); }
-  .copy-block p { color:var(--muted); line-height:1.8; }
-
-  .best-part { display:grid; grid-template-columns:1.2fr .8fr; gap:2rem; align-items:center; margin:4rem 0; }
-  .best-part h2 span { display:block; color:var(--purple); }
-  .best-part-copy > p:not(.eyebrow) { color:var(--muted); line-height:1.85; }
-  .pet-card { padding:2rem; border:1px solid var(--border); border-radius:28px; text-align:center; background:var(--brand-gradient-soft); box-shadow:var(--shadow); }
-  .paw { font-size:3rem; }
-  .pet-card p { color:var(--muted); }
-
-  .values-section { margin:5rem 0; }
-  .values-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
-  .values-grid article { min-width:0; padding:1.4rem; border:1px solid var(--border); border-radius:20px; background:var(--surface-solid); box-shadow:0 8px 24px rgba(49,24,95,.08); }
-  .values-grid article > span { font-size:1.7rem; }
-  .values-grid h3 { margin-top:.7rem; }
-  .values-grid p { color:var(--muted); font-size:.9rem; line-height:1.7; }
-
-  .quote-box { margin:4rem auto; max-width:800px; padding:2rem; border-left:5px solid var(--pink); border-radius:0 24px 24px 0; background:linear-gradient(90deg, rgba(242,75,181,.12), rgba(111,20,217,.07)); }
-  .quote-box p { margin:0; font-family:'DM Serif Display',serif; font-size:clamp(1.5rem,3vw,2.2rem); font-style:italic; }
-
-  .about-cta { padding:clamp(2rem,5vw,4rem); border-radius:30px; text-align:center; color:white; background:var(--brand-gradient); }
-  .about-cta .eyebrow,.about-cta h2,.about-cta p { color:white; }
-  .about-cta p { max-width:720px; margin:0 auto 1.5rem; line-height:1.8; }
-  .cta-button { background:white; color:var(--purple-dark); }
-  .signature { margin-top:1.4rem; font-family:'DM Serif Display',serif; font-size:1.5rem; color:var(--green-bright); }
-
-  @media (prefers-color-scheme:dark) {
-    .story-number { color:#d7baff; }
-    .secondary-button { background:rgba(255,255,255,.04); border-color:#b78cff; }
-    .photo-note { background:rgba(23,24,58,.9); }
+  :global(.about-page) {
+    overflow: hidden;
+  }
+  .about-hero {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    gap: clamp(2rem, 6vw, 5rem);
+    margin-bottom: 5rem;
+  }
+  .hero-copy {
+    min-width: 0;
+  }
+  .hero-copy h1 {
+    margin-bottom: 1rem;
+  }
+  .hero-copy > p:not(.eyebrow) {
+    color: var(--muted);
+    font-size: 1.08rem;
+    line-height: 1.85;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  .primary-button,
+  .secondary-button,
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.95rem 1.45rem;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: 0.2s ease;
+    text-align: center;
+  }
+  .primary-button {
+    color: white;
+    background: var(--brand-gradient);
+    box-shadow: 0 10px 28px rgba(111, 20, 217, 0.22);
+  }
+  .primary-button:hover {
+    color: white;
+    transform: translateY(-2px);
+  }
+  .secondary-button {
+    color: var(--ink);
+    border: 1.5px solid var(--purple);
+    background: var(--surface-solid);
   }
 
-  @media (max-width:900px) {
-    .about-hero,.split-section,.best-part { grid-template-columns:1fr; }
-    .story-grid { grid-template-columns:1fr; }
-    .values-grid { grid-template-columns:repeat(2,1fr); }
-    .about-hero { margin-bottom:3.5rem; }
-    .hero-photo-wrap { max-width:720px; width:100%; margin-inline:auto; }
+  .hero-photo-wrap {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+  }
+  .hero-photo-wrap picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-photo {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+    object-position: center 58%;
+    border-radius: 32px;
+  }
+  .photo-note {
+    position: absolute;
+    left: 0.45rem;
+    right: 0.45rem;
+    bottom: 0.45rem;
+    z-index: 2;
+    padding: 0.82rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-align: center;
+    background: var(--surface);
+    box-shadow: 0 8px 20px rgba(49, 24, 95, 0.12);
+    font-weight: 700;
+    line-height: 1.3;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
 
-  @media (max-width:560px) {
-    :global(.about-page) { overflow:visible; }
-    .about-hero { gap:1.6rem; margin-bottom:3rem; }
-    .hero-copy h1 { font-size:clamp(2.7rem,14vw,3.7rem); line-height:1.02; overflow-wrap:normal; word-break:normal; }
-    .hero-copy > p:not(.eyebrow) { font-size:1rem; line-height:1.7; }
-    .hero-actions { display:grid; grid-template-columns:1fr; gap:.7rem; }
-    .hero-actions a { width:100%; }
-
-    .hero-photo-wrap { aspect-ratio:4 / 3; border-radius:24px; }
-    .hero-photo-wrap picture { width:100%; height:100%; }
-    .hero-photo { width:100%; height:100%; min-height:0; object-fit:cover; object-position:center 58%; border-radius:24px; }
-    .photo-note { left:.3rem; right:.3rem; bottom:.3rem; margin:0; padding:.68rem .7rem; border-radius:13px; font-size:clamp(.78rem,3.7vw,.92rem); }
-
-    .section-heading { margin-bottom:1.5rem; }
-    .section-heading h2 { font-size:clamp(2rem,10vw,2.7rem); }
-    .story-section,.values-section { margin-block:3rem; }
-    .story-card { padding:1.25rem; }
-    .split-section,.pet-card,.quote-box { padding:1.35rem; }
-    .split-section,.best-part { gap:1.4rem; margin-block:3rem; }
-    .values-grid { grid-template-columns:1fr; }
-    .values-grid article { padding:1.25rem; }
-    .quote-box { margin-block:3rem; border-left-width:4px; }
-    .about-cta { padding:2rem 1.25rem; border-radius:24px; }
-    .about-cta h2 { font-size:clamp(2rem,10vw,2.7rem); }
-    .cta-button { width:100%; }
+  .section-heading {
+    max-width: 760px;
+    margin-bottom: 2rem;
+  }
+  .section-heading h2 {
+    margin-bottom: 0.7rem;
+  }
+  .section-heading > p:last-child {
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .centered {
+    margin-inline: auto;
+    text-align: center;
   }
 
-  @media (max-width:390px) {
-    .hero-copy h1 { font-size:2.55rem; }
-    .photo-note { font-size:.78rem; }
-    .story-card,.values-grid article,.pet-card { border-radius:18px; }
+  .story-section {
+    margin-bottom: 4rem;
+  }
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  .story-card {
+    min-width: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: var(--surface-solid);
+    box-shadow: 0 8px 25px rgba(49, 24, 95, 0.08);
+  }
+  .story-number {
+    color: var(--purple);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+  }
+  .story-card p {
+    margin-top: 1rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+  .highlight-card {
+    background: var(--brand-gradient-soft);
+  }
+
+  .split-section {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 3rem;
+    margin: 4rem 0;
+    padding: clamp(1.7rem, 5vw, 3rem);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+  }
+  .soft-green {
+    background: linear-gradient(
+      145deg,
+      rgba(167, 223, 36, 0.14),
+      rgba(21, 72, 245, 0.07)
+    );
+  }
+  .copy-block p {
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .best-part {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    align-items: center;
+    margin: 4rem 0;
+  }
+  .best-part h2 span {
+    display: block;
+    color: var(--accent);
+  }
+  .best-part-copy > p:not(.eyebrow) {
+    color: var(--muted);
+    line-height: 1.85;
+  }
+  .pet-card {
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    text-align: center;
+    background: var(--brand-gradient-soft);
+    box-shadow: var(--shadow);
+  }
+  .paw {
+    font-size: 3rem;
+  }
+  .pet-card p {
+    color: var(--muted);
+  }
+
+  .values-section {
+    margin: 5rem 0;
+  }
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .values-grid article {
+    min-width: 0;
+    padding: 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--surface-solid);
+    box-shadow: 0 8px 24px rgba(49, 24, 95, 0.08);
+  }
+  .values-grid article > span {
+    font-size: 1.7rem;
+  }
+  .values-grid h3 {
+    margin-top: 0.7rem;
+  }
+  .values-grid p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .quote-box {
+    margin: 4rem auto;
+    max-width: 800px;
+    padding: 2rem;
+    border-left: 5px solid var(--pink);
+    border-radius: 0 24px 24px 0;
+    background: linear-gradient(
+      90deg,
+      rgba(242, 75, 181, 0.12),
+      rgba(111, 20, 217, 0.07)
+    );
+  }
+  .quote-box p {
+    margin: 0;
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-style: italic;
+  }
+
+  .about-cta {
+    padding: clamp(2rem, 5vw, 4rem);
+    border-radius: 30px;
+    text-align: center;
+    color: white;
+    background: var(--brand-gradient);
+  }
+  .about-cta .eyebrow,
+  .about-cta h2,
+  .about-cta p {
+    color: white;
+  }
+  .about-cta p {
+    max-width: 720px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.8;
+  }
+  .cta-button {
+    background: white;
+    color: var(--purple-dark);
+  }
+  .signature {
+    margin-top: 1.4rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    color: var(--green-bright);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .story-number {
+      color: #d7baff;
+    }
+    .secondary-button {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: #b78cff;
+    }
+    .photo-note {
+      background: rgba(23, 24, 58, 0.9);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .about-hero,
+    .split-section,
+    .best-part {
+      grid-template-columns: 1fr;
+    }
+    .story-grid {
+      grid-template-columns: 1fr;
+    }
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .about-hero {
+      margin-bottom: 3.5rem;
+    }
+    .hero-photo-wrap {
+      max-width: 720px;
+      width: 100%;
+      margin-inline: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    :global(.about-page) {
+      overflow: visible;
+    }
+    .about-hero {
+      gap: 1.6rem;
+      margin-bottom: 3rem;
+    }
+    .hero-copy h1 {
+      font-size: clamp(2.7rem, 14vw, 3.7rem);
+      line-height: 1.02;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+    .hero-copy > p:not(.eyebrow) {
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+    }
+    .hero-actions a {
+      width: 100%;
+    }
+
+    .hero-photo-wrap {
+      aspect-ratio: 4 / 3;
+      border-radius: 24px;
+    }
+    .hero-photo-wrap picture {
+      width: 100%;
+      height: 100%;
+    }
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      object-fit: cover;
+      object-position: center 58%;
+      border-radius: 24px;
+    }
+    .photo-note {
+      left: 0.3rem;
+      right: 0.3rem;
+      bottom: 0.3rem;
+      margin: 0;
+      padding: 0.68rem 0.7rem;
+      border-radius: 13px;
+      font-size: clamp(0.78rem, 3.7vw, 0.92rem);
+    }
+
+    .section-heading {
+      margin-bottom: 1.5rem;
+    }
+    .section-heading h2 {
+      font-size: clamp(2rem, 10vw, 2.7rem);
+    }
+    .story-section,
+    .values-section {
+      margin-block: 3rem;
+    }
+    .story-card {
+      padding: 1.25rem;
+    }
+    .split-section,
+    .pet-card,
+    .quote-box {
+      padding: 1.35rem;
+    }
+    .split-section,
+    .best-part {
+      gap: 1.4rem;
+      margin-block: 3rem;
+    }
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+    .values-grid article {
+      padding: 1.25rem;
+    }
+    .quote-box {
+      margin-block: 3rem;
+      border-left-width: 4px;
+    }
+    .about-cta {
+      padding: 2rem 1.25rem;
+      border-radius: 24px;
+    }
+    .about-cta h2 {
+      font-size: clamp(2rem, 10vw, 2.7rem);
+    }
+    .cta-button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .hero-copy h1 {
+      font-size: 2.55rem;
+    }
+    .photo-note {
+      font-size: 0.78rem;
+    }
+    .story-card,
+    .values-grid article,
+    .pet-card {
+      border-radius: 18px;
+    }
   }
 </style>

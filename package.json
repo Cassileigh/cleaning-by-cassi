@@ -1,33 +1,43 @@
 {
-	"name": "cleaning-by-cassi",
-	"description": "Public website and quote request service for Cleaning by Cassi.",
-	"dependencies": {
-		"@astrojs/cloudflare": "14.3.1",
-		"@astrojs/sitemap": "3.7.4",
-		"astro": "7.3.2",
-		"typescript": "5.9.3"
-	},
-	"devDependencies": {
-		"@astrojs/check": "0.9.10",
-		"wrangler": "4.130.0"
-	},
-	"engines": {
-		"node": ">=22"
-	},
-	"private": true,
-	"scripts": {
-		"astro": "astro",
-		"build": "node scripts/optimize-images.mjs && astro build",
-		"cf-typegen": "wrangler types && node scripts/scope-worker-types.mjs",
-		"check": "npm run typecheck && npm run build && wrangler deploy --dry-run",
-		"audit": "npm audit --audit-level=high",
-		"deploy": "wrangler deploy",
-		"dev": "node scripts/optimize-images.mjs && astro dev",
-		"preview": "npm run build && wrangler dev",
-		"typecheck": "astro check && tsc --noEmit"
-	},
-	"overrides": {
-		"sharp": "0.35.4"
-	},
-	"type": "module"
+  "name": "cleaning-by-cassi",
+  "description": "Public website and quote request service for Cleaning by Cassi.",
+  "dependencies": {
+    "@astrojs/cloudflare": "14.3.1",
+    "@astrojs/sitemap": "3.7.4",
+    "astro": "7.3.2",
+    "typescript": "5.9.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@playwright/test": "1.63.0",
+    "axe-core": "4.13.0",
+    "lighthouse": "13.4.1",
+    "prettier": "3.6.2",
+    "prettier-plugin-astro": "0.14.1",
+    "sharp": "0.35.4",
+    "wrangler": "4.130.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "private": true,
+  "scripts": {
+    "astro": "astro",
+    "build": "node scripts/write-release.mjs && node scripts/optimize-images.mjs && astro build",
+    "cf-typegen": "wrangler types && node scripts/scope-worker-types.mjs",
+    "check": "npm test && npm run typecheck && npm run build && wrangler deploy --dry-run",
+    "audit": "npm audit --audit-level=high",
+    "deploy": "wrangler deploy",
+    "dev": "node scripts/write-release.mjs && node scripts/optimize-images.mjs && astro dev",
+    "preview": "npm run build && wrangler dev",
+    "typecheck": "node scripts/write-release.mjs && astro check && tsc --noEmit",
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "playwright test",
+    "format": "prettier --write src public/quote-form.js scripts tests .github README.md docs/*.md",
+    "format:check": "prettier --check src public/quote-form.js scripts tests .github README.md docs/*.md"
+  },
+  "overrides": {
+    "sharp": "0.35.4"
+  },
+  "type": "module"
 }

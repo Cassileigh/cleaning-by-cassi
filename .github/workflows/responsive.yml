@@ -50,9 +50,6 @@ jobs:
           cat /tmp/cleaning-by-cassi-preview.log
           exit 1
 
-      - name: Install Playwright test runner
-        run: npm install --no-save --package-lock=false @playwright/test@1.55.0
-
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
@@ -62,7 +59,7 @@ jobs:
           const { test, expect } = require('@playwright/test');
 
           const baseURL = 'http://127.0.0.1:4321';
-          const routes = ['/', '/services/', '/pricing/', '/about/', '/quote/', '/quote-success/'];
+          const routes = ['/', '/services/', '/pricing/', '/about/', '/quote/', '/quote-success/', '/review/', '/privacy/'];
           const viewports = [
             [320, 568], [360, 800], [375, 667], [390, 844], [430, 932],
             [540, 720], [768, 1024], [820, 1180], [1024, 768],

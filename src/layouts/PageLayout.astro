@@ -7,19 +7,32 @@ import Footer from '../components/Footer.astro';
 interface Props extends HTMLAttributes<'main'> {
   title: string;
   description: string;
+  noindex?: boolean;
 }
 
-const { title, description, class: mainClass, ...attributes } = Astro.props;
+const {
+  title,
+  description,
+  noindex = false,
+  class: mainClass,
+  ...attributes
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} noindex={noindex} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <Header />
-    <main class:list={['page-shell', mainClass]} {...attributes}>
+    <main
+      id="main-content"
+      tabindex="-1"
+      class:list={['page-shell', mainClass]}
+      {...attributes}
+    >
       <slot />
     </main>
     <Footer />

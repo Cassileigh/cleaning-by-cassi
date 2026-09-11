@@ -1,26 +1,50 @@
 ---
 import '../styles/global.css';
-interface Props { title: string; description: string; image?: string; }
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noindex?: boolean;
+}
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const { title, description, image = '/social-share.jpg?v=business-card-2' } = Astro.props;
+const {
+  title,
+  description,
+  image = '/social-share.jpg?v=business-card-2',
+  noindex = false,
+} = Astro.props;
 const socialImageURL = new URL(image, Astro.site ?? Astro.url);
 ---
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="generator" content={Astro.generator} />
-<link rel="preload" href="/fonts/DMSerifDisplay-Regular.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="/fonts/PoppinsRegular.woff2" as="font" type="font/woff2" crossorigin />
+<link
+  rel="preload"
+  href="/fonts/DMSerifDisplay-Regular.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/PoppinsRegular.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
 <link rel="canonical" href={canonicalURL} />
 <title>{title}</title>
+{noindex && <meta name="robots" content="noindex, follow" />}
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={socialImageURL} />
@@ -30,7 +54,7 @@ const socialImageURL = new URL(image, Astro.site ?? Astro.url);
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="Cleaning by Cassi business card" />
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={socialImageURL} />

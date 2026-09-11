@@ -36,4 +36,8 @@ for (const job of jobs) {
   ]);
 }
 
-console.log('Optimized hero images generated.');
+await sharp('docs/brand/header-logo-original.png')
+  .resize({ width: 344 })
+  .webp({ quality: 95, effort: 6 })
+  .toFile('public/header-logo-optimized.webp');
+console.log('Optimized website images generated.');

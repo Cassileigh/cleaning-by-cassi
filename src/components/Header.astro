@@ -6,7 +6,14 @@ import { SITE_TITLE } from '../consts';
 <header class="site-header">
   <nav class="site-nav">
     <a href="/" class="brand" aria-label={`${SITE_TITLE} home`}>
-      <img src="/header-logo.png" alt="Cleaning by Cassi" width="1774" height="887" class="brand-logo" decoding="async" />
+      <img
+        src="/header-logo-optimized.webp"
+        alt="Cleaning by Cassi"
+        width="344"
+        height="172"
+        class="brand-logo"
+        decoding="async"
+      />
     </a>
 
     <div class="internal-links">
@@ -17,14 +24,27 @@ import { SITE_TITLE } from '../consts';
       <HeaderLink href="/quote">Get a Quote</HeaderLink>
     </div>
 
-    <a href="https://facebook.com/cleaningbycassi" target="_blank" rel="noopener noreferrer" class="facebook-link" aria-label="Follow Cleaning by Cassi on Facebook">
-      <svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22"><path fill="currentColor" d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.219l-.354 2.326H9.25v5.625c3.824-.604 6.75-3.934 6.75-7.951z" /></svg>
+    <a
+      href="https://facebook.com/cleaningbycassi"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="facebook-link"
+      aria-label="Follow Cleaning by Cassi on Facebook"
+    >
+      <svg viewBox="0 0 16 16" aria-hidden="true" width="22" height="22"
+        ><path
+          fill="currentColor"
+          d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.219l-.354 2.326H9.25v5.625c3.824-.604 6.75-3.934 6.75-7.951z"
+        ></path></svg
+      >
     </a>
   </nav>
 </header>
 
 <script>
-  const links = document.querySelector<HTMLElement>('.site-header .internal-links');
+  const links = document.querySelector<HTMLElement>(
+    '.site-header .internal-links',
+  );
   if (links) {
     const revealActiveLink = () => {
       const active = links.querySelector<HTMLElement>('[aria-current="page"]');
@@ -34,7 +54,11 @@ import { SITE_TITLE } from '../consts';
       if (item.left >= container.left && item.right <= container.right) return;
       // Scroll only this navigation strip; preserve the document's scroll position.
       links.scrollTo({
-        left: links.scrollLeft + item.left - container.left - (links.clientWidth - item.width) / 2,
+        left:
+          links.scrollLeft +
+          item.left -
+          container.left -
+          (links.clientWidth - item.width) / 2,
         behavior: 'auto',
       });
     };
@@ -46,22 +70,113 @@ import { SITE_TITLE } from '../consts';
 </script>
 
 <style>
-  .site-header { position:sticky; top:0; z-index:100; padding:.5rem 1rem; background:linear-gradient(90deg,rgba(12,25,96,.96),rgba(24,59,193,.96),rgba(84,23,132,.96)); border-bottom:1px solid rgba(255,255,255,.12); box-shadow:0 6px 24px rgba(0,0,0,.18); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
-  .site-nav { width:100%; margin:0; display:grid; grid-template-columns:clamp(88px,18vw,172px) minmax(0,1fr) 44px; align-items:center; gap:clamp(.5rem,1.5vw,1.1rem); min-width:0; }
-  .brand { display:inline-flex; align-items:center; width:100%; min-width:0; min-height:44px; text-decoration:none; }
-  .brand-logo { display:block; width:100%; height:auto; object-fit:contain; }
-  .internal-links { display:flex; align-items:center; justify-content:flex-start; gap:.2rem; flex-wrap:nowrap; min-width:0; max-width:100%; overflow-x:auto; overscroll-behavior-x:contain; padding:.4rem .25rem; scroll-padding-inline:.25rem; -webkit-overflow-scrolling:touch; }
-  :global(.internal-links a) { flex:0 0 auto; min-height:44px; white-space:nowrap; padding:.65rem .8rem; border-radius:999px; color:#fff; font-size:.9rem; font-weight:600; transition:.2s ease; }
-  :global(.internal-links a:hover) { color:#fff; background:rgba(255,255,255,.1); }
-  :global(.internal-links a.active) { color:#fff; background:var(--brand-gradient); box-shadow:0 8px 20px rgba(245,54,183,.2); }
-  .facebook-link { display:grid; place-items:center; width:44px; height:44px; justify-self:end; margin-left:auto; flex-shrink:0; border:1px solid rgba(255,255,255,.22); border-radius:50%; color:#ff8ad8; background:rgba(255,255,255,.08); }
-  .brand:focus-visible,.facebook-link:focus-visible,:global(.internal-links a:focus-visible){outline:3px solid #ff8ad8;outline-offset:4px}
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(
+      90deg,
+      rgba(12, 25, 96, 0.96),
+      rgba(24, 59, 193, 0.96),
+      rgba(84, 23, 132, 0.96)
+    );
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .site-nav {
+    width: 100%;
+    margin: 0;
+    display: grid;
+    grid-template-columns: clamp(88px, 18vw, 172px) minmax(0, 1fr) 44px;
+    align-items: center;
+    gap: clamp(0.5rem, 1.5vw, 1.1rem);
+    min-width: 0;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .brand-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  .internal-links {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.2rem;
+    flex-wrap: nowrap;
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 0.4rem 0.25rem;
+    scroll-padding-inline: 0.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  :global(.internal-links a) {
+    flex: 0 0 auto;
+    min-height: 44px;
+    white-space: nowrap;
+    padding: 0.65rem 0.8rem;
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: 0.2s ease;
+  }
+  :global(.internal-links a:hover) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  :global(.internal-links a.active) {
+    color: #fff;
+    background: var(--brand-gradient);
+    box-shadow: 0 8px 20px rgba(245, 54, 183, 0.2);
+  }
+  .facebook-link {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    justify-self: end;
+    margin-left: auto;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 50%;
+    color: #ff8ad8;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  .brand:focus-visible,
+  .facebook-link:focus-visible,
+  :global(.internal-links a:focus-visible) {
+    outline: 3px solid #ff8ad8;
+    outline-offset: 4px;
+  }
 
-  :global(.internal-links a:focus-visible) { outline-offset:-3px; }
+  :global(.internal-links a:focus-visible) {
+    outline-offset: -3px;
+  }
 
-  @media (max-width:520px) {
-    .site-header { padding:.45rem .5rem; }
-    .internal-links { gap:.15rem; }
-    :global(.internal-links a) { font-size:.84rem; padding:.55rem .7rem; }
+  @media (max-width: 520px) {
+    .site-header {
+      padding: 0.45rem 0.5rem;
+    }
+    .internal-links {
+      gap: 0.15rem;
+    }
+    :global(.internal-links a) {
+      font-size: 0.84rem;
+      padding: 0.55rem 0.7rem;
+    }
   }
 </style>

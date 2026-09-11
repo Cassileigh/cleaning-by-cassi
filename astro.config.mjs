@@ -8,7 +8,7 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
 	site: "https://cleaningbycassi.com",
 	output: "server",
-	integrations: [sitemap()],
+	integrations: [sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/quote-success') })],
     
 	adapter: cloudflare(),
 });

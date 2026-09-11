@@ -72,13 +72,13 @@ This repository contains the production website and its secure quote-request sys
 
 ## 🧽 Services at a glance
 
-| Service | Designed for |
-| :--- | :--- |
-| **Standard Cleaning** | Regular upkeep that keeps a home fresh, tidy, and comfortable |
-| **Deep Cleaning** | A detailed reset for spaces that need extra care |
-| **Recurring Cleaning** | Weekly, biweekly, every-three-weeks, or monthly support |
-| **Move-In / Move-Out** | Preparing a home for its next chapter |
-| **Add-On Services** | Custom extras such as baseboards, bed making, laundry, and more |
+| Service                | Designed for                                                    |
+| :--------------------- | :-------------------------------------------------------------- |
+| **Standard Cleaning**  | Regular upkeep that keeps a home fresh, tidy, and comfortable   |
+| **Deep Cleaning**      | A detailed reset for spaces that need extra care                |
+| **Recurring Cleaning** | Weekly, biweekly, every-three-weeks, or monthly support         |
+| **Move-In / Move-Out** | Preparing a home for its next chapter                           |
+| **Add-On Services**    | Custom extras such as baseboards, bed making, laundry, and more |
 
 > Every home is different. Final quotes are based on the home's size, condition, rooms, and requested services.
 
@@ -98,7 +98,7 @@ flowchart LR
     D --> E[Success page]
 ```
 
-The success page appears only after the business notification has been accepted by the email provider. Failed validation or delivery stays on the form and gives the visitor a useful error instead of reporting a false success.
+The form navigates to the success page only after the email provider accepts the business notification. Acceptance is not proof of inbox delivery. JavaScript errors remain on the form; native submissions receive an HTML recovery page. Retries use provider idempotency keys for 24 hours.
 
 ## 🛡️ Security and reliability
 
@@ -110,11 +110,11 @@ The production safeguards follow the same checks-and-balances approach used for 
 - Field allowlists, length limits, and HTML escaping
 - Real request-body size enforcement
 - Resend response-ID confirmation
-- Strict browser security headers
+- Browser security headers, including a script policy without unsafe-inline
 - Hourly production smoke monitoring
-- Automated responsive compatibility testing across 72 page and viewport combinations
-- Automated light/dark WCAG and contrast testing across every public page
-- Build, TypeScript, Cloudflare dry-run, and dependency-audit gates
+- Automated responsive compatibility testing across eight public pages and 12 viewport sizes
+- Automated light/dark WCAG and contrast testing across the public business pages
+- Build, TypeScript, Cloudflare dry-run, and dependency checks
 - GitHub CodeQL analysis
 - Grouped Dependabot maintenance
 
@@ -131,44 +131,44 @@ Accessibility is a release requirement for Cleaning by Cassi. The website must r
 - Semantic structure, labels, page titles, and language metadata must remain valid.
 - `prefers-reduced-motion` must be respected.
 
-The accessibility workflow tests all six public routes in both light and dark modes with axe WCAG A/AA rules, then requires a Lighthouse accessibility score of at least 95 on every route.
+The accessibility workflow tests eight public routes in both light and dark modes with axe WCAG A/AA rules, then requires a Lighthouse accessibility score of at least 95 on those routes.
 
 ## 🎨 Brand system
 
-| Color | Hex | Role |
-| :--- | :---: | :--- |
+| Color           |    Hex    | Role                                 |
+| :-------------- | :-------: | :----------------------------------- |
 | 🟣 Royal Purple | `#6F14D9` | Primary identity and calls to action |
-| 🔵 Bright Blue | `#1548F5` | Gradient depth and balance |
-| 🩷 Vibrant Pink | `#F24BB5` | Warmth, highlights, and personality |
-| 🟢 Fresh Green | `#A7DF24` | Energetic accent details |
-| ⚫ Deep Plum | `#211631` | Text and strong contrast |
+| 🔵 Bright Blue  | `#1548F5` | Gradient depth and balance           |
+| 🩷 Vibrant Pink | `#F24BB5` | Warmth, highlights, and personality  |
+| 🟢 Fresh Green  | `#A7DF24` | Energetic accent details             |
+| ⚫ Deep Plum    | `#211631` | Text and strong contrast             |
 
 **Display type:** DM Serif Display  
 **Body type:** Poppins
 
 ## ⚙️ Technology
 
-| Layer | Technology | Purpose |
-| :--- | :--- | :--- |
-| Framework | [Astro 7](https://astro.build) | Pages, routing, and server rendering |
-| Runtime | [Cloudflare Workers](https://workers.cloudflare.com) | Production hosting and quote processing |
-| Language | [TypeScript](https://www.typescriptlang.org) | Safer application code |
-| Spam protection | [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) | Private, server-verified bot protection |
-| Email | [Resend](https://resend.com) | Business and customer notifications |
-| Validation | GitHub Actions | Build, security, responsive, accessibility, and production health gates |
+| Layer           | Technology                                                             | Purpose                                                                 |
+| :-------------- | :--------------------------------------------------------------------- | :---------------------------------------------------------------------- |
+| Framework       | [Astro 7](https://astro.build)                                         | Pages, routing, and server rendering                                    |
+| Runtime         | [Cloudflare Workers](https://workers.cloudflare.com)                   | Production hosting and quote processing                                 |
+| Language        | [TypeScript](https://www.typescriptlang.org)                           | Safer application code                                                  |
+| Spam protection | [Cloudflare Turnstile](https://www.cloudflare.com/products/turnstile/) | Private, server-verified bot protection                                 |
+| Email           | [Resend](https://resend.com)                                           | Business and customer notifications                                     |
+| Validation      | GitHub Actions                                                         | Build, security, responsive, accessibility, and production health gates |
 
 Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion support, and mobile-first styling keep the site fast and comfortable to use.
 
 ## ✅ Automated checks
 
-| Check | When it runs | What it protects |
-| :--- | :--- | :--- |
-| **Quality** | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit |
-| **Production smoke** | Every push to `main` and hourly | Both domains, quote page, success page, runtime bindings, and rejection behavior |
-| **Responsive compatibility** | Every push and pull request to `main` | Six public pages at 12 viewport sizes for overflow and browser runtime errors |
-| **Accessibility & theme** | Every push and pull request to `main` | 12 light/dark axe checks plus Lighthouse accessibility scores of 95 or higher |
-| **CodeQL** | GitHub security analysis | JavaScript, TypeScript, and workflow vulnerabilities |
-| **Workers Build** | Every production update | Cloudflare production deployment |
+| Check                        | When it runs                          | What it protects                                                                                         |
+| :--------------------------- | :------------------------------------ | :------------------------------------------------------------------------------------------------------- |
+| **Quality**                  | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit                                              |
+| **Production smoke**         | Every push to `main` and hourly       | Expected Git revision, public pages, runtime readiness, and rejection behavior                           |
+| **Responsive compatibility** | Every push and pull request to `main` | Eight public pages at 12 viewport sizes for overflow and browser runtime errors                          |
+| **Accessibility & theme**    | Every push and pull request to `main` | Light/dark axe checks, Chromium and WebKit journeys, and Lighthouse accessibility scores of 95 or higher |
+| **CodeQL**                   | GitHub security analysis              | JavaScript, TypeScript, and workflow vulnerabilities                                                     |
+| **Workers Build**            | Every production update               | Cloudflare production deployment (external integration)                                                  |
 
 Only **`main`** is maintained and deployed to production.
 
@@ -184,7 +184,7 @@ Only **`main`** is maintained and deployed to production.
 ├── scripts/                       Image optimization
 ├── src/
 │   ├── components/                Header, footer, metadata, and shared UI
-│   ├── layouts/                   PageLayout: document shell for all six pages
+│   ├── layouts/                   PageLayout: document shell for public pages
 │   ├── pages/                     Website routes and API endpoints
 │   └── styles/                    Brand, typography, and responsive styles
 ├── astro.config.mjs               Astro and Cloudflare adapter
@@ -192,7 +192,7 @@ Only **`main`** is maintained and deployed to production.
 └── package.json                   Commands and pinned dependencies
 ```
 
-All six business pages use `PageLayout.astro` for metadata, navigation, and footer, with shared spacing and system light/dark colors in `global.css`. The homepage uses those same light/dark colors for every section. The About photo is `public/cassi-family.jpg`; `scripts/optimize-images.mjs` generates its AVIF/WebP versions and the accepting-new-clients images.
+All public business pages use `PageLayout.astro` for metadata, navigation, and footer, with shared spacing and system light/dark colors in `global.css`. The homepage uses those same light/dark colors for every section. The About photo is `public/cassi-family.jpg`; `scripts/optimize-images.mjs` generates its AVIF/WebP versions and the accepting-new-clients images.
 
 The Astro starter blog routes, content collections, RSS/MDX integrations, placeholder images, and unused fonts are removed. The build decodes every raster image to reject corrupt files, and browser checks verify image loading and live system-theme switching. Only referenced website assets and their font licenses belong in `public/`; repository-only artwork belongs in `docs/`.
 
@@ -207,14 +207,13 @@ npm run dev
 
 Then open [localhost:4321](http://localhost:4321).
 
-| Command | Purpose |
-| :--- | :--- |
-| `npm run dev` | Optimize images and start the local development server |
-| `npm run build` | Create the production build |
-| `npm run check` | Build, type-check, and test a Cloudflare deployment bundle |
-| `npm run audit` | Check dependencies for high-severity vulnerabilities |
+| Command         | Purpose                                                |
+| :-------------- | :----------------------------------------------------- |
+| `npm run dev`   | Optimize images and start the local development server |
+| `npm run build` | Create the production build                            |
+| `npm run check` | API regressions, type check, build, and Worker dry run |
+| `npm run audit` | Check dependencies for high-severity vulnerabilities   |
 
-For a quick local accessibility review, run Chrome DevTools Lighthouse in both light and dark system appearances. The GitHub workflow remains the repeatable release gate.
 | `npm run preview` | Build and preview with the Cloudflare runtime |
 | `npm run deploy` | Deploy the current `main` release through Wrangler |
 
@@ -222,11 +221,11 @@ For a quick local accessibility review, run Chrome DevTools Lighthouse in both l
 
 <div align="center">
 
-<img src="./public/header-logo.png" alt="Cleaning by Cassi logo" width="150" />
+<img src="./docs/brand/header-logo-original.png" alt="Cleaning by Cassi logo" width="150" />
 
 ### Cleaning by Cassi
 
-*Done with precision. Peace of mind delivered.*
+_Done with precision. Peace of mind delivered._
 
 [Website](https://cleaningbycassi.com) · [Free Quote](https://cleaningbycassi.com/quote) · [Email Cassi](mailto:cassandramorris@cleaningbycassi.com)
 
@@ -234,6 +233,28 @@ For a quick local accessibility review, run Chrome DevTools Lighthouse in both l
 
 </div>
 
-### Recent maintenance reference
+### Maintenance reference
 
 Relevant changes from AlienX SmartHome commits `3aed304`, `9a20a0f`, and `0065127` are adapted here: pinned Astro diagnostics alongside TypeScript, scoped Worker declarations, active-navigation accessibility, a same-origin quote script with bounded requests, and maintained WCAG 2.1/browser retry tests. Cleaning by Cassi retains system-controlled themes and its own form/security contract. Browser quote tests mock verification and delivery; they send no email.
+
+## Audit remediation and operations
+
+See [audit follow-up](docs/audit-follow-up.md) for changes, verification, and remaining infrastructure work. A green configuration-readiness endpoint does **not** establish working inbox delivery. Production smoke verifies the expected Git SHA, but independent Cloudflare Builds still requires an explicit release-gating policy.
+
+Local verification:
+
+```bash
+npm ci
+npm run check
+npm run audit
+npx playwright install chromium webkit
+npm run preview
+# In another terminal, while preview listens on port 4321:
+npm run test:browser
+```
+
+For local verification settings, copy `.env.example` to `.dev.vars` and use a dedicated Turnstile testing setup whose hostname policy matches the verification response. Never copy production email secrets into browser code. Browser tests mock verification and email submission and require no live secrets. Production uses Worker secrets for `TURNSTILE_SECRET` and `RESEND_API_KEY`; `TURNSTILE_HOSTNAMES` and the public `TURNSTILE_SITE_KEY` must match the intended widget. The public site key has the existing production fallback.
+
+`npm run cf-typegen` regenerates the Worker declarations. Optional application secrets are described in `src/bindings.ts`. `npm run format` formats maintained source; `npm run format:check` checks it. Direct build and test tools are pinned in the lockfile and covered by the dependency audit.
+
+The original header artwork is retained in `docs/brand`; the build generates a 344px WebP for visitors. No user-facing logo redesign was made.

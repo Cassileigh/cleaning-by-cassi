@@ -1,0 +1,32 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { CONTACT_EMAIL } from '../consts';
+---
+
+<PageLayout
+  title="Your Quote Information | Cleaning by Cassi"
+  description="How the Cleaning by Cassi quote form uses your information."
+>
+  <h1>Your quote information</h1>
+  <p>
+    The quote form asks for your name, email and phone number so Cassi can
+    respond. Home details, cleaning preferences and scheduling information help
+    prepare your personalized quote.
+  </p>
+  <h2>What happens when you submit?</h2>
+  <p>
+    Cloudflare Turnstile checks the submission for spam. Resend sends your
+    request to Cassi by email and attempts to send you a confirmation. Your
+    contact information and the details you enter are included in these emails.
+  </p>
+  <p>
+    Please avoid including passwords, access codes or other sensitive
+    information in the form.
+  </p>
+  <h2>Questions or corrections</h2>
+  <p>
+    To ask about information you submitted or request a correction or deletion, <a
+      href={`mailto:${CONTACT_EMAIL}`}>contact Cassi</a
+    >.
+  </p>
+</PageLayout>

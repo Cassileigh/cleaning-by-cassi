@@ -52,12 +52,14 @@ jobs:
 
       - name: Install browser accessibility tooling
         run: |
-          npm install --no-save --package-lock=false @playwright/test@1.55.0 axe-core@4.10.3
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps chromium webkit
 
       - name: Test light and dark themes with axe
         run: |
-          npx playwright test tests/accessibility.spec.cjs tests/theme-assets.spec.cjs tests/quote-interactions.spec.cjs --reporter=line
+          npx playwright test tests/accessibility.spec.cjs tests/theme-assets.spec.cjs tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --reporter=line
+
+      - name: Test Safari navigation and quote recovery
+        run: npx playwright test tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --browser=webkit --reporter=line
 
       - name: Upload theme screenshots
         if: always()
@@ -69,33 +71,7 @@ jobs:
           include-hidden-files: true
 
       - name: Run Lighthouse accessibility audit
-        run: |
-          cat > lighthouserc.cjs <<'LIGHTHOUSE'
-          module.exports = {
-            ci: {
-              collect: {
-                url: [
-                  'http://127.0.0.1:4321/',
-                  'http://127.0.0.1:4321/services/',
-                  'http://127.0.0.1:4321/pricing/',
-                  'http://127.0.0.1:4321/about/',
-                  'http://127.0.0.1:4321/quote/',
-                  'http://127.0.0.1:4321/quote-success/'
-                ],
-                numberOfRuns: 1,
-                settings: { onlyCategories: ['accessibility'] }
-              },
-              assert: {
-                assertions: {
-                  'categories:accessibility': ['error', { minScore: 0.95 }]
-                }
-              },
-              upload: { target: 'filesystem', outputDir: '.lighthouseci' }
-            }
-          };
-          LIGHTHOUSE
-
-          npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.cjs
+        run: node scripts/lighthouse.mjs
 
       - name: Upload diagnostics on failure
         if: failure()

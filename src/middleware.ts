@@ -14,8 +14,8 @@ const contentSecurityPolicy = [
   "img-src 'self' data: https:",
   "font-src 'self' data:",
   "style-src 'self' 'unsafe-inline'",
-  "script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com",
-  "frame-src https://challenges.cloudflare.com",
+  "script-src 'self' https://challenges.cloudflare.com",
+  'frame-src https://challenges.cloudflare.com',
   "connect-src 'self' https://challenges.cloudflare.com",
   'upgrade-insecure-requests',
 ].join('; ');
@@ -25,7 +25,8 @@ const securityHeaders = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+  'Permissions-Policy':
+    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
@@ -33,9 +34,13 @@ const securityHeaders = {
 
 const secure = (response: Response, statusRoute = false) => {
   const headers = new Headers(response.headers);
-  for (const [name, value] of Object.entries(securityHeaders)) headers.set(name, value);
+  for (const [name, value] of Object.entries(securityHeaders))
+    headers.set(name, value);
   if (statusRoute) {
-    headers.set('Content-Security-Policy', "default-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    headers.set(
+      'Content-Security-Policy',
+      "default-src 'none'; base-uri 'none'; frame-ancestors 'none'",
+    );
     headers.set('Referrer-Policy', 'no-referrer');
   }
   return new Response(response.body, {
@@ -45,19 +50,30 @@ const secure = (response: Response, statusRoute = false) => {
   });
 };
 
-const json = (body: Record<string, unknown>, status: number, requestId: string) =>
-  secure(new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'no-store',
-      'X-Request-ID': requestId,
-    },
-  }));
+const json = (
+  body: Record<string, unknown>,
+  status: number,
+  requestId: string,
+) =>
+  secure(
+    new Response(JSON.stringify(body), {
+      status,
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'no-store',
+        'X-Request-ID': requestId,
+        ...(status === 429
+          ? { 'Retry-After': String(Math.ceil(RATE_WINDOW_MS / 1000)) }
+          : {}),
+      },
+    }),
+  );
 
 const pruneAttempts = (now: number) => {
   for (const [ip, timestamps] of attempts) {
-    const recent = timestamps.filter((timestamp) => now - timestamp < RATE_WINDOW_MS);
+    const recent = timestamps.filter(
+      (timestamp) => now - timestamp < RATE_WINDOW_MS,
+    );
     if (recent.length === 0) attempts.delete(ip);
     else attempts.set(ip, recent);
   }
@@ -70,21 +86,35 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
     const requestId = `CBC-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
     const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown';
     const now = Date.now();
-    const recent = (attempts.get(ip) ?? []).filter((timestamp) => now - timestamp < RATE_WINDOW_MS);
+    const recent = (attempts.get(ip) ?? []).filter(
+      (timestamp) => now - timestamp < RATE_WINDOW_MS,
+    );
 
-    if (attempts.size > MAX_TRACKED_IPS) pruneAttempts(now);
+    if (attempts.size >= MAX_TRACKED_IPS) pruneAttempts(now);
     if (recent.length >= RATE_LIMIT) {
-      return json({
-        error: 'Too many quote requests. Please try again later.',
-        code: 'rate-limited',
+      return json(
+        {
+          error: 'Too many quote requests. Please try again later.',
+          code: 'rate-limited',
+          requestId,
+        },
+        429,
         requestId,
-      }, 429, requestId);
+      );
     }
 
-    // Keep isolate-local bookkeeping bounded even during a many-IP burst.
+    // Never evict an active limit to admit a new address. This is an isolate-local safety net, not distributed enforcement.
     if (!attempts.has(ip) && attempts.size >= MAX_TRACKED_IPS) {
-      const oldest = attempts.keys().next().value;
-      if (oldest !== undefined) attempts.delete(oldest);
+      return json(
+        {
+          error:
+            'Quote requests are temporarily busy. Please try again later or email Cassi.',
+          code: 'rate-limited',
+          requestId,
+        },
+        429,
+        requestId,
+      );
     }
 
     recent.push(now);

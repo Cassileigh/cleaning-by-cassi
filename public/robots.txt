@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cleaningbycassi.com/sitemap-index.xml

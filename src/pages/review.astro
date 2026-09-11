@@ -1,0 +1,27 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { CONTACT_EMAIL, FACEBOOK_URL } from '../consts';
+---
+
+<PageLayout
+  title="Share Your Feedback | Cleaning by Cassi"
+  description="Share feedback about your cleaning experience with Cassi."
+>
+  <h1>How was your clean?</h1>
+  <p>
+    Thank you for choosing Cleaning by Cassi. I’d love to hear about your
+    experience.
+  </p>
+  <p>
+    <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer"
+      >Visit Cleaning by Cassi on Facebook</a
+    >
+  </p>
+  <p>
+    Prefer to share feedback directly? <a
+      href={`mailto:${CONTACT_EMAIL}?subject=Cleaning%20feedback`}
+      >Email Cassi</a
+    >. Your email is private feedback and is not automatically published as a
+    review.
+  </p>
+</PageLayout>

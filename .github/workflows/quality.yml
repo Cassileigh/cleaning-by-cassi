@@ -30,7 +30,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: API contract tests (no email sends)
-        run: node --test tests/api-contract.test.mjs
+        run: npm test
+      - name: Source formatting
+        run: npm run format:check
       - name: Build
         run: npm run build
       - name: Type check

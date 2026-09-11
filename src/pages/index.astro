@@ -2,92 +2,492 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import Testimonials from '../components/Testimonials.astro';
 import HeroCleaningGraphic from '../components/HeroCleaningGraphic.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME, SERVICE_AREA } from '../consts';
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  OWNER_NAME,
+  SERVICE_AREA,
+} from '../consts';
 ---
+
 <PageLayout title={SITE_TITLE} description={SITE_DESCRIPTION} class="home">
-<section class="hero"><div class="hero-grid"><div class="hero-copy"><p class="eyebrow">CLEANING BY CASSI</p><h1>A Cleaner<br/>Home for a<br/><em>Brighter You</em></h1><p class="lead">Reliable, detailed residential cleaning services so you can spend more time doing what you love.</p><div class="actions"><a class="button primary" href="/quote">Get a Free Quote <span>→</span></a><a class="button glass" href="/services">Explore Services</a></div></div><div class="hero-art"><HeroCleaningGraphic /></div></div><div class="care-strip"><span class="spark">✨</span><div><strong>Detailed care, done personally.</strong><small>One cleaner. One familiar face. One home at a time.</small></div></div><a class="client-card" href="/quote" aria-label="Get a quote — now accepting new clients"><picture><source srcset="/homepage-optimized.avif" type="image/avif"/><source srcset="/homepage-optimized.webp" type="image/webp"/><img src="/homepage.jpg" alt="Cleaning by Cassi accepting new clients" loading="eager" fetchpriority="high"/></picture></a></section>
-<section class="intro section"><div><p class="eyebrow">HI, I'M CASSI! 👋</p><h2>A cleaner home means <em>more time for what matters.</em></h2></div><div><p>Life gets busy. Between work, family, pets, and everything else on your plate, keeping up with the house can feel like one more thing to manage.</p><p>That's where I come in. My goal isn't just to make your home clean — it's to make your life a little easier.</p><a class="text-link" href="/about">Meet {OWNER_NAME} →</a></div></section>
-<section class="services section"><div class="heading"><p class="eyebrow">WHAT I DO</p><h2>Cleaning that fits <em>your home & your life.</em></h2><p>Every home is different, which is why your cleaning should be, too.</p></div><div class="cards"><article><span>🧽</span><h3>Standard Cleaning</h3><p>Regular upkeep to keep your home fresh, comfortable, and clean.</p></article><article class="featured"><span>✨</span><h3>Deep Cleaning</h3><p>A detailed reset for homes that need a little extra TLC.</p></article><article><span>🏡</span><h3>Recurring Cleaning</h3><p>Weekly, biweekly, or monthly visits to keep your home under control.</p></article><article><span>➕</span><h3>Add-On Services</h3><p>Customize your clean with extras like baseboards, bed making, laundry, and more.</p></article></div><div class="center"><a class="button glass" href="/services">See All Services →</a></div></section>
-<section class="why section"><div><p class="eyebrow">WHY CLEANING BY CASSI?</p><h2>Your home deserves <em>personal attention.</em></h2><p>When you invite someone into your home, you want to know who is caring for it. I provide dependable, detailed cleaning with a personal touch.</p></div><div class="features"><div>💗 <strong>Personalized</strong><small>Your home and needs are unique.</small></div><div>✨ <strong>Detail-focused</strong><small>The little things matter.</small></div><div>🐾 <strong>Pet-friendly</strong><small>Four-legged family members are welcome.</small></div><div>💚 <strong>One familiar face</strong><small>You know who's caring for your home.</small></div></div></section><div class="testimonials-wrap"><Testimonials /></div><section class="final-cta section"><p class="eyebrow">READY FOR A FRESH START?</p><h2>A brighter home is <em>one quote away.</em></h2><p>Let's find the cleaning plan that's right for your home in the {SERVICE_AREA} area.</p><a href="/quote" class="button light">Get My Free Quote →</a><small>No pressure. Just a simple quote tailored to your home.</small></section></PageLayout>
+  <section class="hero">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">CLEANING BY CASSI</p><h1>
+          A Cleaner<br />Home for a<br /><em>Brighter You</em>
+        </h1><p class="lead">
+          Reliable, detailed residential cleaning services so you can spend more
+          time doing what you love.
+        </p><div class="actions">
+          <a class="button primary" href="/quote"
+            >Get a Free Quote <span>→</span></a
+          ><a class="button glass" href="/services">Explore Services</a>
+        </div>
+      </div><div class="hero-art"><HeroCleaningGraphic /></div>
+    </div><div class="care-strip">
+      <span class="spark">✨</span><div>
+        <strong>Detailed care, done personally.</strong><small
+          >One cleaner. One familiar face. One home at a time.</small
+        >
+      </div>
+    </div><a
+      class="client-card"
+      href="/quote"
+      aria-label="Get a quote — now accepting new clients"
+      ><picture
+        ><source srcset="/homepage-optimized.avif" type="image/avif" /><source
+          srcset="/homepage-optimized.webp"
+          type="image/webp"
+        /><img
+          src="/homepage.jpg"
+          alt="Cleaning by Cassi accepting new clients"
+          width="1536"
+          height="1024"
+          loading="lazy"
+          decoding="async"
+        /></picture
+      ></a
+    >
+  </section>
+  <section class="intro section">
+    <div>
+      <p class="eyebrow">HI, I'M CASSI! 👋</p><h2>
+        A cleaner home means <em>more time for what matters.</em>
+      </h2>
+    </div><div>
+      <p>
+        Life gets busy. Between work, family, pets, and everything else on your
+        plate, keeping up with the house can feel like one more thing to manage.
+      </p><p>
+        That's where I come in. My goal isn't just to make your home clean —
+        it's to make your life a little easier.
+      </p><a class="text-link" href="/about">Meet {OWNER_NAME} →</a>
+    </div>
+  </section>
+  <section class="services section">
+    <div class="heading">
+      <p class="eyebrow">WHAT I DO</p><h2>
+        Cleaning that fits <em>your home & your life.</em>
+      </h2><p>
+        Every home is different, which is why your cleaning should be, too.
+      </p>
+    </div><div class="cards">
+      <article>
+        <span>🧽</span><h3>Standard Cleaning</h3><p>
+          Regular upkeep to keep your home fresh, comfortable, and clean.
+        </p>
+      </article><article class="featured">
+        <span>✨</span><h3>Deep Cleaning</h3><p>
+          A detailed reset for homes that need a little extra TLC.
+        </p>
+      </article><article>
+        <span>🏡</span><h3>Recurring Cleaning</h3><p>
+          Weekly, biweekly, or monthly visits to keep your home under control.
+        </p>
+      </article><article>
+        <span>➕</span><h3>Add-On Services</h3><p>
+          Customize your clean with extras like baseboards, bed making, laundry,
+          and more.
+        </p>
+      </article>
+    </div><div class="center">
+      <a class="button glass" href="/services">See All Services →</a>
+    </div>
+  </section>
+  <section class="why section">
+    <div>
+      <p class="eyebrow">WHY CLEANING BY CASSI?</p><h2>
+        Your home deserves <em>personal attention.</em>
+      </h2><p>
+        When you invite someone into your home, you want to know who is caring
+        for it. I provide dependable, detailed cleaning with a personal touch.
+      </p>
+    </div><div class="features">
+      <div>
+        💗 <strong>Personalized</strong><small
+          >Your home and needs are unique.</small
+        >
+      </div><div>
+        ✨ <strong>Detail-focused</strong><small
+          >The little things matter.</small
+        >
+      </div><div>
+        🐾 <strong>Pet-friendly</strong><small
+          >Four-legged family members are welcome.</small
+        >
+      </div><div>
+        💚 <strong>One familiar face</strong><small
+          >You know who's caring for your home.</small
+        >
+      </div>
+    </div>
+  </section><div class="testimonials-wrap"><Testimonials /></div><section
+    class="final-cta section"
+  >
+    <p class="eyebrow">READY FOR A FRESH START?</p><h2>
+      A brighter home is <em>one quote away.</em>
+    </h2><p>
+      Let's find the cleaning plan that's right for your home in the {
+        SERVICE_AREA
+      } area.
+    </p><a href="/quote" class="button light">Get My Free Quote →</a><small
+      >No pressure. Just a simple quote tailored to your home.</small
+    >
+  </section></PageLayout
+>
 <style>
-  :global(.home) { padding:0; overflow:hidden; color:var(--ink); background:var(--surface); }
-  .hero { position:relative; padding:clamp(3rem,6vw,6rem) clamp(1.25rem,6vw,6rem) clamp(3.5rem,6vw,5rem); background:var(--brand-gradient-soft); isolation:isolate; }
-  .hero-grid { width:min(1120px,100%); margin:auto; display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(2rem,4vw,4rem); align-items:center; }
-  .hero-copy { min-width:0; padding-block:1rem; }
-  .eyebrow { color:var(--accent); font-size:.83rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-  .hero h1 { margin:.6rem 0 1.5rem; color:var(--ink); font-size:clamp(3.5rem,6vw,6rem); line-height:1.05; letter-spacing:-.025em; }
-  .hero h1 em,.section h2 em { color:var(--emphasis); font-style:italic; }
-  .lead { max-width:600px; color:var(--muted); font-size:clamp(1.05rem,1.8vw,1.3rem); line-height:1.65; }
-  .actions { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2rem; }
-  .button { display:inline-flex; align-items:center; justify-content:center; min-height:44px; gap:.45rem; padding:.9rem 1.5rem; border-radius:999px; font-weight:700; transition:transform .2s ease,box-shadow .2s ease; }
-  .button:hover { transform:translateY(-2px); }
-  .button:focus-visible,.text-link:focus-visible,.client-card:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
-  .primary { color:#fff; background:linear-gradient(110deg,#6215bb,#a01377); box-shadow:var(--shadow); }
-  .primary:hover { color:#fff; }
-  .glass,.light { color:var(--accent); border:1px solid var(--accent); background:var(--surface-solid); }
-  .glass:hover,.light:hover { color:var(--accent); }
-  .hero-art { position:relative; width:min(88%,455px); justify-self:center; }
-  .hero-art :global(img) { filter:drop-shadow(0 12px 22px rgba(67,16,143,.22)); }
-  .care-strip { width:min(760px,82%); margin:1rem auto 1.5rem; display:flex; align-items:center; gap:1rem; padding:1rem 1.4rem; border:1px solid var(--border); border-radius:28px; background:var(--surface-solid); box-shadow:var(--shadow); }
-  .spark { display:grid; place-items:center; width:58px; height:58px; flex:0 0 58px; border-radius:50%; background:var(--brand-gradient-soft); font-size:1.5rem; }
-  .care-strip strong,.care-strip small { display:block; }
-  .care-strip strong { font-size:1.15rem; }
-  .care-strip small { margin-top:.2rem; color:var(--muted); }
-  .client-card { display:block; width:min(780px,78%); margin:0 auto; border-radius:30px; overflow:hidden; box-shadow:var(--shadow); transition:transform .2s ease; }
-  .client-card:hover { transform:translateY(-3px); }
-  .client-card picture,.client-card img { display:block; width:100%; }
-  .client-card img { height:auto; }
-  .section { padding:clamp(4rem,7vw,7rem) clamp(1.25rem,7vw,7rem); }
-  .section h2 { font-size:clamp(2.5rem,5vw,4.5rem); line-height:1.1; color:var(--ink); }
-  .section p:not(.eyebrow) { color:var(--muted); line-height:1.8; }
-  .intro { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:center; background:var(--surface-solid); }
-  .text-link { color:var(--accent); font-weight:700; }
-  .services { background:var(--surface-soft); }
-  .heading { max-width:760px; margin:0 auto 3rem; text-align:center; }
-  .cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1.2rem; max-width:1250px; margin:auto; }
-  .cards article { min-width:0; padding:2rem; border:1px solid var(--border); border-radius:26px; background:var(--surface-solid); box-shadow:var(--shadow); }
-  .cards article>span { font-size:2rem; }
-  .cards h3 { color:var(--ink); }
-  .cards p { font-size:.94rem; }
-  .cards .featured { background:var(--brand-gradient-soft); }
-  .center { text-align:center; margin-top:2.5rem; }
-  .why { display:grid; grid-template-columns:1fr 1fr; gap:5rem; background:var(--brand-gradient-soft); }
-  .features { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
-  .features div { padding:1.4rem; border:1px solid var(--border); border-radius:22px; background:var(--surface-solid); }
-  .features strong,.features small { display:block; }
-  .features strong { margin-top:.35rem; color:var(--ink); }
-  .features small { margin-top:.3rem; color:var(--muted); }
-  .testimonials-wrap { background:var(--surface-soft); }
-  .final-cta { text-align:center; background:var(--brand-gradient-soft); }
-  .final-cta p { max-width:650px; margin-inline:auto; }
-  .final-cta small { display:block; margin-top:1rem; color:var(--muted); }
-  .light { margin-top:1rem; }
-  @media(max-width:900px) {
-    .hero-grid,.intro,.why { grid-template-columns:1fr; }
-    .hero-copy { text-align:center; }
-    .lead { margin-inline:auto; }
-    .actions { justify-content:center; }
-    .hero-art { display:none; }
-    .care-strip { width:min(680px,100%); }
-    .client-card { width:min(700px,100%); }
-    .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .intro,.why { gap:2.5rem; }
+  :global(.home) {
+    padding: 0;
+    overflow: hidden;
+    color: var(--ink);
+    background: var(--surface);
   }
-  @media(max-width:600px) {
-    .hero { padding:2.5rem 1.15rem 3rem; }
-    .hero-grid { gap:1.5rem; }
-    .hero h1 { font-size:clamp(3rem,14vw,4.3rem); }
-    .lead { font-size:1.05rem; }
-    .actions .button { width:100%; }
-    .care-strip { padding:.85rem 1rem; border-radius:22px; }
-    .spark { width:46px; height:46px; flex-basis:46px; }
-    .care-strip strong { font-size:.92rem; }
-    .care-strip small { font-size:.85rem; }
-    .client-card { border-radius:22px; }
-    .section { padding:3.75rem 1.25rem; }
-    .cards,.features { grid-template-columns:1fr; }
-    .section h2 { font-size:2.7rem; }
-    .intro { text-align:center; }
+  .hero {
+    position: relative;
+    padding: clamp(3rem, 6vw, 6rem) clamp(1.25rem, 6vw, 6rem)
+      clamp(3.5rem, 6vw, 5rem);
+    background: var(--brand-gradient-soft);
+    isolation: isolate;
   }
-  @media(prefers-reduced-motion:reduce) { .button,.client-card { transition:none; } }
+  .hero-grid {
+    width: min(1120px, 100%);
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.08fr 0.92fr;
+    gap: clamp(2rem, 4vw, 4rem);
+    align-items: center;
+  }
+  .hero-copy {
+    min-width: 0;
+    padding-block: 1rem;
+  }
+  .eyebrow {
+    color: var(--accent);
+    font-size: 0.83rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    margin: 0.6rem 0 1.5rem;
+    color: var(--ink);
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+  .hero h1 em,
+  .section h2 em {
+    color: var(--emphasis);
+    font-style: italic;
+  }
+  .lead {
+    max-width: 600px;
+    color: var(--muted);
+    font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+    line-height: 1.65;
+  }
+  .actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    gap: 0.45rem;
+    padding: 0.9rem 1.5rem;
+    border-radius: 999px;
+    font-weight: 700;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .button:hover {
+    transform: translateY(-2px);
+  }
+  .button:focus-visible,
+  .text-link:focus-visible,
+  .client-card:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+  }
+  .primary {
+    color: #fff;
+    background: linear-gradient(110deg, #6215bb, #a01377);
+    box-shadow: var(--shadow);
+  }
+  .primary:hover {
+    color: #fff;
+  }
+  .glass,
+  .light {
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    background: var(--surface-solid);
+  }
+  .glass:hover,
+  .light:hover {
+    color: var(--accent);
+  }
+  .hero-art {
+    position: relative;
+    width: min(88%, 455px);
+    justify-self: center;
+  }
+  .hero-art :global(img) {
+    filter: drop-shadow(0 12px 22px rgba(67, 16, 143, 0.22));
+  }
+  .care-strip {
+    width: min(760px, 82%);
+    margin: 1rem auto 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--surface-solid);
+    box-shadow: var(--shadow);
+  }
+  .spark {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    flex: 0 0 58px;
+    border-radius: 50%;
+    background: var(--brand-gradient-soft);
+    font-size: 1.5rem;
+  }
+  .care-strip strong,
+  .care-strip small {
+    display: block;
+  }
+  .care-strip strong {
+    font-size: 1.15rem;
+  }
+  .care-strip small {
+    margin-top: 0.2rem;
+    color: var(--muted);
+  }
+  .client-card {
+    display: block;
+    width: min(780px, 78%);
+    margin: 0 auto;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease;
+  }
+  .client-card:hover {
+    transform: translateY(-3px);
+  }
+  .client-card picture,
+  .client-card img {
+    display: block;
+    width: 100%;
+  }
+  .client-card img {
+    height: auto;
+  }
+  .section {
+    padding: clamp(4rem, 7vw, 7rem) clamp(1.25rem, 7vw, 7rem);
+  }
+  .section h2 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .section p:not(.eyebrow) {
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    background: var(--surface-solid);
+  }
+  .text-link {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .services {
+    background: var(--surface-soft);
+  }
+  .heading {
+    max-width: 760px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.2rem;
+    max-width: 1250px;
+    margin: auto;
+  }
+  .cards article {
+    min-width: 0;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    background: var(--surface-solid);
+    box-shadow: var(--shadow);
+  }
+  .cards article > span {
+    font-size: 2rem;
+  }
+  .cards h3 {
+    color: var(--ink);
+  }
+  .cards p {
+    font-size: 0.94rem;
+  }
+  .cards .featured {
+    background: var(--brand-gradient-soft);
+  }
+  .center {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+  .why {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    background: var(--brand-gradient-soft);
+  }
+  .features {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .features div {
+    padding: 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    background: var(--surface-solid);
+  }
+  .features strong,
+  .features small {
+    display: block;
+  }
+  .features strong {
+    margin-top: 0.35rem;
+    color: var(--ink);
+  }
+  .features small {
+    margin-top: 0.3rem;
+    color: var(--muted);
+  }
+  .testimonials-wrap {
+    background: var(--surface-soft);
+  }
+  .final-cta {
+    text-align: center;
+    background: var(--brand-gradient-soft);
+  }
+  .final-cta p {
+    max-width: 650px;
+    margin-inline: auto;
+  }
+  .final-cta small {
+    display: block;
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+  .light {
+    margin-top: 1rem;
+  }
+  @media (max-width: 900px) {
+    .hero-grid,
+    .intro,
+    .why {
+      grid-template-columns: 1fr;
+    }
+    .hero-copy {
+      text-align: center;
+    }
+    .lead {
+      margin-inline: auto;
+    }
+    .actions {
+      justify-content: center;
+    }
+    .hero-art {
+      display: none;
+    }
+    .care-strip {
+      width: min(680px, 100%);
+    }
+    .client-card {
+      width: min(700px, 100%);
+    }
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .intro,
+    .why {
+      gap: 2.5rem;
+    }
+  }
+  @media (max-width: 600px) {
+    .hero {
+      padding: 2.5rem 1.15rem 3rem;
+    }
+    .hero-grid {
+      gap: 1.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(3rem, 14vw, 4.3rem);
+    }
+    .lead {
+      font-size: 1.05rem;
+    }
+    .actions .button {
+      width: 100%;
+    }
+    .care-strip {
+      padding: 0.85rem 1rem;
+      border-radius: 22px;
+    }
+    .spark {
+      width: 46px;
+      height: 46px;
+      flex-basis: 46px;
+    }
+    .care-strip strong {
+      font-size: 0.92rem;
+    }
+    .care-strip small {
+      font-size: 0.85rem;
+    }
+    .client-card {
+      border-radius: 22px;
+    }
+    .section {
+      padding: 3.75rem 1.25rem;
+    }
+    .cards,
+    .features {
+      grid-template-columns: 1fr;
+    }
+    .section h2 {
+      font-size: 2.7rem;
+    }
+    .intro {
+      text-align: center;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .button,
+    .client-card {
+      transition: none;
+    }
+  }
 </style>

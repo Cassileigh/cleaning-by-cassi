@@ -19,6 +19,22 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Wait for the requested production revision
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          ready=false
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error --connect-timeout 5 --max-time 10 https://cleaningbycassi.com/api/release > /tmp/release.json &&
+              node -e 'const r=JSON.parse(require("node:fs").readFileSync("/tmp/release.json","utf8"));process.exit(r.revision===process.env.EXPECTED_SHA?0:1)'; then
+              ready=true
+              break
+            fi
+            sleep 5
+          done
+          test "$ready" = true
+
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
@@ -59,6 +75,11 @@ jobs:
           check_html "https://www.cleaningbycassi.com/" "Cleaning by Cassi"
           check_html "https://cleaningbycassi.com/quote" "0x4AAAAAAEmmOovf3yTuy_Ua"
           check_html "https://cleaningbycassi.com/quote-success" "Quote Request Received"
+          check_html "https://cleaningbycassi.com/about" "Cassi"
+          check_html "https://cleaningbycassi.com/services" "Cleaning"
+          check_html "https://cleaningbycassi.com/pricing" "Pricing"
+          check_html "https://cleaningbycassi.com/review" "feedback"
+          check_html "https://cleaningbycassi.com/privacy" "information"
 
       - name: Check runtime configuration
         shell: bash
@@ -97,7 +118,7 @@ jobs:
           const value = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
           const required = ['worker', 'quote', 'protection', 'delivery'];
           const forbidden = ['turnstile', 'resend', 'generatedAt', 'requestId', 'runtime'];
-          const valid = value.ok === true && value.status === 'operational' &&
+          const valid = value.ok === true && value.scope === 'configuration-readiness' && value.status === 'operational' &&
             required.every((key) => value.checks?.[key]?.status === 'operational') &&
             forbidden.every((key) => !(key in value) && !(key in (value.checks ?? {})));
           if (!valid) {
@@ -107,7 +128,7 @@ jobs:
           console.log(value.summary);
           NODE
 
-          method_status="$(curl --silent --show-error --output /dev/null \
+          method_status="$(curl --silent --show-error --connect-timeout 5 --max-time 15 --output /dev/null \
             --write-out '%{http_code}' --request POST \
             --header 'Origin: https://cleaningbycassi.com' \
             --header 'Content-Type: application/json' \
@@ -121,7 +142,7 @@ jobs:
           body_file="$(mktemp)"
           trap 'rm -f "$body_file"' EXIT
 
-          status="$(curl --silent --show-error --output "$body_file" \
+          status="$(curl --silent --show-error --connect-timeout 5 --max-time 15 --output "$body_file" \
             --write-out '%{http_code}' --request POST \
             --header 'Accept: application/json' \
             --header 'Origin: https://cleaningbycassi.com' \
