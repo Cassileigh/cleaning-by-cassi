@@ -51,16 +51,22 @@ for (const width of [320, 520, 768, 860, 900, 1024, 1280]) {
     const bounds = await nav.boundingBox();
     expect(bounds.x).toBeGreaterThanOrEqual(0);
     expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
-    if (width <= 1024) {
-      const logo = await page.locator('.brand').boundingBox();
-      expect(bounds.y).toBeGreaterThanOrEqual(logo.y + logo.height);
-      const rows = await nav.locator('a').evaluateAll(links => links.map(a => Math.round(a.getBoundingClientRect().top)));
-      expect(new Set(rows).size).toBe(1);
-      await nav.evaluate(el => { el.scrollLeft = el.scrollWidth; });
-      const last = await nav.locator('a').last().boundingBox();
-      expect(last.x).toBeGreaterThanOrEqual(bounds.x);
-      expect(last.x + last.width).toBeLessThanOrEqual(bounds.x + bounds.width + 1);
-    }
+    const logo = await page.locator('.brand').boundingBox();
+    const facebook = page.locator('.facebook-link');
+    await expect(facebook).toBeVisible();
+    const social = await facebook.boundingBox();
+    expect(logo.x).toBeGreaterThanOrEqual(0);
+    expect(logo.x + logo.width).toBeLessThanOrEqual(bounds.x);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(social.x);
+    expect(social.x + social.width).toBeLessThanOrEqual(width);
+    expect(Math.abs(logo.y + logo.height / 2 - bounds.y - bounds.height / 2)).toBeLessThanOrEqual(1);
+    expect(Math.abs(social.y + social.height / 2 - bounds.y - bounds.height / 2)).toBeLessThanOrEqual(1);
+    const rows = await nav.locator('a').evaluateAll(links => links.map(a => Math.round(a.getBoundingClientRect().top)));
+    expect(new Set(rows).size).toBe(1);
+    await nav.evaluate(el => { el.scrollLeft = el.scrollWidth; });
+    const last = await nav.locator('a').last().boundingBox();
+    expect(last.x).toBeGreaterThanOrEqual(bounds.x);
+    expect(last.x + last.width).toBeLessThanOrEqual(bounds.x + bounds.width + 1);
     if (width <= 900) await expect(page.locator('.hero-art')).toBeHidden();
     else await expect(page.locator('.hero-art')).toBeVisible();
     await expect(page.locator('.client-card')).toBeVisible();
