@@ -72,3 +72,39 @@ for (const width of [320, 520, 768, 860, 900, 1024, 1280]) {
     await expect(page.locator('.client-card')).toBeVisible();
   });
 }
+
+for (const width of [320, 390, 520, 768]) {
+  test(`Active header link follows navigation and resize at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    const expectActiveVisible = async (label) => {
+      await expect(page.locator('.internal-links [aria-current="page"]')).toHaveText(label);
+      await expect.poll(() => page.locator('.internal-links').evaluate(el => {
+        const active = el.querySelector('[aria-current="page"]');
+        if (!active) return false;
+        const box = el.getBoundingClientRect();
+        const item = active.getBoundingClientRect();
+        return item.left >= box.left - 1 && item.right <= box.right + 1;
+      })).toBe(true);
+    };
+    await page.goto('http://127.0.0.1:4321/');
+    await page.locator('.internal-links a[href="/quote"]').click();
+    await expectActiveVisible('Get a Quote');
+    await page.reload();
+    await expectActiveVisible('Get a Quote');
+    await page.locator('.internal-links a[href="/about"]').click();
+    await expectActiveVisible('About');
+    await page.goBack();
+    await expectActiveVisible('Get a Quote');
+    await page.setViewportSize({ width: 320, height: 900 });
+    await expectActiveVisible('Get a Quote');
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.evaluate(() => window.scrollTo(0, 400));
+    const scrollY = await page.evaluate(() => window.scrollY);
+    await page.evaluate(() => {
+      document.querySelector('.internal-links').scrollLeft = 0;
+      window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true }));
+    });
+    await expectActiveVisible('Get a Quote');
+    expect(await page.evaluate(() => window.scrollY)).toBe(scrollY);
+  });
+}

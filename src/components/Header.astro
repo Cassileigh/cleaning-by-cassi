@@ -23,6 +23,28 @@ import { SITE_TITLE } from '../consts';
   </nav>
 </header>
 
+<script>
+  const links = document.querySelector<HTMLElement>('.site-header .internal-links');
+  if (links) {
+    const revealActiveLink = () => {
+      const active = links.querySelector<HTMLElement>('[aria-current="page"]');
+      if (!active) return;
+      const container = links.getBoundingClientRect();
+      const item = active.getBoundingClientRect();
+      if (item.left >= container.left && item.right <= container.right) return;
+      // Scroll only this navigation strip; preserve the document's scroll position.
+      links.scrollTo({
+        left: links.scrollLeft + item.left - container.left - (links.clientWidth - item.width) / 2,
+        behavior: 'auto',
+      });
+    };
+    revealActiveLink();
+    void document.fonts.ready.then(revealActiveLink);
+    window.addEventListener('pageshow', revealActiveLink);
+    new ResizeObserver(revealActiveLink).observe(links);
+  }
+</script>
+
 <style>
   .site-header { position:sticky; top:0; z-index:100; padding:.5rem 1rem; background:linear-gradient(90deg,rgba(12,25,96,.96),rgba(24,59,193,.96),rgba(84,23,132,.96)); border-bottom:1px solid rgba(255,255,255,.12); box-shadow:0 6px 24px rgba(0,0,0,.18); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
   .site-nav { width:100%; margin:0; display:grid; grid-template-columns:clamp(88px,18vw,172px) minmax(0,1fr) 44px; align-items:center; gap:clamp(.5rem,1.5vw,1.1rem); min-width:0; }
