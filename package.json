@@ -12,7 +12,7 @@
     "@playwright/test": "1.63.0",
     "axe-core": "4.13.0",
     "lighthouse": "13.4.1",
-    "prettier": "3.6.2",
+    "prettier": "3.9.6",
     "prettier-plugin-astro": "0.14.1",
     "sharp": "0.35.4",
     "wrangler": "4.130.0"
