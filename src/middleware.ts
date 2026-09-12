@@ -32,10 +32,23 @@ const securityHeaders = {
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
 
-const secure = (response: Response, statusRoute = false) => {
+const secure = (
+  response: Response,
+  statusRoute = false,
+  localHttpPreview = false,
+) => {
   const headers = new Headers(response.headers);
   for (const [name, value] of Object.entries(securityHeaders))
     headers.set(name, value);
+  // WebKit upgrades loopback assets too; Wrangler's local preview serves HTTP.
+  // Only explicit HTTP loopback requests omit this directive. Public hosts and
+  // every HTTPS response retain the production upgrade policy.
+  if (localHttpPreview) {
+    headers.set(
+      'Content-Security-Policy',
+      contentSecurityPolicy.replace('; upgrade-insecure-requests', ''),
+    );
+  }
   if (statusRoute) {
     headers.set(
       'Content-Security-Policy',
@@ -121,5 +134,10 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
     attempts.set(ip, recent);
   }
 
-  return secure(await next(), pathname === '/api/status');
+  return secure(
+    await next(),
+    pathname === '/api/status',
+    requestUrl.protocol === 'http:' &&
+      ['localhost', '127.0.0.1', '[::1]'].includes(requestUrl.hostname),
+  );
 });

@@ -417,3 +417,40 @@ test('saturated limiter preserves active blocks and expires old records', async 
   assert.equal((await call('another')).status, 200);
   assert.equal((await call('original')).status, 200);
 });
+
+test('HTTPS upgrading stays enforced outside the explicit HTTP loopback preview', async () => {
+  const source = readFileSync(
+    new URL('../src/middleware.ts', import.meta.url),
+    'utf8',
+  ).replace(
+    "import { defineMiddleware } from 'astro:middleware';",
+    'const defineMiddleware = h => h;',
+  );
+  const exports = {};
+  vm.runInNewContext(
+    ts.transpileModule(source, {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2022,
+      },
+    }).outputText,
+    { exports, Response, Headers, URL, crypto },
+  );
+  for (const [url, upgraded] of [
+    ['http://127.0.0.1:4321/', false],
+    ['http://localhost:4321/', false],
+    ['https://cleaningbycassi.com/', true],
+    ['http://cleaningbycassi.com/', true],
+    ['https://127.0.0.1/', true],
+  ]) {
+    const response = await exports.onRequest(
+      { request: new Request(url) },
+      () => new Response('<html></html>'),
+    );
+    const policy = response.headers.get('content-security-policy');
+    assert.equal(policy.includes('upgrade-insecure-requests'), upgraded, url);
+    assert.ok(
+      policy.includes("script-src 'self' https://challenges.cloudflare.com"),
+    );
+  }
+});
