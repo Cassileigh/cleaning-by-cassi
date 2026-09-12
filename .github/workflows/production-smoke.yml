@@ -17,7 +17,7 @@ concurrency:
 jobs:
   smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - name: Wait for the requested production revision
         env:
@@ -25,7 +25,8 @@ jobs:
         run: |
           set -euo pipefail
           ready=false
-          for attempt in {1..30}; do
+          deadline=$((SECONDS + 900))
+          while (( SECONDS < deadline )); do
             if curl --fail --silent --show-error --connect-timeout 5 --max-time 10 https://cleaningbycassi.com/api/release > /tmp/release.json &&
               node -e 'const r=JSON.parse(require("node:fs").readFileSync("/tmp/release.json","utf8"));process.exit(r.revision===process.env.EXPECTED_SHA?0:1)'; then
               ready=true
@@ -92,7 +93,8 @@ jobs:
           # Push workflows can start before the independently managed Worker
           # deployment finishes. Retry the contract, not just HTTP failures.
           ready=false
-          for attempt in {1..30}; do
+          deadline=$((SECONDS + 900))
+          while (( SECONDS < deadline )); do
             if curl --fail --silent --show-error --location \
               --connect-timeout 5 --max-time 10 \
               --dump-header "$headers_file" \

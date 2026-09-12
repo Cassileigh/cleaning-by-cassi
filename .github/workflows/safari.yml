@@ -53,6 +53,7 @@ jobs:
         run: sudo safaridriver --enable
 
       - name: Run Safari compatibility checks
+        timeout-minutes: 6
         run: |
           node tests/safari.cjs
 
@@ -60,6 +61,7 @@ jobs:
         run: npx playwright install webkit
 
       - name: Check quote recovery and navigation in WebKit
+        if: success() || failure()
         run: npx playwright test tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --browser=webkit --reporter=line
 
       - name: Upload Safari diagnostics on failure

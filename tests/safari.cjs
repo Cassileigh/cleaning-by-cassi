@@ -1,9 +1,23 @@
 const { Builder } = require('selenium-webdriver');
+const safari = require('selenium-webdriver/safari');
 const assert = require('node:assert/strict');
 const { mkdirSync, writeFileSync } = require('node:fs');
 
 (async () => {
-  const driver = await new Builder().forBrowser('safari').build();
+  const deadline = setTimeout(() => {
+    console.error('Safari exceeded its five-minute deadline');
+    process.exit(1);
+  }, 300000);
+  console.log('Starting the macOS bundled Safari driver');
+  const service = new safari.ServiceBuilder('/usr/bin/safaridriver').build();
+  const server = await service.start();
+  console.log('Creating Safari session');
+  const driver = await new Builder()
+    .forBrowser('safari')
+    .usingServer(server)
+    .withCapabilities({ pageLoadStrategy: 'eager' })
+    .build();
+  console.log('Safari session ready');
   await driver.manage().setTimeouts({ pageLoad: 30000, script: 10000 });
   try {
     for (const width of [768, 1280]) {
@@ -18,7 +32,11 @@ const { mkdirSync, writeFileSync } = require('node:fs');
         'review',
         'privacy',
       ]) {
+        console.log(`Checking Safari ${width}px /${route}`);
         await driver.get(`http://127.0.0.1:4321/${route}`);
+        await driver.executeScript(() => {
+          for (const image of document.images) image.loading = 'eager';
+        });
         await driver.wait(
           () =>
             driver.executeScript(() =>
@@ -74,7 +92,12 @@ const { mkdirSync, writeFileSync } = require('node:fs');
     );
     throw error;
   } finally {
-    await driver.quit();
+    try {
+      await driver.quit();
+    } finally {
+      service.kill();
+      clearTimeout(deadline);
+    }
   }
 })().catch((error) => {
   console.error(error);
