@@ -1,4 +1,6 @@
 import { defineMiddleware } from 'astro:middleware';
+import { env } from 'cloudflare:workers';
+import type { ApplicationBindings } from './bindings';
 
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 8;
@@ -132,6 +134,36 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
 
     recent.push(now);
     attempts.set(ip, recent);
+    const bindings: ApplicationBindings = env;
+    try {
+      // Cloudflare shares counters within an edge location, across isolates.
+      // A missing binding is a configuration error, never a silent bypass.
+      if (!bindings.QUOTE_RATE_LIMITER) throw new Error('Missing rate limiter');
+      const result = await bindings.QUOTE_RATE_LIMITER.limit({
+        key: `quote:${ip}`,
+      });
+      if (!result.success)
+        return json(
+          {
+            error: 'Too many quote requests. Please try again later.',
+            code: 'rate-limited',
+            requestId,
+          },
+          429,
+          requestId,
+        );
+    } catch {
+      return json(
+        {
+          error:
+            'Quote requests are temporarily unavailable. Please try again later or email Cassi.',
+          code: 'rate-limit-unavailable',
+          requestId,
+        },
+        503,
+        requestId,
+      );
+    }
   }
 
   return secure(

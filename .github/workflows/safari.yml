@@ -1,0 +1,73 @@
+name: Safari Compatibility
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: safari-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  safari:
+    name: Safari / WebKit compatibility
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Cloudflare preview
+        run: npx wrangler dev --port 4321 > /tmp/cleaning-by-cassi-safari.log 2>&1 &
+
+      - name: Wait for preview
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent --show-error http://127.0.0.1:4321/ > /dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/cleaning-by-cassi-safari.log
+          exit 1
+
+      - name: Enable Safari WebDriver
+        run: sudo safaridriver --enable
+
+      - name: Run Safari compatibility checks
+        run: |
+          node tests/safari.cjs
+
+      - name: Install WebKit
+        run: npx playwright install webkit
+
+      - name: Check quote recovery and navigation in WebKit
+        run: npx playwright test tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --browser=webkit --reporter=line
+
+      - name: Upload Safari diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: safari-preview-log
+          path: |
+            /tmp/cleaning-by-cassi-safari.log
+            test-results
+          if-no-files-found: ignore

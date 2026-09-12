@@ -19,7 +19,7 @@ this implementation keeps generic public protection/delivery checks.
 
 A Resend email ID proves provider acceptance, not inbox delivery. Delivery/bounce verification requires provider events or mailbox confirmation. Network timeouts after provider acceptance remain ambiguous; this flow has no durable retry deduplication. A honeypot is supplemental, not a substitute for Turnstile or edge abuse controls.
 
-Middleware also enforces a best-effort per-IP limit of eight quote attempts per ten minutes, including trailing-slash requests, with bounded isolate-local bookkeeping. This is not a globally coordinated rate limit; separate Worker instances and evictions can reset counters.
+Middleware enforces eight attempts per ten minutes in a bounded isolate-local map, plus the configured `QUOTE_RATE_LIMITER` Cloudflare binding (eight per minute per IP within an edge location). Missing or failing bindings return 503 before provider calls; exhausted limits return 429 with Retry-After. Both quote URL forms share limits. Cloudflare counters span isolates within a location, but do not provide a strict worldwide quota. Namespace `2107100912` is reserved for this site's quote limiter in this repository.
 
 `/api/status` reports local readiness, not an end-to-end provider probe. Generic protection/delivery values reflect required bindings, not a test email or live challenge verification. It returns 503 for missing bindings, supports bodyless HEAD, rejects other methods, disallows caching, and omits vendor names, runtime metadata and echoed request identifiers. It still intentionally publishes generic readiness; this is not a private diagnostics endpoint.
 

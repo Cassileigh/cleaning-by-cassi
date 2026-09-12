@@ -1,6 +1,9 @@
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
-let revision = process.env.CF_BUILD_COMMIT_SHA || process.env.GITHUB_SHA;
+let revision =
+  process.env.WORKERS_CI_COMMIT_SHA ||
+  process.env.CF_BUILD_COMMIT_SHA ||
+  process.env.GITHUB_SHA;
 if (!revision)
   revision = execFileSync('git', ['rev-parse', 'HEAD'], {
     encoding: 'utf8',

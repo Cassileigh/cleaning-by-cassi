@@ -1,4 +1,4 @@
-name: Accessibility & Theme Compatibility
+name: Lighthouse Quality Budgets
 
 on:
   push:
@@ -11,12 +11,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: accessibility-${{ github.workflow }}-${{ github.ref }}
+  group: lighthouse-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  accessibility:
-    name: Light, dark, and accessibility checks
+  lighthouse:
+    name: Performance, accessibility, best practices, and SEO
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -50,31 +50,15 @@ jobs:
           cat /tmp/cleaning-by-cassi-accessibility.log
           exit 1
 
-      - name: Install browser accessibility tooling
-        run: |
-          npx playwright install --with-deps chromium
+      - name: Run Lighthouse budgets
+        run: node scripts/lighthouse.mjs
 
-      - name: Test light and dark themes with axe
-        run: |
-          npx playwright test tests/accessibility.spec.cjs tests/theme-assets.spec.cjs tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --reporter=line
-
-      - name: Upload theme screenshots
+      - name: Upload Lighthouse reports
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: theme-screenshots
-          path: test-results/**/*.png
-          if-no-files-found: ignore
-          include-hidden-files: true
-
-      - name: Upload diagnostics on failure
-        if: failure()
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: accessibility-diagnostics
+          name: lighthouse-reports
           path: |
-            /tmp/cleaning-by-cassi-accessibility.log
             .lighthouseci
-            test-results
-          if-no-files-found: ignore
+            /tmp/cleaning-by-cassi-accessibility.log
           include-hidden-files: true

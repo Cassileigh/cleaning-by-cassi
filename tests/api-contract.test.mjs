@@ -301,10 +301,15 @@ test('middleware preserves status policy and limits both quote URL forms', async
   const source = readFileSync(
     new URL('../src/middleware.ts', import.meta.url),
     'utf8',
-  ).replace(
-    "import { defineMiddleware } from 'astro:middleware';",
-    'const defineMiddleware = (handler) => handler;',
-  );
+  )
+    .replace(
+      "import { env } from 'cloudflare:workers';",
+      'const env = { QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) } };',
+    )
+    .replace(
+      "import { defineMiddleware } from 'astro:middleware';",
+      'const defineMiddleware = (handler) => handler;',
+    );
   const compiled = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.CommonJS,
@@ -383,10 +388,15 @@ test('saturated limiter preserves active blocks and expires old records', async 
   const source = readFileSync(
     new URL('../src/middleware.ts', import.meta.url),
     'utf8',
-  ).replace(
-    "import { defineMiddleware } from 'astro:middleware';",
-    'const defineMiddleware = h => h;',
-  );
+  )
+    .replace(
+      "import { env } from 'cloudflare:workers';",
+      'const env = { QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) } };',
+    )
+    .replace(
+      "import { defineMiddleware } from 'astro:middleware';",
+      'const defineMiddleware = h => h;',
+    );
   const exports = {};
   let now = 1000000;
   vm.runInNewContext(
@@ -422,10 +432,15 @@ test('HTTPS upgrading stays enforced outside the explicit HTTP loopback preview'
   const source = readFileSync(
     new URL('../src/middleware.ts', import.meta.url),
     'utf8',
-  ).replace(
-    "import { defineMiddleware } from 'astro:middleware';",
-    'const defineMiddleware = h => h;',
-  );
+  )
+    .replace(
+      "import { env } from 'cloudflare:workers';",
+      'const env = { QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) } };',
+    )
+    .replace(
+      "import { defineMiddleware } from 'astro:middleware';",
+      'const defineMiddleware = h => h;',
+    );
   const exports = {};
   vm.runInNewContext(
     ts.transpileModule(source, {
@@ -452,5 +467,65 @@ test('HTTPS upgrading stays enforced outside the explicit HTTP loopback preview'
     assert.ok(
       policy.includes("script-src 'self' https://challenges.cloudflare.com"),
     );
+  }
+});
+
+test('edge limiter blocks requests and fails closed on missing or broken bindings', async () => {
+  for (const outcome of ['allow', 'deny', 'missing', 'throw']) {
+    const source = readFileSync(
+      new URL('../src/middleware.ts', import.meta.url),
+      'utf8',
+    )
+      .replace(
+        "import { defineMiddleware } from 'astro:middleware';",
+        'const defineMiddleware = h => h;',
+      )
+      .replace(
+        "import { env } from 'cloudflare:workers';",
+        'const env = globalThis.bindings;',
+      );
+    const exports = {};
+    const keys = [];
+    let reached = false;
+    const bindings =
+      outcome === 'missing'
+        ? {}
+        : {
+            QUOTE_RATE_LIMITER: {
+              async limit({ key }) {
+                keys.push(key);
+                if (outcome === 'throw') throw Error('outage');
+                return { success: outcome === 'allow' };
+              },
+            },
+          };
+    vm.runInNewContext(
+      ts.transpileModule(source, {
+        compilerOptions: {
+          module: ts.ModuleKind.CommonJS,
+          target: ts.ScriptTarget.ES2022,
+        },
+      }).outputText,
+      { exports, bindings, Response, Headers, URL, crypto },
+    );
+    const response = await exports.onRequest(
+      {
+        request: new Request('https://cleaningbycassi.com/api/quote/', {
+          method: 'POST',
+          headers: { 'CF-Connecting-IP': '192.0.2.7' },
+        }),
+      },
+      () => {
+        reached = true;
+        return new Response('ok');
+      },
+    );
+    assert.equal(
+      response.status,
+      outcome === 'allow' ? 200 : outcome === 'deny' ? 429 : 503,
+    );
+    assert.equal(reached, outcome === 'allow');
+    if (outcome !== 'missing') assert.deepEqual(keys, ['quote:192.0.2.7']);
+    assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
   }
 });

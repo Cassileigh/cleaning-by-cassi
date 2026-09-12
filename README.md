@@ -131,7 +131,7 @@ Accessibility is a release requirement for Cleaning by Cassi. The website must r
 - Semantic structure, labels, page titles, and language metadata must remain valid.
 - `prefers-reduced-motion` must be respected.
 
-The accessibility workflow tests eight public routes in both light and dark modes with axe WCAG A/AA rules, then requires a Lighthouse accessibility score of at least 95 on those routes.
+The accessibility workflow tests eight routes in both light and dark modes with axe WCAG A/AA rules. Separate workflows run native macOS Safari plus WebKit navigation/quote recovery, and Lighthouse budgets: accessibility 95, best practices 95, performance 85, and SEO 95. The intentionally noindex quote receipt is excluded only from the SEO gate.
 
 ## 🎨 Brand system
 
@@ -161,14 +161,14 @@ Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion
 
 ## ✅ Automated checks
 
-| Check                        | When it runs                          | What it protects                                                                                         |
-| :--------------------------- | :------------------------------------ | :------------------------------------------------------------------------------------------------------- |
-| **Quality**                  | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit                                              |
-| **Production smoke**         | Every push to `main` and hourly       | Expected Git revision, public pages, runtime readiness, and rejection behavior                           |
-| **Responsive compatibility** | Every push and pull request to `main` | Eight public pages at 12 viewport sizes for overflow and browser runtime errors                          |
-| **Accessibility & theme**    | Every push and pull request to `main` | Light/dark axe checks, Chromium and WebKit journeys, and Lighthouse accessibility scores of 95 or higher |
-| **CodeQL**                   | GitHub security analysis              | JavaScript, TypeScript, and workflow vulnerabilities                                                     |
-| **Workers Build**            | Every production update               | Cloudflare production deployment (external integration)                                                  |
+| Check                        | When it runs                          | What it protects                                                                |
+| :--------------------------- | :------------------------------------ | :------------------------------------------------------------------------------ |
+| **Quality**                  | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit                     |
+| **Production smoke**         | Every push to `main` and hourly       | Expected Git revision, public pages, runtime readiness, and rejection behavior  |
+| **Responsive compatibility** | Every push and pull request to `main` | Eight public pages at 12 viewport sizes for overflow and browser runtime errors |
+| **Accessibility & theme**    | Every push and pull request to `main` | Light/dark axe checks and Chromium journeys                                     |
+| **CodeQL**                   | GitHub security analysis              | JavaScript, TypeScript, and workflow vulnerabilities                            |
+| **Workers Build**            | Every production update               | Cloudflare production deployment (external integration)                         |
 
 Only **`main`** is maintained and deployed to production.
 
@@ -215,7 +215,7 @@ Then open [localhost:4321](http://localhost:4321).
 | `npm run audit` | Check dependencies for high-severity vulnerabilities   |
 
 | `npm run preview` | Build and preview with the Cloudflare runtime |
-| `npm run deploy` | Deploy the current `main` release through Wrangler |
+| `npm run deploy` | Verify required CI for the exact current `main` revision, then deploy through Wrangler |
 
 ---
 
@@ -258,3 +258,7 @@ For local verification settings, copy `.env.example` to `.dev.vars` and use a de
 `npm run cf-typegen` regenerates the Worker declarations. Optional application secrets are described in `src/bindings.ts`. `npm run format` formats maintained source; `npm run format:check` checks it. Direct build and test tools are pinned in the lockfile and covered by the dependency audit.
 
 The original header artwork is retained in `docs/brand`; the build generates a 344px WebP for visitors. No user-facing logo redesign was made.
+
+### Release verification
+
+See [the release runbook](docs/release-runbook.md) for the required Cloudflare build configuration and evidence boundaries. `npm run deploy` fails closed if any required workflow fails, is missing, or has not completed before the deadline. Calling Wrangler directly bypasses that script.

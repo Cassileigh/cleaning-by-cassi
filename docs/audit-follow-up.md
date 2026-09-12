@@ -36,9 +36,9 @@ The local browser download endpoint timed out/returned 502, and the environment 
 ## External release and delivery work
 
 1. In GitHub, verify required checks for main and bypass/force-push settings. The audit's protection lookup was denied by the integration. Required checks should include quality, accessibility and responsive suites.
-2. In Cloudflare, make deployment follow those checks, or use a protected release workflow with scoped deployment credentials. Do not disable the current deployment integration before its replacement has been verified. The new SHA smoke test verifies a deployed version but is not a pre-deployment gate.
+2. In Cloudflare, make deployment follow those checks, or use a protected release workflow with scoped deployment credentials. Do not disable the current deployment integration before its replacement has been verified. The SHA smoke test verifies a deployed version. A separate exact-revision pre-deployment gate is now available through `npm run deploy`; Cloudflare must use that command.
 3. Verify the configured Turnstile hostname policy, Resend sender/domain authentication, contact/security mailbox aliases, delivery/bounce signals and alert recipients. A nonempty secret is not proof of validity.
-4. Set an appropriate shared/platform rate limit; the in-memory map cannot enforce a global quota.
+4. Cloudflare rate limiting is now configured alongside the in-memory map; neither is a strict global quota. Confirm the binding in the production deployment.
 5. Run one authorized valid quote through an owned mailbox and verify acceptance, actual receipt and reply routing. No such email was sent as part of this patch.
 6. Confirm a dedicated public review destination, source a higher-resolution hero original if desired, and verify DM Serif provenance/notices. These were not guessed.
 7. Check keyboard/screen-reader behavior, iPad Safari, zoom, and measured performance. Do not change the pricing policy or reject past requested dates without confirming the intended business rule.
@@ -52,3 +52,7 @@ The local browser download endpoint timed out/returned 502, and the environment 
 Resend reports the sending domain, DKIM and SPF as verified. The ten recent transactional messages inspected show delivered status. These are historical delivery records, not an end-to-end test of this new revision. No delivery-event webhooks are configured. No customer identities or email bodies are included here, and no messages were sent.
 
 The first CI run passed build/type checks, dependency audit, CodeQL, Worker deployment and the exact-revision production smoke. Its responsive test caught Astro inlining the header script under the stricter CSP. The header now explicitly loads `/navigation.js` as an external script; the active-tab behavior is retained without restoring `unsafe-inline`.
+
+## Security and workflow parity follow-up
+
+The 2026-09-12 follow-up adds an edge-location quote limiter with failure-closed regression tests, exact-main-SHA deployment verification, a separate four-category Lighthouse gate, and native macOS Safari plus the existing WebKit interaction assertions. The prior Linux WebKit run timed out during initial navigation even after the loopback CSP fix; it was not a passing Safari result. The interaction suite is now hosted on macOS, alongside native Safari. Validation results belong to the exact GitHub revision's workflow runs. See [the release runbook](release-runbook.md) for activation requirements and remaining account-level limits.
