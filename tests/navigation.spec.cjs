@@ -10,7 +10,7 @@ test('Internal links lead to real pages and skip navigation works', async ({
     const path = pending.shift();
     if (visited.has(path)) continue;
     visited.add(path);
-    await page.goto(origin + path);
+    await page.goto(origin + path, { waitUntil: 'domcontentloaded' });
     const hrefs = await page
       .locator('a[href]')
       .evaluateAll((links) => links.map((a) => a.getAttribute('href')));
@@ -22,7 +22,7 @@ test('Internal links lead to real pages and skip navigation works', async ({
       if (!visited.has(target)) pending.push(target);
     }
   }
-  await page.goto(origin);
+  await page.goto(origin, { waitUntil: 'domcontentloaded' });
   await page.keyboard.press('Tab');
   await expect(page.locator('.skip-link')).toBeFocused();
   await page.keyboard.press('Enter');
@@ -33,7 +33,7 @@ test('Small-screen quote tab remains visible alongside logo and Facebook', async
   page,
 }) => {
   await page.setViewportSize({ width: 320, height: 700 });
-  await page.goto(origin + '/quote');
+  await page.goto(origin + '/quote', { waitUntil: 'domcontentloaded' });
   const active = page.locator('.internal-links [aria-current="page"]');
   await expect(active).toBeInViewport();
   await expect(page.locator('.facebook-link')).toBeInViewport();

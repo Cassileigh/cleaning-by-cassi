@@ -17,7 +17,9 @@ async function prepare(page) {
     }; window.cleaningByCassiTurnstileLoad();`,
     }),
   );
-  await page.goto('http://127.0.0.1:4321/quote');
+  await page.goto('http://127.0.0.1:4321/quote', {
+    waitUntil: 'domcontentloaded',
+  });
   await page.locator('[name="name"]').fill('Test Person');
   await page.locator('[name="email"]').fill('person@example.com');
   await page.locator('[name="phone"]').fill('9205550123');
@@ -115,7 +117,7 @@ test('Back after success restores a usable quote form', async ({ page }) => {
   await prepare(page);
   await page.locator('#quote-submit').click();
   await expect(page).toHaveURL(/quote-success/);
-  await page.goBack();
+  await page.goBack({ waitUntil: 'domcontentloaded' });
   await expect(page.locator('#quote-submit')).toBeEnabled();
   await expect(page.locator('#quote-submit')).toContainText(
     'Request My Free Quote',
