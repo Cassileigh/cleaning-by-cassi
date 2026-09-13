@@ -58,6 +58,7 @@ jobs:
           node tests/safari.cjs
 
       - name: Install WebKit
+        if: success() || failure()
         run: npx playwright install webkit
 
       - name: Check quote recovery and navigation in WebKit

@@ -13,9 +13,9 @@ const { mkdirSync, writeFileSync } = require('node:fs');
   const server = await service.start();
   console.log('Creating Safari session');
   const driver = await new Builder()
+    .withCapabilities({ pageLoadStrategy: 'eager' })
     .forBrowser('safari')
     .usingServer(server)
-    .withCapabilities({ pageLoadStrategy: 'eager' })
     .build();
   console.log('Safari session ready');
   await driver.manage().setTimeouts({ pageLoad: 30000, script: 10000 });
@@ -101,5 +101,5 @@ const { mkdirSync, writeFileSync } = require('node:fs');
   }
 })().catch((error) => {
   console.error(error);
-  process.exitCode = 1;
+  process.exit(1);
 });
