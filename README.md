@@ -13,6 +13,8 @@
 [![Production Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml)
 [![Responsive](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml)
 [![Accessibility](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml)
+[![Safari](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/safari.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/safari.yml)
+[![Lighthouse](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/lighthouse.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/lighthouse.yml)
 [![Astro 7](https://img.shields.io/badge/Astro-7.3.2-1548F5?logo=astro&logoColor=white)](https://astro.build)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=211631)](https://workers.cloudflare.com)
 
@@ -60,14 +62,14 @@ This repository contains the production website and its secure quote-request sys
 </tr>
 </table>
 
-## 🏡 Website preview
+## 🏡 Brand artwork
 
 <div align="center">
   <a href="https://cleaningbycassi.com">
-    <img src="./public/homepage.jpg" alt="Cleaning by Cassi website and accepting new clients artwork" width="820" />
+    <img src="./public/homepage.jpg" alt="Cleaning by Cassi accepting new clients artwork" width="820" />
   </a>
   <br />
-  <sub>Select the preview to visit the production website.</sub>
+  <sub>Select the artwork to visit the production website.</sub>
 </div>
 
 ## 🧽 Services at a glance
@@ -92,8 +94,8 @@ This repository contains the production website and its secure quote-request sys
 
 ```mermaid
 flowchart LR
-    A[Quote form] --> B[Turnstile check]
-    B --> C[Worker validation]
+    A[Quote form] --> B[Worker validation]
+    B --> C[Turnstile check]
     C --> D[Resend acceptance]
     D --> E[Success page]
 ```
@@ -102,11 +104,13 @@ The form navigates to the success page only after the email provider accepts the
 
 ## 🛡️ Security and reliability
 
-The production safeguards follow the same checks-and-balances approach used for the AlienX SmartHome project:
+The quote service validates requests before contacting Turnstile or the email provider. Safeguards include:
 
 - Turnstile token, hostname, and action verification
 - Same-origin submission enforcement
-- Honeypot spam detection and per-IP rate limiting
+- Honeypot spam detection
+- Cloudflare rate limiting: eight attempts per minute per IP within an edge location, plus an eight-per-ten-minute isolate safety net
+- Fail-closed quote handling when the rate-limit binding is missing or unavailable
 - Field allowlists, length limits, and HTML escaping
 - Real request-body size enforcement
 - Resend response-ID confirmation
@@ -117,6 +121,9 @@ The production safeguards follow the same checks-and-balances approach used for 
 - Build, TypeScript, Cloudflare dry-run, and dependency checks
 - GitHub CodeQL analysis
 - Grouped Dependabot maintenance
+- An exact-revision release gate requiring five successful workflows before `npm run deploy` proceeds
+
+Edge-location counters are not a strict global quota. Provider acceptance and configuration readiness are not proof of inbox delivery. Browser quote tests mock verification and email submission; they send no email.
 
 Please report vulnerabilities privately according to the [security policy](./SECURITY.md) or email **cassi@cleaningbycassi.com**.
 
@@ -161,16 +168,21 @@ Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion
 
 ## ✅ Automated checks
 
-| Check                        | When it runs                          | What it protects                                                                |
-| :--------------------------- | :------------------------------------ | :------------------------------------------------------------------------------ |
-| **Quality**                  | Every push and pull request to `main` | Install, build, types, Worker dry run, and dependency audit                     |
-| **Production smoke**         | Every push to `main` and hourly       | Expected Git revision, public pages, runtime readiness, and rejection behavior  |
-| **Responsive compatibility** | Every push and pull request to `main` | Eight public pages at 12 viewport sizes for overflow and browser runtime errors |
-| **Accessibility & theme**    | Every push and pull request to `main` | Light/dark axe checks and Chromium journeys                                     |
-| **CodeQL**                   | GitHub security analysis              | JavaScript, TypeScript, and workflow vulnerabilities                            |
-| **Workers Build**            | Every production update               | Cloudflare production deployment (external integration)                         |
+| Check                     | When it runs                      | Coverage                                                                                      |
+| :------------------------ | :-------------------------------- | :-------------------------------------------------------------------------------------------- |
+| **Quality**               | Push / PR to `main`               | Regression tests, formatting, build, types, Worker dry run, dependency audit                  |
+| **Responsive**            | Push / PR to `main`               | Eight routes × 12 viewport sizes; overflow and browser errors                                 |
+| **Accessibility & theme** | Push / PR to `main`               | Light/dark axe checks, image loading, Chromium navigation and quote recovery                  |
+| **Safari & WebKit**       | Push / PR to `main`               | 16 native Safari page/viewport checks and seven WebKit interaction tests on macOS             |
+| **Lighthouse**            | Push / PR to `main`               | Accessibility ≥95, best practices ≥95, performance ≥85, SEO ≥95                               |
+| **CodeQL**                | GitHub security analysis          | JavaScript/TypeScript and workflow analysis                                                   |
+| **Production smoke**      | Push to `main`, hourly, or manual | Exact deployed revision, public routes, configuration readiness, rejected invalid submissions |
+| **Browser diagnostics**   | Manual only                       | Isolates preview navigation failures; does not replace release checks                         |
+| **Workers Build**         | Cloudflare Git integration        | Production build and deployment                                                               |
 
-Only **`main`** is maintained and deployed to production.
+The five required release workflows are **quality, responsive, accessibility, Lighthouse, and Safari**. `npm run deploy` checks their successful push runs against the clean checkout and latest GitHub `main` SHA, then allows Wrangler to deploy. Missing, failed, skipped, or timed-out evidence blocks deployment. Production smoke checks the result afterward; newer checks supersede obsolete revisions.
+
+Cloudflare must use **`npm run build`** as its build command and **`npm run deploy`** as its deploy command. Direct `wrangler deploy` bypasses the repository gate. See the [release runbook](docs/release-runbook.md) for account-setting verification and operational limits. Production is hosted on **Cloudflare Workers**, from **`main`**.
 
 ## 📁 Project map
 
@@ -178,10 +190,10 @@ Only **`main`** is maintained and deployed to production.
 /
 ├── .github/
 │   ├── dependabot.yml             Grouped dependency updates
-│   └── workflows/                 Quality, production, responsive, and accessibility checks
-├── docs/                          Security contract and repository artwork
+│   └── workflows/                 Release gates, production checks, and browser diagnostics
+├── docs/                          Runbook, audit follow-up, security contract, and artwork
 ├── public/                        Images, icons, and local fonts
-├── scripts/                       Image optimization
+├── scripts/                       Image optimization, revision metadata, and CI gate
 ├── src/
 │   ├── components/                Header, footer, metadata, and shared UI
 │   ├── layouts/                   PageLayout: document shell for public pages
@@ -207,15 +219,49 @@ npm run dev
 
 Then open [localhost:4321](http://localhost:4321).
 
-| Command         | Purpose                                                |
-| :-------------- | :----------------------------------------------------- |
-| `npm run dev`   | Optimize images and start the local development server |
-| `npm run build` | Create the production build                            |
-| `npm run check` | API regressions, type check, build, and Worker dry run |
-| `npm run audit` | Check dependencies for high-severity vulnerabilities   |
+| Command                          | Purpose                                                             |
+| :------------------------------- | :------------------------------------------------------------------ |
+| `npm run dev`                    | Optimize images and start Astro development                         |
+| `npm run build`                  | Generate revision metadata, optimize images, and build              |
+| `npm test`                       | Run API, quote-client, and release-gate regression tests            |
+| `npm run check`                  | Run regressions, type checks, production build, and Worker dry run  |
+| `npm run audit`                  | Check the locked dependency tree; fail at high severity or above    |
+| `npm run format:check`           | Verify maintained source and documentation formatting               |
+| `npm run preview -- --port 4321` | Build and start the Cloudflare runtime with an HTTP loopback origin |
+| `npm run test:browser`           | Run Playwright tests against the running preview                    |
+| `npm run cf-typegen`             | Regenerate scoped Worker declarations                               |
+| `npm run deploy`                 | Verify exact-revision CI, then deploy through Wrangler              |
 
-| `npm run preview` | Build and preview with the Cloudflare runtime |
-| `npm run deploy` | Verify required CI for the exact current `main` revision, then deploy through Wrangler |
+The loopback preview configuration is intentional: it prevents production-origin HTTPS upgrading from breaking local Safari assets while retaining production security headers.
+
+---
+
+## 🔧 Maintenance and operations
+
+Use the [release runbook](docs/release-runbook.md), [quote security contract](docs/quote-security-contract.md), and [audit follow-up](docs/audit-follow-up.md) for implementation details, evidence, and remaining account-level checks. GitHub is the source of truth: pull current `main` before making changes and inspect checks for that exact revision.
+
+For browser verification:
+
+```bash
+npm ci
+npx playwright install chromium webkit
+npm run preview -- --port 4321
+# In another terminal:
+npm run test:browser
+npx playwright test tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --browser=webkit
+```
+
+Native Safari requires macOS and enabled Safari WebDriver; the Safari workflow configures both. Tests cover stale form state, retries, timeouts, back navigation, header containment, and active-tab visibility. Safari timeout messages use the actual timeout signal rather than relying on browser-specific error wording.
+
+For local verification settings, copy `.env.example` to `.dev.vars` and use a dedicated Turnstile testing setup with matching hostnames. Automated browser tests mock verification and delivery and need no live email secrets. Production uses Worker secrets for `TURNSTILE_SECRET` and `RESEND_API_KEY`; hostname and site-key settings must match the intended widget. Never place production secrets in browser code.
+
+The original header artwork is retained in `docs/brand`; the build generates a 344px WebP for visitors. Repository-only artwork stays in `docs/`, and served assets stay in `public/`.
+
+### Verification snapshot — September 13, 2026
+
+The fresh dependency audit reported **zero known vulnerabilities**. Source revision [`d8def80`](https://github.com/Cassileigh/cleaning-by-cassi/commit/d8def80087339af87e139e82ce008282e0d52096) passed all five required workflows, both CodeQL analyses, Cloudflare deployment, and production smoke before this README update. Workflow badges above track subsequent runs; [GitHub Actions](https://github.com/Cassileigh/cleaning-by-cassi/actions) holds the results for each revision.
+
+The latest GitHub Pages/Jekyll build failed. Removing `CNAME` does not by itself establish that Pages hosting has been disabled. Cloudflare Workers is the production host; GitHub Pages settings are a separate account-level cleanup item.
 
 ---
 
@@ -232,33 +278,3 @@ _Done with precision. Peace of mind delivered._
 <sub>Serving the Fox Cities and surrounding areas.</sub>
 
 </div>
-
-### Maintenance reference
-
-Relevant changes from AlienX SmartHome commits `3aed304`, `9a20a0f`, and `0065127` are adapted here: pinned Astro diagnostics alongside TypeScript, scoped Worker declarations, active-navigation accessibility, a same-origin quote script with bounded requests, and maintained WCAG 2.1/browser retry tests. Cleaning by Cassi retains system-controlled themes and its own form/security contract. Browser quote tests mock verification and delivery; they send no email.
-
-## Audit remediation and operations
-
-See [audit follow-up](docs/audit-follow-up.md) for changes, verification, and remaining infrastructure work. A green configuration-readiness endpoint does **not** establish working inbox delivery. Production smoke verifies the expected Git SHA, but independent Cloudflare Builds still requires an explicit release-gating policy.
-
-Local verification:
-
-```bash
-npm ci
-npm run check
-npm run audit
-npx playwright install chromium webkit
-npm run preview
-# In another terminal, while preview listens on port 4321:
-npm run test:browser
-```
-
-For local verification settings, copy `.env.example` to `.dev.vars` and use a dedicated Turnstile testing setup whose hostname policy matches the verification response. Never copy production email secrets into browser code. Browser tests mock verification and email submission and require no live secrets. Production uses Worker secrets for `TURNSTILE_SECRET` and `RESEND_API_KEY`; `TURNSTILE_HOSTNAMES` and the public `TURNSTILE_SITE_KEY` must match the intended widget. The public site key has the existing production fallback.
-
-`npm run cf-typegen` regenerates the Worker declarations. Optional application secrets are described in `src/bindings.ts`. `npm run format` formats maintained source; `npm run format:check` checks it. Direct build and test tools are pinned in the lockfile and covered by the dependency audit.
-
-The original header artwork is retained in `docs/brand`; the build generates a 344px WebP for visitors. No user-facing logo redesign was made.
-
-### Release verification
-
-See [the release runbook](docs/release-runbook.md) for the required Cloudflare build configuration and evidence boundaries. `npm run deploy` fails closed if any required workflow fails, is missing, or has not completed before the deadline. Calling Wrangler directly bypasses that script.
