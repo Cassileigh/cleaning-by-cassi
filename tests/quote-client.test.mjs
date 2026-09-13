@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-function client(fetch) {
+function client(fetch, signals = AbortSignal) {
   const events = {};
   let submit;
   let destination;
@@ -45,7 +45,7 @@ function client(fetch) {
       document: { querySelector: (selector) => elements[selector] },
       crypto,
       AbortController,
-      AbortSignal,
+      AbortSignal: signals,
       FormData: class {
         get() {
           return 'test-token';
@@ -57,11 +57,29 @@ function client(fetch) {
   return {
     events,
     button,
+    status,
     id,
     submit: () => submit({ preventDefault() {} }),
     destination: () => destination,
   };
 }
+
+test('Safari abort wording still produces the useful timeout recovery message', async () => {
+  const page = client(
+    async () => {
+      throw new Error('Fetch is aborted');
+    },
+    {
+      any: AbortSignal.any,
+      timeout: () =>
+        AbortSignal.abort(new DOMException('Timeout', 'TimeoutError')),
+    },
+  );
+  await page.submit();
+  assert.match(page.status.textContent, /request timed out/);
+  assert.equal(page.button.disabled, false);
+  assert.equal(page.destination(), undefined);
+});
 
 test('successful quote can be restored and submitted again', async () => {
   const page = client(async () => Response.json({ ok: true }));

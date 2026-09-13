@@ -14,6 +14,10 @@ This repository cannot prove the Cloudflare dashboard deploy command or GitHub b
 
 ## Verification
 
+CI previews must use `wrangler dev --host 127.0.0.1 --upstream-protocol http` (plus the test port). Wrangler otherwise derives the upstream origin from the production route, causing the production CSP to upgrade local WebKit assets to HTTPS even though the local listener serves HTTP. Keep the production security headers intact; do not strip them to make tests pass. The manually dispatched browser diagnostics workflow can isolate future navigation failures.
+
+Native Safari passed all 16 page/viewport checks at `2ffc6e6`. That run also identified Safari's generic fetch-abort wording, now handled through the actual timeout signal, and macOS's Option-Tab link navigation convention. The latest revision's full workflow results remain the release authority.
+
 Run `npm ci`, `npm run format:check`, `npm run check`, and `npm run audit`. All five required workflows must pass on the exact release SHA. Safari uses native Safari WebDriver on macOS and retains the seven Playwright WebKit interaction tests. Automated quote journeys mock the verification/provider boundary and send no email. Lighthouse collects all eight routes and all four categories; only the intentionally noindex receipt omits the SEO threshold. Reports remain downloadable even on failure. Performance thresholds are not relaxed for noisy runs.
 
 After deployment, verify `/api/release` matches the expected SHA and the production smoke passes. Configuration readiness is not proof of live mail delivery. Provider notifications, branch protection and a rehearsed rollback remain separate operational checks.

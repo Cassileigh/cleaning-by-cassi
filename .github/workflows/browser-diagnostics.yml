@@ -1,7 +1,5 @@
 name: Browser navigation diagnostics
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read

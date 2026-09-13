@@ -3,6 +3,7 @@ const origin = 'http://127.0.0.1:4321';
 test('Internal links lead to real pages and skip navigation works', async ({
   page,
   request,
+  browserName,
 }) => {
   const visited = new Set();
   const pending = ['/'];
@@ -23,7 +24,12 @@ test('Internal links lead to real pages and skip navigation works', async ({
     }
   }
   await page.goto(origin, { waitUntil: 'domcontentloaded' });
-  await page.keyboard.press('Tab');
+  // macOS Safari uses Option-Tab to include links with default keyboard settings.
+  await page.keyboard.press(
+    browserName === 'webkit' && process.platform === 'darwin'
+      ? 'Alt+Tab'
+      : 'Tab',
+  );
   await expect(page.locator('.skip-link')).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.locator('main')).toBeFocused();
