@@ -21,6 +21,12 @@ const jobs = [
     avif: 'public/about-optimized.avif',
     width: 1400,
   },
+  {
+    input: 'public/cassi-and-bear.jpg',
+    webp: 'public/cassi-bear-optimized.webp',
+    avif: 'public/cassi-bear-optimized.avif',
+    width: 1100,
+  },
 ];
 
 for (const job of jobs) {
