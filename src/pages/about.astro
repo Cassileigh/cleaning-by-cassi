@@ -91,35 +91,41 @@ const description =
   </section>
 
   <section class="best-part">
-    <div class="best-part-copy">
-      <p class="eyebrow">The Best Part</p><h2>
-        My clients. <span>And their pets. 🐾</span>
-      </h2><p>
-        There's nothing better than leaving a home knowing my client is happy
-        with the work I've done. That feeling of accomplishment is one of the
-        biggest reasons I love what I do.
-      </p><p>
-        And if you have pets, there's a pretty good chance I'll love them too!
-        I'm an animal lover, so meeting my clients' furry family members is
-        definitely one of the perks of the job.
-      </p>
+    <div class="best-part-heading">
+      <p class="eyebrow">The Best Part</p>
+      <h2>My clients. <span>And their pets. 🐾</span></h2>
     </div>
-    <figure class="pet-photo-card">
-      <picture>
-        <source srcset="/cassi-bear-optimized.avif" type="image/avif" />
-        <source srcset="/cassi-bear-optimized.webp" type="image/webp" />
-        <img
-          src="/cassi-and-bear.jpg"
-          alt={`${OWNER_NAME} with her black Labrador, Bear`}
-          loading="lazy"
-          decoding="async"
-        />
-      </picture>
-      <figcaption>
-        <strong>Pet-friendly homes are welcome. 🐾</strong>
-        <span>Your four-legged family members are part of the family too.</span>
-      </figcaption>
-    </figure>
+    <div class="pet-feature">
+      <figure class="pet-photo-card">
+        <picture>
+          <source srcset="/cassi-bear-optimized.avif" type="image/avif" />
+          <source srcset="/cassi-bear-optimized.webp" type="image/webp" />
+          <img
+            src="/cassi-and-bear.jpg"
+            alt={`${OWNER_NAME} with her black Labrador, Bear`}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </figure>
+      <div class="pet-story-card">
+        <span class="pet-story-paw" aria-hidden="true">🐾</span>
+        <p>
+          There's nothing better than leaving a home knowing my client is happy
+          with the work I've done. That feeling of accomplishment is one of the
+          biggest reasons I love what I do.
+        </p>
+        <p>
+          And if you have pets, there's a pretty good chance I'll love them too!
+          I'm an animal lover, so meeting my clients' furry family members is
+          definitely one of the perks of the job.
+        </p>
+        <div class="pet-welcome">
+          <strong>Pet-friendly homes are welcome.</strong>
+          <span>Your four-legged family members are part of the family too.</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="values-section">
@@ -340,30 +346,51 @@ const description =
   }
 
   .best-part {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    gap: 2rem;
-    align-items: center;
-    margin: 4rem 0;
+    margin: 5rem 0 6rem;
   }
-  .best-part h2 span {
+  .best-part-heading {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto 2.2rem;
+    text-align: center;
+  }
+  .best-part-heading h2 {
+    margin: 0;
+  }
+  .best-part-heading h2 span {
     display: block;
     color: var(--accent);
   }
-  .best-part-copy > p:not(.eyebrow) {
-    color: var(--muted);
-    line-height: 1.85;
+  .pet-feature {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    align-items: center;
+    isolation: isolate;
+  }
+  .pet-feature::before {
+    content: '';
+    position: absolute;
+    inset: 8% 4% 3% 8%;
+    z-index: -1;
+    border-radius: 36px;
+    background: var(--brand-gradient-soft);
+    transform: rotate(1.5deg);
   }
   .pet-photo-card {
-    position: relative;
+    grid-column: 1;
+    grid-row: 1;
     min-width: 0;
+    width: min(100%, 620px);
     margin: 0;
     overflow: hidden;
     aspect-ratio: 3 / 4;
     border: 1px solid var(--border);
-    border-radius: 28px;
+    border-radius: 32px;
     background: var(--surface-solid);
     box-shadow: var(--shadow);
+    transform: rotate(-1.25deg);
   }
   .pet-photo-card picture,
   .pet-photo-card img {
@@ -375,26 +402,49 @@ const description =
     object-fit: cover;
     object-position: center;
   }
-  .pet-photo-card figcaption {
-    position: absolute;
-    right: 0.55rem;
-    bottom: 0.55rem;
-    left: 0.55rem;
-    display: grid;
-    gap: 0.2rem;
-    padding: 0.85rem 1rem;
+  .pet-story-card {
+    grid-column: 2;
+    grid-row: 1;
+    z-index: 2;
+    min-width: 0;
+    margin-left: clamp(-5rem, -7vw, -2.5rem);
+    padding: clamp(1.6rem, 4vw, 2.6rem);
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: 28px;
     color: var(--ink);
     background: var(--surface);
-    box-shadow: 0 8px 20px rgba(49, 24, 95, 0.14);
-    line-height: 1.35;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 22px 55px rgba(49, 24, 95, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   }
-  .pet-photo-card figcaption span {
+  .pet-story-paw {
+    display: inline-grid;
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-bottom: 0.5rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--brand-gradient-soft);
+    font-size: 1.7rem;
+    transform: rotate(8deg);
+  }
+  .pet-story-card > p {
     color: var(--muted);
-    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+  .pet-welcome {
+    display: grid;
+    gap: 0.18rem;
+    margin-top: 1.25rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--border);
+  }
+  .pet-welcome strong {
+    color: var(--purple);
+  }
+  .pet-welcome span {
+    color: var(--muted);
+    font-size: 0.9rem;
   }
 
   .values-section {
@@ -487,9 +537,14 @@ const description =
 
   @media (max-width: 900px) {
     .about-hero,
-    .split-section,
-    .best-part {
+    .split-section {
       grid-template-columns: 1fr;
+    }
+    .pet-feature {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    }
+    .pet-story-card {
+      margin-left: -2.5rem;
     }
     .story-grid {
       grid-template-columns: 1fr;
@@ -577,22 +632,39 @@ const description =
     .quote-box {
       padding: 1.35rem;
     }
-    .pet-photo-card {
-      width: min(100%, 430px);
-      margin-inline: auto;
-      border-radius: 24px;
-    }
-    .pet-photo-card figcaption {
-      right: 0.35rem;
-      bottom: 0.35rem;
-      left: 0.35rem;
-      padding: 0.72rem 0.8rem;
-      border-radius: 13px;
-    }
-    .split-section,
-    .best-part {
+    .split-section {
       gap: 1.4rem;
       margin-block: 3rem;
+    }
+    .best-part {
+      margin-block: 3.5rem;
+    }
+    .best-part-heading {
+      margin-bottom: 1.5rem;
+    }
+    .pet-feature {
+      grid-template-columns: 1fr;
+      padding-bottom: 0.5rem;
+    }
+    .pet-feature::before {
+      inset: 5% 0.3rem 0;
+      border-radius: 26px;
+    }
+    .pet-photo-card {
+      grid-column: 1;
+      grid-row: 1;
+      width: min(92%, 430px);
+      margin-inline: auto;
+      border-radius: 24px;
+      transform: rotate(-0.8deg);
+    }
+    .pet-story-card {
+      grid-column: 1;
+      grid-row: 2;
+      width: calc(100% - 1rem);
+      margin: -2.4rem auto 0;
+      padding: 1.3rem;
+      border-radius: 22px;
     }
     .values-grid {
       grid-template-columns: 1fr;
@@ -625,7 +697,8 @@ const description =
     }
     .story-card,
     .values-grid article,
-    .pet-photo-card {
+    .pet-photo-card,
+    .pet-story-card {
       border-radius: 18px;
     }
   }
