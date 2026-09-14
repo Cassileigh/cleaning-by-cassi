@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import Testimonials from '../components/Testimonials.astro';
+import ServiceAreaContact from '../components/ServiceAreaContact.astro';
 import HeroCleaningGraphic from '../components/HeroCleaningGraphic.astro';
 import {
   SITE_TITLE,
@@ -134,8 +135,9 @@ import {
     </p><a href="/quote" class="button light">Get My Free Quote →</a><small
       >No pressure. Just a simple quote tailored to your home.</small
     >
-  </section></PageLayout
->
+  </section>
+  <ServiceAreaContact />
+</PageLayout>
 <style>
   :global(.home) {
     padding: 0;

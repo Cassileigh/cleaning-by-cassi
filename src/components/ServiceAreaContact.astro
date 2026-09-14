@@ -1,0 +1,281 @@
+---
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_HREF } from '../consts';
+
+const communities = [
+  'Allenville',
+  'Appleton',
+  'Black Creek',
+  'Brillion',
+  'Brothertown',
+  'Butte des Morts',
+  'Chilton',
+  'Combined Locks',
+  'Dale',
+  'Darboy',
+  'Ellington',
+  'Forest Junction',
+  'Fox Crossing',
+  'Grand Chute',
+  'Greenville',
+  'Harrison',
+  'Hilbert',
+  'Hortonville',
+  'Kaukauna',
+  'Kimberly',
+  'Larsen',
+  'Little Chute',
+  'Menasha',
+  'Neenah',
+  'New London',
+  'Oshkosh',
+  'Potter',
+  'Sherwood',
+  'Shiocton',
+  'Stockbridge',
+  'Winchester',
+  'Winneconne',
+  'Wrightstown',
+];
+---
+
+<section
+  id="contact"
+  class="service-contact"
+  aria-labelledby="service-contact-title"
+>
+  <div class="section-heading">
+    <p class="eyebrow">LOCAL CLEANING. PERSONAL CARE.</p>
+    <h2 id="service-contact-title">Service Area &amp; <em>Contact</em></h2>
+  </div>
+  <div class="contact-card">
+    <div class="coverage">
+      <a
+        class="map-link"
+        href="/service-area-map.webp"
+        aria-label="Open the detailed Fox Cities service-area map"
+      >
+        <img
+          src="/homepage-service-map.webp"
+          alt="Fox Cities reference map showing Menasha, Appleton, Neenah, Oshkosh, Greenville, Hortonville, and surrounding communities."
+          width="800"
+          height="800"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <a class="detail-link" href="/service-area-map.webp"
+        >View the detailed map <span aria-hidden="true">↗</span></a
+      >
+      <details>
+        <summary>View all service areas</summary>
+        <p>
+          These communities are shown on the map. Service availability is
+          confirmed by your address and driving distance. Please ask about
+          locations in Winneconne, which is near the edge of the service area.
+        </p>
+        <ul>{communities.map((community) => <li>{community}</li>)}</ul>
+      </details>
+    </div>
+    <div class="contact-info">
+      <p class="location">BASED IN MENASHA, WISCONSIN</p>
+      <h3>Contact Cleaning by Cassi</h3>
+      <p>
+        Have a question about cleaning services or availability? I'd love to
+        hear from you!
+      </p>
+      <p>
+        Proudly serving the Fox Cities and surrounding communities within
+        approximately 25 driving miles of Menasha. Service availability is
+        confirmed by address.
+      </p>
+      <address>
+        <dl>
+          <div>
+            <dt>Call</dt><dd>
+              <a href={CONTACT_PHONE_HREF}>{CONTACT_PHONE}</a>
+            </dd>
+          </div>
+          <div>
+            <dt>Email</dt><dd>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </dd>
+          </div>
+        </dl>
+      </address>
+      <p class="quote-intro">
+        For a personalized estimate, please complete my quote form.
+      </p>
+      <a class="quote-button" href="/quote"
+        >Request a Quote <span aria-hidden="true">→</span></a
+      >
+    </div>
+  </div>
+</section>
+
+<style>
+  .service-contact {
+    padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3rem);
+    background: var(--surface-solid);
+    scroll-margin-top: 8rem;
+  }
+  .section-heading {
+    max-width: 1000px;
+    margin: 0 auto 1.5rem;
+  }
+  .eyebrow {
+    color: var(--accent);
+  }
+  h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+  }
+  h2 em {
+    color: var(--emphasis);
+  }
+  .contact-card {
+    max-width: 1000px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.75rem);
+    padding: clamp(1rem, 3vw, 2rem);
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: var(--brand-gradient-soft);
+    align-items: start;
+  }
+  .coverage,
+  .contact-info {
+    min-width: 0;
+  }
+  .map-link {
+    display: block;
+    max-width: 400px;
+    margin-inline: auto;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .map-link img {
+    width: 100%;
+    height: auto;
+  }
+  a {
+    color: var(--accent);
+  }
+  a:hover {
+    color: var(--emphasis);
+  }
+  a:focus-visible,
+  summary:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .detail-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  details {
+    margin-top: 0.4rem;
+    border-top: 1px solid var(--border);
+  }
+  summary {
+    padding-block: 0.75rem;
+    min-height: 44px;
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  details p {
+    font-size: 0.9rem;
+  }
+  ul {
+    columns: 2;
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+  }
+  li {
+    break-inside: avoid;
+    font-size: 0.9rem;
+    padding-bottom: 0.25rem;
+  }
+  .location {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin: 0.5rem 0 1rem;
+  }
+  h3 {
+    font-size: clamp(1.65rem, 3vw, 2.2rem);
+    line-height: 1.2;
+  }
+  p {
+    color: var(--muted);
+  }
+  address {
+    font-style: normal;
+  }
+  dl {
+    margin: 1.25rem 0;
+  }
+  dl > div + div {
+    margin-top: 0.8rem;
+  }
+  dt {
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  dd {
+    margin: 0;
+  }
+  dd a {
+    display: inline-block;
+    padding-block: 0.4rem;
+    min-height: 44px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  .quote-intro {
+    font-size: 0.9rem;
+  }
+  .quote-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    min-height: 48px;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    background: linear-gradient(110deg, #6215bb, #a01377);
+    color: #fff;
+    font-weight: 700;
+  }
+  .quote-button:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  @media (max-width: 760px) {
+    .contact-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .quote-button {
+      width: 100%;
+    }
+  }
+  @media (max-width: 390px) {
+    ul {
+      columns: 1;
+    }
+  }
+</style>
