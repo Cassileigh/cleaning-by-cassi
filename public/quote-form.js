@@ -110,13 +110,18 @@
     controller = new AbortController();
     button.textContent = 'Sending…';
 
-    const timeout = AbortSignal.timeout(40_000);
+    let timedOut = false;
+    const timeoutId = window.setTimeout(() => {
+      timedOut = true;
+      controller?.abort();
+    }, 40_000);
+
     try {
       const response = await fetch(form.action, {
         method: 'POST',
         headers: { Accept: 'application/json' },
         body: formData,
-        signal: AbortSignal.any([controller.signal, timeout]),
+        signal: controller.signal,
       });
       const parsed = await response.json().catch(() => null);
       if (attempt !== generation) return;
@@ -143,8 +148,7 @@
       if (attempt !== generation) return;
       resetTurnstile();
       setStatus(
-        timeout.aborted ||
-          (error instanceof Error && error.name === 'TimeoutError')
+        timedOut
           ? 'The request timed out. Please complete the security check and try again.'
           : error instanceof Error
             ? error.message
@@ -153,6 +157,8 @@
       );
       button.disabled = false;
       button.textContent = originalLabel;
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   });
 })();
