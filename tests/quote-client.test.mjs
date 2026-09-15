@@ -3,7 +3,10 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-function client(fetch, signals = AbortSignal) {
+function client(
+  fetch,
+  timers = { setTimeout, clearTimeout },
+) {
   const events = {};
   let submit;
   let destination;
@@ -29,6 +32,8 @@ function client(fetch, signals = AbortSignal) {
   const window = {
     matchMedia: () => ({ matches: false }),
     turnstile: { render: () => 1, reset() {}, remove() {} },
+    setTimeout: timers.setTimeout,
+    clearTimeout: timers.clearTimeout,
     addEventListener: (name, handler) => {
       events[name] = handler;
     },
@@ -45,7 +50,6 @@ function client(fetch, signals = AbortSignal) {
       document: { querySelector: (selector) => elements[selector] },
       crypto,
       AbortController,
-      AbortSignal: signals,
       FormData: class {
         get() {
           return 'test-token';
@@ -66,13 +70,16 @@ function client(fetch, signals = AbortSignal) {
 
 test('Safari abort wording still produces the useful timeout recovery message', async () => {
   const page = client(
-    async () => {
-      throw new Error('Fetch is aborted');
-    },
+    async (_, { signal }) =>
+      new Promise((_, reject) => {
+        signal.addEventListener('abort', () => reject(new Error('Fetch is aborted')));
+      }),
     {
-      any: AbortSignal.any,
-      timeout: () =>
-        AbortSignal.abort(new DOMException('Timeout', 'TimeoutError')),
+      setTimeout(callback) {
+        queueMicrotask(callback);
+        return 1;
+      },
+      clearTimeout() {},
     },
   );
   await page.submit();
