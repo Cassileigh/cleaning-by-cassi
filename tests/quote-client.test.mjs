@@ -3,10 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-function client(
-  fetch,
-  timers = { setTimeout, clearTimeout },
-) {
+function client(fetch, timers = { setTimeout, clearTimeout }) {
   const events = {};
   let submit;
   let destination;
