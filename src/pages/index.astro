@@ -32,15 +32,26 @@ import {
         <span>Accepting</span>
         <strong>NEW CLIENTS</strong>
       </h1>
-      <p class="hero-tagline">Done with precision.<br />Peace of mind delivered.</p>
+      <p class="hero-tagline">
+        Done with precision.<br />Peace of mind delivered.
+      </p>
 
       <div class="hero-benefits" aria-label="Cleaning by Cassi benefits">
-        <div><span aria-hidden="true">⌂</span><small>A CLEANER<br />HOME</small></div>
-        <div><span aria-hidden="true">♡</span><small>A HAPPIER<br />YOU</small></div>
-        <div><span aria-hidden="true">♧</span><small>MORE TIME FOR<br />WHAT MATTERS</small></div>
+        <div>
+          <span aria-hidden="true">⌂</span><small>A CLEANER<br />HOME</small>
+        </div>
+        <div>
+          <span aria-hidden="true">♡</span><small>A HAPPIER<br />YOU</small>
+        </div>
+        <div>
+          <span aria-hidden="true">♧</span><small
+            >MORE TIME FOR<br />WHAT MATTERS</small>
+        </div>
       </div>
 
-      <a class="button hero-quote" href="/quote">Get a Free Quote <span aria-hidden="true">→</span></a>
+      <a class="button hero-quote" href="/quote"
+        >Get a Free Quote <span aria-hidden="true">→</span></a
+      >
       <p class="hero-note">Because a clean home feels good ♡</p>
     </div>
   </section>
@@ -102,13 +113,21 @@ import {
       </p>
     </div><div class="features">
       <div>
-        💗 <strong>Personalized</strong><small>Your home and needs are unique.</small>
+        💗 <strong>Personalized</strong><small
+          >Your home and needs are unique.</small
+        >
       </div><div>
-        ✨ <strong>Detail-focused</strong><small>The little things matter.</small>
+        ✨ <strong>Detail-focused</strong><small
+          >The little things matter.</small
+        >
       </div><div>
-        🐾 <strong>Pet-friendly</strong><small>Four-legged family members are welcome.</small>
+        🐾 <strong>Pet-friendly</strong><small
+          >Four-legged family members are welcome.</small
+        >
       </div><div>
-        💚 <strong>One familiar face</strong><small>You know who's caring for your home.</small>
+        💚 <strong>One familiar face</strong><small
+          >You know who's caring for your home.</small
+        >
       </div>
     </div>
   </section>
@@ -119,7 +138,9 @@ import {
     <p class="eyebrow">READY FOR A FRESH START?</p><h2>
       A brighter home is <em>one quote away.</em>
     </h2><p>
-      Let's find the cleaning plan that's right for your home in the {SERVICE_AREA} area.
+      Let's find the cleaning plan that's right for your home in the {
+        SERVICE_AREA
+      } area.
     </p><a href="/quote" class="button light">Get My Free Quote →</a><small>
       No pressure. Just a simple quote tailored to your home.
     </small>
@@ -170,7 +191,13 @@ import {
     inset: 0;
     z-index: 1;
     background:
-      linear-gradient(90deg, rgba(43, 17, 53, 0.91) 0%, rgba(76, 28, 78, 0.79) 27%, rgba(111, 20, 217, 0.28) 49%, rgba(20, 13, 29, 0.08) 72%),
+      linear-gradient(
+        90deg,
+        rgba(43, 17, 53, 0.91) 0%,
+        rgba(76, 28, 78, 0.79) 27%,
+        rgba(111, 20, 217, 0.28) 49%,
+        rgba(20, 13, 29, 0.08) 72%
+      ),
       linear-gradient(0deg, rgba(242, 75, 181, 0.19), transparent 46%);
   }
   .hero-content {
@@ -178,7 +205,8 @@ import {
     z-index: 3;
     width: min(1240px, 100%);
     margin: 0 auto;
-    padding: clamp(4.5rem, 8vw, 7.5rem) clamp(1.35rem, 7vw, 6rem) clamp(6rem, 10vw, 8rem);
+    padding: clamp(4.5rem, 8vw, 7.5rem) clamp(1.35rem, 7vw, 6rem)
+      clamp(6rem, 10vw, 8rem);
     color: #fff;
   }
   .hero-eyebrow {
@@ -237,7 +265,7 @@ import {
     width: 50px;
     height: 50px;
     margin: 0 auto 0.45rem;
-    border: 1px solid rgba(255,255,255,.58);
+    border: 1px solid rgba(255, 255, 255, 0.58);
     border-radius: 50%;
     background: rgba(255, 203, 235, 0.16);
     font-size: 1.7rem;
@@ -253,14 +281,16 @@ import {
   .hero-quote {
     min-width: 235px;
     color: #fff;
-    border: 1px solid rgba(255,255,255,.58);
+    border: 1px solid rgba(255, 255, 255, 0.58);
     background: linear-gradient(110deg, #7b22d5, #ed62bd);
     box-shadow: 0 14px 35px rgba(51, 10, 66, 0.28);
   }
-  .hero-quote:hover { color: #fff; }
+  .hero-quote:hover {
+    color: #fff;
+  }
   .hero-note {
     margin: 1.1rem 0 0;
-    color: rgba(255,255,255,.92);
+    color: rgba(255, 255, 255, 0.92);
     font-family: 'DM Serif Display', Georgia, serif;
     font-size: 1rem;
     font-style: italic;
@@ -274,8 +304,16 @@ import {
     line-height: 1;
     pointer-events: none;
   }
-  .hero-leaves-top { top: -2rem; left: -1rem; transform: rotate(28deg); }
-  .hero-leaves-bottom { right: -1rem; bottom: 1rem; transform: rotate(205deg); }
+  .hero-leaves-top {
+    top: -2rem;
+    left: -1rem;
+    transform: rotate(28deg);
+  }
+  .hero-leaves-bottom {
+    right: -1rem;
+    bottom: 1rem;
+    transform: rotate(205deg);
+  }
 
   .eyebrow {
     color: var(--accent);
@@ -293,9 +331,13 @@ import {
     padding: 0.9rem 1.5rem;
     border-radius: 999px;
     font-weight: 700;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
   }
-  .button:hover { transform: translateY(-2px); }
+  .button:hover {
+    transform: translateY(-2px);
+  }
   .button:focus-visible,
   .text-link:focus-visible {
     outline: 3px solid var(--accent);
@@ -308,7 +350,9 @@ import {
     background: var(--surface-solid);
   }
   .glass:hover,
-  .light:hover { color: var(--accent); }
+  .light:hover {
+    color: var(--accent);
+  }
 
   .section {
     padding: clamp(4rem, 7vw, 7rem) clamp(1.25rem, 7vw, 7rem);
@@ -318,8 +362,14 @@ import {
     line-height: 1.1;
     color: var(--ink);
   }
-  .section h2 em { color: var(--emphasis); font-style: italic; }
-  .section p:not(.eyebrow) { color: var(--muted); line-height: 1.8; }
+  .section h2 em {
+    color: var(--emphasis);
+    font-style: italic;
+  }
+  .section p:not(.eyebrow) {
+    color: var(--muted);
+    line-height: 1.8;
+  }
   .intro {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -327,9 +377,18 @@ import {
     align-items: center;
     background: var(--surface-solid);
   }
-  .text-link { color: var(--accent); font-weight: 700; }
-  .services { background: var(--surface-soft); }
-  .heading { max-width: 760px; margin: 0 auto 3rem; text-align: center; }
+  .text-link {
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .services {
+    background: var(--surface-soft);
+  }
+  .heading {
+    max-width: 760px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
   .cards {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -345,11 +404,22 @@ import {
     background: var(--surface-solid);
     box-shadow: var(--shadow);
   }
-  .cards article > span { font-size: 2rem; }
-  .cards h3 { color: var(--ink); }
-  .cards p { font-size: 0.94rem; }
-  .cards .featured { background: var(--brand-gradient-soft); }
-  .center { text-align: center; margin-top: 2.5rem; }
+  .cards article > span {
+    font-size: 2rem;
+  }
+  .cards h3 {
+    color: var(--ink);
+  }
+  .cards p {
+    font-size: 0.94rem;
+  }
+  .cards .featured {
+    background: var(--brand-gradient-soft);
+  }
+  .center {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
   .why {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -368,70 +438,158 @@ import {
     background: var(--surface-solid);
   }
   .features strong,
-  .features small { display: block; }
-  .features strong { margin-top: 0.35rem; color: var(--ink); }
-  .features small { margin-top: 0.3rem; color: var(--muted); }
-  .testimonials-wrap { background: var(--surface-soft); }
-  .final-cta { text-align: center; background: var(--brand-gradient-soft); }
-  .final-cta p { max-width: 650px; margin-inline: auto; }
-  .final-cta small { display: block; margin-top: 1rem; color: var(--muted); }
-  .light { margin-top: 1rem; }
+  .features small {
+    display: block;
+  }
+  .features strong {
+    margin-top: 0.35rem;
+    color: var(--ink);
+  }
+  .features small {
+    margin-top: 0.3rem;
+    color: var(--muted);
+  }
+  .testimonials-wrap {
+    background: var(--surface-soft);
+  }
+  .final-cta {
+    text-align: center;
+    background: var(--brand-gradient-soft);
+  }
+  .final-cta p {
+    max-width: 650px;
+    margin-inline: auto;
+  }
+  .final-cta small {
+    display: block;
+    margin-top: 1rem;
+    color: var(--muted);
+  }
+  .light {
+    margin-top: 1rem;
+  }
 
   @media (max-width: 900px) {
-    .hero { min-height: 690px; align-items: flex-end; }
-    .hero-photo { object-position: 63% center; }
+    .hero {
+      min-height: 690px;
+      align-items: flex-end;
+    }
+    .hero-photo {
+      object-position: 63% center;
+    }
     .hero-shade {
       background:
-        linear-gradient(90deg, rgba(43,17,53,.9) 0%, rgba(76,28,78,.68) 50%, rgba(31,12,38,.18) 100%),
-        linear-gradient(0deg, rgba(43,17,53,.64), transparent 60%);
+        linear-gradient(
+          90deg,
+          rgba(43, 17, 53, 0.9) 0%,
+          rgba(76, 28, 78, 0.68) 50%,
+          rgba(31, 12, 38, 0.18) 100%
+        ),
+        linear-gradient(0deg, rgba(43, 17, 53, 0.64), transparent 60%);
     }
-    .hero-content { padding-top: 5rem; padding-bottom: 7rem; }
+    .hero-content {
+      padding-top: 5rem;
+      padding-bottom: 7rem;
+    }
     .intro,
-    .why { grid-template-columns: 1fr; gap: 2.5rem; }
-    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .why {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   @media (max-width: 600px) {
-    .hero { min-height: 710px; }
-    .hero-photo { object-position: 60% center; }
+    .hero {
+      min-height: 710px;
+    }
+    .hero-photo {
+      object-position: 60% center;
+    }
     .hero-shade {
       background:
-        linear-gradient(0deg, rgba(44,15,52,.92) 0%, rgba(71,26,72,.68) 57%, rgba(36,16,42,.22) 100%),
-        linear-gradient(90deg, rgba(111,20,217,.22), transparent 75%);
+        linear-gradient(
+          0deg,
+          rgba(44, 15, 52, 0.92) 0%,
+          rgba(71, 26, 72, 0.68) 57%,
+          rgba(36, 16, 42, 0.22) 100%
+        ),
+        linear-gradient(90deg, rgba(111, 20, 217, 0.22), transparent 75%);
     }
     .hero-content {
       align-self: flex-end;
       padding: 8rem 1.15rem 6.5rem;
       text-align: center;
     }
-    .hero-eyebrow { font-size: 0.68rem; }
-    .hero h1 { margin-inline: auto; }
-    .hero h1 span { font-size: clamp(4.1rem, 21vw, 6.2rem); }
+    .hero-eyebrow {
+      font-size: 0.68rem;
+    }
+    .hero h1 {
+      margin-inline: auto;
+    }
+    .hero h1 span {
+      font-size: clamp(4.1rem, 21vw, 6.2rem);
+    }
     .hero h1 strong {
       margin-top: 0.34em;
       font-size: clamp(2.35rem, 11vw, 3.7rem);
       white-space: normal;
     }
-    .hero-tagline { margin: 1.2rem auto 1.35rem; font-size: 1.12rem; }
-    .hero-benefits { justify-content: center; gap: 0.45rem; }
-    .hero-benefits div { min-width: 88px; }
-    .hero-benefits span { width: 44px; height: 44px; font-size: 1.4rem; }
-    .hero-benefits small { font-size: 0.62rem; }
-    .hero-quote { width: min(320px, 100%); }
-    .hero-note { font-size: 0.9rem; }
-    .hero-leaves { font-size: 7rem; opacity: .72; }
-    .section { padding: 3.75rem 1.25rem; }
+    .hero-tagline {
+      margin: 1.2rem auto 1.35rem;
+      font-size: 1.12rem;
+    }
+    .hero-benefits {
+      justify-content: center;
+      gap: 0.45rem;
+    }
+    .hero-benefits div {
+      min-width: 88px;
+    }
+    .hero-benefits span {
+      width: 44px;
+      height: 44px;
+      font-size: 1.4rem;
+    }
+    .hero-benefits small {
+      font-size: 0.62rem;
+    }
+    .hero-quote {
+      width: min(320px, 100%);
+    }
+    .hero-note {
+      font-size: 0.9rem;
+    }
+    .hero-leaves {
+      font-size: 7rem;
+      opacity: 0.72;
+    }
+    .section {
+      padding: 3.75rem 1.25rem;
+    }
     .cards,
-    .features { grid-template-columns: 1fr; }
-    .section h2 { font-size: 2.7rem; }
-    .intro { text-align: center; }
+    .features {
+      grid-template-columns: 1fr;
+    }
+    .section h2 {
+      font-size: 2.7rem;
+    }
+    .intro {
+      text-align: center;
+    }
   }
 
   @media (prefers-color-scheme: dark) {
-    .hero::after { background: var(--surface-solid); }
+    .hero::after {
+      background: var(--surface-solid);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .button { transition: none; }
+    .button {
+      transition: none;
+    }
   }
 </style>
