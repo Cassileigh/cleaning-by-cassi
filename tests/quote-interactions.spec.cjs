@@ -73,8 +73,9 @@ test('A stalled quote request times out and restores the form', async ({
   page,
 }) => {
   await page.addInitScript(() => {
-    const timeout = AbortSignal.timeout.bind(AbortSignal);
-    AbortSignal.timeout = (ms) => timeout(ms === 40000 ? 100 : ms);
+    const nativeSetTimeout = window.setTimeout.bind(window);
+    window.setTimeout = (callback, ms, ...args) =>
+      nativeSetTimeout(callback, ms === 40000 ? 100 : ms, ...args);
   });
   await page.route('**/api/quote', async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
