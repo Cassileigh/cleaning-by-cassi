@@ -69,7 +69,9 @@ test('Safari abort wording still produces the useful timeout recovery message', 
   const page = client(
     async (_, { signal }) =>
       new Promise((_, reject) => {
-        signal.addEventListener('abort', () => reject(new Error('Fetch is aborted')));
+        signal.addEventListener('abort', () =>
+          reject(new Error('Fetch is aborted')),
+        );
       }),
     {
       setTimeout(callback) {
