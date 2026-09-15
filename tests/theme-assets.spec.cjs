@@ -113,9 +113,13 @@ for (const width of [320, 520, 768, 860, 900, 1024, 1280]) {
     expect(last.x + last.width).toBeLessThanOrEqual(
       bounds.x + bounds.width + 1,
     );
-    if (width <= 900) await expect(page.locator('.hero-art')).toBeHidden();
-    else await expect(page.locator('.hero-art')).toBeVisible();
-    await expect(page.locator('.client-card')).toBeVisible();
+
+    const hero = page.locator('.hero');
+    const heroPhoto = page.locator('.hero-photo');
+    await expect(hero).toBeVisible();
+    await expect(page.locator('#hero-title')).toContainText('NEW CLIENTS');
+    await expect(heroPhoto).toBeVisible();
+    expect(await heroPhoto.evaluate((image) => image.naturalWidth)).toBeGreaterThan(0);
   });
 }
 
