@@ -28,6 +28,7 @@ function route(file, options = {}) {
     TURNSTILE_SECRET: 'test',
     TURNSTILE_HOSTNAMES: 'cleaningbycassi.com',
     RESEND_API_KEY: 'test',
+    QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) },
     ...options.env,
   };
   const calls = [];
@@ -270,6 +271,9 @@ test('status hides implementation metadata and returns real failure codes', asyn
     [{}, 200],
     [{ RESEND_API_KEY: '' }, 503],
     [{ TURNSTILE_SECRET: ' ' }, 503],
+    [{ TURNSTILE_HOSTNAMES: ' , , ' }, 503],
+    [{ QUOTE_RATE_LIMITER: undefined }, 503],
+    [{ QUOTE_RATE_LIMITER: {} }, 503],
   ]) {
     const api = route('status', { env });
     const response = await api.GET({});

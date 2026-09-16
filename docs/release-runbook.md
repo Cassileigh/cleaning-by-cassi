@@ -1,5 +1,13 @@
 # Release runbook
 
+## September 16 security controls
+
+Quality now includes repository policy and sanitized full-history credential checks before dependency installation. Checkout must use fetch-depth: 0; shallow history fails closed. A detected historical value must be investigated privately, never printed into an issue or log.
+
+Production Integrity runs after a successful main-push Production Smoke result, or on its daily/manual schedule. It checks the exact expected revision three consecutive times before examining eight routes on both domains, security headers and script CSP, HTTPS redirects, receipt noindex, robots and sitemap availability; it rechecks the revision afterward. It makes no quote submissions or email sends. It is post-deployment evidence, not a sixth pre-deployment gate.
+
+See [current security parity](security-parity.md) for outstanding style-CSP, dependency and account-verification work. Do not infer that an added workflow has already passed.
+
 ## Cloudflare build configuration
 
 Production branch: `main`. Build command: `npm run build`. Deploy command: **`npm run deploy`**. Do not use the default direct `npx wrangler deploy` command: it bypasses the repository's CI gate.

@@ -17,7 +17,9 @@ this implementation keeps generic public protection/delivery checks.
 
 ## Limits of these checks
 
-A Resend email ID proves provider acceptance, not inbox delivery. Delivery/bounce verification requires provider events or mailbox confirmation. Network timeouts after provider acceptance remain ambiguous; this flow has no durable retry deduplication. A honeypot is supplemental, not a substitute for Turnstile or edge abuse controls.
+A Resend email ID proves provider acceptance, not inbox delivery. Delivery/bounce verification requires provider events or mailbox confirmation. Canonical submitted fields and the submission ID produce stable, separate business/customer Resend idempotency keys; fresh Turnstile tokens and request IDs do not change those keys. Deduplication lasts only for the provider's retention window, not indefinitely. There is no durable application queue. A honeypot is supplemental, not a substitute for Turnstile or edge abuse controls.
+
+The protection readiness check requires a nonempty secret, at least one nonempty configured hostname, and a callable quote rate-limit binding. Missing configuration returns 503 for GET and HEAD without probing providers. Logs retain fixed failure categories and request/provider IDs, not arbitrary exception messages or provider response bodies.
 
 Middleware enforces eight attempts per ten minutes in a bounded isolate-local map, plus the configured `QUOTE_RATE_LIMITER` Cloudflare binding (eight per minute per IP within an edge location). Missing or failing bindings return 503 before provider calls; exhausted limits return 429 with Retry-After. Both quote URL forms share limits. Cloudflare counters span isolates within a location, but do not provide a strict worldwide quota. Namespace `2107100912` is reserved for this site's quote limiter in this repository.
 

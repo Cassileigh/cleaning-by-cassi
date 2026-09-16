@@ -575,7 +575,7 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (error) {
       console.error('Resend business email request failed.', {
         requestId,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        category: 'provider-request-failed',
       });
       return respond(
         {
@@ -658,7 +658,7 @@ export const POST: APIRoute = async ({ request }) => {
     } catch (error) {
       console.error('Resend customer confirmation failed.', {
         requestId,
-        error: error instanceof Error ? error.message : 'Unknown error',
+        category: 'provider-request-failed',
       });
     }
 
@@ -675,11 +675,9 @@ export const POST: APIRoute = async ({ request }) => {
       },
     });
   } catch (error) {
-    console.error(
-      'Quote form error:',
-      error instanceof Error ? error.message : 'Unknown error',
-      { requestId },
-    );
+    console.error('Quote form error:', 'Request handling failed', {
+      requestId,
+    });
     return respond(
       {
         error: 'Something went wrong while submitting your quote request.',

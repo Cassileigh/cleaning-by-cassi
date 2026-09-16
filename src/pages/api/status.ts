@@ -42,7 +42,11 @@ const getStatus = () => {
   const bindings: ApplicationBindings = env;
   const protectionAvailable =
     hasBinding(bindings.TURNSTILE_SECRET) &&
-    hasBinding(bindings.TURNSTILE_HOSTNAMES);
+    hasBinding(bindings.TURNSTILE_HOSTNAMES) &&
+    String(bindings.TURNSTILE_HOSTNAMES)
+      .split(',')
+      .some((host) => host.trim()) &&
+    typeof bindings.QUOTE_RATE_LIMITER?.limit === 'function';
   const deliveryAvailable = hasBinding(bindings.RESEND_API_KEY);
 
   const checks: Record<string, Check> = {

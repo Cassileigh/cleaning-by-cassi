@@ -1,0 +1,46 @@
+# Security parity — current-source audit
+
+Audit date: 2026-09-16. Status: implementation and verification in progress, not a full-parity certification.
+
+## Sources and evidence
+
+- Cleaning main at audit start: `fc89f155ca09c67a4c0ecc36aa2dcf54b4a0bff7`.
+- AlienX main: `8b6d5006f5612c8943c528579d9bf90381d52d21`.
+- AlienX security branch: `1bb8fec2c518584cec6396b2a8e52f8ac55cae69`.
+- [All 450 inventoried commits](alienx-commit-inventory.md), with scope/patch limitations.
+- Read current local contracts: [quote security](quote-security-contract.md), [release runbook](release-runbook.md), [earlier audit](audit-follow-up.md). Historical observations are not fresh production evidence.
+- Current Cleaning baseline has successful Quality, Responsive, Accessibility, Lighthouse, Safari and Production Smoke runs for its exact SHA. New changes require new results.
+- GitHub lists one open Dependabot PR (#12), updating Prettier, its Astro plugin and Selenium. It is not safe to call the repository “zero PRs” or dismiss that work without incorporation/testing.
+
+## Comparison and dispositions
+
+| Area                   | Current comparison                                                                                                                                      | Disposition                                                                                                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Turnstile              | Cleaning verifies success, hostname and quote action server-side, with a 10-second timeout and fail-closed configuration                                | Retained; do not copy AlienX's legacy token-field/forwarding rewrites                                                                                                      |
+| Request validation     | Cleaning bounds streamed form bodies to 30 KB, rejects duplicate scalars, files, controls, invalid enums/dates and cross-origin submissions             | Retained; different form schema intentionally not replaced by AlienX's JSON inquiry payload                                                                                |
+| Honeypot               | Cleaning rejects any populated faxNumber, including whitespace, duplicates and files, before provider calls                                             | Stronger than AlienX's trimmed-string trap; retained                                                                                                                       |
+| Rate limits            | Cleaning requires the edge binding and has a bounded isolate fallback; AlienX's current edge binding is optional                                        | Stronger protection retained                                                                                                                                               |
+| Readiness              | Cleaning omitted the required rate-limit binding and accepted comma-only host configuration                                                             | Fixed, with GET/HEAD tests and no provider calls                                                                                                                           |
+| Resend response chain  | Business HTTP success plus nonempty provider ID precedes JSON success/native 303; optional customer confirmation failure does not lose an accepted lead | Retained; arbitrary exception text removed from logs                                                                                                                       |
+| Retry safety           | Canonical submitted fields and submission ID produce separate deterministic business/customer keys; verification tokens excluded                        | Retained; provider acceptance is not delivery, no durable application queue                                                                                                |
+| Workflow supply chain  | Full SHA action pins, explicit read permissions, exact dependencies, lockfile, npm audit and Dependabot already present                                 | Added permanent repository security audit adapted from AlienX                                                                                                              |
+| Historical credentials | No required historical scan in Cleaning baseline                                                                                                        | Added sanitized full-history scanner in Quality, full checkout, fail on shallow/incomplete object reads                                                                    |
+| Production integrity   | Cleaning smoke verifies revision/basic route/readiness contracts; AlienX has a deeper post-smoke integrity matrix                                       | Added separate read-only integrity workflow: stable exact revision, eight routes, both domains, CSP script restrictions/headers, HTTPS, robots/sitemap and noindex receipt |
+| Release gates          | Both require five successful exact-main-push workflows                                                                                                  | Keep Cleaning's existing API gate; AlienX's tag approval architecture is not required for equivalent fail-closed decisions                                                 |
+| Strict style CSP       | Cleaning still permits inline styles and broader image/font sources; AlienX uses Astro-generated style hashes                                           | Open: migrate with rendered/browser tests; do not assert strict style-CSP parity                                                                                           |
+| Dependency versions    | Astro/adapter match; TypeScript, Wrangler and some development tooling lag AlienX                                                                       | Open: coordinated lockfile update and complete CI, including PR #12                                                                                                        |
+| Browser/accessibility  | Five pre-release gates already include Safari, responsive/theme, accessibility and Lighthouse                                                           | Retained; AlienX-specific Museum/Lab/portfolio changes do not belong in Cleaning                                                                                           |
+| Account controls       | Repository source cannot prove dashboard deploy commands, protection enforcement, WAF or credential scope                                               | Not certified; verify with authorized account evidence                                                                                                                     |
+| Full historical review | Commit inventory and security-focused source review completed; not every historical line manually audited                                               | Open; inventory must not be presented as exhaustive manual review                                                                                                          |
+
+## Verification boundaries
+
+Local verification: 41 mocked endpoint/client/release/integrity/scanner tests passed; clean dependency installation, Astro build, Astro/TypeScript checks (zero errors/warnings/hints), Cloudflare deploy dry run and npm audit (zero reported vulnerabilities) passed. No emails sent. The real main history and binary assets were subsequently fetched: the sanitized history scanner passed across 431 unique text blobs reachable from the fetched refs and local snapshot. The full-history CI run remains required for the eventual commit. Browser gates and new production deployment evidence remain pending.
+
+Adapting AlienX's scanner exposed an additional robustness issue: decoding binary blobs as UTF-8 could exceed the subprocess buffer and dump captured output on error. The port reads raw bytes, skips binary data before decoding, and replaces subprocess failures with a fixed sanitized error. Tests prove detection of a removed synthetic credential without printing it, shallow-history rejection, and detection of unpinned shorthand action steps.
+
+The scanners are heuristic: text blobs over 2 MiB and binary blobs are skipped; a clean scan is not proof no credential ever existed. A historical finding must be investigated privately and rotated if real, not “fixed” by deleting the detector. Never publish matched values. Do not rewrite production history as an automatic audit remediation.
+
+## Maintenance
+
+Future work must read this document, quote-security-contract.md and release-runbook.md, fetch current repository heads, update the commit inventory delta and attach exact-SHA validation evidence. Keep main as the sole production branch. Never close dependency PRs or remove branches simply to improve counts.
