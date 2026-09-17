@@ -1,6 +1,6 @@
 # Security parity — current-source audit
 
-Audit refreshed: 2026-09-17. Status: code-level hardening implemented; follow-up exact-revision CI/production verification pending. This is not a full manual historical or account-security certification.
+Audit refreshed: 2026-09-17. Code-level hardening verified at `66cc94657bfdc29e67ed9b87c23ed868ef53e3ea`. This is not a full manual historical or account-security certification.
 
 ## Sources and evidence
 
@@ -10,7 +10,8 @@ Audit refreshed: 2026-09-17. Status: code-level hardening implemented; follow-up
 - [All 520 reachable commits](alienx-commit-inventory.md), including main, branch-only history, retained PR refs and the approval tag. A fresh full mirror extends the earlier 450-commit branch inventory. Every available complete first-parent patch was read by the reproducible inventory script; automated mapping is not a claim of manual line-by-line review.
 - Read current local contracts: [quote security](quote-security-contract.md), [release runbook](release-runbook.md), [earlier audit](audit-follow-up.md). Historical observations are not fresh production evidence.
 - Current Cleaning baseline has successful Quality, Responsive, Accessibility, Lighthouse, Safari and Production Smoke runs for its exact SHA. New changes require new results.
-- GitHub listed one open Dependabot PR (#12) at audit start. Its three requested versions are included in the follow-up tooling update, alongside TypeScript and Wrangler; closure requires successful exact-revision validation.
+- Dependabot closed PR #12 after its three requested versions were incorporated. It subsequently opened PR #13 for Wrangler 4.131.2, newer than the reference's 4.131.1. That new maintenance update remains open; it was not discarded to claim zero PRs.
+- Fresh GitHub branch listings mark both repositories' main branches protected. This flag does not establish the exact enforced rules or bypass permissions.
 
 ## Comparison and dispositions
 
@@ -37,9 +38,23 @@ Audit refreshed: 2026-09-17. Status: code-level hardening implemented; follow-up
 
 First patch (`7ca37f9019fc7fc24fbfc7aaa49b87ad3deefdef`) passed GitHub Quality, Responsive, Accessibility, Lighthouse, Safari, Production Smoke and Production Integrity. Refreshed on September 17: Production Integrity run 35161611825 and scheduled run 35196726526 succeeded. Integrity jobs triggered by scheduled smoke are intentionally skipped; its own daily schedule remains active.
 
-The fresh AlienX mirror's sanitized history scan passed across 746 unique text blobs. Its main still resolves to `8b6d5006f5612c8943c528579d9bf90381d52d21`; Cleaning live main still resolves to the first patch above. No new upstream main commit was assumed from memory.
+The fresh AlienX mirror's sanitized history scan passed across 746 unique text blobs. Its main still resolves to `8b6d5006f5612c8943c528579d9bf90381d52d21`. Cleaning's complete mirror includes 309 reachable commits (including retained PR refs); its scan passed across 497 unique text blobs. No upstream main commit was assumed from memory.
 
-Local verification of the first patch: 41 mocked endpoint/client/release/integrity/scanner tests passed; clean dependency installation, Astro build, Astro/TypeScript checks (zero errors/warnings/hints), Cloudflare deploy dry run and npm audit (zero reported vulnerabilities) passed. No emails sent. The real main history and binary assets were subsequently fetched: the sanitized history scanner passed across 431 unique text blobs reachable from the fetched refs and local snapshot. The full-history CI run remains required for the eventual commit. Follow-up strict-CSP/tooling validation adds a 42nd test; final CI and production evidence remain pending. Local Wrangler browser preview fails with uv_interface_addresses in this environment and is not counted as passing.
+The follow-up at `66cc94657bfdc29e67ed9b87c23ed868ef53e3ea` passed 42 mocked endpoint/client/release/integrity/scanner tests, source formatting, Astro/TypeScript checks (zero errors/warnings/hints), Astro build, Cloudflare dry run, repository/history gates and npm audit (zero reported vulnerabilities). Local Wrangler browser preview fails with uv_interface_addresses in this environment and is not counted as passing; actual GitHub browser gates passed instead. No real emails were sent.
+
+Exact-revision GitHub evidence:
+
+| Check                                                                | Successful run                                                                          |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Quality, including repository/history audits                         | [35275240814](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275240814) |
+| Accessibility/theme, including strict-CSP and quote/navigation tests | [35275240815](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275240815) |
+| Responsive viewport matrix                                           | [35275240956](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275240956) |
+| Native Safari and WebKit                                             | [35275240784](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275240784) |
+| Lighthouse, unchanged budgets                                        | [35275240826](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275240826) |
+| Exact-revision Production Smoke                                      | [35275240844](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275240844) |
+| Post-Smoke Production Integrity, both domains/eight routes           | [35275587182](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35275587182) |
+
+An early independent production check saw the new release revision followed by a page with the old inline-style CSP and correctly failed. Later read-only responses showed strict CSP and zero inline style blocks, and the post-Smoke GitHub Integrity run passed without loosening the policy or rerunning that gate. The observations are consistent with rollout propagation, not proof of its underlying cause. Preserve this first failure; revision readiness alone does not prove every route has converged.
 
 Adapting AlienX's scanner exposed an additional robustness issue: decoding binary blobs as UTF-8 could exceed the subprocess buffer and dump captured output on error. The port reads raw bytes, skips binary data before decoding, and replaces subprocess failures with a fixed sanitized error. Tests prove detection of a removed synthetic credential without printing it, shallow-history rejection, and detection of unpinned shorthand action steps.
 
