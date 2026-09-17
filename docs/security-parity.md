@@ -1,16 +1,16 @@
 # Security parity — current-source audit
 
-Audit date: 2026-09-16. Status: implementation and verification in progress, not a full-parity certification.
+Audit refreshed: 2026-09-17. Status: code-level hardening implemented; follow-up exact-revision CI/production verification pending. This is not a full manual historical or account-security certification.
 
 ## Sources and evidence
 
 - Cleaning main at audit start: `fc89f155ca09c67a4c0ecc36aa2dcf54b4a0bff7`.
 - AlienX main: `8b6d5006f5612c8943c528579d9bf90381d52d21`.
 - AlienX security branch: `1bb8fec2c518584cec6396b2a8e52f8ac55cae69`.
-- [All 450 inventoried commits](alienx-commit-inventory.md), with scope/patch limitations.
+- [All 520 reachable commits](alienx-commit-inventory.md), including main, branch-only history, retained PR refs and the approval tag. A fresh full mirror extends the earlier 450-commit branch inventory. Every available complete first-parent patch was read by the reproducible inventory script; automated mapping is not a claim of manual line-by-line review.
 - Read current local contracts: [quote security](quote-security-contract.md), [release runbook](release-runbook.md), [earlier audit](audit-follow-up.md). Historical observations are not fresh production evidence.
 - Current Cleaning baseline has successful Quality, Responsive, Accessibility, Lighthouse, Safari and Production Smoke runs for its exact SHA. New changes require new results.
-- GitHub lists one open Dependabot PR (#12), updating Prettier, its Astro plugin and Selenium. It is not safe to call the repository “zero PRs” or dismiss that work without incorporation/testing.
+- GitHub listed one open Dependabot PR (#12) at audit start. Its three requested versions are included in the follow-up tooling update, alongside TypeScript and Wrangler; closure requires successful exact-revision validation.
 
 ## Comparison and dispositions
 
@@ -27,15 +27,19 @@ Audit date: 2026-09-16. Status: implementation and verification in progress, not
 | Historical credentials | No required historical scan in Cleaning baseline                                                                                                        | Added sanitized full-history scanner in Quality, full checkout, fail on shallow/incomplete object reads                                                                    |
 | Production integrity   | Cleaning smoke verifies revision/basic route/readiness contracts; AlienX has a deeper post-smoke integrity matrix                                       | Added separate read-only integrity workflow: stable exact revision, eight routes, both domains, CSP script restrictions/headers, HTTPS, robots/sitemap and noindex receipt |
 | Release gates          | Both require five successful exact-main-push workflows                                                                                                  | Keep Cleaning's existing API gate; AlienX's tag approval architecture is not required for equivalent fail-closed decisions                                                 |
-| Strict style CSP       | Cleaning still permits inline styles and broader image/font sources; AlienX uses Astro-generated style hashes                                           | Open: migrate with rendered/browser tests; do not assert strict style-CSP parity                                                                                           |
-| Dependency versions    | Astro/adapter match; TypeScript, Wrangler and some development tooling lag AlienX                                                                       | Open: coordinated lockfile update and complete CI, including PR #12                                                                                                        |
+| Strict style CSP       | Inline-style exception and broad external image/font allowances removed                                                                                 | Astro emits external same-origin stylesheets; browser matrix now asserts strict CSP, no server-authored inline styles, and loaded local CSS. Email HTML is unaffected.     |
+| Dependency versions    | Matched reference pins: TypeScript 6.0.3, Wrangler 4.131.1, Prettier 3.9.6, Astro formatter 1.0.0, Selenium 4.49.0                                      | Lockfile regenerated; formatter migration requires formatting-only changes across Astro templates and quote client. Other shared runtime/test versions already match.      |
 | Browser/accessibility  | Five pre-release gates already include Safari, responsive/theme, accessibility and Lighthouse                                                           | Retained; AlienX-specific Museum/Lab/portfolio changes do not belong in Cleaning                                                                                           |
 | Account controls       | Repository source cannot prove dashboard deploy commands, protection enforcement, WAF or credential scope                                               | Not certified; verify with authorized account evidence                                                                                                                     |
 | Full historical review | Commit inventory and security-focused source review completed; not every historical line manually audited                                               | Open; inventory must not be presented as exhaustive manual review                                                                                                          |
 
 ## Verification boundaries
 
-Local verification: 41 mocked endpoint/client/release/integrity/scanner tests passed; clean dependency installation, Astro build, Astro/TypeScript checks (zero errors/warnings/hints), Cloudflare deploy dry run and npm audit (zero reported vulnerabilities) passed. No emails sent. The real main history and binary assets were subsequently fetched: the sanitized history scanner passed across 431 unique text blobs reachable from the fetched refs and local snapshot. The full-history CI run remains required for the eventual commit. Browser gates and new production deployment evidence remain pending.
+First patch (`7ca37f9019fc7fc24fbfc7aaa49b87ad3deefdef`) passed GitHub Quality, Responsive, Accessibility, Lighthouse, Safari, Production Smoke and Production Integrity. Refreshed on September 17: Production Integrity run 35161611825 and scheduled run 35196726526 succeeded. Integrity jobs triggered by scheduled smoke are intentionally skipped; its own daily schedule remains active.
+
+The fresh AlienX mirror's sanitized history scan passed across 746 unique text blobs. Its main still resolves to `8b6d5006f5612c8943c528579d9bf90381d52d21`; Cleaning live main still resolves to the first patch above. No new upstream main commit was assumed from memory.
+
+Local verification of the first patch: 41 mocked endpoint/client/release/integrity/scanner tests passed; clean dependency installation, Astro build, Astro/TypeScript checks (zero errors/warnings/hints), Cloudflare deploy dry run and npm audit (zero reported vulnerabilities) passed. No emails sent. The real main history and binary assets were subsequently fetched: the sanitized history scanner passed across 431 unique text blobs reachable from the fetched refs and local snapshot. The full-history CI run remains required for the eventual commit. Follow-up strict-CSP/tooling validation adds a 42nd test; final CI and production evidence remain pending. Local Wrangler browser preview fails with uv_interface_addresses in this environment and is not counted as passing.
 
 Adapting AlienX's scanner exposed an additional robustness issue: decoding binary blobs as UTF-8 could exceed the subprocess buffer and dump captured output on error. The port reads raw bytes, skips binary data before decoding, and replaces subprocess failures with a fixed sanitized error. Tests prove detection of a removed synthetic credential without printing it, shallow-history rejection, and detection of unpinned shorthand action steps.
 

@@ -31,9 +31,9 @@ Dependable, detailed residential cleaning for busy families throughout the
 
 ## ✨ Welcome
 
-Security maintenance: [current parity audit](docs/security-parity.md) · [450-commit AlienX inventory](docs/alienx-commit-inventory.md) · [quote contract](docs/quote-security-contract.md) · [release runbook](docs/release-runbook.md).
+Security maintenance: [current parity audit](docs/security-parity.md) · [520-commit AlienX comparison](docs/alienx-commit-inventory.md) · [quote contract](docs/quote-security-contract.md) · [release runbook](docs/release-runbook.md).
 
-The September 16 audit adds required repository/history checks and post-deployment integrity verification. See the audit for exact source revisions, validation evidence, and remaining gaps; these are not a claim of zero vulnerabilities or complete security parity.
+The September 16–17 audit adds required repository/history checks, post-deployment integrity verification, strict external-stylesheet CSP and matched compatible tooling. See the audit for exact source revisions, validation evidence, and remaining gaps; these are not a claim of zero vulnerabilities or complete security parity.
 
 Cleaning by Cassi is a locally owned residential cleaning business built around personal service, careful attention to detail, and making home feel lighter.
 

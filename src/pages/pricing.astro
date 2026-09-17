@@ -25,62 +25,70 @@ const addOns = ADD_ONS.map(([, label]) => label);
   class="pricing-page"
 >
   <section class="pricing-hero">
-    <p class="eyebrow">Simple, Personalized Pricing</p><h1>
-      Cleaning prices that fit your home.
-    </h1><p>
+    <p class="eyebrow">Simple, Personalized Pricing</p>
+    <h1>Cleaning prices that fit your home.</h1>
+    <p>
       Every home is different, so this sheet is a starting point. Your final
       quote is based on your home's size, condition, rooms, and requested
       services.
-    </p><a href="/quote" class="primary-button">Get My Free Quote →</a>
+    </p>
+    <a href="/quote" class="primary-button">
+      Get My Free Quote →
+    </a>
   </section>
 
   <section class="pricing-section soft-pink">
     <div class="section-heading">
-      <span class="section-icon">📅</span><div>
-        <p class="eyebrow">Recurring Service</p><h2>Cleaning Frequency</h2>
+      <span class="section-icon">📅</span>
+      <div>
+        <p class="eyebrow">Recurring Service</p>
+        <h2>Cleaning Frequency</h2>
       </div>
-    </div><div class="pricing-list">
-      {
-        cleaningFrequencies.map((item) => (
-          <div class="pricing-row">
-            <>
-              <span>{item.name}</span>
-              <strong>{item.price}</strong>
-            </>
-          </div>
-        ))
-      }
+    </div>
+    <div class="pricing-list">
+      {cleaningFrequencies.map((item) => (
+        <div class="pricing-row">
+          <>
+            <span>{item.name}</span>
+            <strong>{item.price}</strong>
+          </>
+        </div>
+      ))}
     </div>
   </section>
 
   <section class="pricing-section soft-lavender">
     <div class="section-heading">
-      <span class="section-icon">🏠</span><div>
-        <p class="eyebrow">Base Price Sheet</p><h2>Base Room Rates</h2>
+      <span class="section-icon">🏠</span>
+      <div>
+        <p class="eyebrow">Base Price Sheet</p>
+        <h2>Base Room Rates</h2>
       </div>
-    </div><div class="room-grid">
-      {
-        roomRates.map((room) => (
-          <article class="room-card">
-            <>
-              <span class="room-icon">{room.icon}</span>
-              <div>
-                <>
-                  <h3>{room.name}</h3>
-                  <small>{room.unit}</small>
-                </>
-              </div>
-              <strong>{room.price}</strong>
-            </>
-          </article>
-        ))
-      }
+    </div>
+    <div class="room-grid">
+      {roomRates.map((room) => (
+        <article class="room-card">
+          <>
+            <span class="room-icon">{room.icon}</span>
+            <div>
+              <>
+                <h3>{room.name}</h3>
+                <small>{room.unit}</small>
+              </>
+            </div>
+            <strong>{room.price}</strong>
+          </>
+        </article>
+      ))}
     </div>
   </section>
 
   <section class="first-cleaning">
-    <div class="big-icon">✨</div><div>
-      <p class="eyebrow">First Visit</p><h2>First-Time Cleanings</h2><p>
+    <div class="big-icon">✨</div>
+    <div>
+      <p class="eyebrow">First Visit</p>
+      <h2>First-Time Cleanings</h2>
+      <p>
         All first-time cleanings are priced separately so I can get the home to
         a good base point before regular cleaning rates begin.
       </p>
@@ -89,32 +97,40 @@ const addOns = ADD_ONS.map(([, label]) => label);
 
   <section class="pricing-section soft-green">
     <div class="section-heading">
-      <span class="section-icon">➕</span><div>
-        <p class="eyebrow">Customize Your Clean</p><h2>Add-On Services</h2>
+      <span class="section-icon">➕</span>
+      <div>
+        <p class="eyebrow">Customize Your Clean</p>
+        <h2>Add-On Services</h2>
       </div>
-    </div><p class="section-copy">
+    </div>
+    <p class="section-copy">
       Add-ons are quoted individually based on the size, condition, and time
       required.
-    </p><div class="addon-grid">
-      {
-        addOns.map((addon) => (
-          <div class="addon-card">
-            <span>✦</span>
-            {addon}
-          </div>
-        ))
-      }
-    </div><div class="fine-print">
+    </p>
+    <div class="addon-grid">
+      {addOns.map((addon) => (
+        <div class="addon-card">
+          <span>✦</span>
+          {addon}
+        </div>
+      ))}
+    </div>
+    <div class="fine-print">
       <p>
-        <strong>🛏️ Bed Making:</strong> Clean sheets must be provided and left out.
-        Please remove soiled sheets before arrival.
-      </p><p><strong>🧺 Laundry:</strong> Wash, dry, and fold only.</p>
+        <strong>🛏️ Bed Making:</strong> Clean sheets must be provided and left
+        out. Please remove soiled sheets before arrival.
+      </p>
+      <p>
+        <strong>🧺 Laundry:</strong> Wash, dry, and fold only.
+      </p>
     </div>
   </section>
 
   <section class="pricing-note">
-    <span>💗</span><div>
-      <h2>A Note About Pricing</h2><p>
+    <span>💗</span>
+    <div>
+      <h2>A Note About Pricing</h2>
+      <p>
         Pricing may vary based on the size and condition of the home, cleaning
         needs, and additional services requested. Deep-cleaning tasks and
         special requests may be quoted separately.
@@ -123,12 +139,12 @@ const addOns = ADD_ONS.map(([, label]) => label);
   </section>
 
   <section class="pricing-cta">
-    <p class="eyebrow">Ready When You Are</p><h2>
-      Let's find the right cleaning plan for your home.
-    </h2><p>No pressure — just a simple, personalized quote.</p><a
-      href="/quote"
-      class="cta-button">Get a Free Quote →</a
-    >
+    <p class="eyebrow">Ready When You Are</p>
+    <h2>Let's find the right cleaning plan for your home.</h2>
+    <p>No pressure — just a simple, personalized quote.</p>
+    <a href="/quote" class="cta-button">
+      Get a Free Quote →
+    </a>
   </section>
 </PageLayout>
 

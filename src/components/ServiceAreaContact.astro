@@ -45,7 +45,9 @@ const communities = [
 >
   <div class="section-heading">
     <p class="eyebrow">LOCAL CLEANING. PERSONAL CARE.</p>
-    <h2 id="service-contact-title">Service Area &amp; <em>Contact</em></h2>
+    <h2 id="service-contact-title">
+      Service Area &amp; <em>Contact</em>
+    </h2>
   </div>
   <div class="contact-card">
     <div class="coverage">
@@ -63,9 +65,9 @@ const communities = [
           decoding="async"
         />
       </a>
-      <a class="detail-link" href="/service-area-map.webp"
-        >View the detailed map <span aria-hidden="true">↗</span></a
-      >
+      <a class="detail-link" href="/service-area-map.webp">
+        View the detailed map <span aria-hidden="true">↗</span>
+      </a>
       <details>
         <summary>View all service areas</summary>
         <p>
@@ -73,7 +75,11 @@ const communities = [
           confirmed by your address and driving distance. Please ask about
           locations in Winneconne, which is near the edge of the service area.
         </p>
-        <ul>{communities.map((community) => <li>{community}</li>)}</ul>
+        <ul>
+          {communities.map((community) => (
+            <li>{community}</li>
+          ))}
+        </ul>
       </details>
     </div>
     <div class="contact-info">
@@ -91,12 +97,14 @@ const communities = [
       <address>
         <dl>
           <div>
-            <dt>Call</dt><dd>
+            <dt>Call</dt>
+            <dd>
               <a href={CONTACT_PHONE_HREF}>{CONTACT_PHONE}</a>
             </dd>
           </div>
           <div>
-            <dt>Email</dt><dd>
+            <dt>Email</dt>
+            <dd>
               <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </dd>
           </div>
@@ -105,9 +113,9 @@ const communities = [
       <p class="quote-intro">
         For a personalized estimate, please complete my quote form.
       </p>
-      <a class="quote-button" href="/quote"
-        >Request a Quote <span aria-hidden="true">→</span></a
-      >
+      <a class="quote-button" href="/quote">
+        Request a Quote <span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>

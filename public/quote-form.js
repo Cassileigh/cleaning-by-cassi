@@ -130,9 +130,9 @@
         throw new Error(
           typeof responseBody.error === 'string'
             ? responseBody.error +
-              (/^CBC-[A-F0-9]{12}$/.test(responseBody.requestId || '')
-                ? ` Reference: ${responseBody.requestId}`
-                : '')
+                (/^CBC-[A-F0-9]{12}$/.test(responseBody.requestId || '')
+                  ? ` Reference: ${responseBody.requestId}`
+                  : '')
             : 'Your quote request could not be sent. Please try again.',
         );
       }

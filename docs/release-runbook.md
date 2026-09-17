@@ -6,7 +6,9 @@ Quality now includes repository policy and sanitized full-history credential che
 
 Production Integrity runs after a successful main-push Production Smoke result, or on its daily/manual schedule. It checks the exact expected revision three consecutive times before examining eight routes on both domains, security headers and script CSP, HTTPS redirects, receipt noindex, robots and sitemap availability; it rechecks the revision afterward. It makes no quote submissions or email sends. It is post-deployment evidence, not a sixth pre-deployment gate.
 
-See [current security parity](security-parity.md) for outstanding style-CSP, dependency and account-verification work. Do not infer that an added workflow has already passed.
+The September 17 follow-up moves Astro page CSS to same-origin assets and removes inline-style, arbitrary HTTPS image and data-font allowances. Keep `build.inlineStylesheets: 'never'` paired with the strict middleware style policy. Rendered browser tests check both themes and detect server-authored inline styles or missing stylesheets. HTML email styles are separate and unaffected. Tooling is updated to the compatible reference versions, including TypeScript 6 rather than the unsupported TypeScript 7 proposal.
+
+See [current security parity](security-parity.md) for exact verification and account-level limits. Do not infer that an added workflow has already passed.
 
 ## Cloudflare build configuration
 

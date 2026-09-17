@@ -39,42 +39,42 @@ const testimonials = [
 >
   <div class="section-heading">
     <p class="eyebrow">Kind Words 💗</p>
-    <h2 id="testimonials-heading">What My Clients <em>Say</em></h2>
+    <h2 id="testimonials-heading">
+      What My Clients <em>Say</em>
+    </h2>
     <p class="intro">Real words from real Cleaning by Cassi clients.</p>
   </div>
 
   <div class="testimonial-grid" role="list" aria-label="Client testimonials">
-    {
-      testimonials.map((testimonial) => (
-        <article class="testimonial-card" role="listitem">
-          <div class="quote-mark" aria-hidden="true">
-            “
+    {testimonials.map((testimonial) => (
+      <article class="testimonial-card" role="listitem">
+        <div class="quote-mark" aria-hidden="true">
+          “
+        </div>
+
+        <div class="rating">
+          <span class="stars" aria-hidden="true">
+            ★★★★★
+          </span>
+          <span class="sr-only">5 out of 5 stars</span>
+        </div>
+
+        <blockquote>
+          <p>{testimonial.review}</p>
+        </blockquote>
+
+        <footer class="client">
+          <div class="client-initial" aria-hidden="true">
+            {testimonial.name.charAt(0)}
           </div>
 
-          <div class="rating">
-            <span class="stars" aria-hidden="true">
-              ★★★★★
-            </span>
-            <span class="sr-only">5 out of 5 stars</span>
+          <div class="client-details">
+            <p class="client-name">{testimonial.name}</p>
+            <p class="client-location">{testimonial.location}</p>
           </div>
-
-          <blockquote>
-            <p>{testimonial.review}</p>
-          </blockquote>
-
-          <footer class="client">
-            <div class="client-initial" aria-hidden="true">
-              {testimonial.name.charAt(0)}
-            </div>
-
-            <div class="client-details">
-              <p class="client-name">{testimonial.name}</p>
-              <p class="client-location">{testimonial.location}</p>
-            </div>
-          </footer>
-        </article>
-      ))
-    }
+        </footer>
+      </article>
+    ))}
   </div>
 
   <div class="review-cta">

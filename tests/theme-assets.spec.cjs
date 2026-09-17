@@ -23,6 +23,34 @@ for (const width of [390, 1280]) {
         });
         const response = await page.goto(`http://127.0.0.1:4321${route}`);
         expect(response.status()).toBe(200);
+        expect(response.headers()['content-security-policy']).toContain(
+          "style-src 'self'",
+        );
+        expect(response.headers()['content-security-policy']).not.toContain(
+          "'unsafe-inline'",
+        );
+        // Astro must emit same-origin stylesheets, not blocks/attributes that
+        // would silently lose styling under the strict production policy.
+        const serverHtml = await response.text();
+        expect(
+          await page.evaluate(
+            (html) =>
+              new DOMParser()
+                .parseFromString(html, 'text/html')
+                .querySelectorAll('style, [style]').length,
+            serverHtml,
+          ),
+        ).toBe(0);
+        expect(
+          await page.locator('link[rel="stylesheet"]').count(),
+        ).toBeGreaterThan(0);
+        expect(
+          await page.evaluate(() =>
+            Array.from(document.styleSheets).some((sheet) =>
+              sheet.href?.startsWith(location.origin),
+            ),
+          ),
+        ).toBe(true);
         const broken = await page.locator('img').evaluateAll(async (images) => {
           return (
             await Promise.all(

@@ -32,11 +32,19 @@ export function assertHeaders(headers, { status = false } = {}) {
   expect('base-uri', ["'self'"]);
   expect('object-src', ["'none'"]);
   expect('form-action', ["'self'"]);
+  expect('style-src', ["'self'"]);
+  expect('font-src', ["'self'"]);
+  expect('img-src', ["'self'", 'data:']);
   expect('script-src', ["'self'", 'https://challenges.cloudflare.com']);
   expect('frame-src', ['https://challenges.cloudflare.com']);
   expect('connect-src', ["'self'", 'https://challenges.cloudflare.com']);
   expect('upgrade-insecure-requests', []);
-  for (const name of ['script-src-elem', 'script-src-attr'])
+  for (const name of [
+    'script-src-elem',
+    'script-src-attr',
+    'style-src-elem',
+    'style-src-attr',
+  ])
     assert.ok(!directives.has(name), 'Unexpected script policy override');
   assert.match(
     headers.get('permissions-policy') ?? '',

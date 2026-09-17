@@ -4,7 +4,7 @@ import { assertHeaders } from '../scripts/integrity-contract.mjs';
 const headers = () =>
   new Headers({
     'content-security-policy':
-      "default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; upgrade-insecure-requests",
+      "default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data:; upgrade-insecure-requests",
     'x-content-type-options': 'nosniff',
     'x-frame-options': 'DENY',
     'strict-transport-security': 'max-age=31536000; includeSubDomains',
@@ -18,6 +18,7 @@ for (const extra of [
   '; script-src *',
   '; script-src-elem *',
   "; script-src-attr 'unsafe-inline'",
+  "; style-src-attr 'unsafe-inline'",
 ])
   test('integrity rejects CSP override ' + extra, () => {
     const h = headers();
