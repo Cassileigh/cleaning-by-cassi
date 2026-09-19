@@ -1,5 +1,49 @@
 # Security parity — current-source audit
 
+## September 19 follow-up — closure work, not blanket certification
+
+Fresh main refs: Cleaning `b872d989d0cf29e8730f78d260c4edaf126782cd` and AlienX
+`8b6d5006f5612c8943c528579d9bf90381d52d21`. Neither main advanced since the
+previous audit. PR #13 now proposes Wrangler 4.132.0; this follow-up incorporates
+that exact version and its regenerated lockfile, without dropping other gates.
+
+Repository fixes in this follow-up:
+
+- Disable persisted checkout credentials in all five remaining checkout workflows.
+  The repository audit now requires that setting for each checkout separately.
+- Reject inline/unsupported permission declarations, commented write permissions,
+  and compact privileged pull-request triggers. These are conservative checks of
+  repository workflow conventions, not a general-purpose YAML security parser.
+- Reject tracked `.dev.vars` secrets and fail on unreadable tracked files instead
+  of silently excluding them. Detect Resend key patterns in the working tree as
+  well as historical commits, without printing matching values.
+- Raise the dependency gate from high/critical to **all reported severities**.
+  Do not add audit exclusions or lower this threshold to get a green check.
+- Add regression tests for each of these cases. Browser and production evidence
+  for earlier commits does not certify this new patch.
+
+### Open controls requiring additional evidence or authority
+
+| Control                            | Fresh evidence / remaining action                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Required CI at the GitHub boundary | Public ruleset 23093180 is active on the default branch but only lists deletion and non-fast-forward restrictions, with multiple always-bypass actors. No required CI is present in that ruleset. Legacy branch-protection inspection returned 403 (integration lacks administration access); its settings remain unknown. An administrator must verify/enforce required checks and review bypass actors. Do not bypass protections to apply this. |
+| Security alerts                    | The configured repository connection cannot read the Dependabot alerts endpoint. A clean npm audit is not a substitute for the repository's private alert state.                                                                                                                                                                                                                                                                                   |
+| Cloudflare deployment gate         | Dashboard configuration and a build log proving `npm run deploy` invoked the exact-SHA CI gate remain unverified. Only main may produce production releases.                                                                                                                                                                                                                                                                                       |
+| Account/edge controls              | WAF rules, token scope/rotation, account MFA and recovery controls require authorized account inspection; source changes cannot certify them.                                                                                                                                                                                                                                                                                                      |
+| Delivery and recovery              | Provider acceptance is not inbox delivery. Existing delivery/bounce events, alert ownership and a safely planned rollback rehearsal still need evidence; no real quote emails are sent by tests.                                                                                                                                                                                                                                                   |
+| Historical review                  | The complete automated inventory remains distinct from manual review of every historical line. No unsupported exhaustive certification is made.                                                                                                                                                                                                                                                                                                    |
+
+These items are **open**, not waived or counted as completed. See the release
+runbook for the administrator closure checklist and preserve existing evidence.
+
+Local follow-up validation: 48 tests passed; formatting, Astro/TypeScript checks
+(zero errors/warnings/hints), build, Wrangler 4.132.0 deployment dry run, repository
+audit and history scan passed. npm reported zero vulnerabilities with the stricter
+low-severity threshold. The history scan covered 479 unique text blobs reachable
+in the fresh ordinary clone; it is not a renewed full retained-PR mirror inventory.
+New exact-revision GitHub browser and production results must be checked after
+publication; they are not implied by these local results. No test emails were sent.
+
 Audit refreshed: 2026-09-17. Code-level hardening verified at `66cc94657bfdc29e67ed9b87c23ed868ef53e3ea`. This is not a full manual historical or account-security certification.
 
 ## Sources and evidence

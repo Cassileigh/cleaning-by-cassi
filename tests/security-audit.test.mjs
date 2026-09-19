@@ -1,7 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import {
+  mkdtempSync,
+  writeFileSync,
+  mkdirSync,
+  rmSync,
+  unlinkSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
@@ -59,6 +65,104 @@ test('history detects a removed credential without exposing its value', () =>
     assert.match(result.stderr, /github-token: old.txt/);
     assert.ok(!(result.stdout + result.stderr).includes(token));
   }));
+
+const safeWorkflow = `permissions:
+  contents: read
+on:
+  push:
+jobs:
+  test:
+    steps:
+      - uses: actions/checkout@${'a'.repeat(40)}
+        with:
+          persist-credentials: false
+      - run: npm run audit
+`;
+function repositoryAudit(workflow = safeWorkflow, prepare = () => {}) {
+  return fixture((dir) => {
+    mkdirSync(join(dir, '.github/workflows'), { recursive: true });
+    writeFileSync(join(dir, '.github/workflows/quality.yml'), workflow);
+    writeFileSync(
+      join(dir, '.github/dependabot.yml'),
+      'package-ecosystem: npm\npackage-ecosystem: github-actions\n',
+    );
+    writeFileSync(
+      join(dir, 'package.json'),
+      JSON.stringify({ scripts: { audit: 'npm audit --audit-level=low' } }),
+    );
+    writeFileSync(
+      join(dir, 'package-lock.json'),
+      JSON.stringify({ lockfileVersion: 3, packages: { '': {} } }),
+    );
+    execFileSync('git', ['add', '.'], { cwd: dir });
+    prepare(dir);
+    return spawnSync(
+      process.execPath,
+      [new URL('../scripts/security-audit.mjs', import.meta.url).pathname],
+      { cwd: dir, encoding: 'utf8' },
+    );
+  });
+}
+test('repository audit accepts explicit read-only permissions and credential-free checkout', () => {
+  const result = repositoryAudit();
+  assert.equal(result.status, 0, result.stderr);
+});
+test('every checkout must disable persisted credentials', () => {
+  for (const workflow of [
+    safeWorkflow.replace(
+      'persist-credentials: false',
+      'persist-credentials: true',
+    ),
+    safeWorkflow.replace('          persist-credentials: false\n', ''),
+    safeWorkflow + `      - uses: actions/checkout@${'b'.repeat(40)}\n`,
+  ]) {
+    const result = repositoryAudit(workflow);
+    assert.equal(result.status, 1);
+    assert.match(result.stderr, /checkout must disable persisted credentials/);
+  }
+});
+test('permission comments and flow mappings cannot hide write access', () => {
+  for (const workflow of [
+    safeWorkflow.replace('contents: read', 'contents: write # explanation'),
+    safeWorkflow.replace(
+      '    steps:',
+      '    permissions: { contents: write }\n    steps:',
+    ),
+    safeWorkflow.replace('contents: read', 'contents: "write"'),
+  ])
+    assert.equal(repositoryAudit(workflow).status, 1);
+});
+test('compact privileged pull request triggers are prohibited', () => {
+  const result = repositoryAudit(
+    safeWorkflow.replace('on:\n  push:', 'on: [push, pull_request_target]'),
+  );
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /pull_request_target is prohibited/);
+});
+test('tracked Worker secret files and unreadable tracked paths fail closed', () => {
+  for (const missing of [false, true]) {
+    const result = repositoryAudit(safeWorkflow, (dir) => {
+      const path = join(dir, missing ? 'missing.txt' : '.dev.vars');
+      writeFileSync(path, 'fixture');
+      execFileSync('git', ['add', '.'], { cwd: dir });
+      if (missing) unlinkSync(path);
+    });
+    assert.equal(result.status, 1);
+    assert.match(
+      result.stderr,
+      missing ? /could not be inspected/ : /Worker secret file is prohibited/,
+    );
+  }
+});
+test('current Resend credentials are detected without disclosing values', () => {
+  const token = ['re', 'A'.repeat(32)].join('_');
+  const result = repositoryAudit(safeWorkflow, (dir) => {
+    writeFileSync(join(dir, 'accidental.txt'), token);
+    execFileSync('git', ['add', '.'], { cwd: dir });
+  });
+  assert.equal(result.status, 1);
+  assert.ok(!(result.stdout + result.stderr).includes(token));
+});
 test('history rejects shallow repositories', () =>
   fixture((dir) => {
     writeFileSync(join(dir, 'safe.txt'), 'safe');
@@ -101,7 +205,7 @@ test('repository audit rejects shorthand unpinned actions', () =>
     );
     writeFileSync(
       join(dir, 'package.json'),
-      JSON.stringify({ scripts: { audit: 'npm audit --audit-level=high' } }),
+      JSON.stringify({ scripts: { audit: 'npm audit --audit-level=low' } }),
     );
     writeFileSync(
       join(dir, 'package-lock.json'),

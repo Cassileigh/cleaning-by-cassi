@@ -1,5 +1,34 @@
 # Release runbook
 
+## September 19 closure checklist
+
+All checkout steps must set `persist-credentials: false`; repository tests enforce
+this and fail closed on unsupported permissions and unreadable tracked files.
+`npm run audit` now blocks on low, moderate, high and critical findings. Wrangler
+is pinned to 4.132.0. Do not relax existing browser, accessibility or release gates.
+
+Account-level work is not complete until an authorized administrator records:
+
+1. The effective main rules (including legacy protections), requiring Quality,
+   Responsive, Accessibility, Lighthouse and Safari results, and an explicit review
+   of all bypass actors. The currently visible ruleset only restricts deletion and
+   force-pushes. Avoid locking out the legitimate release path; do not disable rules
+   to ship a patch. Record settings and exact check names, not credentials.
+2. Cloudflare production branch `main`, build `npm run build`, deploy `npm run deploy`,
+   and an actual log containing `CI approved main <sha>` for the released revision.
+3. Repository security-alert disposition, account MFA/recovery, least-privilege
+   deployment/mail credentials, and applicable edge abuse controls.
+4. Existing provider delivery/bounce evidence and an owner for failed delivery and
+   failed production-integrity alerts. Automated tests must not send real mail.
+5. A separately approved rollback rehearsal: identify a known-good deployed version,
+   confirm its bindings/configuration compatibility, rehearse outside production
+   where possible, and record recovery validation. Never roll back production merely
+   to mark an audit checklist complete.
+
+Record evidence dates/revisions and unresolved items in security-parity.md. Missing
+access is an open control, not a successful check. A patch can improve repository
+security without proving account settings or eliminating every possible vulnerability.
+
 ## September 16 security controls
 
 Quality now includes repository policy and sanitized full-history credential checks before dependency installation. Checkout must use fetch-depth: 0; shallow history fails closed. A detected historical value must be investigated privately, never printed into an issue or log.
