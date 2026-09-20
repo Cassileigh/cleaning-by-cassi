@@ -1,5 +1,42 @@
 # Security parity — current-source audit
 
+## September 19 account-control verification (latest disposition)
+
+The earlier open-control tables below are historical snapshots. This section
+supersedes their GitHub ruleset and Cloudflare dashboard-configuration findings.
+
+| Control                  | Evidence and disposition                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Main merge protections   | GitHub API confirms ruleset 23093180 is active on the default branch, main. PRs and all five CI checks are required, strict up-to-date checks are enabled, deletion and force pushes are blocked, and bypass_actors is empty. Current connector bypass permission is never. Zero human approvals is intentional for the solo-maintainer workflow; PRs and automated checks remain mandatory. |
+| Check provenance         | All five contexts are bound to GitHub Actions, integration 15368: Build, type check, audit; Light, dark, and accessibility checks; Performance, accessibility, best practices, and SEO; Safari / WebKit compatibility; Responsive viewport matrix.                                                                                                                                           |
+| Cloudflare configuration | User-provided dashboard screenshot IMG_0248.png shows Cassileigh/cleaning-by-cassi, production main, root /, build npm run build and deploy npm run deploy. The user subsequently confirmed disabling non-production branch builds. The toggle change is user-reported, not independently read through an account API.                                                                       |
+| Gate execution evidence  | Dashboard command configuration is now evidenced. A Cloudflare build log containing CI approved main followed by the release SHA has not been inspected; do not confuse configuration evidence with a full execution-log audit.                                                                                                                                                              |
+| Scanning enabled         | User-provided Security overview shows security policy, advisories, private reporting, Dependabot alerts, code scanning and secret scanning enabled. Open alert lists remain unverified; enabled does not mean zero alerts.                                                                                                                                                                   |
+
+The workflow-hardening release `5fd4741c1cc3eaff65850848b0e097805b94ee31`
+passed all five main-push release workflows, CodeQL, Production Smoke
+([35470325306](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35470325306))
+and Production Integrity
+([35470515658](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35470515658)).
+Independent read-only integrity checks passed on both domains for that exact SHA.
+Its refreshed full-mirror credential scan covered 509 unique text blobs with no
+detector findings; heuristic scanning is not exhaustive certification.
+
+PR #14 updates Prettier to 3.9.7 and Wrangler to 4.133.0. Its exact head
+`bda932e53021f923918eb7c066d538748c875c1b` passed Quality (35470437759),
+Accessibility (35470437758), Responsive (35470437761), Lighthouse (35470437773)
+and Safari (35470437796). Quality includes install, tests, formatting, build,
+typecheck, dry run and both security scans plus the all-severity dependency audit.
+It was merged normally as `24a28a8dfdc0af17acc3d3825305d24f6b552d7b` under the
+active rules, without bypass. Its new main-push and production checks are separate
+from PR evidence and must pass before calling that revision production-verified.
+
+Still open: private alert disposition; account MFA/recovery and credential scope;
+edge/WAF account inspection; provider delivery/bounce and notification ownership;
+safe rollback rehearsal; and the limits of manual historical review. No real test
+emails were sent. Do not reopen completed configuration questions without evidence
+of drift, and do not mark the remaining controls completed without evidence.
+
 ## September 19 follow-up — closure work, not blanket certification
 
 Fresh main refs: Cleaning `b872d989d0cf29e8730f78d260c4edaf126782cd` and AlienX
@@ -22,7 +59,7 @@ Repository fixes in this follow-up:
 - Add regression tests for each of these cases. Browser and production evidence
   for earlier commits does not certify this new patch.
 
-### Open controls requiring additional evidence or authority
+### Earlier open-control snapshot (superseded above where verified)
 
 | Control                            | Fresh evidence / remaining action                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
