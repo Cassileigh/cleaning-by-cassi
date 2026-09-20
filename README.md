@@ -11,6 +11,7 @@
 
 [![Quality](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/quality.yml)
 [![Production Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-smoke.yml)
+[![Production Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-integrity.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-integrity.yml)
 [![Responsive](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/responsive.yml)
 [![Accessibility](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml)
 [![Safari](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/safari.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/safari.yml)
@@ -34,6 +35,13 @@ Dependable, detailed residential cleaning for busy families throughout the
 Security maintenance: [current parity audit](docs/security-parity.md) · [520-commit AlienX comparison](docs/alienx-commit-inventory.md) · [quote contract](docs/quote-security-contract.md) · [release runbook](docs/release-runbook.md).
 
 The September 16–17 audit adds required repository/history checks, post-deployment integrity verification, strict external-stylesheet CSP and matched compatible tooling. See the audit for exact source revisions, validation evidence, and remaining gaps; these are not a claim of zero vulnerabilities or complete security parity.
+
+The September 19 follow-up enforces PRs and five GitHub Actions checks on `main`,
+with up-to-date branches and no bypass actors. Every checkout disables persisted
+credentials, and the dependency audit blocks all reported vulnerability severities.
+Cloudflare's production branch and gated build/deploy commands were confirmed by
+dashboard screenshot; disabling non-production builds was subsequently confirmed
+by the owner. Remaining account checks are tracked explicitly in the audit.
 
 Cleaning by Cassi is a locally owned residential cleaning business built around personal service, careful attention to detail, and making home feel lighter.
 
@@ -120,11 +128,13 @@ The quote service validates requests before contacting Turnstile or the email pr
 - Resend response-ID confirmation
 - Browser security headers, including a script policy without unsafe-inline
 - Hourly production smoke monitoring
+- Post-smoke and daily production-integrity checks on both domains
 - Automated responsive compatibility testing across eight public pages and 12 viewport sizes
 - Automated light/dark WCAG and contrast testing across the public business pages
 - Build, TypeScript, Cloudflare dry-run, and dependency checks
 - GitHub CodeQL analysis
 - Grouped Dependabot maintenance
+- Required PRs and five source-bound GitHub Actions checks, with no bypass actors
 - An exact-revision release gate requiring five successful workflows before `npm run deploy` proceeds
 
 Edge-location counters are not a strict global quota. Provider acceptance and configuration readiness are not proof of inbox delivery. Browser quote tests mock verification and email submission; they send no email.
@@ -172,21 +182,28 @@ Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion
 
 ## ✅ Automated checks
 
-| Check                     | When it runs                      | Coverage                                                                                      |
-| :------------------------ | :-------------------------------- | :-------------------------------------------------------------------------------------------- |
-| **Quality**               | Push / PR to `main`               | Regression tests, formatting, build, types, Worker dry run, dependency audit                  |
-| **Responsive**            | Push / PR to `main`               | Eight routes × 12 viewport sizes; overflow and browser errors                                 |
-| **Accessibility & theme** | Push / PR to `main`               | Light/dark axe checks, image loading, Chromium navigation and quote recovery                  |
-| **Safari & WebKit**       | Push / PR to `main`               | 16 native Safari page/viewport checks and seven WebKit interaction tests on macOS             |
-| **Lighthouse**            | Push / PR to `main`               | Accessibility ≥95, best practices ≥95, performance ≥85, SEO ≥95                               |
-| **CodeQL**                | GitHub security analysis          | JavaScript/TypeScript and workflow analysis                                                   |
-| **Production smoke**      | Push to `main`, hourly, or manual | Exact deployed revision, public routes, configuration readiness, rejected invalid submissions |
-| **Browser diagnostics**   | Manual only                       | Isolates preview navigation failures; does not replace release checks                         |
-| **Workers Build**         | Cloudflare Git integration        | Production build and deployment                                                               |
+| Check                     | When it runs                                 | Coverage                                                                                        |
+| :------------------------ | :------------------------------------------- | :---------------------------------------------------------------------------------------------- |
+| **Quality**               | Push / PR to `main`                          | Regression tests, formatting, build, types, Worker dry run, dependency audit                    |
+| **Responsive**            | Push / PR to `main`                          | Eight routes × 12 viewport sizes; overflow and browser errors                                   |
+| **Accessibility & theme** | Push / PR to `main`                          | Light/dark axe checks, image loading, Chromium navigation and quote recovery                    |
+| **Safari & WebKit**       | Push / PR to `main`                          | 16 native Safari page/viewport checks and seven WebKit interaction tests on macOS               |
+| **Lighthouse**            | Push / PR to `main`                          | Accessibility ≥95, best practices ≥95, performance ≥85, SEO ≥95                                 |
+| **CodeQL**                | GitHub security analysis                     | JavaScript/TypeScript and workflow analysis                                                     |
+| **Production smoke**      | Push to `main`, hourly, or manual            | Exact deployed revision, public routes, configuration readiness, rejected invalid submissions   |
+| **Production integrity**  | Successful main-push smoke, daily, or manual | Stable revision, eight routes on both domains, strict CSP/security headers, HTTPS and readiness |
+| **Browser diagnostics**   | Manual only                                  | Isolates preview navigation failures; does not replace release checks                           |
+| **Workers Build**         | Cloudflare Git integration                   | Production build and deployment                                                                 |
 
 The five required release workflows are **quality, responsive, accessibility, Lighthouse, and Safari**. `npm run deploy` checks their successful push runs against the clean checkout and latest GitHub `main` SHA, then allows Wrangler to deploy. Missing, failed, skipped, or timed-out evidence blocks deployment. Production smoke checks the result afterward; newer checks supersede obsolete revisions.
 
 Cloudflare must use **`npm run build`** as its build command and **`npm run deploy`** as its deploy command. Direct `wrangler deploy` bypasses the repository gate. See the [release runbook](docs/release-runbook.md) for account-setting verification and operational limits. Production is hosted on **Cloudflare Workers**, from **`main`**.
+
+Changes must use temporary PR branches, pass the five required GitHub Actions
+checks on an up-to-date branch, and merge normally. Direct pushes to `main` are
+not the maintenance path. The ruleset requires zero human approvals for the solo
+maintainer, but still requires PRs and passing checks. Production smoke/integrity
+are post-deployment evidence, never pre-merge requirements.
 
 ## 📁 Project map
 
@@ -229,7 +246,7 @@ Then open [localhost:4321](http://localhost:4321).
 | `npm run build`                  | Generate revision metadata, optimize images, and build              |
 | `npm test`                       | Run API, quote-client, and release-gate regression tests            |
 | `npm run check`                  | Run regressions, type checks, production build, and Worker dry run  |
-| `npm run audit`                  | Check the locked dependency tree; fail at high severity or above    |
+| `npm run audit`                  | Check the locked dependency tree; fail at low severity or above     |
 | `npm run format:check`           | Verify maintained source and documentation formatting               |
 | `npm run preview -- --port 4321` | Build and start the Cloudflare runtime with an HTTP loopback origin |
 | `npm run test:browser`           | Run Playwright tests against the running preview                    |
@@ -261,11 +278,20 @@ For local verification settings, copy `.env.example` to `.dev.vars` and use a de
 
 The original header artwork is retained in `docs/brand`; the build generates a 344px WebP for visitors. Repository-only artwork stays in `docs/`, and served assets stay in `public/`.
 
-### Verification snapshot — September 13, 2026
+### Verification evidence — September 19, 2026
 
-The fresh dependency audit reported **zero known vulnerabilities**. Source revision [`d8def80`](https://github.com/Cassileigh/cleaning-by-cassi/commit/d8def80087339af87e139e82ce008282e0d52096) passed all five required workflows, both CodeQL analyses, Cloudflare deployment, and production smoke before this README update. Workflow badges above track subsequent runs; [GitHub Actions](https://github.com/Cassileigh/cleaning-by-cassi/actions) holds the results for each revision.
+The hardened release [`5fd4741`](https://github.com/Cassileigh/cleaning-by-cassi/commit/5fd4741c1cc3eaff65850848b0e097805b94ee31)
+passed 48 tests, all five release workflows, CodeQL, production smoke and integrity
+checks on both domains. npm reported zero vulnerabilities; that is not a guarantee
+of complete security. PR #14 subsequently passed all five PR checks and updated
+Prettier to 3.9.7 and Wrangler to 4.133.0. Each new main revision needs its own
+release and production evidence; see [the audit](docs/security-parity.md) and
+[GitHub Actions](https://github.com/Cassileigh/cleaning-by-cassi/actions).
 
-The latest GitHub Pages/Jekyll build failed. Removing `CNAME` does not by itself establish that Pages hosting has been disabled. Cloudflare Workers is the production host; GitHub Pages settings are a separate account-level cleanup item.
+The September 19 dashboard screenshot confirms GitHub Pages is disabled.
+Cloudflare Workers remains the production host. Security scanning is enabled,
+but private alert disposition, account controls and recovery evidence remain
+separate checks; see the audit rather than treating green badges as certification.
 
 ---
 

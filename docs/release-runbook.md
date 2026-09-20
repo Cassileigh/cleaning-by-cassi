@@ -1,18 +1,34 @@
 # Release runbook
 
+## Enforced PR workflow and verified dashboard settings
+
+Verified September 19: main ruleset 23093180 requires PRs, all five existing
+GitHub Actions checks and up-to-date branches; blocks deletion/force pushes; and
+has no bypass actors. Use temporary PR branches and normal protected merges.
+Zero required human approvals supports the solo maintainer, not direct pushes.
+Production Smoke and Integrity remain post-deployment checks, not merge gates.
+
+Dashboard screenshot IMG_0248.png confirms repository Cassileigh/cleaning-by-cassi,
+production main, root /, build npm run build and deploy npm run deploy. The user
+confirmed turning off non-production branch builds afterward; GitHub PR checks
+remain enabled. No screenshot assets or account identifiers need to be committed.
+Cloudflare build-log execution evidence is still separate from these settings.
+See security-parity.md for the evidence and remaining account controls.
+
 ## September 19 closure checklist
 
 All checkout steps must set `persist-credentials: false`; repository tests enforce
 this and fail closed on unsupported permissions and unreadable tracked files.
 `npm run audit` now blocks on low, moderate, high and critical findings. Wrangler
-is pinned to 4.132.0. Do not relax existing browser, accessibility or release gates.
+is now pinned to 4.133.0 via PR #14, with Prettier 3.9.7. Do not relax existing
+browser, accessibility or release gates.
 
 Account-level work is not complete until an authorized administrator records:
 
 1. The effective main rules (including legacy protections), requiring Quality,
    Responsive, Accessibility, Lighthouse and Safari results, and an explicit review
-   of all bypass actors. The currently visible ruleset only restricts deletion and
-   force-pushes. Avoid locking out the legitimate release path; do not disable rules
+   of all bypass actors. The ruleset portion is now verified above; legacy
+   protection inspection remains unavailable. Do not disable rules
    to ship a patch. Record settings and exact check names, not credentials.
 2. Cloudflare production branch `main`, build `npm run build`, deploy `npm run deploy`,
    and an actual log containing `CI approved main <sha>` for the released revision.
@@ -45,7 +61,9 @@ Production branch: `main`. Build command: `npm run build`. Deploy command: **`np
 
 The gate checks a clean checkout, the build SHA, the current GitHub main SHA, and successful push runs for quality, responsive, accessibility, lighthouse, and safari. It rechecks main immediately before allowing Wrangler to run. GitHub errors, missing evidence, skipped or failed workflows and a 12-minute timeout block deployment. Production smoke runs afterward and is deliberately not a prerequisite that would deadlock deployment.
 
-This repository cannot prove the Cloudflare dashboard deploy command or GitHub branch protection settings. Confirm the configured command and retain one build log showing `CI approved main <sha>` before treating this gate as activated. No account integration was disabled or replaced by this change.
+The dashboard deploy command and active GitHub ruleset are now evidenced above.
+Retain one Cloudflare build log showing `CI approved main <sha>` to close the
+remaining execution-evidence item. No account integration was disconnected.
 
 ## Rate limiting
 
