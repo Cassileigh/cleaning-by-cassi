@@ -314,6 +314,33 @@ table {
   }
 }
 
+/* Keep a visible keyboard indicator across both color schemes. */
+:where(
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  summary,
+  [tabindex='0']
+):focus-visible {
+  outline: 3px solid var(--purple);
+  outline-offset: 3px;
+}
+@media (prefers-color-scheme: dark) {
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex='0']
+  ):focus-visible {
+    outline-color: #ff8ad8;
+  }
+}
+
 /* Tablet */
 @media (max-width: 900px) {
   main {

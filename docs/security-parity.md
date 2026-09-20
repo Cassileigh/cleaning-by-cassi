@@ -1,5 +1,46 @@
 # Security parity — current-source audit
 
+## September 20 closeout and daily mail monitoring
+
+Fresh comparison: Cleaning `3c9f4997fbec9677ca4d9b03c30f2454985dda6f`, AlienX
+`f532099632ea0c093629ff08b1b46f4a645d6b45`. Seven new AlienX main commits since
+`8b6d500` merge PR #36: three release-decision/test changes, three formatting
+changes and the merge. PR #38 remains unmerged at `4586ceb8c0d1d1e4417e3fe917207d68737d19ba`.
+
+Applicable changes adopted in this closeout:
+
+- Directly test the final release decision, rejecting empty, duplicate and malformed
+  evidence as well as failures. Preserve the read-only exact-main API deployment
+  gate instead of copying AlienX's writable approval refs.
+- Enforce the existing workflow origin guard and execution of WebKit interaction
+  tests against accidental removal, including commented-out controls.
+- Add real keyboard light/dark journeys across all eight routes and quote retry
+  coverage in Chromium/WebKit. Remove the quote input outline suppression and
+  provide a visible keyboard outline in both themes.
+- Add the owner-authorized daily 05:00 Central production email check, documented
+  in [email-health.md](email-health.md). No public sending endpoint or Turnstile
+  bypass is introduced; ordinary CI tests remain fully mocked.
+
+Read-only Resend evidence confirms the sending domain is verified and recent
+business/customer messages were delivered. Future daily heartbeat delivery is not
+verified until its scheduled run. Monitoring activation and exact-revision CI and
+production outcomes must be checked separately from implementation.
+
+Still open, not waived: private GitHub alert disposition, account MFA/recovery,
+credential scope/rotation, WAF inspection, Cloudflare CI-approval execution log,
+and a controlled rollback rehearsal. The GitHub connector does not provide the
+necessary administrative/private-alert access. No live rollback or account-rule
+relaxation is justified by this code closeout. Prior verified dashboard settings
+and branch rules remain valid unless fresh evidence shows drift.
+
+Local validation for this patch: 55 regression tests, formatting, Astro/TypeScript
+(zero diagnostics), production build, Wrangler deployment dry run and repository
+audit passed. npm audit reported zero vulnerabilities at the all-severity gate.
+The ordinary checkout history scan covered 495 reachable text blobs; this is not
+a new full retained-PR mirror inventory. Local browser preview was blocked by
+`uv_interface_addresses` in this workspace; required GitHub browser checks must
+pass before merge. No real email was sent during these tests.
+
 ## September 19 account-control verification (latest disposition)
 
 The earlier open-control tables below are historical snapshots. This section

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
-function sourceModule(specifier) {
+function sourceModule(specifier, globals) {
   const file = new URL(
     `../src/${specifier.replace('../../', '')}.ts`,
     import.meta.url,
@@ -15,7 +15,7 @@ function sourceModule(specifier) {
         target: ts.ScriptTarget.ES2022,
       },
     }).outputText,
-    { exports },
+    { exports, ...globals },
   );
   return exports;
 }
@@ -46,7 +46,7 @@ function route(file, options = {}) {
     },
   }).outputText;
   const exports = {};
-  vm.runInNewContext(compiled, {
+  const context = {
     exports,
     bindings: env,
     Request,
@@ -58,7 +58,8 @@ function route(file, options = {}) {
     TextEncoder,
     AbortSignal,
     crypto,
-    require: sourceModule,
+    require: (specifier) =>
+      sourceModule(specifier, { fetch: context.fetch, AbortSignal }),
     console: { error() {}, info() {} },
     fetch: async (url, init) => {
       calls.push({ url, init });
@@ -85,7 +86,8 @@ function route(file, options = {}) {
         { status: options.customerStatus ?? 200 },
       );
     },
-  });
+  };
+  vm.runInNewContext(compiled, context);
   return { ...exports, calls };
 }
 
