@@ -182,12 +182,22 @@ Responsive AVIF/WebP images, locally hosted fonts, semantic HTML, reduced-motion
 
 ## ✅ Automated checks
 
+### Daily email health check
+
+The production Worker schedules one health email at **5:00 a.m. America/Chicago**
+(Central time, including daylight saving) to the business quote mailbox. It uses
+the same production Resend credential, sender and shared sending code as quotes.
+The fixed-recipient job has no public HTTP trigger and never bypasses Turnstile.
+Retries use one stable daily idempotency key. Receiving the message confirms this
+delivery path for that message, not every customer submission or destination.
+See [email monitoring](docs/email-health.md) for delivery checks and failure handling.
+
 | Check                     | When it runs                                 | Coverage                                                                                        |
 | :------------------------ | :------------------------------------------- | :---------------------------------------------------------------------------------------------- |
 | **Quality**               | Push / PR to `main`                          | Regression tests, formatting, build, types, Worker dry run, dependency audit                    |
 | **Responsive**            | Push / PR to `main`                          | Eight routes × 12 viewport sizes; overflow and browser errors                                   |
 | **Accessibility & theme** | Push / PR to `main`                          | Light/dark axe checks, image loading, Chromium navigation and quote recovery                    |
-| **Safari & WebKit**       | Push / PR to `main`                          | 16 native Safari page/viewport checks and seven WebKit interaction tests on macOS               |
+| **Safari & WebKit**       | Push / PR to `main`                          | Native Safari plus WebKit quote recovery, navigation and keyboard-only light/dark journeys      |
 | **Lighthouse**            | Push / PR to `main`                          | Accessibility ≥95, best practices ≥95, performance ≥85, SEO ≥95                                 |
 | **CodeQL**                | GitHub security analysis                     | JavaScript/TypeScript and workflow analysis                                                     |
 | **Production smoke**      | Push to `main`, hourly, or manual            | Exact deployed revision, public routes, configuration readiness, rejected invalid submissions   |

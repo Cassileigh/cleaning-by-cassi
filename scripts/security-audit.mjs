@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process';
 import { readFile, stat } from 'node:fs/promises';
 import { basename, join } from 'node:path';
 import { promisify } from 'node:util';
+import { workflowFailures } from './workflow-policy.mjs';
 
 const execFileAsync = promisify(execFile);
 const root = process.cwd();
@@ -27,6 +28,7 @@ if (workflowFiles.length === 0) fail('No GitHub Actions workflows found.');
 for (const file of workflowFiles) {
   const text = await readFile(join(root, file), 'utf8');
   const name = basename(file);
+  for (const issue of workflowFailures(name, text)) fail(`${file}: ${issue}`);
 
   if (!/^permissions:\s*$/m.test(text))
     fail(`${file}: missing explicit top-level permissions block`);

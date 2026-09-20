@@ -58,7 +58,7 @@ jobs:
 
       - name: Test light and dark themes with axe
         run: |
-          npx playwright test tests/accessibility.spec.cjs tests/theme-assets.spec.cjs tests/quote-interactions.spec.cjs tests/navigation.spec.cjs --reporter=line
+          npx playwright test tests/accessibility.spec.cjs tests/theme-assets.spec.cjs tests/quote-interactions.spec.cjs tests/navigation.spec.cjs tests/keyboard.spec.cjs --reporter=line
 
       - name: Upload theme screenshots
         if: always()

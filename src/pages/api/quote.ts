@@ -6,7 +6,7 @@ export const prerender = false;
 
 import { CONTACT_EMAIL as BUSINESS_EMAIL } from '../../consts';
 import { ADD_ONS, FREQUENCIES } from '../../catalog';
-const FROM_EMAIL = 'Cleaning by Cassi <quotes@cleaningbycassi.com>';
+import { sendMail } from '../../mail';
 
 const MAX_REQUEST_BYTES = 30_000;
 const MAX_LENGTHS: Record<string, number> = {
@@ -556,22 +556,16 @@ export const POST: APIRoute = async ({ request }) => {
 
     let resendResponse: Response;
     try {
-      resendResponse = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          'Content-Type': 'application/json',
-          'Idempotency-Key': `quote-business/${deliveryKey}`,
-        },
-        body: JSON.stringify({
-          from: FROM_EMAIL,
+      resendResponse = await sendMail(
+        resendApiKey,
+        `quote-business/${deliveryKey}`,
+        {
           to: [BUSINESS_EMAIL],
           reply_to: email,
           subject: `🧼 New Quote Request — ${name}`,
           html: businessEmailHtml,
-        }),
-        signal: AbortSignal.timeout(10_000),
-      });
+        },
+      );
     } catch (error) {
       console.error('Resend business email request failed.', {
         requestId,
@@ -632,22 +626,16 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     try {
-      const customerResponse = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          'Content-Type': 'application/json',
-          'Idempotency-Key': `quote-customer/${deliveryKey}`,
-        },
-        body: JSON.stringify({
-          from: FROM_EMAIL,
+      const customerResponse = await sendMail(
+        resendApiKey,
+        `quote-customer/${deliveryKey}`,
+        {
           to: [email],
           reply_to: BUSINESS_EMAIL,
           subject: '✨ We received your quote request — Cleaning by Cassi',
           html: customerEmailHtml,
-        }),
-        signal: AbortSignal.timeout(10_000),
-      });
+        },
+      );
 
       if (!customerResponse.ok) {
         console.error('Resend customer confirmation was rejected.', {

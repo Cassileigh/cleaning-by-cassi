@@ -1,5 +1,14 @@
 # Release runbook
 
+## Daily mail job
+
+The owner authorized a fixed-recipient daily production health email at 05:00
+Central on September 20. See [email-health.md](email-health.md) for scheduling,
+delivery evidence, monitoring and safe disable instructions. This is the only
+scheduled real-mail exception; CI and production smoke do not send test quotes.
+The Worker entrypoint now retains Astro's `handle` for HTTP and adds a scheduled
+handler. Preserve the two UTC cron candidates and America/Chicago time guard.
+
 ## Enforced PR workflow and verified dashboard settings
 
 Verified September 19: main ruleset 23093180 requires PRs, all five existing

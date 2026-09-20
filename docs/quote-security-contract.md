@@ -17,6 +17,12 @@ this implementation keeps generic public protection/delivery checks.
 
 ## Limits of these checks
 
+Quote notifications and customer confirmations use the shared `src/mail.ts`
+transport. The authorized daily operational email uses that same transport and
+production credential but is invoked only by the Worker's scheduled handler.
+It cannot bypass any quote validation or accept a caller-selected destination.
+See [email-health.md](email-health.md).
+
 A Resend email ID proves provider acceptance, not inbox delivery. Delivery/bounce verification requires provider events or mailbox confirmation. Canonical submitted fields and the submission ID produce stable, separate business/customer Resend idempotency keys; fresh Turnstile tokens and request IDs do not change those keys. Deduplication lasts only for the provider's retention window, not indefinitely. There is no durable application queue. A honeypot is supplemental, not a substitute for Turnstile or edge abuse controls.
 
 The protection readiness check requires a nonempty secret, at least one nonempty configured hostname, and a callable quote rate-limit binding. Missing configuration returns 503 for GET and HEAD without probing providers. Logs retain fixed failure categories and request/provider IDs, not arbitrary exception messages or provider response bodies.

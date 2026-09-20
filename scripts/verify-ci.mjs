@@ -8,6 +8,22 @@ export const required = [
   'lighthouse.yml',
   'safari.yml',
 ];
+export function classifyApproval(checks) {
+  if (
+    !Array.isArray(checks) ||
+    checks.length !== required.length ||
+    new Set(checks.map((check) => check?.file)).size !== required.length ||
+    checks.some(
+      (check) =>
+        !required.includes(check?.file) ||
+        !['missing', 'pending', 'success'].includes(check?.state),
+    )
+  )
+    return 'rejected';
+  return checks.every((check) => check.state === 'success')
+    ? 'approved'
+    : 'pending';
+}
 export function assessRuns(runs, sha) {
   return required.map((file) => {
     const matches = runs.filter(
@@ -74,13 +90,10 @@ export async function verify() {
     console.log(
       checks.map((check) => `${check.file}: ${check.state}`).join('; '),
     );
-    if (
-      checks.some(
-        (check) => !['missing', 'pending', 'success'].includes(check.state),
-      )
-    )
+    const decision = classifyApproval(checks);
+    if (decision === 'rejected')
       throw Error('Required CI failed; deployment blocked');
-    if (checks.every((check) => check.state === 'success')) {
+    if (decision === 'approved') {
       await current();
       console.log(`CI approved main ${sha}`);
       return;
