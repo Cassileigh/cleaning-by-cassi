@@ -1,3 +1,14 @@
+export const REFERRAL_SOURCES = [
+  ['friend-family', 'Friend or Family Member'],
+  ['current-client', 'Current Cleaning by Cassi Client'],
+  ['facebook-group', 'Facebook Group'],
+  ['facebook-page', 'Facebook Page or Post'],
+  ['google', 'Google Search'],
+  ['business-card', 'Business Card at a Local Business'],
+  ['flyer', 'Flyer'],
+  ['other', 'Other'],
+];
+
 export const ADD_ONS = [
   ['window-tracks', 'Window Tracks & Sills'],
   ['baseboards', 'Baseboards'],

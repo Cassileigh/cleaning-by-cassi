@@ -5,7 +5,7 @@ import { env } from 'cloudflare:workers';
 export const prerender = false;
 
 import { CONTACT_EMAIL as BUSINESS_EMAIL } from '../../consts';
-import { ADD_ONS, FREQUENCIES } from '../../catalog';
+import { ADD_ONS, FREQUENCIES, REFERRAL_SOURCES } from '../../catalog';
 import { sendMail } from '../../mail';
 
 const MAX_REQUEST_BYTES = 30_000;
@@ -17,6 +17,8 @@ const MAX_LENGTHS: Record<string, number> = {
   squareFootage: 12,
   message: 2_500,
   preferredDays: 150,
+  referrerName: 100,
+  referralDetails: 250,
 };
 
 const ALLOWED = {
@@ -34,6 +36,7 @@ const ALLOWED = {
     'other',
   ]),
   frequency: new Set(['', ...FREQUENCIES.map(([value]) => value)]),
+  referralSource: new Set(['', ...REFERRAL_SOURCES.map(([value]) => value)]),
   preferredTime: new Set([
     '',
     'morning',
@@ -110,6 +113,7 @@ function hasInvalidSelectValue(formData: FormData) {
     ['bathrooms', value(formData, 'bathrooms')],
     ['cleaningType', value(formData, 'cleaningType')],
     ['frequency', value(formData, 'frequency')],
+    ['referralSource', value(formData, 'referralSource')],
     ['preferredTime', value(formData, 'preferredTime')],
   ];
 
@@ -511,6 +515,14 @@ export const POST: APIRoute = async ({ request }) => {
       ['Preferred Date', preferredDate],
       ['Preferred Time', value(formData, 'preferredTime')],
       ['Preferred Days', value(formData, 'preferredDays')],
+      [
+        'How Did You Hear About Us?',
+        REFERRAL_SOURCES.find(
+          ([key]) => key === value(formData, 'referralSource'),
+        )?.[1] || '',
+      ],
+      ['Referred By', value(formData, 'referrerName')],
+      ['Referral Details', value(formData, 'referralDetails')],
     ];
 
     // Resend retains idempotency keys for 24 hours. Tokens and request IDs must

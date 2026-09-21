@@ -139,6 +139,41 @@ for (const [name, fields, options, status, code] of [
   ['invalid email', { email: 'bad' }, {}, 400, 'invalid-fields'],
   ['oversized field', { message: 'a'.repeat(2501) }, {}, 400, 'invalid-fields'],
   ['invalid selection', { frequency: 'daily' }, {}, 400, 'invalid-selection'],
+  [
+    'invalid referral source',
+    { referralSource: 'unknown' },
+    {},
+    400,
+    'invalid-selection',
+  ],
+  [
+    'oversized referrer',
+    { referrerName: 'a'.repeat(101) },
+    {},
+    400,
+    'invalid-fields',
+  ],
+  [
+    'oversized referral details',
+    { referralDetails: 'a'.repeat(251) },
+    {},
+    400,
+    'invalid-fields',
+  ],
+  [
+    'referrer controls',
+    { referrerName: 'Test\r\nPerson' },
+    {},
+    400,
+    'invalid-fields',
+  ],
+  [
+    'duplicate referral source',
+    { referralSource: 'google' },
+    { append: [['referralSource', 'other']] },
+    400,
+    'invalid-form',
+  ],
   ['invalid addon', { addons: 'invalid' }, {}, 400, 'invalid-selection'],
   ['zero area', { squareFootage: '0' }, {}, 400, 'invalid-square-footage'],
   ['impossible date', { preferredDate: '2026-02-30' }, {}, 400, 'invalid-date'],
@@ -267,6 +302,64 @@ test('native form success uses a no-store 303', async () => {
     'https://cleaningbycassi.com/quote-success',
   );
   assert.equal(response.headers.get('cache-control'), 'no-store');
+});
+
+test('optional discovery and referral details reach only the business notification, escaped', async () => {
+  for (const [referralSource, label] of [
+    ['facebook-group', 'Facebook Group'],
+    ['facebook-page', 'Facebook Page or Post'],
+    ['business-card', 'Business Card at a Local Business'],
+    ['friend-family', 'Friend or Family Member'],
+    ['current-client', 'Current Cleaning by Cassi Client'],
+    ['flyer', 'Flyer'],
+    ['google', 'Google Search'],
+    ['other', 'Other'],
+    ['', 'Not provided'],
+  ]) {
+    const api = route('quote');
+    const response = await api.POST({
+      request: request({
+        referralSource,
+        referrerName: '<Test Referrer>',
+        referralDetails: 'Local <Group> & Business',
+      }),
+    });
+    assert.equal(response.status, 200);
+    const business = JSON.parse(api.calls[1].init.body);
+    assert.ok(business.html.includes(label));
+    assert.ok(business.html.includes('&lt;Test Referrer&gt;'));
+    assert.ok(business.html.includes('Local &lt;Group&gt; &amp; Business'));
+    assert.ok(!business.html.includes('<Test Referrer>'));
+    const customer = JSON.parse(api.calls[2].init.body);
+    assert.ok(!customer.html.includes('Test Referrer'));
+  }
+});
+
+test('edited referral information changes retry identity while verification refresh does not', async () => {
+  const api = route('quote');
+  const fields = {
+    referralSource: 'facebook-group',
+    referrerName: 'Test Referrer',
+    referralDetails: 'Local Group',
+  };
+  for (const change of [
+    {},
+    { 'cf-turnstile-response': 'fresh' },
+    { referralSource: 'business-card' },
+    { referrerName: 'Another Referrer' },
+    { referralDetails: 'Local Shop' },
+  ]) {
+    assert.equal(
+      (await api.POST({ request: request({ ...fields, ...change }) })).status,
+      200,
+    );
+  }
+  const keys = api.calls
+    .filter((c) => c.url.includes('resend'))
+    .filter((_, i) => i % 2 === 0)
+    .map((c) => c.init.headers['Idempotency-Key']);
+  assert.equal(keys[0], keys[1]);
+  assert.equal(new Set(keys).size, 4);
 });
 test('status hides implementation metadata and returns real failure codes', async () => {
   for (const [env, expected] of [
