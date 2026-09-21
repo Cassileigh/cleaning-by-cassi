@@ -45,6 +45,54 @@ export function assessRuns(runs, sha) {
   });
 }
 
+export async function getGitHubJson(
+  path,
+  { token = process.env.GITHUB_READ_TOKEN?.trim(), fetchImpl = fetch } = {},
+) {
+  const api = 'https://api.github.com/repos/Cassileigh/cleaning-by-cassi';
+  const headers = {
+    Accept: 'application/vnd.github+json',
+    'User-Agent': 'Cleaning-by-Cassi-release-gate',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+  let response;
+  try {
+    response = await fetchImpl(api + path, {
+      headers,
+      redirect: 'error',
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch {
+    // Never print request headers, token values, or arbitrary provider errors.
+    throw Error('GitHub verification request failed; deployment blocked');
+  }
+  if (!response.ok) {
+    const rateLimited =
+      response.status === 429 ||
+      (response.status === 403 &&
+        (response.headers.get('x-ratelimit-remaining') === '0' ||
+          response.headers.has('retry-after')));
+    const guidance = rateLimited
+      ? 'GitHub API rate limit reached. Wait for the limit to reset before retrying.'
+      : response.status === 401 ||
+          response.status === 403 ||
+          response.status === 404
+        ? 'GitHub denied verification access. Check token expiry and repository read permissions.'
+        : 'GitHub could not supply release evidence.';
+    const auth = token
+      ? 'GITHUB_READ_TOKEN is configured (value withheld).'
+      : 'Request was unauthenticated. Configure GITHUB_READ_TOKEN as a Cloudflare Build secret with Actions and Contents read access to this repository.';
+    throw Error(
+      `GitHub verification unavailable: HTTP ${response.status}. ${guidance} ${auth} Deployment blocked.`,
+    );
+  }
+  try {
+    return await response.json();
+  } catch {
+    throw Error('GitHub returned invalid release evidence; deployment blocked');
+  }
+}
+
 export async function verify() {
   const sha = execFileSync('git', ['rev-parse', 'HEAD'], {
     encoding: 'utf8',
@@ -61,19 +109,7 @@ export async function verify() {
     }).trim()
   )
     throw Error('Refusing a modified checkout');
-  const api = 'https://api.github.com/repos/Cassileigh/cleaning-by-cassi';
-  const get = async (path) => {
-    const response = await fetch(api + path, {
-      headers: {
-        Accept: 'application/vnd.github+json',
-        'User-Agent': 'Cleaning-by-Cassi-release-gate',
-      },
-      signal: AbortSignal.timeout(15000),
-    });
-    if (!response.ok)
-      throw Error(`GitHub verification unavailable: HTTP ${response.status}`);
-    return response.json();
-  };
+  const get = getGitHubJson;
   const current = async () => {
     if ((await get('/git/ref/heads/main')).object.sha !== sha)
       throw Error('A newer main revision exists; refusing stale deployment');

@@ -1,5 +1,19 @@
 # Security parity — current-source audit
 
+## September 21 release verification access
+
+Owner-provided Cloudflare logs for main
+`f101a2c5d4e8891dbe3acb0cf8a30fe07a9fcd11` show a successful build followed by
+a GitHub HTTP 403 in the release gate, before Wrangler deployment. This establishes
+that `npm run deploy` invoked the gate and blocked on missing evidence; it does
+not establish a successful `CI approved main` execution or the cause of the 403.
+The source made anonymous GitHub API requests. Add optional build-only
+`GITHUB_READ_TOKEN` authentication and safe rate-limit/access diagnostics; retain
+all five exact-revision checks, the current-main recheck and fail-closed behavior.
+See the release runbook for minimal permissions and owner-only secret setup.
+No credential was created, widened, displayed or stored by this patch. Cloudflare
+configuration and successful deployment remain outstanding.
+
 ## September 20 closeout and daily mail monitoring
 
 Fresh comparison: Cleaning `3c9f4997fbec9677ca4d9b03c30f2454985dda6f`, AlienX

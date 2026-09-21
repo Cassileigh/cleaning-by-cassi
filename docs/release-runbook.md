@@ -66,6 +66,43 @@ See [current security parity](security-parity.md) for exact verification and acc
 
 ## Cloudflare build configuration
 
+### GitHub verification authentication
+
+The September 21 deployment of referral update
+`f101a2c5d4e8891dbe3acb0cf8a30fe07a9fcd11` built successfully, then stopped at
+`GitHub verification unavailable: HTTP 403`. The old verifier made anonymous
+requests and did not retain rate-limit headers, so the log does not distinguish
+rate limiting from another GitHub denial. Cloudflare's repository connection does
+not automatically authenticate this script's separate GitHub API requests.
+
+The verifier now supports `GITHUB_READ_TOKEN`. Configure it under the Worker's
+**Settings > Build > Build variables and secrets**, as a **secret**. It is a
+build-only credential, not a Worker runtime binding, public variable or committed
+`.env` value. Use a fine-grained GitHub token limited to
+`Cassileigh/cleaning-by-cassi`, with **Actions: Read-only** and
+**Contents: Read-only** (Metadata read access is automatic), an appropriate expiry,
+and no write permissions. The owner must create and enter the credential through
+the provider's secure UI; never send it in chat or print it in build logs.
+
+When unset, public anonymous reads remain possible but share GitHub's lower IP
+rate limit. Rate-limit headers now produce a specific diagnostic. Other denied
+requests identify missing authentication or the need to check configured token
+expiry/access without printing secrets or provider bodies. Redirects are rejected.
+Errors remain fail-closed, with no anonymous fallback after an authenticated error.
+Retry a failed Cloudflare build after configuration; all five exact-main-push
+checks and the final current-main verification must still pass. Keep the deploy
+command `npm run deploy`.
+
+Sources: [GitHub rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api),
+[workflow run permissions](https://docs.github.com/en/rest/actions/workflow-runs),
+[Git reference permissions](https://docs.github.com/en/rest/git/refs), and
+[Cloudflare build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
+
+Tests cover authenticated/anonymous headers, fixed API destination, redirect
+rejection, rate-limit/access diagnostics, malformed JSON, and secret/error-body
+redaction. Creating the token, configuring the build secret, and successful
+production deployment remain unverified until separately completed.
+
 Production branch: `main`. Build command: `npm run build`. Deploy command: **`npm run deploy`**. Do not use the default direct `npx wrangler deploy` command: it bypasses the repository's CI gate.
 
 The gate checks a clean checkout, the build SHA, the current GitHub main SHA, and successful push runs for quality, responsive, accessibility, lighthouse, and safari. It rechecks main immediately before allowing Wrangler to run. GitHub errors, missing evidence, skipped or failed workflows and a 12-minute timeout block deployment. Production smoke runs afterward and is deliberately not a prerequisite that would deadlock deployment.
