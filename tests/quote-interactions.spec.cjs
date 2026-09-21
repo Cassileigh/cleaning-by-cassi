@@ -35,6 +35,10 @@ for (const failure of ['provider', 'malformed']) {
   test(`Quote retry after ${failure} failure`, async ({ page }) => {
     let requests = 0;
     await page.route('**/api/quote', (route) => {
+      const body = route.request().postData();
+      expect(body).toContain('facebook-group');
+      expect(body).toContain('Test Referrer');
+      expect(body).toContain('Local Group');
       requests++;
       return route.fulfill({
         status: requests === 1 && failure === 'provider' ? 502 : 200,
@@ -48,12 +52,22 @@ for (const failure of ['provider', 'malformed']) {
       });
     });
     await prepare(page);
+    await page
+      .getByLabel('How did you find us?')
+      .selectOption('facebook-group');
+    await page.getByLabel('Who referred you?').fill('Test Referrer');
+    await page
+      .getByLabel('Group, business name, or other details')
+      .fill('Local Group');
     await page.locator('#quote-submit').click();
     await expect(page.locator('#form-status')).toContainText(
       failure === 'provider' ? 'Please retry.' : 'could not be confirmed',
     );
     await expect(page.locator('#quote-submit')).toBeEnabled();
     await expect(page.locator('[name="phone"]')).toHaveValue('9205550123');
+    await expect(page.getByLabel('Who referred you?')).toHaveValue(
+      'Test Referrer',
+    );
     expect(await page.evaluate(() => window.resetCount)).toBe(1);
     await page.locator('#quote-submit').click();
     await expect(page.locator('#form-status')).toContainText(

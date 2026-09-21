@@ -1,6 +1,6 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
-import { ADD_ONS as addOns, FREQUENCIES } from '../catalog';
+import { ADD_ONS as addOns, FREQUENCIES, REFERRAL_SOURCES } from '../catalog';
 import { CONTACT_EMAIL } from '../consts';
 import { env } from 'cloudflare:workers';
 import type { ApplicationBindings } from '../bindings';
@@ -328,6 +328,49 @@ Astro.response.headers.set('Cache-Control', 'no-store');
             />
           </label>
         </div>
+      </section>
+
+      <section class="form-card soft-lavender">
+        <div class="section-heading">
+          <span class="section-number">08</span>
+          <div>
+            <h2>How Did You Hear About Us? 💕</h2>
+            <p>I'd love to know how you found Cleaning by Cassi!</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <label>
+            How did you find us? (Optional)
+            <select name="referralSource">
+              <option value="">Choose one</option>
+              {REFERRAL_SOURCES.map(([value, label]) => (
+                <option value={value}>{label}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Who referred you? (Optional)
+            <input
+              type="text"
+              name="referrerName"
+              maxlength="100"
+              placeholder="Their first and last name, if known"
+              aria-describedby="referral-note"
+            />
+          </label>
+          <label class="full-width">
+            Group, business name, or other details (Optional)
+            <input
+              type="text"
+              name="referralDetails"
+              maxlength="250"
+              placeholder="Which Facebook group or business? Or tell me where else you found me."
+            />
+          </label>
+        </div>
+        <p id="referral-note">
+          If someone sent you my way, share their name so I know who to thank!
+        </p>
       </section>
 
       <section class="submit-card">

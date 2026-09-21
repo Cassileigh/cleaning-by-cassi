@@ -17,6 +17,27 @@ this implementation keeps generic public protection/delivery checks.
 
 ## Limits of these checks
 
+The optional discovery section accepts a source from the shared
+`REFERRAL_SOURCES` allowlist, a referrer name (100 characters maximum), and
+group/business/other details (250 characters maximum). Facebook groups, Facebook
+pages/posts, business cards at local businesses, flyers, Google, personal referrals
+and other sources are distinguished. Empty or omitted fields remain valid. The
+fields inherit duplicate/file/control rejection, HTML escaping, and canonical
+retry identity; all three appear in the business notification only. Collecting
+these details does not promise a discount or automatically award referral credit.
+
+Implemented against main `9dfc8eb3635b9e3bd3f3fcb1c044e142fb24b651`.
+Mocked API coverage checks source validation, length limits, escaping, notification
+contents and retry identity; browser retry coverage submits the new fields.
+Exact-revision CI and deployment results remain separate release evidence.
+
+Local validation of this change passed all 62 regression tests, formatting,
+Astro/TypeScript checks (zero diagnostics), production build, Worker deployment
+dry run, repository audit, history audit (516 reachable text blobs) and npm audit
+(zero reported vulnerabilities). Local browser preview is blocked by the runtime's
+`uv_interface_addresses` error; browser behavior must pass the existing required
+GitHub checks before merge. No real quote emails were sent.
+
 Quote notifications and customer confirmations use the shared `src/mail.ts`
 transport. The authorized daily operational email uses that same transport and
 production credential but is invoked only by the Worker's scheduled handler.
