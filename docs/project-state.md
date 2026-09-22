@@ -1,0 +1,104 @@
+# Cleaning by Cassi — current roadmap
+
+This is the current findings register and document index. Updated September 22,
+2026 from live GitHub refs and source, not earlier conversation summaries.
+Historical audit sections retain evidence for their stated revisions only.
+
+## Source states and release evidence
+
+- Cleaning baseline: `286bf4a57f84b9b6f43d48eec5635353873bfade`.
+- AlienX main: `b7a04bf8fdb13f8c4a6c616047ea80af459b5331`.
+- AlienX PR #39: `83d3bdcfc908416be233b839504c90c5396d16aa`, still proposed
+  when inspected. Adapted alert enforcement; no claim that it was merged upstream.
+- AlienX PR #40 proposes a documentation index. This register uses Cleaning's
+  own contracts and business needs, not AlienX's Lab/Work content roadmap.
+- The baseline's five main gates and Production Smoke passed. Production Integrity
+  [35662232341](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/35662232341)
+  passed and a read-only production request returned the exact baseline revision.
+  This supersedes the earlier statement that deployment of the authentication
+  patch was unverified. It does not establish which build credential was used or
+  independently inspect the Cloudflare `CI approved main` execution log.
+- Refreshed [reference inventory](alienx-commit-inventory.md): 535 reachable
+  commits, including retained PR refs, read as complete first-parent patches.
+  This is automated inventory, not manual certification of every historical line.
+
+Local closeout validation: 75 regression tests, formatting, type checks (zero
+diagnostics), build, Wrangler deployment dry run and repository audit passed.
+The history scan covered 527 reachable text blobs without detector findings; npm
+audit reported zero vulnerabilities. The Cloudflare browser attempt stalled and
+was cancelled; it provided no additional account evidence.
+
+This closeout's new CI and production results must be read for its exact commit;
+previous green checks do not certify it. The five protected PR checks remain
+mandatory. The new code-scanning policy runs on main and must pass within Quality
+before the existing Cloudflare release gate can approve deployment.
+
+## Six-item closeout register
+
+| ID     | Priority / disposition                               | Work and acceptance                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------ | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CBC-01 | P1 / implemented; exact-revision CI required         | Production Integrity checks out the trusted workflow revision, passes the target release SHA only as data, disables package caches and retained credentials. Regression tests reject removed/commented controls, changed origin/branch/event guards and caching.                                                                                                                                           |
+| CBC-02 | P1 / implemented; main execution required            | Quality requires current CodeQL analyses for Actions and JavaScript/TypeScript, no analysis errors/warnings and zero open code-scanning alerts across tools/severities. Uses only read permissions, no install/cache, bounded wait and complete bounded alert pagination. Stale main, missing evidence and API failures block release. This does not inspect private Dependabot or secret-scanning alerts. |
+| CBC-03 | P2 / implemented                                     | Dedicated `.dev.vars.example` contains empty secrets and explicit local hostname policy. `.env.example` redirects to Worker configuration. Production hostnames/credentials are not local-test defaults. No PUBLIC variable architecture was copied from AlienX.                                                                                                                                           |
+| CBC-04 | P2 / implemented                                     | This current register, docs index, README and operating runbook distinguish baseline evidence, new implementation, and controls still requiring evidence. Future changes update this register and the relevant contract.                                                                                                                                                                                   |
+| CBC-05 | P1 / partly verified; account controls open          | Live required PR/check rules are active with no bypasses. September 21/22 heartbeat delivery and enabled daily monitor are evidenced below. The actual npm deployment command was exercised in an isolated rejection/recovery rehearsal with mocked GitHub evidence and a non-deploying Wrangler sentinel. Real account configuration, credential review and production recovery remain open below.        |
+| CBC-06 | P2 / partly completed; device/business evidence open | Missing DM Serif Display notice restored using upstream OFL plus embedded binary copyright. Removed the unused old 220×230 hero component/asset; current homepage uses the existing 1312×1199 photo. Keyboard/axe/Safari/Lighthouse gates remain mandatory. Real VoiceOver/iPad/touch/zoom and a verified dedicated Facebook review URL still require direct evidence.                                     |
+
+## Operational evidence and remaining blockers
+
+- GitHub ruleset 23093180 was read on September 22: active, PRs and all five
+  GitHub Actions contexts required, strict up-to-date checks, no bypasses, deletion
+  and force-push blocked. Review-thread resolution is currently not required;
+  enabling it requires administrator access. Legacy branch-protection access is
+  unavailable. Do not bypass the rules to apply future changes.
+- Read-only Resend metadata contained exactly one heartbeat for September 21 and
+  one for September 22, each marked delivered. The September 22 record confirms
+  sender `quotes@cleaningbycassi.com` and the fixed business recipient. Domain
+  status is verified and sending enabled. No unrelated customer body was read,
+  no replacement email was sent, and no successful quote was submitted.
+- The independent monitor is enabled for 05:10 America/Chicago; its last recorded
+  execution was September 22 at 10:11:57 UTC. Configuration and execution do not
+  establish receipt of a failure notification. A controlled notification exercise
+  remains unverified. Delivery means receiving-server acceptance, not inbox placement.
+- Private GitHub CodeQL/Dependabot/secret-scanning endpoints were rejected by the
+  connector's endpoint policy. The new Actions job can establish CodeQL inventory
+  using its dedicated permission. Private Dependabot and secret alerts still need
+  authorized account inspection; a clean npm/history scan is different evidence.
+- Resend key metadata exposed a credential-shaped display name. Its value is not
+  retained here. Treat it as potentially exposed until privately checked. The
+  listing provides no scope or mapping to the Worker's secret. An administrator
+  must identify usage, create a replacement with sending-only access to this
+  domain if required, update the Worker through the secret UI, verify delivery,
+  then revoke the old key. Do not revoke an unidentified live key or put values
+  in chat, docs, PRs or logs. Review obsolete onboarding keys at the same time.
+- No Cloudflare account-management capability is available in this session. WAF,
+  MFA/recovery, runtime credential mapping/rotation and build-log inspection cannot
+  be certified from public site responses. Existing user-evidenced build settings
+  remain recorded in the release runbook; no drift is assumed.
+- The isolated npm-command exercise proves failure before deployment and recovery
+  with valid mocked evidence. It is **not** a live failed release or Cloudflare
+  version rollback. A live recovery drill needs a known-good Worker version,
+  binding compatibility and an agreed maintenance window; see the runbook.
+- Local Wrangler preview failed with `uv_interface_addresses`; no browser pass is
+  claimed from that attempt. Required CI supplies real Chromium, native Safari,
+  WebKit, axe and Lighthouse execution. These do not emulate a human VoiceOver
+  user or establish real-device touch/zoom behavior.
+- Public search did not establish a dedicated Facebook recommendations URL for
+  this business. `/review` keeps the verified profile and accurately labelled
+  private email feedback; no speculative review link or invented review is added.
+- Lighthouse provides lab performance evidence. Real-user field metrics remain
+  unavailable; no analytics/tracking service was added just to manufacture them.
+
+## Next evidence to close owner-only items
+
+1. GitHub Security alert lists and account security settings: inspect privately;
+   record counts/disposition and MFA/recovery readiness, never secret values.
+2. Cloudflare: inspect WAF coverage, least-privilege credentials, the exact release
+   approval log and compatible version history. Coordinate the potentially exposed
+   mail-key rotation through the provider secret interfaces.
+3. Recovery/notifications: run the controlled exercise in the release runbook and
+   confirm failure notification receipt without intentionally dropping a heartbeat.
+4. On an actual iPad with VoiceOver, use [the device protocol](device-validation.md).
+   Record device/OS, both themes and observed outcomes; fix failures before closing.
+5. Open this business's Facebook Recommendations/Reviews interface and capture its
+   actual public destination before replacing the profile link.

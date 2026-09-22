@@ -1,5 +1,7 @@
 <div align="center">
 
+Current maintenance status and remaining evidence: [roadmap](docs/project-state.md) · [docs index](docs/README.md).
+
 <a href="https://cleaningbycassi.com">
   <img src="./docs/readme-banner.svg" alt="Cleaning by Cassi — residential cleaning throughout the Fox Cities" width="100%" />
 </a>
@@ -284,7 +286,7 @@ npx playwright test tests/quote-interactions.spec.cjs tests/navigation.spec.cjs 
 
 Native Safari requires macOS and enabled Safari WebDriver; the Safari workflow configures both. Tests cover stale form state, retries, timeouts, back navigation, header containment, and active-tab visibility. Safari timeout messages use the actual timeout signal rather than relying on browser-specific error wording.
 
-For local verification settings, copy `.env.example` to `.dev.vars` and use a dedicated Turnstile testing setup with matching hostnames. Automated browser tests mock verification and delivery and need no live email secrets. Production uses Worker secrets for `TURNSTILE_SECRET` and `RESEND_API_KEY`; hostname and site-key settings must match the intended widget. Never place production secrets in browser code.
+For local verification settings, copy `.dev.vars.example` to `.dev.vars` and use a dedicated Turnstile testing setup with matching hostnames. Automated browser tests mock verification and delivery and need no live email secrets. Production uses Worker secrets for `TURNSTILE_SECRET` and `RESEND_API_KEY`; hostname and site-key settings must match the intended widget. Never place production secrets in browser code.
 
 The original header artwork is retained in `docs/brand`; the build generates a 344px WebP for visitors. Repository-only artwork stays in `docs/`, and served assets stay in `public/`.
 
@@ -318,3 +320,19 @@ _Done with precision. Peace of mind delivered._
 <sub>Serving the Fox Cities and surrounding areas.</sub>
 
 </div>
+
+## Security closeout maintenance
+
+Production Integrity isolates its trusted verification code from the release it
+checks and disables package caching. On main pushes, Quality additionally requires
+fresh Actions and JavaScript/TypeScript CodeQL analyses and zero open code-scanning
+alerts. It uses a short-lived read-only workflow token; no new Cloudflare secret
+is needed. Missing/stale evidence or any open alert blocks release. All five PR
+checks remain required; a skipped PR-only instance of the main inventory job is
+not live-alert verification.
+
+Use `.dev.vars.example` for local Worker bindings. Keep secrets empty for static
+pages and mocked tests. The Worker reads `TURNSTILE_SITE_KEY` at runtime, so no
+`PUBLIC_*` build variable is introduced. See the [current roadmap](docs/project-state.md)
+for dated delivery evidence, remaining account/device work and exact-revision
+release requirements.

@@ -1,6 +1,6 @@
 # Repository maintenance
 
-Before changing this project, read docs/security-parity.md,
+Before changing this project, read docs/project-state.md, docs/security-parity.md,
 docs/quote-security-contract.md and docs/release-runbook.md. Treat historical
 audit notes as evidence for their recorded revision, not current facts.
 
