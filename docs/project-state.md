@@ -1,7 +1,8 @@
 # Cleaning by Cassi — current roadmap
 
-This is the current findings register and document index. Updated September 22,
-2026 from live GitHub refs and source, not earlier conversation summaries.
+This is the current findings register and document index. Roadmap updated September
+25, 2026 with live external header scans. The repository comparison below remains
+the September 22 snapshot; it is not a new AlienX comparison.
 Historical audit sections retain evidence for their stated revisions only.
 
 ## Source states and release evidence
@@ -102,3 +103,54 @@ before the existing Cloudflare release gate can approve deployment.
    Record device/OS, both themes and observed outcomes; fix failures before closing.
 5. Open this business's Facebook Recommendations/Reviews interface and capture its
    actual public destination before replacing the profile link.
+
+## September 25 external header baseline and follow-up
+
+Owner-approved roadmap additions; implementation remains open. The September 25
+scan did not alter production, submit a quote or send email. The fetched main ref
+is still `286bf4a57f84b9b6f43d48eec5635353873bfade`; PR #19 is separate,
+unmerged work. These external scans did not read `/api/release`, so their results
+are timestamped URL evidence, not exact-revision deployment certification.
+
+- [Mozilla Observatory](https://developer.mozilla.org/en-US/observatory/analyze?host=cleaningbycassi.com):
+  live homepage scan on September 25 around 12:45 CDT returned **A+, 140/100,
+  12/12 tests passed**. The score includes bonus points; the report URL can change
+  with later scans. Recorded bonuses: CSP +5, Referrer Policy +5, Subresource
+  Integrity +5, framing protection +5, COOP +10 and CORP +10. These are the
+  scanner's findings for the scanned page, not proof all routes/scripts have SRI.
+- [SSL.org security headers](https://www.ssl.org/security-headers): submitted
+  `https://cleaningbycassi.com` with redirects enabled. Response date September
+  25, 17:45:29 UTC; HTTP 200; **9/15 tracked headers present**, not a grade.
+  The form result is not encoded in its URL. HSTS was one year with
+  `includeSubDomains; preload`; this does not prove preload-list enrollment.
+- Both observations support the existing homepage header protections. Neither
+  verifies account security, private alert inventory, successful quote handling,
+  email delivery or every route. SSL.org's host-allowlist advisory is a hardening
+  opportunity, not evidence of an exploitable bypass on an allowed host.
+
+| ID     | Priority / status            | Work and closure criteria                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ------ | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CBC-07 | P3 / planned                 | Add `X-Permitted-Cross-Domain-Policies: none` and `display-capture=()` to the existing Permissions Policy where appropriate. Cover middleware/static response paths with regression assertions; verify actual live values after deployment and retain all existing protections.                                                                                                                                                                    |
+| CBC-08 | P2 / evaluation pending      | Evaluate nonce/hash-based script authorization with `strict-dynamic`, and Observatory's `default-src 'none'` suggestion. Inventory first-party modules, dynamic imports, Turnstile and cache behavior before choosing a policy. Close with a tested implementation or a documented compatibility-based disposition; adding a nonce alone does not remove host trust.                                                                               |
+| CBC-09 | P2 / evaluation pending      | Evaluate a monitored CSP reporting destination with an identified owner, data minimization/redaction, retention limits, body-size/rate limits and abuse controls. Avoid quote data or sensitive URLs in reports. Prove a synthetic non-production violation is received and actionable before calling monitoring operational; do not create an unbounded public ingestion endpoint.                                                                |
+| CBC-10 | P2 / coverage review planned | Compare existing production-integrity coverage with the scan findings; extend only missing checks across homepage, quote page, API success/error responses and representative static assets on both domains. Apply headers according to response type. Record exact-revision evidence, redirects, cache behavior and repeat external scan outcomes after rollout. Successful API paths use mocked providers; production probes must not send mail. |
+
+### Compatibility and bonus-point acceptance
+
+Preserve the current protections that earned bonus points, while prioritizing
+security and correct behavior over a numerical score. Assess COEP, stricter
+referrer policy, DNS-prefetch controls, Origin-Agent-Cluster and legacy XSS-filter
+settings individually; absence alone is not a required fix. COEP requires a
+specific cross-origin resource/Turnstile compatibility assessment. Do not apply
+`Clear-Site-Data` globally, enable deprecated XSS filtering, submit HSTS preload,
+or add arbitrary headers solely to reach 15/15 or raise the score.
+
+Before merging runtime changes: all five protected checks must pass on the
+up-to-date exact revision, including Chromium/WebKit/native Safari, both themes,
+keyboard navigation and quote validation/retry journeys. Confirm styles/scripts
+load without unexpected CSP violations and Turnstile remains functional; mocked
+provider tests cannot alone establish real-widget compatibility. No bypasses,
+weakened checks or real quote emails as tests. After deployment, verify the exact
+release and applicable live headers, repeat the scans and investigate any lost
+bonus protection or behavior regression before closing these items. An A+ is a
+baseline observation, not a guarantee of security or a reason to suppress findings.
