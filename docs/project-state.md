@@ -166,8 +166,12 @@ report identified approximately 67 KiB of image-delivery savings in the logo and
 homepage photo. Its about-page trace failed once with NO_NAVSTART and succeeded
 under the existing trace-only retry; the low homepage score was not retried.
 
-The follow-up generates AVIF/WebP versions of the same homepage photo at its
-original dimensions and encodes the existing 344px logo at quality 80 instead of 95. Source artwork, layout, alt text and all thresholds remain unchanged. This
+The follow-up generates an AVIF version of the same homepage photo at its
+original dimensions, retaining the original WebP fallback and encodes the existing 344px logo at quality 80 instead of 95. Source artwork, layout, alt text and all thresholds remain unchanged. This
 addresses measured image overhead; a new required Lighthouse run must establish
 whether performance now meets the budget. No pass or deployment is inferred
 from the optimization itself. CBC-07 through CBC-10 remain open roadmap work.
+
+The AVIF quality-45 candidate is 41,007 bytes versus the original 69,618-byte
+WebP; the logo is 32,210 bytes versus 41,064. No lower-quality replacement is
+forced on clients without AVIF support. Exact CI/browser results remain required.
