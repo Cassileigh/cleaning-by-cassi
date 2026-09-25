@@ -154,3 +154,20 @@ weakened checks or real quote emails as tests. After deployment, verify the exac
 release and applicable live headers, repeat the scans and investigate any lost
 bonus protection or behavior regression before closing these items. An A+ is a
 baseline observation, not a guarantee of security or a reason to suppress findings.
+
+## September 25 closeout verification blocker
+
+PR #19 at `8abe63d` passed Quality, accessibility/theme and responsive checks.
+[Lighthouse run 36169641237](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/36169641237)
+failed: homepage performance 0.82 against the unchanged 0.85 minimum (LCP 3.3s,
+TBT about 400ms). All applicable accessibility, best-practices and SEO scores
+were 1.00; the other seven routes met the performance budget. The retained
+report identified approximately 67 KiB of image-delivery savings in the logo and
+homepage photo. Its about-page trace failed once with NO_NAVSTART and succeeded
+under the existing trace-only retry; the low homepage score was not retried.
+
+The follow-up generates AVIF/WebP versions of the same homepage photo at its
+original dimensions and encodes the existing 344px logo at quality 80 instead of 95. Source artwork, layout, alt text and all thresholds remain unchanged. This
+addresses measured image overhead; a new required Lighthouse run must establish
+whether performance now meets the budget. No pass or deployment is inferred
+from the optimization itself. CBC-07 through CBC-10 remain open roadmap work.
