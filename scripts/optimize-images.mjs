@@ -10,6 +10,12 @@ for (const file of await readdir('public', { recursive: true })) {
 
 const jobs = [
   {
+    input: 'public/cleaned-living-room.webp',
+    webp: 'public/cleaned-living-room-optimized.webp',
+    avif: 'public/cleaned-living-room-optimized.avif',
+    width: 1312,
+  },
+  {
     input: 'public/homepage.jpg',
     webp: 'public/homepage-optimized.webp',
     avif: 'public/homepage-optimized.avif',
@@ -44,6 +50,6 @@ for (const job of jobs) {
 
 await sharp('docs/brand/header-logo-original.png')
   .resize({ width: 344 })
-  .webp({ quality: 95, effort: 6 })
+  .webp({ quality: 80, effort: 6 })
   .toFile('public/header-logo-optimized.webp');
 console.log('Optimized website images generated.');
