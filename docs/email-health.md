@@ -64,3 +64,12 @@ To disable the email job through a reviewed change, set `triggers.crons` to `[]`
 and deploy through the normal gate. Keep the shared mail transport and HTTP
 handler. Pause the separate delivery monitor when intentionally disabling sends.
 No production rollback has been performed as part of implementing this check.
+
+## September 22 delivery evidence
+
+Read-only provider metadata showed exactly one heartbeat dated September 21 and
+one dated September 22, each delivered. The September 22 record confirms the
+configured sender and fixed business recipient. The separate 05:10 Central
+monitor is enabled and recorded a September 22 execution. No replacement email
+or quote was sent. This establishes receiving-server acceptance, not inbox
+placement or receipt of a failure notification; see the current roadmap.

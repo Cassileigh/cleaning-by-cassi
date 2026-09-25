@@ -1,0 +1,9 @@
+# Local Wrangler bindings only. Copy to .dev.vars; never commit that file.
+# Static pages and mocked tests need no live provider secrets.
+TURNSTILE_SECRET=""
+RESEND_API_KEY=""
+# For a separately approved integration test, use dedicated test credentials,
+# the matching widget key and its verified local hostname policy.
+TURNSTILE_HOSTNAMES="localhost,127.0.0.1"
+TURNSTILE_SITE_KEY=""
+# Do not add GITHUB_READ_TOKEN: it is a Cloudflare build-only secret.

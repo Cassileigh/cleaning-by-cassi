@@ -12,16 +12,19 @@ import {
 
 <PageLayout title={SITE_TITLE} description={SITE_DESCRIPTION} class="home">
   <section class="hero" aria-labelledby="hero-title">
-    <img
-      class="hero-photo"
-      src="/cleaned-living-room.webp"
-      alt="Freshly cleaned living room with vacuumed carpet, polished wood furniture, and a tidy kitchen beyond"
-      width="1312"
-      height="1199"
-      loading="eager"
-      fetchpriority="high"
-      decoding="async"
-    />
+    <picture>
+      <source srcset="/cleaned-living-room-optimized.avif" type="image/avif" />
+      <img
+        class="hero-photo"
+        src="/cleaned-living-room.webp"
+        alt="Freshly cleaned living room with vacuumed carpet, polished wood furniture, and a tidy kitchen beyond"
+        width="1312"
+        height="1199"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-leaves hero-leaves-top" aria-hidden="true">
       ⌁

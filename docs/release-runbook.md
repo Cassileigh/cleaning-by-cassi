@@ -126,3 +126,38 @@ Run `npm ci`, `npm run format:check`, `npm run check`, and `npm run audit`. All 
 After deployment, verify `/api/release` matches the expected SHA and the production smoke passes. Configuration readiness is not proof of live mail delivery. Provider notifications, branch protection and a rehearsed rollback remain separate operational checks.
 
 The September 17 release at `66cc946` passed all five pre-release gates, Smoke and post-Smoke Integrity. An independent check started earlier saw a stale page policy despite the new release revision; the failed observation is retained in [security-parity.md](security-parity.md). Run manual integrity checks after Smoke succeeds, and investigate a mixed revision/policy result rather than weakening CSP or treating the release endpoint alone as sufficient evidence.
+
+## September 22 verification isolation and alert gate
+
+Production Integrity loads scripts from `github.workflow_sha` and passes the
+observed release SHA separately through `EXPECTED_REVISION`. Keep package caches
+disabled in that controller. Quality's main-only code-scanning job has only
+`contents: read` and `security-events: read`, no install/cache and no persistent
+credentials. It requires exact-main CodeQL analyses for Actions and JavaScript/
+TypeScript, no reported analysis errors/warnings, and zero open code-scanning
+alerts across tools and severities. API failures, incomplete pagination and stale
+main fail closed. The Cloudflare gate already requires the whole Quality workflow
+success, so this becomes release-required without weakening the five PR contexts.
+The read-only Cloudflare build token does not need broader security permissions.
+
+Do not dismiss alerts, skip the job, or lower severity thresholds to release.
+Fix findings through a protected PR and obtain new analyses. A CodeQL pass does
+not establish zero private Dependabot/secret-scanning alerts.
+
+## Controlled rejection and recovery protocol
+
+`node --test tests/deployment-rehearsal.test.mjs` runs the actual npm deploy command
+in a temporary clean repository, with mocked GitHub evidence and a Wrangler
+sentinel incapable of deploying. Failed Quality, denied API access and a stale
+main each stop before the sentinel; valid restored evidence reaches it. This is
+an offline command-chain rehearsal, not a live Cloudflare rollback.
+
+For an account-level rehearsal, first identify the known-good Worker version and
+record its commit, bindings, migrations, scheduled handler and secret compatibility.
+Prefer an isolated Worker with test bindings and cron triggers disabled; never
+reuse live mail credentials. Exercise rejection there, restore the known-good
+artifact and check routes/status/version. Confirm the owner receives the expected
+failure notification through a channel independent of email. Do not intentionally
+break the production heartbeat. A live production rollback requires an agreed
+maintenance window and verified version compatibility; do not roll back just to
+close a checklist. Record actual commands/outcomes with secret values redacted.

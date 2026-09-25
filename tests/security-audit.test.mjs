@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync, spawnSync } from 'node:child_process';
 import {
   mkdtempSync,
+  readFileSync,
   writeFileSync,
   mkdirSync,
   rmSync,
@@ -66,7 +67,8 @@ test('history detects a removed credential without exposing its value', () =>
     assert.ok(!(result.stdout + result.stderr).includes(token));
   }));
 
-const safeWorkflow = `permissions:
+const safeWorkflow =
+  `permissions:
   contents: read
 on:
   push:
@@ -77,7 +79,16 @@ jobs:
         with:
           persist-credentials: false
       - run: npm run audit
-`;
+` +
+  readFileSync(
+    new URL('../.github/workflows/quality.yml', import.meta.url),
+    'utf8',
+  ).slice(
+    readFileSync(
+      new URL('../.github/workflows/quality.yml', import.meta.url),
+      'utf8',
+    ).indexOf('  code-scanning-policy:'),
+  );
 function repositoryAudit(workflow = safeWorkflow, prepare = () => {}) {
   return fixture((dir) => {
     mkdirSync(join(dir, '.github/workflows'), { recursive: true });

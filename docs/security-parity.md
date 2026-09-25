@@ -1,5 +1,11 @@
 # Security parity — current-source audit
 
+Current dispositions: [project-state.md](project-state.md). The September 22
+closeout adapts AlienX main `b7a04bf` and proposed PR #39 `83d3bdc` with isolated
+production verification, read-only fresh-analysis/zero-alert enforcement and
+regression coverage. All earlier evidence remains revision-specific. The
+reference inventory now covers 535 reachable commits.
+
 ## September 21 release verification access
 
 Owner-provided Cloudflare logs for main
