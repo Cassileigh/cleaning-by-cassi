@@ -10,12 +10,6 @@ for (const file of await readdir('public', { recursive: true })) {
 
 const jobs = [
   {
-    input: 'public/cleaned-living-room.webp',
-    webp: 'public/cleaned-living-room-optimized.webp',
-    avif: 'public/cleaned-living-room-optimized.avif',
-    width: 1312,
-  },
-  {
     input: 'public/homepage.jpg',
     webp: 'public/homepage-optimized.webp',
     avif: 'public/homepage-optimized.avif',
@@ -47,6 +41,11 @@ for (const job of jobs) {
     base.clone().avif({ quality: 55, effort: 5 }).toFile(job.avif),
   ]);
 }
+
+// Keep the original WebP fallback; avoid a larger second-generation WebP.
+await sharp('public/cleaned-living-room.webp')
+  .avif({ quality: 45, effort: 5 })
+  .toFile('public/cleaned-living-room-optimized.avif');
 
 await sharp('docs/brand/header-logo-original.png')
   .resize({ width: 344 })
