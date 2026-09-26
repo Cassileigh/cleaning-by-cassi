@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 
 export function assertHeaders(headers, { status = false } = {}) {
   for (const [name, pattern] of Object.entries({
+    'x-permitted-cross-domain-policies': /^none$/i,
+    'cross-origin-opener-policy': /^same-origin$/i,
     'x-content-type-options': /^nosniff$/i,
     'x-frame-options': /^DENY$/i,
     'strict-transport-security': /max-age=31536000.*includeSubDomains/i,
@@ -11,6 +13,10 @@ export function assertHeaders(headers, { status = false } = {}) {
       : /^strict-origin-when-cross-origin$/,
   }))
     assert.match(headers.get(name) ?? '', pattern, name);
+  assert.match(
+    headers.get('permissions-policy') ?? '',
+    /(?:^|,\s*)display-capture=\(\)(?:,|$)/,
+  );
   const directives = new Map();
   for (const entry of (headers.get('content-security-policy') ?? '').split(
     ';',

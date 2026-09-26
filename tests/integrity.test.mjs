@@ -5,12 +5,15 @@ const headers = () =>
   new Headers({
     'content-security-policy':
       "default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self'; frame-ancestors 'none'; script-src 'self' https://challenges.cloudflare.com; frame-src https://challenges.cloudflare.com; connect-src 'self' https://challenges.cloudflare.com; style-src 'self'; font-src 'self'; img-src 'self' data:; upgrade-insecure-requests",
+    'x-permitted-cross-domain-policies': 'none',
+    'cross-origin-opener-policy': 'same-origin',
     'x-content-type-options': 'nosniff',
     'x-frame-options': 'DENY',
     'strict-transport-security': 'max-age=31536000; includeSubDomains',
     'cross-origin-resource-policy': 'same-origin',
     'referrer-policy': 'strict-origin-when-cross-origin',
-    'permissions-policy': 'camera=(), microphone=(), geolocation=()',
+    'permissions-policy':
+      'camera=(), microphone=(), geolocation=(), display-capture=()',
   });
 test('integrity accepts the intended script and response policy', () =>
   assertHeaders(headers()));
@@ -30,3 +33,15 @@ test('integrity rejects missing security headers', () => {
   h.delete('x-frame-options');
   assert.throws(() => assertHeaders(h));
 });
+
+for (const name of [
+  'x-permitted-cross-domain-policies',
+  'permissions-policy',
+  'cross-origin-opener-policy',
+]) {
+  test('integrity rejects removal of ' + name, () => {
+    const h = headers();
+    h.delete(name);
+    assert.throws(() => assertHeaders(h));
+  });
+}

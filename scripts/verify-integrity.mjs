@@ -67,6 +67,21 @@ for (const origin of origins) {
   }
   const status = await request(origin, '/api/status');
   assertHeaders(status.headers, { status: true });
+  const release = await request(origin, '/api/release');
+  assertHeaders(release.headers);
+  // Read-only error path: never submit a quote or send mail.
+  const missing = await request(origin, '/__integrity_missing_page');
+  if (missing.status !== 404) throw Error('Missing route must return 404');
+  assertHeaders(missing.headers);
+  for (const path of ['/navigation.js', '/header-logo-optimized.webp']) {
+    const asset = await request(origin, path);
+    if (
+      !asset.ok ||
+      asset.headers.get('x-permitted-cross-domain-policies') !== 'none' ||
+      !asset.headers.get('permissions-policy')?.includes('display-capture=()')
+    )
+      throw Error(path + ': static hardening missing');
+  }
   const data = await status.json();
   if (
     !status.ok ||

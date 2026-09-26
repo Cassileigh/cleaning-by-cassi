@@ -161,3 +161,16 @@ failure notification through a channel independent of email. Do not intentionall
 break the production heartbeat. A live production rollback requires an agreed
 maintenance window and verified version compatibility; do not roll back just to
 close a checklist. Record actual commands/outcomes with secret values redacted.
+
+## Auto-merge and September 26 recovery
+
+The owner enabled auto-merge. Queue reviewed repair PRs after local verification;
+GitHub must enforce the existing five checks, up-to-date main and no bypasses.
+If already mergeable, use a normal merge with an expected head SHA. Do not count
+PR checks as main release evidence: `e058d7c` passed PR checks but failed main
+Lighthouse and consequently did not pass production revision verification.
+After each merge, inspect main Quality (including CodeQL inventory), all other
+release workflows, exact production revision, Smoke and Integrity. Never retry a
+low performance score merely to obtain a green result or lower its threshold.
+CBC-07's middleware/static headers and broader Integrity assertions need actual
+production execution before being marked closed.

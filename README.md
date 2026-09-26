@@ -336,3 +336,11 @@ pages and mocked tests. The Worker reads `TURNSTILE_SITE_KEY` at runtime, so no
 `PUBLIC_*` build variable is introduced. See the [current roadmap](docs/project-state.md)
 for dated delivery evidence, remaining account/device work and exact-revision
 release requirements.
+
+### Protected auto-merge
+
+Repository auto-merge is enabled. Reviewed PRs may queue for merging after all five
+required checks pass on an up-to-date branch; no bypass or direct main push is
+permitted. Main release gates still run independently, and deployment is complete
+only after the exact revision passes Production Smoke and Integrity. Consult the
+[current release record](docs/project-state.md) for blockers and dated evidence.

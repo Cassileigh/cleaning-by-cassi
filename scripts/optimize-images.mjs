@@ -51,4 +51,8 @@ await sharp('docs/brand/header-logo-original.png')
   .resize({ width: 344 })
   .webp({ quality: 80, effort: 6 })
   .toFile('public/header-logo-optimized.webp');
+await sharp('docs/brand/header-logo-original.png')
+  .resize({ width: 176 })
+  .webp({ quality: 80, effort: 6 })
+  .toFile('public/header-logo-small-optimized.webp');
 console.log('Optimized website images generated.');

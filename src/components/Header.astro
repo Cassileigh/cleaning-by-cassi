@@ -8,6 +8,8 @@ import { SITE_TITLE } from '../consts';
     <a href="/" class="brand" aria-label={`${SITE_TITLE} home`}>
       <img
         src="/header-logo-optimized.webp"
+        srcset="/header-logo-small-optimized.webp 176w, /header-logo-optimized.webp 344w"
+        sizes="(max-width: 489px) 88px, (max-width: 955px) 18vw, 172px"
         alt="Cleaning by Cassi"
         width="344"
         height="172"

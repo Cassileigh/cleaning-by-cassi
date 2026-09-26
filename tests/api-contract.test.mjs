@@ -386,6 +386,7 @@ test('status hides implementation metadata and returns real failure codes', asyn
       assert.ok(!(key in data.checks));
     }
     assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+
     const head = await api.HEAD({});
     assert.equal(head.status, expected);
     assert.equal(await head.text(), '');
@@ -570,7 +571,15 @@ test('HTTPS upgrading stays enforced outside the explicit HTTP loopback preview'
 });
 
 test('edge limiter blocks requests and fails closed on missing or broken bindings', async () => {
-  for (const outcome of ['allow', 'deny', 'missing', 'throw']) {
+  for (const outcome of [
+    'allow',
+    'deny',
+    'truthy',
+    'empty',
+    'null',
+    'missing',
+    'throw',
+  ]) {
     const source = readFileSync(
       new URL('../src/middleware.ts', import.meta.url),
       'utf8',
@@ -594,7 +603,11 @@ test('edge limiter blocks requests and fails closed on missing or broken binding
               async limit({ key }) {
                 keys.push(key);
                 if (outcome === 'throw') throw Error('outage');
-                return { success: outcome === 'allow' };
+                if (outcome === 'null') return null;
+                if (outcome === 'empty') return {};
+                return {
+                  success: outcome === 'truthy' ? 'true' : outcome === 'allow',
+                };
               },
             },
           };
@@ -621,10 +634,22 @@ test('edge limiter blocks requests and fails closed on missing or broken binding
     );
     assert.equal(
       response.status,
-      outcome === 'allow' ? 200 : outcome === 'deny' ? 429 : 503,
+      outcome === 'allow'
+        ? 200
+        : ['deny', 'truthy', 'empty'].includes(outcome)
+          ? 429
+          : 503,
     );
     assert.equal(reached, outcome === 'allow');
     if (outcome !== 'missing') assert.deepEqual(keys, ['quote:192.0.2.7']);
     assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
+    assert.equal(
+      response.headers.get('x-permitted-cross-domain-policies'),
+      'none',
+    );
+    assert.match(
+      response.headers.get('permissions-policy'),
+      /display-capture=\(\)/,
+    );
   }
 });

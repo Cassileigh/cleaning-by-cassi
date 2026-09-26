@@ -24,11 +24,12 @@ const contentSecurityPolicy = [
 
 const securityHeaders = {
   'Content-Security-Policy': contentSecurityPolicy,
+  'X-Permitted-Cross-Domain-Policies': 'none',
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy':
-    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=(), display-capture=()',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
@@ -142,7 +143,7 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
       const result = await bindings.QUOTE_RATE_LIMITER.limit({
         key: `quote:${ip}`,
       });
-      if (!result.success)
+      if (result.success !== true)
         return json(
           {
             error: 'Too many quote requests. Please try again later.',
