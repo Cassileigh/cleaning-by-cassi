@@ -205,3 +205,14 @@ The scanners are heuristic: text blobs over 2 MiB and binary blobs are skipped; 
 ## Maintenance
 
 Future work must read this document, quote-security-contract.md and release-runbook.md, fetch current repository heads, update the commit inventory delta and attach exact-SHA validation evidence. Keep main as the sole production branch. Never close dependency PRs or remove branches simply to improve counts.
+
+## September 26 live comparison and release repair
+
+See [current register](project-state.md#september-26-current-release-repair) for the
+fresh `e058d7c` / AlienX `f67c91c` comparison and regenerated 552-commit inventory.
+The current-main Lighthouse failure is a real release blocker; prior PR success
+must not be reused as main deployment evidence. The repair keeps every threshold,
+adds malformed rate-limiter result regressions, restores rendering margin, retains
+both dependency PRs' updates and implements CBC-07 plus broader header verification.
+The earlier main-only CodeQL policy passed; remaining private account controls are
+not certified by that result. Auto-merge is authorized only through existing rules.

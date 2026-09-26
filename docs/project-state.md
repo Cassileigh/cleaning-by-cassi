@@ -1,11 +1,57 @@
 # Cleaning by Cassi — current roadmap
 
-This is the current findings register and document index. Roadmap updated September
-25, 2026 with live external header scans. The repository comparison below remains
-the September 22 snapshot; it is not a new AlienX comparison.
+This is the current findings register and document index. Latest comparison and
+release repair: September 26, 2026. The dated sections below retain earlier evidence.
 Historical audit sections retain evidence for their stated revisions only.
 
-## Source states and release evidence
+## September 26 current release repair
+
+Fresh Git fetches establish Cleaning main `e058d7cb44a35f8abb55862840287eec4684d9ef`
+and AlienX main `f67c91c0022a231dc0fd6764f129dbef710b993e` at the start of this review.
+The regenerated full reference inventory contains 552 reachable commits, including
+479 reachable from main. All patches are inventoried; this is not manual certification.
+
+- PR #19 merged with five green PR checks, but its **main** Lighthouse run
+  [36170839528](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/36170839528)
+  failed at 0.71, below the unchanged 0.85 requirement. Homepage TBT was 1,230 ms,
+  primarily layout/rendering work. Smoke [36263229515](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/36263229515)
+  failed waiting for the new revision. Do not describe `e058d7c` as deployed.
+- Main Quality passed, including the exact-revision CodeQL/zero-open-alert gate.
+  CBC-02 therefore has actual main execution evidence, distinct from release success.
+- Development dependency PR #21 passed all five checks and merged normally as
+  `89ebe6eb8e0541ca942aa54a35d9245facf4dc17`. Auto-merge cannot be queued when a PR
+  is already immediately mergeable; normal protected merge was used. The owner
+  enabled repository auto-merge; pending repair PRs may use it without bypasses.
+- The repair removes the homepage container's unnecessary full-page backdrop blur
+  (its sections have their own backgrounds) and generates a responsive 176px logo
+  from the original artwork. Layout, content, alt text and performance gates stay intact.
+- Production dependency PR #20's Astro 7.3.4 / adapter 14.3.3 updates are incorporated
+  into this repair for combined testing. Dependency work is retained, not discarded.
+- AlienX's latest limiter/Turnstile/honeypot/logging hardening largely matches existing
+  Cleaning protections. Adopted the remaining strict limiter check: only boolean
+  `true` permits processing; truthy strings, empty/null results and outages reject
+  before the handler. Cleaning already requires literal Turnstile success, a callable
+  readiness binding, sanitized logging, and strict honeypot/duplicate/file rejection.
+- AlienX's CodeQL gate and docs index are now merged; Cleaning already implements
+  their relevant controls. Its navigation fix is covered here by the existing active
+  link reveal script. Its Git approval-ref release architecture is different; the
+  existing fail-closed REST verifier and rejection rehearsal remain authoritative.
+  AlienX's Wrangler 4.137.0 is newer than the tested 4.136.3 from PR #21; this is a
+  tooling maintenance difference, not an established vulnerability.
+- CBC-07 is implemented in middleware and static asset headers: legacy cross-domain
+  policy denial and display-capture denial. CBC-10 now checks release API, a read-only
+  404 and representative JS/image assets in addition to existing pages/readiness.
+  Exact-main rollout and live header evidence remain required before closure.
+- CBC-08/09 remain evaluations: a strict script policy must account for Astro modules,
+  Turnstile and caching; reporting needs a monitored, privacy-filtered, abuse-bounded
+  destination. No untested CSP rewrite or unmonitored public collector was introduced.
+
+Local browser preview remains blocked by `uv_interface_addresses`; required GitHub
+browser/Lighthouse results must verify this patch. No real quote or replacement
+heartbeat was sent. Account credential/WAF/notification/recovery and real-device
+items below remain open until the required private evidence is available.
+
+## September 22 source states and release evidence
 
 - Cleaning baseline: `286bf4a57f84b9b6f43d48eec5635353873bfade`.
 - AlienX main: `b7a04bf8fdb13f8c4a6c616047ea80af459b5331`.
