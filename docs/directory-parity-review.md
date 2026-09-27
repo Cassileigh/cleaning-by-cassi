@@ -1,5 +1,12 @@
 # Directory parity review — September 26, 2026
 
+September 27 implementation follow-up: the comparison table below records the
+baseline, not the proposed branch. Candidate/static/permissions enforcement,
+CodeQL record-shape tests, QUALITY.md and tested lighthouse.config.cjs are now
+implemented on the follow-up branch, pending exact-revision CI and production
+verification. The existing single-sample threshold remains unchanged. No SVG
+favicon, CSP rewrite or account-setting change is included.
+
 Fresh sources: Cleaning `ee9f3e8898fcab7d250983d7ca733a29e87dc946`; AlienX
 `cf464ed512d799d1282c41894ac5ff18e4cacbd6`. The latest AlienX change is PR #47,
 which adopted several existing Cleaning controls. This is a scoped comparison,

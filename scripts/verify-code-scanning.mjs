@@ -9,7 +9,7 @@ export function assessAnalyses(analyses, sha) {
     throw Error('Invalid code-scanning analysis response');
   const latest = new Map();
   for (const analysis of analyses) {
-    if (!analysis || typeof analysis !== 'object')
+    if (!analysis || typeof analysis !== 'object' || Array.isArray(analysis))
       throw Error('Invalid CodeQL analysis record');
     if (analysis.tool?.name !== 'CodeQL' || analysis.ref !== ref) continue;
     if (
@@ -27,7 +27,10 @@ export function assessAnalyses(analyses, sha) {
     (analysis) => analysis.commit_sha === sha,
   );
   for (const analysis of current) {
-    if (analysis.warning?.trim())
+    if (
+      analysis.warning != null &&
+      (typeof analysis.warning !== 'string' || analysis.warning.trim())
+    )
       throw Error('CodeQL analysis reported a warning requiring review');
     if (typeof analysis.error !== 'string' || analysis.error.length)
       throw Error('CodeQL analysis reported an error or missing error status');

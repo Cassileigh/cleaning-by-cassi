@@ -5,6 +5,16 @@ export function workflowFailures(name, text) {
     .filter((line) => !line.trimStart().startsWith('#'))
     .join('\n');
   const failures = [];
+  if (name === 'responsive.yml') {
+    for (const control of [
+      'EXPECTED_REVISION: ${{ github.sha }}',
+      'run: node scripts/verify-integrity.mjs --candidate',
+    ])
+      if (!active.includes(control))
+        failures.push(`Candidate verification requires ${control}`);
+    if (/continue-on-error/.test(active))
+      failures.push('Candidate verification cannot ignore failures');
+  }
   if (
     name === 'production-integrity.yml' &&
     !/github\.event\.workflow_run\.head_repository\.full_name == github\.repository &&/.test(

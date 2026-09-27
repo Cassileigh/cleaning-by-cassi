@@ -1,5 +1,8 @@
 # Documentation index
 
+- [Quality policy](../QUALITY.md): acceptance gates and evidence boundaries;
+  [Lighthouse configuration](../lighthouse.config.cjs) preserves existing budgets.
+
 - [Current roadmap](project-state.md): current findings, six-item closeout,
   dated verification and access/device blockers. Start here.
 - [Security comparison](security-parity.md): reference comparison and chronological

@@ -34,8 +34,8 @@
     "typecheck": "node scripts/write-release.mjs && astro check && tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
     "test:browser": "playwright test",
-    "format": "prettier --write src public/*.js scripts tests .github README.md docs/*.md",
-    "format:check": "prettier --check src public/*.js scripts tests .github README.md docs/*.md"
+    "format": "prettier --write src public/*.js scripts tests .github README.md QUALITY.md lighthouse.config.cjs docs/*.md",
+    "format:check": "prettier --check src public/*.js scripts tests .github README.md QUALITY.md lighthouse.config.cjs docs/*.md"
   },
   "overrides": {
     "sharp": "0.35.4"

@@ -1,21 +1,9 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync, mkdirSync } from 'node:fs';
-const thresholds = {
-  accessibility: 0.95,
-  'best-practices': 0.95,
-  performance: 0.85,
-  seo: 0.95,
-};
-const urls = [
-  '',
-  'about',
-  'services',
-  'pricing',
-  'quote',
-  'quote-success',
-  'review',
-  'privacy',
-].map((route) => `http://127.0.0.1:4321/${route}`);
+import config from '../lighthouse.config.cjs';
+import { assessReport, shouldRetryTrace } from './lighthouse-assessment.mjs';
+const { thresholds } = config;
+const urls = config.routes.map((route) => new URL(route, config.origin).href);
 mkdirSync('.lighthouseci', { recursive: true });
 let failed = false;
 for (const [index, url] of urls.entries()) {
@@ -44,20 +32,22 @@ for (const [index, url] of urls.entries()) {
       report = JSON.parse(readFileSync(output, 'utf8'));
       // Retry only a known trace-collection failure, never a low score.
       // Preserve both reports so the retry remains visible in CI artifacts.
-      if (attempt === 0 && report.runtimeError?.code === 'NO_NAVSTART') {
+      if (shouldRetryTrace(report, attempt)) {
         console.warn(`${url}: retrying failed trace collection once`);
         continue;
       }
       if (failure) throw failure;
       break;
     }
-    if (report.runtimeError) throw new Error(report.runtimeError.message);
-    for (const [category, minimum] of Object.entries(thresholds)) {
-      // The receipt deliberately declares noindex; SEO eligibility is inapplicable.
-      if (category === 'seo' && url.endsWith('/quote-success')) continue;
-      const score = report.categories?.[category]?.score;
+    for (const { category, minimum, score, passed } of assessReport(
+      report,
+      thresholds,
+      {
+        noindex: config.noindexRoutes.includes(new URL(url).pathname),
+      },
+    )) {
       console.log(`${url} ${category}: ${score} (minimum ${minimum})`);
-      if (typeof score !== 'number' || score < minimum) {
+      if (!passed) {
         failed = true;
         for (const ref of report.categories?.[category]?.auditRefs ?? []) {
           const audit = report.audits?.[ref.id];

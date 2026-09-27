@@ -10,6 +10,17 @@ const analysis = (language, id = 1) => ({
   results_count: 0,
   tool: { name: 'CodeQL' },
 });
+test('malformed analyses and warning types fail with sanitized errors', async () => {
+  const { assessAnalyses } =
+    await import('../scripts/verify-code-scanning.mjs');
+  assert.throws(() => assessAnalyses([[]], sha));
+  for (const warning of [false, 0, [], {}, 'private-warning-text']) {
+    assert.throws(
+      () => assessAnalyses([{ ...analysis('actions'), warning }], sha),
+      (error) => !error.message.includes('private-warning-text'),
+    );
+  }
+});
 test('code-scanning policy requires both fresh language analyses', async () => {
   const { assessAnalyses } =
     await import('../scripts/verify-code-scanning.mjs');

@@ -4,6 +4,17 @@ This is the current findings register and document index. Latest comparison and
 release repair: September 26, 2026. The dated sections below retain earlier evidence.
 Historical audit sections retain evidence for their stated revisions only.
 
+September 27 implementation follow-up (not yet release approval): candidate
+integrity now shares the production assertions in the required Responsive job;
+static assets receive the complete baseline and all seven browser denials are
+parsed strictly. CodeQL malformed records/warnings fail closed. QUALITY.md and
+lighthouse.config.cjs consolidate policy with tested single-sample assessment.
+The original docs PR #23 is blocked by homepage Lighthouse 82 (required 85),
+run 36294276655. Its artifact shows 460 ms TBT and 110 ms forced layout attributed
+to navigation.js. The follow-up replaces synchronous geometry reads with
+post-layout intersection observations, retaining strip-only active-link scrolling.
+Do not treat the new source or mocked tests as browser/deployment evidence.
+
 Latest follow-up (September 26, 23:23 Central): [directory parity review](directory-parity-review.md)
 compares Cleaning `ee9f3e8` with AlienX `cf464ed`; the regenerated inventory now
 contains 554 reachable reference commits. Fresh Observatory scans remain A+/140

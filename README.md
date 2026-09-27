@@ -1,6 +1,6 @@
 <div align="center">
 
-Current maintenance status and remaining evidence: [roadmap](docs/project-state.md) · [docs index](docs/README.md).
+Current maintenance status and remaining evidence: [roadmap](docs/project-state.md) · [quality policy](QUALITY.md) · [docs index](docs/README.md).
 
 <a href="https://cleaningbycassi.com">
   <img src="./docs/readme-banner.svg" alt="Cleaning by Cassi — residential cleaning throughout the Fox Cities" width="100%" />
@@ -18,7 +18,7 @@ Current maintenance status and remaining evidence: [roadmap](docs/project-state.
 [![Accessibility](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/accessibility.yml)
 [![Safari](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/safari.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/safari.yml)
 [![Lighthouse](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/lighthouse.yml/badge.svg?branch=main)](https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/lighthouse.yml)
-[![Astro 7](https://img.shields.io/badge/Astro-7.3.2-1548F5?logo=astro&logoColor=white)](https://astro.build)
+[![Astro 7](https://img.shields.io/badge/Astro-7.3.4-1548F5?logo=astro&logoColor=white)](https://astro.build)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=211631)](https://workers.cloudflare.com)
 
 ### A cleaner home. A little more breathing room.
