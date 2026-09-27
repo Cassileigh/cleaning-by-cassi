@@ -216,3 +216,8 @@ adds malformed rate-limiter result regressions, restores rendering margin, retai
 both dependency PRs' updates and implements CBC-07 plus broader header verification.
 The earlier main-only CodeQL policy passed; remaining private account controls are
 not certified by that result. Auto-merge is authorized only through existing rules.
+
+Final runtime evidence: `ee9f3e8898fcab7d250983d7ca733a29e87dc946` passed every
+main gate, CodeQL inventory, Smoke 36275020798 and Integrity 36275277300 on both
+domains. See the [new directory review](directory-parity-review.md) for the later
+AlienX `cf464ed` comparison, fresh A+/140 versus A+/145 scans and remaining gaps.
