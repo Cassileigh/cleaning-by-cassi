@@ -1,5 +1,41 @@
 # Cleaning by Cassi — current roadmap
 
+## September 28 closeout status
+
+PR #23 head `07c168e` passed Quality, candidate/Responsive integrity, Lighthouse
+and CodeQL. Accessibility run 36294923217 and Safari run 36294923235 failed mobile
+navigation checks: the persistent observer fought manual scrolling and did not
+re-arm when font metrics changed without crossing its threshold. Native Safari's
+16 route/viewport checks and WebKit's other 24 journeys passed. These failures
+remain release blockers, not owner-verification items.
+
+The repair reveals the active link once per layout/font/pageshow change, then
+disconnects so manual scrolling remains usable. A small inner margin avoids
+edge clipping. Full-visibility assertions and all existing gates remain unchanged.
+Fresh PR, main and production results are required before patch closeout.
+
+Owner evidence still needed (no secret values in screenshots or chat):
+
+- GitHub private Dependabot and secret-scanning alert counts/dispositions;
+  account MFA and safely stored recovery methods for GitHub, Cloudflare and Resend.
+- Privately inspect the credential-shaped Resend key display name. If it contains
+  a real credential, identify its consumers, replace it with a domain-restricted
+  sending-only key, update the Worker secret, verify delivery, then revoke the old
+  key. Do not revoke an unidentified live key. Confirm build-token read-only scope.
+- Cloudflare WAF coverage and one successful build's `CI approved main <sha>` line;
+  previously verified main/build/deploy settings need not be provided again.
+- Confirm heartbeat inbox receipt and failure-notification receipt. Provider
+  delivery alone proves receiving-server acceptance. Recovery rehearsal needs a
+  compatible known-good version and isolated test configuration; no live outage
+  or production rollback merely to complete an audit checklist.
+
+CBC-08 stronger script CSP and CBC-09 reporting remain approved hardening
+follow-ups, not implemented patches or verified vulnerabilities. Their design and
+real-widget/monitored-destination requirements remain below; they cannot honestly
+be marked complete from a screenshot. Physical VoiceOver/iPad testing and the
+Facebook review destination remain usability/business work, separate from security
+patch release approval.
+
 This is the current findings register and document index. Latest comparison and
 release repair: September 26, 2026. The dated sections below retain earlier evidence.
 Historical audit sections retain evidence for their stated revisions only.
