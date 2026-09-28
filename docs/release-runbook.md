@@ -117,6 +117,15 @@ remaining execution-evidence item. No account integration was disconnected.
 
 ## Verification
 
+The required Responsive workflow now runs `node scripts/verify-integrity.mjs
+--candidate` against the fixed `http://127.0.0.1:4321` preview and exact
+`github.sha` build revision. It shares production CSP/header assertions, including
+all seven browser denials, API/error paths and four static assets. Only the local
+HTTP upgrade exception and configuration-readiness 503 are allowed in candidate
+mode; production still requires HTTPS and readiness 200. Both modes are read-only
+and reject unexpected redirects. See QUALITY.md and lighthouse.config.cjs for
+the unchanged single-sample performance and category budgets.
+
 CI previews must use `wrangler dev --host 127.0.0.1 --upstream-protocol http` (plus the test port). Wrangler otherwise derives the upstream origin from the production route, causing the production CSP to upgrade local WebKit assets to HTTPS even though the local listener serves HTTP. Keep the production security headers intact; do not strip them to make tests pass. The manually dispatched browser diagnostics workflow can isolate future navigation failures.
 
 Native Safari passed all 16 page/viewport checks at `2ffc6e6`. That run also identified Safari's generic fetch-abort wording, now handled through the actual timeout signal, and macOS's Option-Tab link navigation convention. The latest revision's full workflow results remain the release authority.

@@ -73,3 +73,13 @@ configured sender and fixed business recipient. The separate 05:10 Central
 monitor is enabled and recorded a September 22 execution. No replacement email
 or quote was sent. This establishes receiving-server acceptance, not inbox
 placement or receipt of a failure notification; see the current roadmap.
+
+## September 26 delivery evidence
+
+Read-only Resend metadata shows exactly one daily heartbeat on each date September
+21–26, all marked delivered. The exact September 26 heartbeat was created at
+10:01:18.771 UTC (05:01:18 CDT), from the configured quotes sender to the fixed
+business mailbox. The independent 05:10 America/Chicago monitor remains enabled
+and recorded a September 26 execution. No unrelated customer body was fetched,
+no replacement message was sent and no quote was submitted. This confirms
+receiving-server acceptance, not inbox placement or receipt of a failure alert.

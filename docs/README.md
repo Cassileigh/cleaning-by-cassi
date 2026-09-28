@@ -1,9 +1,14 @@
 # Documentation index
 
+- [Quality policy](../QUALITY.md): acceptance gates and evidence boundaries;
+  [Lighthouse configuration](../lighthouse.config.cjs) preserves existing budgets.
+
 - [Current roadmap](project-state.md): current findings, six-item closeout,
   dated verification and access/device blockers. Start here.
 - [Security comparison](security-parity.md): reference comparison and chronological
   security evidence. Earlier sections are not current release approval.
+- [Directory parity review](directory-parity-review.md): current AlienX comparison,
+  quality policy, Lighthouse configuration, favicon and remaining enforcement gaps.
 - [Quote contract](quote-security-contract.md): validation, Turnstile, rate limits,
   mail acceptance and response guarantees.
 - [Release runbook](release-runbook.md): protected merges, deployment and recovery.

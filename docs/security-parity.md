@@ -1,5 +1,15 @@
 # Security parity — current-source audit
 
+September 27 follow-up implementation adds shared fixed-loopback candidate
+verification to the required Responsive check, full static baseline protection,
+strict seven-capability permission parsing and malformed CodeQL-record rejection.
+QUALITY.md and lighthouse.config.cjs consolidate the existing acceptance policy.
+PR #23's original documentation-only head failed Lighthouse at homepage 82/85
+(run 36294276655); its artifact attributes forced reflow to navigation.js.
+The follow-up uses post-layout active-link observations and stronger browser
+visibility/resize tests. Exact new PR/main/production outcomes are pending;
+the historical successful release below does not approve these changes.
+
 Current dispositions: [project-state.md](project-state.md). The September 22
 closeout adapts AlienX main `b7a04bf` and proposed PR #39 `83d3bdc` with isolated
 production verification, read-only fresh-analysis/zero-alert enforcement and
@@ -216,3 +226,8 @@ adds malformed rate-limiter result regressions, restores rendering margin, retai
 both dependency PRs' updates and implements CBC-07 plus broader header verification.
 The earlier main-only CodeQL policy passed; remaining private account controls are
 not certified by that result. Auto-merge is authorized only through existing rules.
+
+Final runtime evidence: `ee9f3e8898fcab7d250983d7ca733a29e87dc946` passed every
+main gate, CodeQL inventory, Smoke 36275020798 and Integrity 36275277300 on both
+domains. See the [new directory review](directory-parity-review.md) for the later
+AlienX `cf464ed` comparison, fresh A+/140 versus A+/145 scans and remaining gaps.

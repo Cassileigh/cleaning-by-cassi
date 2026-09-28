@@ -41,7 +41,13 @@ test('Small-screen quote tab remains visible alongside logo and Facebook', async
   await page.setViewportSize({ width: 320, height: 700 });
   await page.goto(origin + '/quote', { waitUntil: 'domcontentloaded' });
   const active = page.locator('.internal-links [aria-current="page"]');
-  await expect(active).toBeInViewport();
+  await expect(active).toBeInViewport({ ratio: 1 });
+  await page.evaluate(() => document.fonts.ready);
+  await page.setViewportSize({ width: 390, height: 700 });
+  await expect(active).toBeInViewport({ ratio: 1 });
+  await page.setViewportSize({ width: 320, height: 700 });
+  await expect(active).toBeInViewport({ ratio: 1 });
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
   await expect(page.locator('.facebook-link')).toBeInViewport();
   await expect(page.locator('.brand-logo')).toBeInViewport();
 });

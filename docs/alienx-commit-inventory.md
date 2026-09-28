@@ -1,8 +1,8 @@
 # AlienX complete reachable-history comparison
 
-Refreshed: 2026-09-26. Main: `f67c91c0022a231dc0fd6764f129dbef710b993e`.
+Refreshed: 2026-09-27. Main: `cf464ed512d799d1282c41894ac5ff18e4cacbd6`.
 
-552 unique commits across all advertised refs; 479 are reachable from main. Includes retained pull-request refs, branch history and tags. Deleted/unreachable objects cannot be established from public Git.
+554 unique commits across all advertised refs; 480 are reachable from main. Includes retained pull-request refs, branch history and tags. Deleted/unreachable objects cannot be established from public Git.
 
 Every commit has a complete first-parent patch read locally (including root commits), a changed-file inventory and a SHA-256 digest of that patch. Merge rows compare with the first parent; all other parents also appear independently in the reachable commit inventory. Binary changes are represented by Git metadata, not pixel/content inspection. This removes the GitHub API large-patch omissions from the earlier 450-commit inventory. The disposition column maps historical changes to current Cleaning controls; it is automated triage backed by the current-source security review, not a claim of manually reviewing every historical line. See [security-parity.md](security-parity.md) for validation and limits. No patch contents or matched credential values are published.
 
@@ -11,8 +11,9 @@ Regenerate with `node scripts/compare-reference-history.mjs /path/to/fresh/alien
 ## Observed refs
 
 - `refs/heads/docs-closeout-2026-09-21 47e29e1794cc1177b4ca66504cd71302ca2a644f`
-- `refs/heads/main f67c91c0022a231dc0fd6764f129dbef710b993e`
+- `refs/heads/main cf464ed512d799d1282c41894ac5ff18e4cacbd6`
 - `refs/heads/security/close-release-evidence 10b067077d0c0ce075414c80246111f834ab6c81`
+- `refs/heads/security/directory-parity-review 37741f4244bf33406744ac2eaad4a46037d5cafa`
 - `refs/heads/security/inquiry-fail-closed-closeout 42e6dfe5d21cb2db6b1f50b2e3d185cc0cee14f3`
 - `refs/heads/security/live-code-scanning-policy 0fd014b0aef33a2efcb20c68ff7070eda470c7aa`
 - `refs/heads/security/workflow-keyboard-closeout b625d27da78235fd091c0526036d7e3912931005`
@@ -57,17 +58,20 @@ Regenerate with `node scripts/compare-reference-history.mjs /path/to/fresh/alien
 - `refs/pull/44/head 0edb13342b900994c4bebe2dea7bd77edbe117ee`
 - `refs/pull/45/head d31f8249ba82c6314654171e4b7148c05715c93c`
 - `refs/pull/46/head 42e6dfe5d21cb2db6b1f50b2e3d185cc0cee14f3`
+- `refs/pull/47/head 37741f4244bf33406744ac2eaad4a46037d5cafa`
 - `refs/pull/5/head a740b6c4f6029093728a46476692abbbd41df172`
 - `refs/pull/6/head 1b4eb4239f769435337ae95b9db65e2ff41703ea`
 - `refs/pull/7/head 6b94a280ab0b766c96fcd67ddba843ee43cea1dc`
 - `refs/pull/8/head c5f12471bbaedaf0d37d44e785d336c42c156282`
 - `refs/pull/9/head 441f4128a995accabb27f70d3e160fe336b323e8`
-- `refs/tags/alienx-ci-approved-main f67c91c0022a231dc0fd6764f129dbef710b993e`
+- `refs/tags/alienx-ci-approved-main cf464ed512d799d1282c41894ac5ff18e4cacbd6`
 
 ## Every reachable commit
 
 | Commit                                                                                                        | Scope           | Subject                                                                                | Files | Current Cleaning disposition                                                                                                                                                                                                                                                                                                                                                                            | Patch digest (SHA-256)                                             |
 | ------------------------------------------------------------------------------------------------------------- | --------------- | -------------------------------------------------------------------------------------- | ----: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| [cf464ed51](https://github.com/AlienX420710/alienx-smarthome/commit/cf464ed512d799d1282c41894ac5ff18e4cacbd6) | main            | security: close applicable Cassi directory parity gaps (#47)                           |    16 | quote/status contract + API/client tests; preserve stricter local guards; security scanners + integrity contract/workflow; current Quality/responsive/accessibility/Safari/Lighthouse gates; local docs own facts; reference history is not live evidence                                                                                                                                               | `e5d718849660dc144d4f47cd4f215acf0f14e9c6f8e3e5d1a72880eeaf8ff286` |
+| [37741f424](https://github.com/AlienX420710/alienx-smarthome/commit/37741f4244bf33406744ac2eaad4a46037d5cafa) | branch-only     | security: close applicable Cassi directory parity gaps                                 |    16 | quote/status contract + API/client tests; preserve stricter local guards; security scanners + integrity contract/workflow; current Quality/responsive/accessibility/Safari/Lighthouse gates; local docs own facts; reference history is not live evidence                                                                                                                                               | `e5d718849660dc144d4f47cd4f215acf0f14e9c6f8e3e5d1a72880eeaf8ff286` |
 | [f67c91c00](https://github.com/AlienX420710/alienx-smarthome/commit/f67c91c0022a231dc0fd6764f129dbef710b993e) | main            | fix: fail-closed contact protection and security closeout docs (#46)                   |     9 | quote/status contract + API/client tests; preserve stricter local guards; exact-SHA five-gate release + post-deploy evidence; no blind tag-gate copy; current Quality/responsive/accessibility/Safari/Lighthouse gates; local docs own facts; reference history is not live evidence                                                                                                                    | `92a3ab3f1d26bcf2c4a938e8128c9fe5b2925cf10cd64cb3372d1467fcec3306` |
 | [42e6dfe5d](https://github.com/AlienX420710/alienx-smarthome/commit/42e6dfe5d21cb2db6b1f50b2e3d185cc0cee14f3) | branch-only     | fix: degrade status when mandatory edge protection is missing                          |     4 | quote/status contract + API/client tests; preserve stricter local guards; current Quality/responsive/accessibility/Safari/Lighthouse gates; local docs own facts; reference history is not live evidence                                                                                                                                                                                                | `0468d25ce53f428843c4b142121c918be59f11614ca36c17049b0dae2afc53e4` |
 | [a8b0b2107](https://github.com/AlienX420710/alienx-smarthome/commit/a8b0b21072cd9a8bd25b80b2bc33919032a863b5) | branch-only     | fix: fail closed on missing inquiry protection and document safe releases              |     6 | quote/status contract + API/client tests; preserve stricter local guards; exact-SHA five-gate release + post-deploy evidence; no blind tag-gate copy; current Quality/responsive/accessibility/Safari/Lighthouse gates; local docs own facts; reference history is not live evidence                                                                                                                    | `73399a48d5565a3f0abff4e6d9f1de8283230f5a00431f15a34ee88c2a6e77fe` |

@@ -1,8 +1,71 @@
 # Cleaning by Cassi — current roadmap
 
+## September 28 closeout status
+
+PR #23 head `07c168e` passed Quality, candidate/Responsive integrity, Lighthouse
+and CodeQL. Accessibility run 36294923217 and Safari run 36294923235 failed mobile
+navigation checks: the persistent observer fought manual scrolling and did not
+re-arm when font metrics changed without crossing its threshold. Native Safari's
+16 route/viewport checks and WebKit's other 24 journeys passed. These failures
+remain release blockers, not owner-verification items.
+
+The repair reveals the active link once per layout/font/pageshow change, then
+disconnects so manual scrolling remains usable. A small inner margin avoids
+edge clipping. Full-visibility assertions and all existing gates remain unchanged.
+Fresh PR, main and production results are required before patch closeout.
+
+Owner evidence still needed (no secret values in screenshots or chat):
+
+- GitHub private Dependabot and secret-scanning alert counts/dispositions;
+  account MFA and safely stored recovery methods for GitHub, Cloudflare and Resend.
+- Privately inspect the credential-shaped Resend key display name. If it contains
+  a real credential, identify its consumers, replace it with a domain-restricted
+  sending-only key, update the Worker secret, verify delivery, then revoke the old
+  key. Do not revoke an unidentified live key. Confirm build-token read-only scope.
+- Cloudflare WAF coverage and one successful build's `CI approved main <sha>` line;
+  previously verified main/build/deploy settings need not be provided again.
+- Confirm heartbeat inbox receipt and failure-notification receipt. Provider
+  delivery alone proves receiving-server acceptance. Recovery rehearsal needs a
+  compatible known-good version and isolated test configuration; no live outage
+  or production rollback merely to complete an audit checklist.
+
+CBC-08 stronger script CSP and CBC-09 reporting remain approved hardening
+follow-ups, not implemented patches or verified vulnerabilities. Their design and
+real-widget/monitored-destination requirements remain below; they cannot honestly
+be marked complete from a screenshot. Physical VoiceOver/iPad testing and the
+Facebook review destination remain usability/business work, separate from security
+patch release approval.
+
 This is the current findings register and document index. Latest comparison and
 release repair: September 26, 2026. The dated sections below retain earlier evidence.
 Historical audit sections retain evidence for their stated revisions only.
+
+September 27 implementation follow-up (not yet release approval): candidate
+integrity now shares the production assertions in the required Responsive job;
+static assets receive the complete baseline and all seven browser denials are
+parsed strictly. CodeQL malformed records/warnings fail closed. QUALITY.md and
+lighthouse.config.cjs consolidate policy with tested single-sample assessment.
+The original docs PR #23 is blocked by homepage Lighthouse 82 (required 85),
+run 36294276655. Its artifact shows 460 ms TBT and 110 ms forced layout attributed
+to navigation.js. The follow-up replaces synchronous geometry reads with
+post-layout intersection observations, retaining strip-only active-link scrolling.
+Do not treat the new source or mocked tests as browser/deployment evidence.
+
+Latest follow-up (September 26, 23:23 Central): [directory parity review](directory-parity-review.md)
+compares Cleaning `ee9f3e8` with AlienX `cf464ed`; the regenerated inventory now
+contains 554 reachable reference commits. Fresh Observatory scans remain A+/140
+for Cleaning and A+/145 for AlienX. Candidate integrity, complete static headers,
+strict permission parsing and CodeQL record-shape tests are identified follow-ups.
+QUALITY.md/config consolidation and an SVG favicon are not missing security gates.
+
+Runtime closeout evidence: all five main gates and CodeQL inventory passed for
+`ee9f3e8898fcab7d250983d7ca733a29e87dc946`.
+[Smoke 36275020798](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/36275020798)
+and [Integrity 36275277300](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/36275277300)
+passed, verifying both domains and the new dynamic/static header coverage.
+CBC-07 is deployed and verified. CBC-10's expanded coverage passed, but the new
+candidate/static parity items remain open. CBC-08/09 and account/device evidence
+are not closed by the scanner score or production checks.
 
 ## September 26 current release repair
 
@@ -51,6 +114,21 @@ browser/Lighthouse results must verify this patch. No real quote or replacement
 heartbeat was sent. Account credential/WAF/notification/recovery and real-device
 items below remain open until the required private evidence is available.
 
+### Repair verification record
+
+PR #22 auto-merged as `ee9f3e8898fcab7d250983d7ca733a29e87dc946` after all
+five required checks passed on `aeaabbec6aa059cca06da3a9a06e85ca9b259865`.
+Local verification passed 78 tests, formatting, type checks, build, Worker dry run,
+repository audit and full-history scan (559 text blobs); npm reported zero findings.
+The PR Lighthouse homepage score was 94 with 0 ms TBT, and its captured mobile
+screenshot was inspected. The independent main Lighthouse run also scored 94.
+All applicable accessibility/best-practices/SEO scores remained 100.
+
+Dependabot closed #20 after its requested versions were incorporated. PR #21's
+merge `89ebe6e` independently passed all main gates, Smoke and Integrity before
+the repair. Auto-merge never bypassed a failed check. The final runtime evidence
+is recorded below after production verification; older failed observations remain.
+
 ## September 22 source states and release evidence
 
 - Cleaning baseline: `286bf4a57f84b9b6f43d48eec5635353873bfade`.
@@ -84,8 +162,8 @@ before the existing Cloudflare release gate can approve deployment.
 
 | ID     | Priority / disposition                               | Work and acceptance                                                                                                                                                                                                                                                                                                                                                                                        |
 | ------ | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CBC-01 | P1 / implemented; exact-revision CI required         | Production Integrity checks out the trusted workflow revision, passes the target release SHA only as data, disables package caches and retained credentials. Regression tests reject removed/commented controls, changed origin/branch/event guards and caching.                                                                                                                                           |
-| CBC-02 | P1 / implemented; main execution required            | Quality requires current CodeQL analyses for Actions and JavaScript/TypeScript, no analysis errors/warnings and zero open code-scanning alerts across tools/severities. Uses only read permissions, no install/cache, bounded wait and complete bounded alert pagination. Stale main, missing evidence and API failures block release. This does not inspect private Dependabot or secret-scanning alerts. |
+| CBC-01 | P1 / deployed; verified September 26                 | Production Integrity checks out the trusted workflow revision, passes the target release SHA only as data, disables package caches and retained credentials. Regression tests reject removed/commented controls, changed origin/branch/event guards and caching.                                                                                                                                           |
+| CBC-02 | P1 / main execution verified September 26            | Quality requires current CodeQL analyses for Actions and JavaScript/TypeScript, no analysis errors/warnings and zero open code-scanning alerts across tools/severities. Uses only read permissions, no install/cache, bounded wait and complete bounded alert pagination. Stale main, missing evidence and API failures block release. This does not inspect private Dependabot or secret-scanning alerts. |
 | CBC-03 | P2 / implemented                                     | Dedicated `.dev.vars.example` contains empty secrets and explicit local hostname policy. `.env.example` redirects to Worker configuration. Production hostnames/credentials are not local-test defaults. No PUBLIC variable architecture was copied from AlienX.                                                                                                                                           |
 | CBC-04 | P2 / implemented                                     | This current register, docs index, README and operating runbook distinguish baseline evidence, new implementation, and controls still requiring evidence. Future changes update this register and the relevant contract.                                                                                                                                                                                   |
 | CBC-05 | P1 / partly verified; account controls open          | Live required PR/check rules are active with no bypasses. September 21/22 heartbeat delivery and enabled daily monitor are evidenced below. The actual npm deployment command was exercised in an isolated rejection/recovery rehearsal with mocked GitHub evidence and a non-deploying Wrangler sentinel. Real account configuration, credential review and production recovery remain open below.        |
@@ -93,7 +171,7 @@ before the existing Cloudflare release gate can approve deployment.
 
 ## Operational evidence and remaining blockers
 
-- GitHub ruleset 23093180 was read on September 22: active, PRs and all five
+- GitHub ruleset 23093180 was read again on September 26: active, PRs and all five
   GitHub Actions contexts required, strict up-to-date checks, no bypasses, deletion
   and force-push blocked. Review-thread resolution is currently not required;
   enabling it requires administrator access. Legacy branch-protection access is
@@ -221,3 +299,31 @@ from the optimization itself. CBC-07 through CBC-10 remain open roadmap work.
 The AVIF quality-45 candidate is 41,007 bytes versus the original 69,618-byte
 WebP; the logo is 32,210 bytes versus 41,064. No lower-quality replacement is
 forced on clients without AVIF support. Exact CI/browser results remain required.
+
+## September 26 CSP evaluation and operational evidence
+
+The [email health record](email-health.md#september-26-delivery-evidence) now covers
+one delivered heartbeat per day September 21–26. The monitor is enabled; receipt
+of a failure notification and inbox placement remain separate evidence.
+
+CBC-08: current source has two parser-inserted same-origin scripts (`navigation.js`,
+`quote-form.js`) and the Turnstile loader. No application dynamic imports were
+found. Astro-generated hashes alone do not authorize these public `is:inline`
+external scripts under `strict-dynamic`. A nonce design must attach an unpredictable
+per-response nonce to each authorized script and its CSP header and account for
+shared HTML caching. Keep the current enforced policy until real-widget testing
+covers this complete path. Turnstile supports nonce propagation and strict-dynamic;
+compatibility is feasible, not a waiver of the work. Evaluation is complete enough
+to identify the design; implementation/real-widget validation remains open.
+
+CBC-09: no monitored report destination or consumer is configured. The proposed
+reporting design needs bounded validated bodies, abuse controls independent of
+claimed origin, query-string/document-URL/sample redaction, retention limits and
+an accountable recipient. A synthetic non-production violation must be received
+and actionable before closure. No unmonitored collector or ineffective reporting
+header was introduced; provisioning and operational verification remain open.
+
+Primary references reviewed September 26:
+[Cloudflare Turnstile CSP](https://developers.cloudflare.com/turnstile/reference/content-security-policy/)
+and [Astro CSP configuration](https://docs.astro.build/en/reference/configuration-reference/#securitycsp).
+These do not establish real-widget or account-control evidence for this site.

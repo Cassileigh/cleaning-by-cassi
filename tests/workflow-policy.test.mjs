@@ -4,6 +4,8 @@ import { readFileSync } from 'node:fs';
 import { workflowFailures } from '../scripts/workflow-policy.mjs';
 test('actual workflow guards survive regression and cannot be satisfied by comments', () => {
   for (const [name, control] of [
+    ['responsive.yml', 'run: node scripts/verify-integrity.mjs --candidate'],
+    ['responsive.yml', 'EXPECTED_REVISION: ${{ github.sha }}'],
     [
       'production-integrity.yml',
       'github.event.workflow_run.head_repository.full_name == github.repository &&',

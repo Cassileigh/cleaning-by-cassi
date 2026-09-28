@@ -1,6 +1,29 @@
 import assert from 'node:assert/strict';
 
-export function assertHeaders(headers, { status = false } = {}) {
+export function assertPermissionsPolicy(value) {
+  const permissions = new Map();
+  for (const entry of (value ?? '').split(',')) {
+    const match = /^\s*([a-z-]+)\s*=\s*(\([^)]*\))\s*$/.exec(entry);
+    assert.ok(match, 'Malformed Permissions-Policy directive');
+    assert.ok(
+      !permissions.has(match[1]),
+      'Duplicate Permissions-Policy directive',
+    );
+    permissions.set(match[1], match[2]);
+  }
+  for (const name of [
+    'camera',
+    'microphone',
+    'geolocation',
+    'payment',
+    'usb',
+    'browsing-topics',
+    'display-capture',
+  ])
+    assert.equal(permissions.get(name), '()', `Permissions-Policy ${name}`);
+}
+
+export function assertSecurityHeaders(headers, { status = false } = {}) {
   for (const [name, pattern] of Object.entries({
     'x-permitted-cross-domain-policies': /^none$/i,
     'cross-origin-opener-policy': /^same-origin$/i,
@@ -13,10 +36,14 @@ export function assertHeaders(headers, { status = false } = {}) {
       : /^strict-origin-when-cross-origin$/,
   }))
     assert.match(headers.get(name) ?? '', pattern, name);
-  assert.match(
-    headers.get('permissions-policy') ?? '',
-    /(?:^|,\s*)display-capture=\(\)(?:,|$)/,
-  );
+  assertPermissionsPolicy(headers.get('permissions-policy'));
+}
+
+export function assertHeaders(
+  headers,
+  { status = false, candidate = false } = {},
+) {
+  assertSecurityHeaders(headers, { status });
   const directives = new Map();
   for (const entry of (headers.get('content-security-policy') ?? '').split(
     ';',
@@ -44,7 +71,12 @@ export function assertHeaders(headers, { status = false } = {}) {
   expect('script-src', ["'self'", 'https://challenges.cloudflare.com']);
   expect('frame-src', ['https://challenges.cloudflare.com']);
   expect('connect-src', ["'self'", 'https://challenges.cloudflare.com']);
-  expect('upgrade-insecure-requests', []);
+  if (candidate)
+    assert.ok(
+      !directives.has('upgrade-insecure-requests'),
+      'HTTP loopback must not upgrade assets',
+    );
+  else expect('upgrade-insecure-requests', []);
   for (const name of [
     'script-src-elem',
     'script-src-attr',
@@ -52,8 +84,4 @@ export function assertHeaders(headers, { status = false } = {}) {
     'style-src-attr',
   ])
     assert.ok(!directives.has(name), 'Unexpected script policy override');
-  assert.match(
-    headers.get('permissions-policy') ?? '',
-    /camera=\(\).*microphone=\(\).*geolocation=\(\)/,
-  );
 }
