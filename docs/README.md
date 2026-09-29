@@ -1,5 +1,8 @@
 # Documentation index
 
+- [Shared project brain](shared-brain.md): startup protocol and links to the
+  canonical AlienX/Cleaning ChatGPT communication log and shared lessons.
+
 - [Quality policy](../QUALITY.md): acceptance gates and evidence boundaries;
   [Lighthouse configuration](../lighthouse.config.cjs) preserves existing budgets.
 
