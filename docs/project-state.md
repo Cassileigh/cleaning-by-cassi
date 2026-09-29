@@ -1,5 +1,14 @@
 # Cleaning by Cassi — current roadmap
 
+## Shared context adoption — September 29, 2026
+
+[Shared project brain](shared-brain.md) links the single AlienX/Cleaning
+communication log and evidence-backed lessons. This register and local contracts
+remain authoritative for Cleaning. No runtime code, recipients, schedules or
+release gates are unified. The initial handoff awaits this project's assistant's
+actual acknowledgment; no automatic chat synchronization or new production
+verification is claimed by adding these documents.
+
 ## September 29 clean-install repair
 
 Compared current AlienX main `5c13040` and its dependency fixes `1329338` /
