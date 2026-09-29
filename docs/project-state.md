@@ -1,5 +1,23 @@
 # Cleaning by Cassi — current roadmap
 
+## September 29 clean-install repair
+
+Compared current AlienX main `5c13040` and its dependency fixes `1329338` /
+`4151b19`: AlienX uses an unqualified exact `undici` 7.29.1 override and patched
+lockfile. Cleaning scopes the same exact patch to `miniflare`, covering both the
+Wrangler and Cloudflare Vite-plugin paths without overriding Astro/unifont's
+separate 8.10.2 requirement. The existing patched lockfile remains unchanged after
+npm regeneration. The previous version-qualified override's failed CI remains
+recorded below; installation must succeed from the committed lockfile.
+
+Local npm 11.9.0 clean installation passed, along with 95 regression tests,
+formatting, type checks, production build, Worker deployment dry run, repository
+and history scans (610 unique text blobs), and npm audit (zero findings).
+A separate empty-directory npm 10.9.4 clean install also passed and confirmed
+both patched Miniflare paths plus the unchanged Astro dependency. Exact-revision
+GitHub browser/release results remain required; local success is not production
+verification.
+
 ## September 28 dependency security follow-up
 
 PR #23 merged as `5522d60440bfe66cb92adde8f2ce3a75c9eb77d4` after all five
@@ -13,9 +31,11 @@ A new Dependabot security job [36490028380](https://github.com/Cassileigh/cleani
 failed with `security_update_not_possible`: Cloudflare's Miniflare dependencies
 pin vulnerable `undici` 7.29.0, while the job identifies 7.29.1 as the lowest
 non-vulnerable version. This evidence supersedes any inference from earlier clean
-npm audits. Apply an exact version-qualified override from 7.29.0 to 7.29.1;
+npm audits. Apply a Miniflare-scoped exact override to 7.29.1;
 keep Astro/unifont's separate 8.10.2 dependency unchanged. Remove the override only
-when upstream requirements no longer resolve the affected version. No advisory is
+when upstream requirements no longer resolve the affected version. The first
+version-qualified override failed GitHub clean installation (run 36490727584);
+parent scoping replaces it, with clean-install verification required. No advisory is
 ignored or dismissed. The lockfile, deployment dry run and all protected browser
 checks must pass before release of this dependency repair.
 
