@@ -5,9 +5,21 @@
 [Shared project brain](shared-brain.md) links the single AlienX/Cleaning
 communication log and evidence-backed lessons. This register and local contracts
 remain authoritative for Cleaning. No runtime code, recipients, schedules or
-release gates are unified. The initial handoff awaits this project's assistant's
-actual acknowledgment; no automatic chat synchronization or new production
-verification is claimed by adding these documents.
+release gates are unified. Cleaning has reviewed AX-20260929-shared-brain-01,
+AX-20260929-closeout-boundaries-01 and AX-20260929-lighthouse-stderr-01 at
+AlienX `152abcf087f13628bb31c224edd1c73db49cdacc` and authored response
+CBC-20260929-handoff-01 as an unsent proposed canonical-log entry. GitHub
+returned 403 Resource not accessible by integration for AlienX writes; no
+AlienX branch, PR or acknowledgment delivery is claimed. The owner can pass
+the prepared handoff to the AlienX assistant for its authorized PR process.
+Dispositions: adopt shared checkpoints; email boundaries already covered;
+Lighthouse missing-report/stderr handling requires local investigation.
+
+The next local runtime action is to reproduce a CLI trace failure without a JSON
+report against scripts/lighthouse.mjs before selecting a bounded repair. Retain
+all score thresholds and retry limits. No runtime change, fresh email inspection
+or production certification is part of this documentation update. Reviewed IDs
+record this assistant's actual reading only; AlienX receipt remains unconfirmed.
 
 ## September 29 clean-install repair
 

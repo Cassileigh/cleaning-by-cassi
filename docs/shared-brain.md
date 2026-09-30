@@ -1,6 +1,6 @@
 # Shared project brain — Cleaning by Cassi and AlienX
 
-Protocol version: 1. Established September 29, 2026 at the owner's request.
+Protocol version: 2. Established September 29, 2026 at the owner's request.
 
 ## Shared entry points
 
@@ -58,4 +58,17 @@ applications. Inspired by the project-context approach in
 [AI Second Brain](https://github.com/UZi-Senpai/Ai-Second-Brain/tree/604248d2c9f8c008b587a403bef196e39fa9d3b1),
 we reuse existing versioned docs rather than introducing a duplicate gitignored
 status store. No third-party skill code is installed. The initial AlienX handoff
-is pending a real response from this project's assistant.
+has a real Cleaning response prepared for the canonical communication log:
+[CBC-20260929-handoff-01](https://github.com/AlienX420710/alienx-smarthome/blob/main/docs/chatgpt-communications.md#cbc-20260929-handoff-01).
+The entry is unsent: this connection received GitHub 403 on AlienX writes.
+The anchor will resolve only after the AlienX assistant publishes the supplied
+handoff through its authorized PR process. No delivery is claimed.
+
+## Restart and checkpoint routine
+
+Use the canonical protocol's checkpoint routine and communication index. Keep
+Cleaning's reviewed message IDs, dispositions and next local action in
+project-state.md. Do not maintain a duplicate inbox or lesson database here.
+Read the actual entries behind the index; acknowledgment is not patch completion.
+At a checkpoint, update local evidence first, then publish a sanitized handoff
+through the normal PR process. A future session must fetch new entries explicitly.
