@@ -75,16 +75,27 @@ Header scores are dated observations: September 25 Observatory A+/140, SSL.org
 Clear-Site-Data, HSTS preload or unmonitored reports solely for a score. Preserve
 existing protection and prove real-widget compatibility before changing CSP.
 
-## Shared checkpoint
+## Cross-project coordination
 
-Use [one shared file](https://github.com/AlienX420710/alienx-smarthome/blob/main/docs/chatgpt-communications.md).
-Cleaning reviewed AX-20260929-shared-brain-01, AX-20260929-closeout-boundaries-01
-and AX-20260929-lighthouse-stderr-01 at AlienX 152abcf087f13628bb31c224edd1c73db49cdacc.
-PR #26 records adoption of checkpoints, email boundaries already covered and a
-local stderr/missing-report reproduction still needed before any patch.
-CBC-20260929-handoff-01 was unsent due to AlienX write 403. AlienX has now read
-the source review; no fabricated peer-authored message is introduced. Access
-differs by connection. Docs consolidation does not complete that investigation.
+Both owners' chat sessions can work on either repo under the local
+[coordination agreement](../AGENTS.md#cross-project-coordination). Cleaning owns
+its decisions and evidence; AlienX does not serve as its communication authority.
+Use linked local issues/PRs for task ownership, findings and dispositions.
+
+Historical review in PR #26 at ea93df984744d930e831796cc3f1856dbcdb5a7f:
+AX-20260929-shared-brain-01 checkpoints were adopted; its central-log design is
+now superseded. AX-20260929-closeout-boundaries-01 was already covered by local
+email rules. CBC-20260929-handoff-01 was unsent because AlienX writes returned
+403; AX-20260930-cassi-review-received-01 records the source review's receipt,
+not a peer-authored reply. The [final log snapshot](https://github.com/AlienX420710/alienx-smarthome/blob/640062d13e9de63b1160137cc01bfd8f3b2d23bf/docs/chatgpt-communications.md) preserves all entries.
+
+Pending: AX-20260929-lighthouse-stderr-01 requires a local stderr/missing-report
+reproduction and disposition before adapting AlienX PR #53's helper. Link that
+source in the Cleaning investigation issue/PR, retain budgets and bounded retry,
+and verify independently. No corresponding defect or adopted patch is claimed.
+The September 30 main homepage performance failure in
+[PR #27](https://github.com/Cassileigh/cleaning-by-cassi/pull/27) (0.84 versus 0.85)
+is separate; its release remains unverified by this documentation change.
 
 ## Historical evidence and consolidation map
 
@@ -93,20 +104,20 @@ not current instructions. Git history is unchanged; every removed file is
 recoverable. Read the relevant evidence instead of restoring whole audits to
 startup context. The current register retains unresolved findings and failures.
 
-| Previous document            | Preserved snapshot                                                                                                                    | Current owner                                                                                               |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `README.md`                  | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/README.md)                  | [Repository index](../README.md)                                                                            |
-| `alienx-commit-inventory.md` | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/alienx-commit-inventory.md) | This register; detailed history remains in the snapshot                                                     |
-| `asset-provenance.md`        | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/asset-provenance.md)        | [Contract](quote-security-contract.md)                                                                      |
-| `audit-follow-up.md`         | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/audit-follow-up.md)         | This register; detailed history remains in the snapshot                                                     |
-| `device-validation.md`       | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/device-validation.md)       | [Operations](release-runbook.md)                                                                            |
-| `directory-parity-review.md` | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/directory-parity-review.md) | This register; detailed history remains in the snapshot                                                     |
-| `email-health.md`            | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/email-health.md)            | [Operations](release-runbook.md)                                                                            |
-| `project-state.md`           | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/project-state.md)           | [project-state.md](project-state.md)                                                                        |
-| `quote-security-contract.md` | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/quote-security-contract.md) | [quote-security-contract.md](quote-security-contract.md)                                                    |
-| `release-runbook.md`         | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/release-runbook.md)         | [release-runbook.md](release-runbook.md)                                                                    |
-| `security-parity.md`         | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/security-parity.md)         | This register; detailed history remains in the snapshot                                                     |
-| `shared-brain.md`            | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/shared-brain.md)            | [Shared handoff](https://github.com/AlienX420710/alienx-smarthome/blob/main/docs/chatgpt-communications.md) |
+| Previous document            | Preserved snapshot                                                                                                                    | Current owner                                            |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| `README.md`                  | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/README.md)                  | [Repository index](../README.md)                         |
+| `alienx-commit-inventory.md` | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/alienx-commit-inventory.md) | This register; detailed history remains in the snapshot  |
+| `asset-provenance.md`        | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/asset-provenance.md)        | [Contract](quote-security-contract.md)                   |
+| `audit-follow-up.md`         | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/audit-follow-up.md)         | This register; detailed history remains in the snapshot  |
+| `device-validation.md`       | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/device-validation.md)       | [Operations](release-runbook.md)                         |
+| `directory-parity-review.md` | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/directory-parity-review.md) | This register; detailed history remains in the snapshot  |
+| `email-health.md`            | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/email-health.md)            | [Operations](release-runbook.md)                         |
+| `project-state.md`           | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/project-state.md)           | [project-state.md](project-state.md)                     |
+| `quote-security-contract.md` | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/quote-security-contract.md) | [quote-security-contract.md](quote-security-contract.md) |
+| `release-runbook.md`         | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/release-runbook.md)         | [release-runbook.md](release-runbook.md)                 |
+| `security-parity.md`         | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/security-parity.md)         | This register; detailed history remains in the snapshot  |
+| `shared-brain.md`            | [Read](https://github.com/Cassileigh/cleaning-by-cassi/blob/ea93df984744d930e831796cc3f1856dbcdb5a7f/docs/shared-brain.md)            | [Coordination](../AGENTS.md#cross-project-coordination)  |
 
 Generated commit inventories are optional research output, not current status or
 manual certification. Comparison scripts remain available; use a fresh mirror
