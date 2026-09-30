@@ -20,15 +20,15 @@ and later 36724726290 timed out waiting for the expected revision.
 failed with "Production revision did not stabilize" before full acceptance.
 These failures do not by themselves prove the older live site is down.
 
-PR #28 head e888750 also failed homepage Lighthouse in run 36746021701:
-performance 0.65, LCP 3020 ms, TBT 1939 ms, main-thread work 4040 ms
-(717 ms style/layout); forced-reflow diagnostics were clear. The repair lets
-the browser defer offscreen homepage sections, retaining their content and
-restoring full rendering for print. Scroll/focus/print regression coverage is
-included. This targets initial rendering cost; exact-head Lighthouse/browser
-results must establish the improvement. No thresholds, sampling or retry rules
-changed. Local browser installation was unavailable (invalid downloaded archive),
-so browser verification must run in CI. CBC-11 stays open until main and production pass.
+PR #28 head e888750 failed homepage Lighthouse run 36746021701 (0.65;
+TBT 1939 ms). Deferring offscreen sections at c41a7c0 passed all four other
+checks, including new scroll/focus/print coverage, but Lighthouse 36777620088
+still failed (0.60; 6196 ms main-thread work). No improvement was established;
+the CSS experiment is removed. The report also warns of a slow host CPU
+(benchmark 696.5). Trace assets and numeric diagnostics are now retained to
+identify the blocking tasks before another runtime correction. Budgets, sample
+count and retry rules stay unchanged; these failed scores remain evidence.
+Local browser installation was unavailable (invalid downloaded archive).
 
 Last previously recorded complete release evidence remains PR #25 main
 `dca370f9b02174c1b57de367ec92ff3f3c83c1f2`: Lighthouse 36646214983,

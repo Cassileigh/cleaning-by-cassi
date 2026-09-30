@@ -20,6 +20,7 @@ for (const [index, url] of urls.entries()) {
             url,
             `--only-categories=${Object.keys(thresholds).join(',')}`,
             '--output=json',
+            '--save-assets',
             `--output-path=${output}`,
             '--chrome-flags=--headless --no-sandbox',
             '--quiet',
@@ -52,7 +53,9 @@ for (const [index, url] of urls.entries()) {
         for (const ref of report.categories?.[category]?.auditRefs ?? []) {
           const audit = report.audits?.[ref.id];
           if (audit && typeof audit.score === 'number' && audit.score < 1)
-            console.error(`${ref.id}: ${audit.title}`);
+            console.error(
+              `${ref.id}: ${audit.title} (${audit.displayValue ?? audit.numericValue ?? audit.score})`,
+            );
         }
       }
     }
