@@ -210,3 +210,6 @@ src/release.json
 test-results/
 playwright-report/
 .lighthouseci/
+
+# On-demand historical research, not maintained context
+docs/*-commit-inventory.md
