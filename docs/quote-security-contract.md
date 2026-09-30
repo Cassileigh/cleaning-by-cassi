@@ -26,23 +26,11 @@ fields inherit duplicate/file/control rejection, HTML escaping, and canonical
 retry identity; all three appear in the business notification only. Collecting
 these details does not promise a discount or automatically award referral credit.
 
-Implemented against main `9dfc8eb3635b9e3bd3f3fcb1c044e142fb24b651`.
-Mocked API coverage checks source validation, length limits, escaping, notification
-contents and retry identity; browser retry coverage submits the new fields.
-Exact-revision CI and deployment results remain separate release evidence.
-
-Local validation of this change passed all 62 regression tests, formatting,
-Astro/TypeScript checks (zero diagnostics), production build, Worker deployment
-dry run, repository audit, history audit (516 reachable text blobs) and npm audit
-(zero reported vulnerabilities). Local browser preview is blocked by the runtime's
-`uv_interface_addresses` error; browser behavior must pass the existing required
-GitHub checks before merge. No real quote emails were sent.
-
 Quote notifications and customer confirmations use the shared `src/mail.ts`
 transport. The authorized daily operational email uses that same transport and
 production credential but is invoked only by the Worker's scheduled handler.
 It cannot bypass any quote validation or accept a caller-selected destination.
-See [email-health.md](email-health.md).
+See [email-health.md](release-runbook.md#email-health).
 
 A Resend email ID proves provider acceptance, not inbox delivery. Delivery/bounce verification requires provider events or mailbox confirmation. Canonical submitted fields and the submission ID produce stable, separate business/customer Resend idempotency keys; fresh Turnstile tokens and request IDs do not change those keys. Deduplication lasts only for the provider's retention window, not indefinitely. There is no durable application queue. A honeypot is supplemental, not a substitute for Turnstile or edge abuse controls.
 
@@ -57,3 +45,28 @@ Middleware enforces eight attempts per ten minutes in a bounded isolate-local ma
 Run `node --test tests/api-contract.test.mjs`. The tests execute the actual TypeScript handlers with Worker bindings and all external requests mocked; they send no email. CI runs these tests before the build, type check, Worker dry run and dependency audit. Production smoke checks use a deliberately invalid Turnstile token and do not test successful email delivery.
 
 GitHub Actions are pinned to verified release commit SHAs. Existing responsive and accessibility workflows remain in place. Passing these checks is not a guarantee that the repository has no vulnerabilities; review dependency and code-scanning findings separately.
+
+## Assets and brand
+
+September 22, 2026 source review:
+
+- `DMSerifDisplay-Regular.woff2` identifies itself as DM Serif Display Regular,
+  version 5.200, Colophon Foundry. Its embedded copyright identifies Adobe and
+  Google and its license identifies SIL OFL 1.1. The original upload commit is
+  `18dedd1`; its original download location is not established by Git history.
+- Added `public/fonts/DMSerifDisplay-OFL.txt` with the embedded copyright and the
+  [upstream family notice/license](https://github.com/google/fonts/blob/main/ofl/dmserifdisplay/OFL.txt).
+  This restores the missing distribution notice without claiming a reproducible
+  binary download history. Poppins already ships with `Poppins-OFL.txt`.
+- `HeroCleaningGraphic.astro` had no importers, and its 220×230 image had no other
+  references. Both unused files are removed. The current homepage hero remains
+  `cleaned-living-room.webp` (1312×1199); no image was enlarged or replaced.
+- The build decodes every shipped raster and generates existing AVIF/WebP variants
+  without enlarging source images. CI verifies actual image loading and layout.
+- All existing Lighthouse budgets are retained. Lab measurements do not establish
+  field Core Web Vitals; no additional tracking was introduced.
+
+Keep shared PageLayout, brand colors/artwork, one-row header and visible Facebook
+entry. Preserve shared service/frequency/add-on data; invent no pricing, surcharge
+or referral reward. docs/brand originals are build inputs, not redundant docs.
+All font licenses remain alongside fonts. Keep actual versions in package.json.

@@ -1,185 +1,161 @@
-# Release runbook
+# Cleaning — operations
 
-## Daily mail job
+## Protected release and build
 
-The owner authorized a fixed-recipient daily production health email at 05:00
-Central on September 20. See [email-health.md](email-health.md) for scheduling,
-delivery evidence, monitoring and safe disable instructions. This is the only
-scheduled real-mail exception; CI and production smoke do not send test quotes.
-The Worker entrypoint now retains Astro's `handle` for HTTP and adds a scheduled
-handler. Preserve the two UTC cron candidates and America/Chicago time guard.
+Follow AGENTS.md and QUALITY.md. main is the only production branch. Use scoped
+temporary PRs, preserve unrelated/dependency work, pass all five exact-head Actions
+checks on an up-to-date branch, then merge with expected head SHA. No bypass,
+direct main push, force reset, weakened gate or retry-until-green. Auto-merge only
+under these protections; delete temporary heads after verified merge. Observed
+ruleset 23093180 has no bypass; zero human approvals does not waive PRs/checks.
 
-## Enforced PR workflow and verified dashboard settings
+Cloudflare Workers: main, root /, npm run build, **npm run deploy**. Direct Wrangler
+bypasses the gate. Owner screenshots/settings confirmed this and disabled preview
+builds; actual CI approved main execution-log evidence is separate in current state.
+The verifier checks clean checkout, build SHA, current GitHub main and five
+successful main-push workflows, then rechecks main before deployment. Failed,
+missing, skipped, stale, inaccessible evidence or 12-minute timeout fails closed.
 
-Verified September 19: main ruleset 23093180 requires PRs, all five existing
-GitHub Actions checks and up-to-date branches; blocks deletion/force pushes; and
-has no bypass actors. Use temporary PR branches and normal protected merges.
-Zero required human approvals supports the solo maintainer, not direct pushes.
-Production Smoke and Integrity remain post-deployment checks, not merge gates.
+## Build credential
 
-Dashboard screenshot IMG_0248.png confirms repository Cassileigh/cleaning-by-cassi,
-production main, root /, build npm run build and deploy npm run deploy. The user
-confirmed turning off non-production branch builds afterward; GitHub PR checks
-remain enabled. No screenshot assets or account identifiers need to be committed.
-Cloudflare build-log execution evidence is still separate from these settings.
-See security-parity.md for the evidence and remaining account controls.
+GITHUB_READ_TOKEN is an optional build-only secret in Worker Settings > Build >
+Build variables and secrets, never runtime/PUBLIC/committed env. Fine-grained repo
+scope, Actions and Contents read-only, no writes, appropriate expiry. Enter through
+secure provider UI, not chat. Cloudflare's Git connection does not authenticate
+the verifier's REST calls. Anonymous calls share lower limits; authenticated errors
+must not fall back silently. Reject redirects and suppress credentials/provider
+bodies. Retain gates/freshness when retrying after credential repair. Old HTTP 403
+alone does not establish cause. Documentation makes no administrative changes.
 
-## September 19 closure checklist
+## Validation and production
 
-All checkout steps must set `persist-credentials: false`; repository tests enforce
-this and fail closed on unsupported permissions and unreadable tracked files.
-`npm run audit` now blocks on low, moderate, high and critical findings. Wrangler
-is now pinned to 4.133.0 via PR #14, with Prettier 3.9.7. Do not relax existing
-browser, accessibility or release gates.
+Run npm ci, format:check, check, audit and repository/history audits. check includes
+tests, types, build and Worker dry run; audit includes all severities. Keep exact
+dependency/action pins, full-history checkout, minimal explicit read permissions
+and persist-credentials: false. Never print secret detector matches.
 
-Account-level work is not complete until an authorized administrator records:
+Preview: wrangler dev --host 127.0.0.1 --upstream-protocol http with selected port.
+Preserve headers instead of removing CSP to fix loopback upgrade failures.
+Candidate integrity uses fixed http://127.0.0.1:4321 and exact build SHA; only
+local HTTP-upgrade/readiness-503 exceptions. Production requires HTTPS/readiness 200. Both reject unexpected redirects. Preserve native Safari, real WebKit and
+Chromium, themes, keyboard/quote retry coverage; providers are mocked, no mail.
+Keep build.inlineStylesheets: never and external same-origin styles.
 
-1. The effective main rules (including legacy protections), requiring Quality,
-   Responsive, Accessibility, Lighthouse and Safari results, and an explicit review
-   of all bypass actors. The ruleset portion is now verified above; legacy
-   protection inspection remains unavailable. Do not disable rules
-   to ship a patch. Record settings and exact check names, not credentials.
-2. Cloudflare production branch `main`, build `npm run build`, deploy `npm run deploy`,
-   and an actual log containing `CI approved main <sha>` for the released revision.
-3. Repository security-alert disposition, account MFA/recovery, least-privilege
-   deployment/mail credentials, and applicable edge abuse controls.
-4. Existing provider delivery/bounce evidence and an owner for failed delivery and
-   failed production-integrity alerts. Automated tests must not send real mail.
-5. A separately approved rollback rehearsal: identify a known-good deployed version,
-   confirm its bindings/configuration compatibility, rehearse outside production
-   where possible, and record recovery validation. Never roll back production merely
-   to mark an audit checklist complete.
+Lighthouse retains configured single-sample budgets/eight routes; only the noindex
+receipt omits SEO. Inspect diagnostics; do not retry poor scores just to pass.
+Main Quality requires exact-main fresh Actions/JS/TS CodeQL, no warnings/errors
+and zero open alerts through bounded complete pagination. Missing/malformed/API/
+stale evidence fails closed; no install, cache, persisted token or alert-write
+permissions in inventory. Private Dependabot/secret inventories remain separate.
 
-Record evidence dates/revisions and unresolved items in security-parity.md. Missing
-access is an open control, not a successful check. A patch can improve repository
-security without proving account settings or eliminating every possible vulnerability.
+After merge inspect five main gates and Workers Build. /api/release must match
+the exact SHA; verify Smoke then Integrity. Integrity uses trusted workflow SHA,
+release SHA as data, no package cache, three stable confirmations, both domains/
+eight routes, CSP/security/SEO/API/static checks and ending revision recheck.
+Old healthy deployment, CodeQL completion or release endpoint alone is insufficient.
+Investigate mixed revision/policy. Daily/manual checks remain available; Integrity
+is post-deployment, never a circular pre-deployment requirement.
 
-## September 16 security controls
+## Recovery and account evidence
 
-Quality now includes repository policy and sanitized full-history credential checks before dependency installation. Checkout must use fetch-depth: 0; shallow history fails closed. A detected historical value must be investigated privately, never printed into an issue or log.
+tests/deployment-rehearsal.test.mjs invokes actual npm deploy with mocked evidence
+and a non-deploying Wrangler sentinel. It is not live rejection/rollback. For an
+account exercise identify known-good version/SHA, bindings, migrations, scheduled
+handler and secret compatibility. Prefer isolated Worker/test bindings, crons off,
+no live mail credentials. Exercise rejection/restore, check routes/status/revision
+and actual independent notification receipt. Never intentionally break heartbeat.
+Live rollback needs agreed maintenance window and version compatibility. Record
+sanitized outcomes. Source cannot certify WAF, MFA, credential scope or account state.
 
-Production Integrity runs after a successful main-push Production Smoke result, or on its daily/manual schedule. It checks the exact expected revision three consecutive times before examining eight routes on both domains, security headers and script CSP, HTTPS redirects, receipt noindex, robots and sitemap availability; it rechecks the revision afterward. It makes no quote submissions or email sends. It is post-deployment evidence, not a sixth pre-deployment gate.
+## Email health
 
-The September 17 follow-up moves Astro page CSS to same-origin assets and removes inline-style, arbitrary HTTPS image and data-font allowances. Keep `build.inlineStylesheets: 'never'` paired with the strict middleware style policy. Rendered browser tests check both themes and detect server-authored inline styles or missing stylesheets. HTML email styles are separate and unaffected. Tooling is updated to the compatible reference versions, including TypeScript 6 rather than the unsupported TypeScript 7 proposal.
+- Cloudflare invokes `src/worker.ts` at 10:00 and 11:00 UTC. The scheduled handler
+  converts the event time to America/Chicago and only sends for 05:00, covering
+  CST/CDT without a seasonal configuration change. Provider processing can delay
+  arrival; 05:00 is the scheduled start, not an inbox-delivery deadline.
+- Sender: `Cleaning by Cassi <quotes@cleaningbycassi.com>`; recipient:
+  `cassandramorris@cleaningbycassi.com`, the existing business quote mailbox.
+- Quote notifications, customer confirmations and the heartbeat share
+  `src/mail.ts` and the production Worker's `RESEND_API_KEY`. No new secret is
+  required. No customer record or quote is created.
+- There is no public health-send endpoint, caller-selected recipient or special
+  token bypass. HTTP requests still use the Astro handler and existing middleware.
+- Event times more than 15 minutes old or over a minute in the future are ignored.
+  A stable date-only payload and `daily-email-health/YYYY-MM-DD` key deduplicate
+  retries within Resend's retention window, including across deployments.
+- Each request times out after ten seconds. There are at most three attempts with
+  short backoff for transient errors. Non-retryable provider responses fail.
+  Success requires HTTP success plus a nonempty provider ID. Exceptions and raw
+  provider responses are never logged; exhaustion fails the scheduled event.
 
-See [current security parity](security-parity.md) for exact verification and account-level limits. Do not infer that an added workflow has already passed.
+### What it proves
 
-## Cloudflare build configuration
+Receipt establishes the scheduled production Worker, its mail credential, shared
+sending code and delivery to this mailbox worked for that message. It does not
+exercise a real Turnstile challenge, customer form completion, or every customer
+mailbox. Existing mocked API/browser contracts cover validation and response
+behavior; production smoke rejects invalid submissions without sending email.
 
-### GitHub verification authentication
+Read-only Resend inspection on September 20 found the domain verified and sending
+enabled. Recent business notifications and customer confirmations were marked
+delivered. This is evidence for those messages only, not a guarantee of future
+delivery. Customer identities and message bodies are not retained in this audit.
 
-The September 21 deployment of referral update
-`f101a2c5d4e8891dbe3acb0cf8a30fe07a9fcd11` built successfully, then stopped at
-`GitHub verification unavailable: HTTP 403`. The old verifier made anonymous
-requests and did not retain rate-limit headers, so the log does not distinguish
-rate limiting from another GitHub denial. Cloudflare's repository connection does
-not automatically authenticate this script's separate GitHub API requests.
+### Monitoring and response
 
-The verifier now supports `GITHUB_READ_TOKEN`. Configure it under the Worker's
-**Settings > Build > Build variables and secrets**, as a **secret**. It is a
-build-only credential, not a Worker runtime binding, public variable or committed
-`.env` value. Use a fine-grained GitHub token limited to
-`Cassileigh/cleaning-by-cassi`, with **Actions: Read-only** and
-**Contents: Read-only** (Metadata read access is automatic), an appropriate expiry,
-and no write permissions. The owner must create and enter the credential through
-the provider's secure UI; never send it in chat or print it in build logs.
+A separate daily ChatGPT delivery monitor is intended to check Resend at 05:10
+America/Chicago for that day's exact subject, sender and recipient. Its activation
+is confirmed separately after deployment; the repository alone cannot enable it.
+It must not send a replacement email that would conceal a failed Worker job.
+Missing, bounced, failed or still-pending delivery should notify the owner through
+ChatGPT, independent of the email channel. A provider `delivered` event confirms
+receiving-server acceptance, not inbox placement or that the owner read it.
 
-When unset, public anonymous reads remain possible but share GitHub's lower IP
-rate limit. Rate-limit headers now produce a specific diagnostic. Other denied
-requests identify missing authentication or the need to check configured token
-expiry/access without printing secrets or provider bodies. Redirects are rejected.
-Errors remain fail-closed, with no anonymous fallback after an authenticated error.
-Retry a failed Cloudflare build after configuration; all five exact-main-push
-checks and the final current-main verification must still pass. Keep the deploy
-command `npm run deploy`.
+If missing: inspect the Cloudflare scheduled-event result, production revision,
+Resend delivery event and domain status. Check credential configuration privately;
+never copy a credential into a ticket or public workflow log. Distinguish provider
+acceptance from delivery. Do not weaken Turnstile or the quote endpoint to test it.
 
-Sources: [GitHub rate limits](https://docs.github.com/en/rest/using-the-rest-api/rate-limits-for-the-rest-api),
-[workflow run permissions](https://docs.github.com/en/rest/actions/workflow-runs),
-[Git reference permissions](https://docs.github.com/en/rest/git/refs), and
-[Cloudflare build configuration](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/).
+### Validation and rollback
 
-Tests cover authenticated/anonymous headers, fixed API destination, redirect
-rejection, rate-limit/access diagnostics, malformed JSON, and secret/error-body
-redaction. Creating the token, configuring the build secret, and successful
-production deployment remain unverified until separately completed.
+Unit tests mock all network calls and cover winter, summer, both DST transitions,
+stale events, fixed recipient, stable keys, missing configuration and failure
+handling. Build/type checks and deployment dry run must include the custom Worker
+entrypoint. Existing browser and five release gates remain mandatory.
 
-Production branch: `main`. Build command: `npm run build`. Deploy command: **`npm run deploy`**. Do not use the default direct `npx wrangler deploy` command: it bypasses the repository's CI gate.
+To disable the email job through a reviewed change, set `triggers.crons` to `[]`
+and deploy through the normal gate. Keep the shared mail transport and HTTP
+handler. Pause the separate delivery monitor when intentionally disabling sends.
+No production rollback has been performed as part of implementing this check.
 
-The gate checks a clean checkout, the build SHA, the current GitHub main SHA, and successful push runs for quality, responsive, accessibility, lighthouse, and safari. It rechecks main immediately before allowing Wrangler to run. GitHub errors, missing evidence, skipped or failed workflows and a 12-minute timeout block deployment. Production smoke runs afterward and is deliberately not a prerequisite that would deadlock deployment.
+Only the owner-authorized fixed-recipient 05:00 Chicago heartbeat is the scheduled
+real-mail exception. Do not send real quote test emails. Current observations and
+acceptance gaps live only in project-state.md.
 
-The dashboard deploy command and active GitHub ruleset are now evidenced above.
-Retain one Cloudflare build log showing `CI approved main <sha>` to close the
-remaining execution-evidence item. No account integration was disconnected.
+## Physical-device acceptance
 
-## Rate limiting
+Status: protocol prepared; actual iPad/VoiceOver results not yet supplied.
+Automated axe, keyboard, WebKit and native Safari tests remain separate evidence.
+No real quote or email is required for this protocol.
 
-`wrangler.json` provisions `QUOTE_RATE_LIMITER`, namespace `2107100912`, at eight requests per minute. Middleware also retains its eight-per-ten-minute isolate safety net. A missing or broken binding rejects submissions with 503; an exhausted limit returns 429. Cloudflare enforcement is shared within a location and is not a strict global quota. See [Cloudflare's rate limit binding documentation](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/).
+Record the release SHA from `/api/release`, device, OS/browser version, date,
+text-size/display settings and tester before starting. Repeat in light and dark.
 
-## Verification
-
-The required Responsive workflow now runs `node scripts/verify-integrity.mjs
---candidate` against the fixed `http://127.0.0.1:4321` preview and exact
-`github.sha` build revision. It shares production CSP/header assertions, including
-all seven browser denials, API/error paths and four static assets. Only the local
-HTTP upgrade exception and configuration-readiness 503 are allowed in candidate
-mode; production still requires HTTPS and readiness 200. Both modes are read-only
-and reject unexpected redirects. See QUALITY.md and lighthouse.config.cjs for
-the unchanged single-sample performance and category budgets.
-
-CI previews must use `wrangler dev --host 127.0.0.1 --upstream-protocol http` (plus the test port). Wrangler otherwise derives the upstream origin from the production route, causing the production CSP to upgrade local WebKit assets to HTTPS even though the local listener serves HTTP. Keep the production security headers intact; do not strip them to make tests pass. The manually dispatched browser diagnostics workflow can isolate future navigation failures.
-
-Native Safari passed all 16 page/viewport checks at `2ffc6e6`. That run also identified Safari's generic fetch-abort wording, now handled through the actual timeout signal, and macOS's Option-Tab link navigation convention. The latest revision's full workflow results remain the release authority.
-
-Run `npm ci`, `npm run format:check`, `npm run check`, and `npm run audit`. All five required workflows must pass on the exact release SHA. Safari uses native Safari WebDriver on macOS and retains the seven Playwright WebKit interaction tests. Automated quote journeys mock the verification/provider boundary and send no email. Lighthouse collects all eight routes and all four categories; only the intentionally noindex receipt omits the SEO threshold. Reports remain downloadable even on failure. Performance thresholds are not relaxed for noisy runs.
-
-After deployment, verify `/api/release` matches the expected SHA and the production smoke passes. Configuration readiness is not proof of live mail delivery. Provider notifications, branch protection and a rehearsed rollback remain separate operational checks.
-
-The September 17 release at `66cc946` passed all five pre-release gates, Smoke and post-Smoke Integrity. An independent check started earlier saw a stale page policy despite the new release revision; the failed observation is retained in [security-parity.md](security-parity.md). Run manual integrity checks after Smoke succeeds, and investigate a mixed revision/policy result rather than weakening CSP or treating the release endpoint alone as sufficient evidence.
-
-## September 22 verification isolation and alert gate
-
-Production Integrity loads scripts from `github.workflow_sha` and passes the
-observed release SHA separately through `EXPECTED_REVISION`. Keep package caches
-disabled in that controller. Quality's main-only code-scanning job has only
-`contents: read` and `security-events: read`, no install/cache and no persistent
-credentials. It requires exact-main CodeQL analyses for Actions and JavaScript/
-TypeScript, no reported analysis errors/warnings, and zero open code-scanning
-alerts across tools and severities. API failures, incomplete pagination and stale
-main fail closed. The Cloudflare gate already requires the whole Quality workflow
-success, so this becomes release-required without weakening the five PR contexts.
-The read-only Cloudflare build token does not need broader security permissions.
-
-Do not dismiss alerts, skip the job, or lower severity thresholds to release.
-Fix findings through a protected PR and obtain new analyses. A CodeQL pass does
-not establish zero private Dependabot/secret-scanning alerts.
-
-## Controlled rejection and recovery protocol
-
-`node --test tests/deployment-rehearsal.test.mjs` runs the actual npm deploy command
-in a temporary clean repository, with mocked GitHub evidence and a Wrangler
-sentinel incapable of deploying. Failed Quality, denied API access and a stale
-main each stop before the sentinel; valid restored evidence reaches it. This is
-an offline command-chain rehearsal, not a live Cloudflare rollback.
-
-For an account-level rehearsal, first identify the known-good Worker version and
-record its commit, bindings, migrations, scheduled handler and secret compatibility.
-Prefer an isolated Worker with test bindings and cron triggers disabled; never
-reuse live mail credentials. Exercise rejection there, restore the known-good
-artifact and check routes/status/version. Confirm the owner receives the expected
-failure notification through a channel independent of email. Do not intentionally
-break the production heartbeat. A live production rollback requires an agreed
-maintenance window and verified version compatibility; do not roll back just to
-close a checklist. Record actual commands/outcomes with secret values redacted.
-
-## Auto-merge and September 26 recovery
-
-The owner enabled auto-merge. Queue reviewed repair PRs after local verification;
-GitHub must enforce the existing five checks, up-to-date main and no bypasses.
-If already mergeable, use a normal merge with an expected head SHA. Do not count
-PR checks as main release evidence: `e058d7c` passed PR checks but failed main
-Lighthouse and consequently did not pass production revision verification.
-After each merge, inspect main Quality (including CodeQL inventory), all other
-release workflows, exact production revision, Smoke and Integrity. Never retry a
-low performance score merely to obtain a green result or lower its threshold.
-CBC-07's middleware/static headers and broader Integrity assertions need actual
-production execution before being marked closed.
+1. With VoiceOver, traverse the homepage headings, landmarks, navigation, service
+   area/contact section and footer. Confirm meaningful names, sensible order and
+   decorative imagery skipped. Activate the skip link and verify main is reached.
+2. Visit About, Services, Pricing, Quote, Review and Privacy using touch and an
+   attached keyboard. Verify Tab/Shift+Tab, visible focus, Enter activation and
+   no keyboard trap. Check navigation after back/forward cache restoration.
+3. On Quote, read every field label, required state and grouped option. Leave the
+   hidden spam trap untouched. Submit an empty form only: confirm native required
+   errors are announced and the relevant control is reachable. Do not submit a
+   populated real form to test this protocol. Success/retry paths are mocked in CI.
+4. Increase text size and zoom to 200%, then test a 320 CSS-pixel equivalent width
+   for reflow. Check clipped labels, horizontal page scrolling, fixed elements
+   obscuring focus, contact email wrapping and scrollable header reachability.
+5. Enable Reduce Motion, change theme while on a page, rotate portrait/landscape,
+   and verify menus, links, focus and readable contrast remain usable.
+6. Record failures with route, exact steps and screenshot where helpful. Never
+   record customer data. Record pass/fail/not-tested for each step; not-tested is
+   not a pass. Attach evidence to the current roadmap before closing CBC-06.
