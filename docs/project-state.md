@@ -20,15 +20,21 @@ and later 36724726290 timed out waiting for the expected revision.
 failed with "Production revision did not stabilize" before full acceptance.
 These failures do not by themselves prove the older live site is down.
 
-PR #28 head e888750 failed homepage Lighthouse run 36746021701 (0.65;
-TBT 1939 ms). Deferring offscreen sections at c41a7c0 passed all four other
-checks, including new scroll/focus/print coverage, but Lighthouse 36777620088
-still failed (0.60; 6196 ms main-thread work). No improvement was established;
-the CSS experiment is removed. The report also warns of a slow host CPU
-(benchmark 696.5). Trace assets and numeric diagnostics are now retained to
-identify the blocking tasks before another runtime correction. Budgets, sample
-count and retry rules stay unchanged; these failed scores remain evidence.
-Local browser installation was unavailable (invalid downloaded archive).
+PR #28 head e888750 failed Lighthouse 36746021701 (0.65; TBT 1939 ms).
+The offscreen-rendering experiment at c41a7c0 passed the four other gates but
+failed Lighthouse 36777620088 (0.60); it was removed. Diagnostic-only head
+de0d7c6 scored 0.85, which is variability evidence, not a runtime fix. Its trace
+showed 104 ms AVIF decode. Failing and passing reports used Chrome 154 and 153
+respectively, with CPU benchmarks 696.5 versus 2877.5. These are observations,
+not proof that the browser version alone caused the regression.
+
+The next repair serves the existing WebP hero (same artwork/layout) to avoid
+that AVIF decode and uses Playwright's exact locked Chromium for Lighthouse,
+removing runner-installed browser drift. Full traces/numeric diagnostics are
+retained. All budgets, cold-cache semantics, sample counts and retry rules stay
+unchanged. Scroll/focus/print regression coverage passed in the prior CI run.
+Local browser installation failed (invalid archive); fresh exact-head CI and
+main/Workers/Smoke/Integrity must verify the repair before CBC-11 closes.
 
 Last previously recorded complete release evidence remains PR #25 main
 `dca370f9b02174c1b57de367ec92ff3f3c83c1f2`: Lighthouse 36646214983,
