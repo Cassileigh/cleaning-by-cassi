@@ -22,10 +22,11 @@ Historical pins are not current upgrade recommendations.
 ## Findings and acceptance
 
 September 30 documentation-cleanup validation: 95 tests, types/build/dry-run and
-repository/history scans passed locally. The all-severity dependency audit failed
-on moderate `fast-uri` advisory GHSA-hrr3-gc8f-f4qj. Dependency remediation and a
-clean audit remain required before this new revision can pass release gates;
-historical zero-audit records above do not override this finding.
+repository/history scans passed locally. The initial all-severity dependency audit
+failed on moderate `fast-uri` advisory GHSA-hrr3-gc8f-f4qj. The lockfile now resolves
+3.1.8 within AJV's existing range; clean-install audit reports zero vulnerabilities
+and the advisory's encoded-host reproducer passes. Exact-head CI and subsequent
+main deployment evidence remain separate requirements.
 
 | ID     | Disposition                                            | Evidence or remaining acceptance                                                                                                                                                                                  |
 | ------ | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
