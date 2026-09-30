@@ -206,6 +206,21 @@ import {
     background: var(--surface);
   }
 
+  /* Keep offscreen sections in the document and accessibility tree, while
+     letting the browser defer their initial layout and painting. Remember
+     measured heights after reveal to keep return scrolling stable. */
+  :global(.home > :not(.hero)) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
+  }
+
+  @media print {
+    :global(.home > :not(.hero)) {
+      content-visibility: visible;
+      contain-intrinsic-size: none;
+    }
+  }
+
   .hero {
     position: relative;
     min-height: clamp(620px, 76vh, 850px);
