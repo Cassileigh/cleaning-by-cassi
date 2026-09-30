@@ -36,7 +36,8 @@ jobs:
         run: npm ci
 
       - name: Install the pinned measurement browser
-        run: npx playwright install --with-deps chromium
+        timeout-minutes: 5
+        run: npx playwright install chromium
 
       - name: Select the pinned measurement browser
         run: node -e 'console.log("CHROME_PATH=" + require("playwright").chromium.executablePath())' >> "$GITHUB_ENV"
