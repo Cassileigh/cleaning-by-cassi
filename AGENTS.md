@@ -68,3 +68,16 @@ owner rather than adding another audit/closeout/onboarding file. Detailed histor
 stays in PRs and immutable Git links. Preserve unresolved IDs, failures and decisions.
 Inventories are optional uncommitted research, not startup context. Do not repeat
 volatile status/test counts in README/primers. Keep reporting policies and licenses.
+
+## Documentation closeout
+
+Every PR states which existing subject-owner documents changed, or why none need
+changes. Use the issue/PR templates for scope, base SHA, session when known,
+acceptance, actual checks, peer disposition and next action. Link existing work
+before opening another task. Public vulnerability details go through SECURITY.md.
+
+After a runtime, architecture, procedure or acceptance change establishes a new
+verified release, update project-state.md with exact-main evidence and remaining
+limits. Do not close production acceptance on merge alone. An evidence-only
+closeout does not recursively require a second evidence-only PR. Keep detailed
+attempt logs in the issue/PR; do not add a transcript, audit or status document.

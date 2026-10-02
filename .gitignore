@@ -213,3 +213,5 @@ playwright-report/
 
 # On-demand historical research, not maintained context
 docs/*-commit-inventory.md
+
+safari-diagnostics/

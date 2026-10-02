@@ -43,6 +43,11 @@ Keep build.inlineStylesheets: never and external same-origin styles.
 
 Lighthouse retains configured single-sample budgets/eight routes; only the noindex
 receipt omits SEO. Inspect diagnostics; do not retry poor scores just to pass.
+The runner captures each attempt's stdout/stderr before reading its report and
+retries only NO_NAVSTART once; missing, malformed, unrelated and low-score results
+fail. Safari waits for document/font/transition readiness, then applies unchanged
+geometry assertions. Its separate safari-diagnostics directory survives WebKit's
+output cleanup. Attach attempt evidence to the linked local issue/PR.
 Main Quality requires exact-main fresh Actions/JS/TS CodeQL, no warnings/errors
 and zero open alerts through bounded complete pagination. Missing/malformed/API/
 stale evidence fails closed; no install, cache, persisted token or alert-write

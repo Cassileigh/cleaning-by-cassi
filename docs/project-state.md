@@ -1,6 +1,6 @@
 # Cleaning by Cassi — current state
 
-Consolidated September 30, 2026. This is the sole current findings register.
+Updated October 2, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
@@ -41,6 +41,13 @@ Last previously recorded complete release evidence remains PR #25 main
 Smoke 36646214948 and Integrity 36646563085. This is historical, not a claim
 that this SHA is currently served. Preserve failed override run 36490727584.
 
+October 2 preparation in PR #28: de08849 passed Quality, accessibility,
+responsive and Lighthouse but failed native Safari at /quote-success (768px,
+sameRow); all 25 WebKit interactions passed. This failure is preserved in #31.
+A fresh audit also identified high-severity devalue <=5.9.2 advisories; the scoped
+lockfile repair selects 5.9.4 within the existing range. Independent Dependabot
+PRs #29/#30 remain untouched. New patch CI and production evidence remain pending.
+
 ## Findings and acceptance
 
 Fresh September 30 comparison: npm ci, all-severity npm audit (zero findings),
@@ -60,9 +67,9 @@ do not replace it with AlienX's global override just for parity.
 | CBC-08 | Design evaluated; implementation/live-widget work open | Nonce/hash strict-dynamic must cover parser-inserted scripts, Turnstile and caching; keep existing policy until proven or compatibility disposition recorded.                                                     |
 | CBC-09 | Provisioning/operational evidence open                 | Monitored CSP destination needs owner, bounded body/rates, URL/query/sample redaction, retention and actionable synthetic non-production evidence; no unmonitored collector.                                      |
 | CBC-10 | Core verified; later candidate tranche released PR #23 | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                             |
-| CBC-11 | Open — current release blocked                         | Homepage Lighthouse below budget, failed Workers Build and expected-revision Smoke/Integrity. Resolve causes and verify a fresh exact-main release end to end.                                                    |
-| CBC-12 | Reproduced offline — runner repair pending             | stderr-only NO_NAVSTART with no report invokes the CLI once, then ENOENT prevents the intended retry. Preserve diagnostics and retry only recognized trace failures.                                              |
-| CBC-13 | Hardening follow-up, not confirmed exploit             | src/mail.ts follows default redirect behavior; email-health.ts does not cancel non-OK response bodies. Consider explicit redirect rejection and body cleanup with mocked tests.                                   |
+| CBC-11 | Open — current release blocked                         | Historical low Lighthouse scores and failed promotion retained; de08849 passed Lighthouse but failed native Safari quote-success alignment. Resolve causes and verify a fresh exact-main release end to end.      |
+| CBC-12 | Repair prepared in PR #28; CI pending                  | stderr-only NO_NAVSTART with no report invokes the CLI once, then ENOENT prevents the intended retry. Preserve diagnostics and retry only recognized trace failures.                                              |
+| CBC-13 | Hardening follow-up, not confirmed exploit             | src/mail.ts follows default redirect behavior; email-health.ts does not cancel non-OK response bodies. Keep direct transport; evaluate failed-body cleanup with mocked tests in #35.                              |
 
 PR #23 runtime/navigation changes passed at 5522d60440bfe66cb92adde8f2ce3a75c9eb77d4,
 Smoke 36490018374 and Integrity 36490418251. Earlier layout/Lighthouse failures
@@ -78,16 +85,16 @@ remain in history. No audit-wide or account-security completion is claimed.
 | P1 — CBC-06         | Run physical iPad/VoiceOver/touch/keyboard/zoom acceptance, resolve failures, verify public review destination and owner business content.                                                                                                                                                                                | Cassi/human tester + engineering     |
 | P2 — CBC-06         | Map server validation errors to relevant fields where useful; current enhanced form presents a form-level error. Verify with mocked invalid submissions, not customer mail.                                                                                                                                               | Engineering                          |
 | P2 — CBC-08, CBC-09 | Decide stricter CSP/reporting based on threat model and operational ownership. Keep current enforced CSP unless replacement is proven with Turnstile/cache tests; no collector without privacy/retention/alert ownership. These are hardening decisions, not automatic release blockers.                                  | Maintainer/operator                  |
-| P2 — CBC-13         | Adopt redirect rejection/body cleanup only after transport/error-path tests; do not label default behavior a demonstrated credential leak.                                                                                                                                                                                | Engineering                          |
+| P2 — CBC-13         | Retain direct Resend transport; evaluate failed-body cleanup in #35. AlienX PR #79 removed its former redirect rejection; default behavior is not a demonstrated leak.                                                                                                                                                    | Engineering                          |
 
 Live ruleset 23093180 still enforces PRs and five strict Actions checks; this
 connection cannot bypass it. Review-thread resolution is false: explicitly
 accept that policy or enable the desired setting through authorized administration.
-Coordination PR #28 and AlienX PR #55 were still open at review; adopt each locally.
+AlienX PR #55 merged; Cleaning adopts the matching protocol through PR #28. Each repository retains local authority.
 
 ## Comparison with AlienX
 
-Peer baseline: AlienX main `640062d13e9de63b1160137cc01bfd8f3b2d23bf`.
+Peer baseline: AlienX main `adb8d5d9f5af7a0bfd074e44eaf119ecd5bcff1d` (October 2).
 Its [local register](https://github.com/AlienX420710/alienx-smarthome/blob/main/docs/project-state.md)
 owns its remaining work; these are Cleaning's dispositions.
 
@@ -95,11 +102,11 @@ owns its remaining work; these are Cleaning's dispositions.
 | ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Release      | AlienX's exact-main approval/build/Smoke/Integrity passed. Cleaning retains its REST verifier; diagnose provider logs before choosing a gate redesign. Do not copy approval tags without a separately reviewed migration.                    |
 | Forms        | Both have bounded input, mandatory edge limits, strict Turnstile, safe email rendering and idempotency. Retain Cleaning's multipart fields, best-effort customer confirmation and generic status; AlienX's JSON schema is not a replacement. |
-| Lighthouse   | AlienX PR #53 provides a tested stderr-capture example. Adopt the principle after CBC-12 regression coverage; do not import its three-sample policy to average away Cleaning's failed score.                                                 |
-| Mail         | Both use a fixed daily schedule/recipient and stable provider keys. Consider AlienX's redirect rejection and failed-body cleanup under CBC-13; keep independent senders/permissions.                                                         |
+| Lighthouse   | Adapt PR #53 stderr capture in PR #28 with real subprocess regressions and per-attempt output; retain single-sample budgets. Local checks do not substitute for exact-head CI.                                                               |
+| Mail         | Both use a fixed daily schedule/recipient and stable provider keys. AlienX PR #79 adopted direct transport; decline its obsolete redirect rejection. Failed-body cleanup remains #35; keep independent senders/permissions.                  |
 | CSP          | Cleaning's external styles/host policy differs from Astro-generated AlienX hashes. Stronger policy needs real-widget validation, not a scanner-score transplant.                                                                             |
 | Dependencies | Runtime pins match; Wrangler/Prettier/parse5 and Undici override scope differ for local reasons. Fresh audits are clean; no blanket version synchronization.                                                                                 |
-| Operations   | Both need independent delivery, alerts, account review and human-device evidence. Source parity cannot close these.                                                                                                                          |
+| Operations   | AlienX PR #87 records its own heartbeat/inquiry receipt; Cleaning still needs independent acceptance. Neither peer evidence nor source parity closes local controls.                                                                         |
 
 Review limits: direct read-only requests to both sites' release/status endpoints
 returned HTTP 403 from this environment. No fresh served SHA is inferred; use the
@@ -150,13 +157,36 @@ email rules. CBC-20260929-handoff-01 was unsent because AlienX writes returned
 403; AX-20260930-cassi-review-received-01 records the source review's receipt,
 not a peer-authored reply. The [final log snapshot](https://github.com/AlienX420710/alienx-smarthome/blob/640062d13e9de63b1160137cc01bfd8f3b2d23bf/docs/chatgpt-communications.md) preserves all entries.
 
-AX-20260929-lighthouse-stderr-01 is now reproduced locally as CBC-12; repair
-and independent verification remain pending before adopting AlienX PR #53's helper. Link that
-source in the Cleaning investigation issue/PR, retain budgets and bounded retry,
-and verify independently. The tooling defect is reproduced; no adopted runtime patch is claimed.
+AX-20260929-lighthouse-stderr-01 is tracked as CBC-12 in [#31](https://github.com/Cassileigh/cleaning-by-cassi/issues/31).
+PR #28 prepares stderr capture before report parsing, a single recognized trace
+retry, and separate diagnostics. Native Safari now waits for document/font/transition
+readiness before unchanged layout assertions and stores geometry/screenshots outside
+Playwright's cleaned output directory. The earlier sameRow failure remains evidence;
+readiness is a test-race hypothesis until native Safari verifies this revision.
+
 The September 30 main homepage performance failure in
 [PR #27](https://github.com/Cassileigh/cleaning-by-cassi/pull/27) (0.84 versus 0.85)
 is separate; its release remains unverified by this documentation change.
+
+## Active issue map
+
+Issues own task checklists and handoffs; this register owns durable decisions and
+release evidence. No central transcript or duplicate status document is introduced.
+
+| Scope                                                      | Local issue                                                      |
+| ---------------------------------------------------------- | ---------------------------------------------------------------- |
+| CBC-11 / CBC-12: PR #28, Safari, Lighthouse and production | [#31](https://github.com/Cassileigh/cleaning-by-cassi/issues/31) |
+| CBC-05: accounts, monitoring, recovery and review policy   | [#32](https://github.com/Cassileigh/cleaning-by-cassi/issues/32) |
+| CBC-06: physical-device and business acceptance            | [#33](https://github.com/Cassileigh/cleaning-by-cassi/issues/33) |
+| CBC-08 / CBC-09: CSP and reporting decision                | [#34](https://github.com/Cassileigh/cleaning-by-cassi/issues/34) |
+| CBC-13: failed mail-response cleanup                       | [#35](https://github.com/Cassileigh/cleaning-by-cassi/issues/35) |
+| CBC-06 usability follow-up: field errors                   | [#36](https://github.com/Cassileigh/cleaning-by-cassi/issues/36) |
+
+Peer review: adapt AlienX #53/#83 diagnostics/readiness concepts; retain Cleaning's
+release-gate architecture. Adopt #81 documentation-closeout practice without
+recursive evidence-only PRs. Decline obsolete mail redirect rejection after #79.
+AlienX's portfolio consolidation, command palette and error-page artwork are not
+Cleaning requirements. No peer acceptance is transferred to this site.
 
 ## Historical evidence and consolidation map
 
