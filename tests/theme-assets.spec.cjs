@@ -11,6 +11,42 @@ const routes = [
   '/privacy/',
 ];
 for (const width of [390, 1280]) {
+  test(`homepage deferred sections remain reachable at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('http://127.0.0.1:4321/');
+    for (const selector of [
+      '.intro',
+      '.services',
+      '.why',
+      '.final-cta',
+      '#contact',
+    ]) {
+      const section = page.locator(selector);
+      await section.locator('h2').scrollIntoViewIfNeeded();
+      await expect(section.locator('h2')).toBeInViewport();
+    }
+    const quote = page.locator('#contact .quote-button');
+    await quote.focus();
+    await expect(quote).toBeFocused();
+    await expect(quote).toBeInViewport();
+    await page.emulateMedia({ media: 'print' });
+    expect(
+      await page
+        .locator('.home > :not(.hero)')
+        .evaluateAll((sections) =>
+          sections.every(
+            (section) =>
+              getComputedStyle(section).contentVisibility === 'visible',
+          ),
+        ),
+    ).toBe(true);
+  });
+}
+
+for (const width of [390, 1280]) {
   for (const theme of ['light', 'dark']) {
     for (const route of routes) {
       test(`${route} images and ${theme} appearance at ${width}px`, async ({

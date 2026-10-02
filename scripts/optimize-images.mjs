@@ -42,11 +42,6 @@ for (const job of jobs) {
   ]);
 }
 
-// Keep the original WebP fallback; avoid a larger second-generation WebP.
-await sharp('public/cleaned-living-room.webp')
-  .avif({ quality: 45, effort: 5 })
-  .toFile('public/cleaned-living-room-optimized.avif');
-
 await sharp('docs/brand/header-logo-original.png')
   .resize({ width: 344 })
   .webp({ quality: 80, effort: 6 })

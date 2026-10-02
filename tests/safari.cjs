@@ -46,6 +46,20 @@ const { mkdirSync, writeFileSync } = require('node:fs');
             ),
           10000,
         );
+        // Eager navigation ends at DOMContentLoaded; cached images alone do not
+        // establish stylesheet/font/transition readiness on the next route.
+        await driver.wait(
+          () => driver.executeScript(() => document.readyState === 'complete'),
+          10000,
+          `${route}: document did not finish loading`,
+        );
+        await driver.executeAsyncScript(function () {
+          const done = arguments[arguments.length - 1];
+          const transition = document.activeViewTransition?.finished;
+          Promise.all([document.fonts.ready, transition?.catch(() => {})]).then(
+            () => requestAnimationFrame(() => requestAnimationFrame(done)),
+          );
+        });
         const state = await driver.executeScript(() => {
           const box = (selector) =>
             document.querySelector(selector).getBoundingClientRect();
@@ -57,6 +71,15 @@ const { mkdirSync, writeFileSync } = require('node:fs');
             ?.getBoundingClientRect();
           return {
             title: document.title,
+            geometry: {
+              logo: logo.toJSON(),
+              nav: nav.toJSON(),
+              facebook: facebook.toJSON(),
+            },
+            readyState: document.readyState,
+            fonts: document.fonts.status,
+            navDisplay: getComputedStyle(document.querySelector('.site-nav'))
+              .display,
             main: Boolean(document.querySelector('main')),
             overflow: document.documentElement.scrollWidth > innerWidth + 1,
             logoVisible:
@@ -71,6 +94,11 @@ const { mkdirSync, writeFileSync } = require('node:fs');
               (active.left >= nav.left - 1 && active.right <= nav.right + 1),
           };
         });
+        mkdirSync('safari-diagnostics', { recursive: true });
+        writeFileSync(
+          `safari-diagnostics/${width}-${route || 'home'}.json`,
+          JSON.stringify(state, null, 2),
+        );
         assert.ok(state.title && state.main, `${route}: page structure`);
         assert.equal(state.overflow, false, `${route}: overflow`);
         for (const key of [
@@ -84,9 +112,9 @@ const { mkdirSync, writeFileSync } = require('node:fs');
       }
     }
   } catch (error) {
-    mkdirSync('test-results', { recursive: true });
+    mkdirSync('safari-diagnostics', { recursive: true });
     writeFileSync(
-      'test-results/safari.png',
+      'safari-diagnostics/safari.png',
       await driver.takeScreenshot(),
       'base64',
     );

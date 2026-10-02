@@ -74,5 +74,6 @@ jobs:
           name: safari-preview-log
           path: |
             /tmp/cleaning-by-cassi-safari.log
+            safari-diagnostics
             test-results
           if-no-files-found: ignore
