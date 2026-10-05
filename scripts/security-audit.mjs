@@ -8,7 +8,10 @@ const execFileAsync = promisify(execFile);
 const root = process.cwd();
 const failures = [];
 const workflowDirectory = join(root, '.github', 'workflows');
-const allowedWritePermissions = new Map();
+const allowedWritePermissions = new Map([
+  ['release-approval.yml', new Set(['contents'])],
+  ['operator-alert.yml', new Set(['issues'])],
+]);
 
 const fail = (message) => failures.push(message);
 const indentOf = (line) => line.match(/^\s*/)?.[0].length ?? 0;

@@ -18,5 +18,8 @@ export default defineConfig({
     }),
   ],
 
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    inspectorPort:
+      process.env.SITE_DISABLE_INSPECTOR === '1' ? false : undefined,
+  }),
 });

@@ -1,0 +1,68 @@
+{
+  "repository": "Cassileigh/cleaning-by-cassi",
+  "releaseRefPrefix": "cleaning",
+  "routes": [
+    "/",
+    "/about",
+    "/services",
+    "/pricing",
+    "/quote",
+    "/quote-success",
+    "/review",
+    "/privacy"
+  ],
+  "noindexRoutes": ["/quote-success"],
+  "browser": {
+    "themeKey": null,
+    "themeAttribute": null,
+    "themeSetter": null,
+    "statusRoute": null,
+    "missingRoute": "/__integrity_missing_page",
+    "turnstileCallback": "cleaningByCassiTurnstileLoad",
+    "suites": {
+      "responsive": [
+        "tests/responsive.spec.cjs",
+        "tests/navigation.spec.cjs",
+        "tests/keyboard.spec.cjs"
+      ],
+      "accessibility": [
+        "tests/accessibility.spec.cjs",
+        "tests/theme-assets.spec.cjs",
+        "tests/quote-interactions.spec.cjs",
+        "tests/navigation.spec.cjs",
+        "tests/keyboard.spec.cjs"
+      ],
+      "webkit": [
+        "tests/quote-interactions.spec.cjs",
+        "tests/navigation.spec.cjs",
+        "tests/keyboard.spec.cjs"
+      ]
+    },
+    "logoSelector": ".brand-logo",
+    "externalSelector": ".facebook-link"
+  },
+  "origin": "https://cleaningbycassi.com",
+  "mail": {
+    "sender": "Cleaning by Cassi <quotes@cleaningbycassi.com>",
+    "address": "quotes@cleaningbycassi.com",
+    "recipient": "cassandramorris@cleaningbycassi.com",
+    "healthSubject": "Cleaning by Cassi \u2014 daily email health check \u2014 "
+  },
+  "form": {
+    "route": "/quote",
+    "selector": ".quote-form",
+    "submit": "#quote-submit",
+    "turnstile": "#quote-turnstile",
+    "script": "/quote-form.js",
+    "error": null,
+    "endpoint": "/api/quote",
+    "encoding": "form",
+    "invalid": {
+      "name": "Health Monitor",
+      "email": "monitor@example.invalid",
+      "phone": "5555555555",
+      "faxNumber": "",
+      "cf-turnstile-response": ""
+    }
+  }
+}

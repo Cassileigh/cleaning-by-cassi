@@ -19,6 +19,7 @@ jobs:
     name: Safari / WebKit compatibility
     runs-on: macos-latest
     timeout-minutes: 20
+
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -38,7 +39,7 @@ jobs:
         run: npm run build
 
       - name: Start Cloudflare preview
-        run: npx wrangler dev --port 4321 --host 127.0.0.1 --upstream-protocol http > /tmp/cleaning-by-cassi-safari.log 2>&1 &
+        run: npx wrangler dev --port 4321 --host 127.0.0.1 --upstream-protocol http > /tmp/site-preview.log 2>&1 &
 
       - name: Wait for preview
         run: |
@@ -48,24 +49,28 @@ jobs:
             fi
             sleep 2
           done
-          cat /tmp/cleaning-by-cassi-safari.log
+          cat /tmp/site-preview.log
           exit 1
+
+      - name: Enable full keyboard navigation on macOS
+        run: |
+          defaults write -g AppleKeyboardUIMode -int 3
+          defaults write -g WebKitTabToLinksPreferenceKey -bool true
+          defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
 
       - name: Enable Safari WebDriver
         run: sudo safaridriver --enable
 
       - name: Run Safari compatibility checks
-        timeout-minutes: 6
-        run: |
-          node tests/safari.cjs
+        run: node tests/safari.cjs
 
-      - name: Install WebKit
+      - name: Install Playwright WebKit
         if: success() || failure()
         run: npx playwright install webkit
 
-      - name: Check quote recovery and navigation in WebKit
+      - name: Run WebKit navigation and keyboard interactions
         if: success() || failure()
-        run: npx playwright test tests/quote-interactions.spec.cjs tests/navigation.spec.cjs tests/keyboard.spec.cjs --browser=webkit --reporter=line
+        run: npm run test:webkit
 
       - name: Upload Safari diagnostics on failure
         if: failure()
@@ -73,7 +78,7 @@ jobs:
         with:
           name: safari-preview-log
           path: |
-            /tmp/cleaning-by-cassi-safari.log
+            /tmp/site-preview.log
             safari-diagnostics
             test-results
           if-no-files-found: ignore

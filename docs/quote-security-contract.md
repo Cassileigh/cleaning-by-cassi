@@ -70,3 +70,14 @@ Keep shared PageLayout, brand colors/artwork, one-row header and visible Faceboo
 entry. Preserve shared service/frequency/add-on data; invent no pricing, surcharge
 or referral reward. docs/brand originals are build inputs, not redundant docs.
 All font licenses remain alongside fonts. Keep actual versions in package.json.
+
+## Shared engineering ownership
+
+`engineering.config.json` owns explicit non-secret site inputs for migrated
+release/monitoring/browser tooling. `scripts/site-config.mjs` validates repository
+and release-ref identity. Release verification uses the shared Git-ref verifier
+and trusted approval publisher; the production target guard also runs at deploy.
+The shared browser runner selects committed site interaction suites without
+changing business forms or recipients. The shared form monitor uses empty-token
+rejection only. Remaining application/CSP/integrity migration and exact-revision
+release acceptance stay in the existing findings register.

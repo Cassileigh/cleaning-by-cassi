@@ -21,9 +21,9 @@ failed, pending, skipped or cancelled required checks are not approval. Preserve
 quote validation, Turnstile, rate limiting, idempotency, strict CSP, no persisted
 checkout credentials and read-only workflow permissions.
 
-Lighthouse remains single-sample, with performance at least 0.85 and all other
+Lighthouse uses three fixed samples, each with performance at least 0.85 and all other
 applicable categories at least 0.95. Only the intentionally noindex receipt omits
-SEO. One NO_NAVSTART trace retry is allowed, with both reports retained. Never
+SEO. Two bounded NO_NAVSTART trace retries are allowed, with all attempts retained. Never
 retry low scores to manufacture success, lower thresholds or average away a failure.
 
 ## Required after merge
