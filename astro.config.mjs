@@ -8,6 +8,7 @@ import cloudflare from '@astrojs/cloudflare';
 export default defineConfig({
   site: 'https://cleaningbycassi.com',
   output: 'server',
+  session: false,
   // Keep page CSS in same-origin assets so production needs no inline-style
   // exception. Email HTML is sent to Resend and is not governed by this CSP.
   build: { inlineStylesheets: 'never' },
