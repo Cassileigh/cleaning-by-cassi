@@ -13,11 +13,11 @@
     "axe-core": "4.13.0",
     "lighthouse": "13.5.0",
     "parse5": "8.0.1",
-    "prettier": "3.9.8",
-    "prettier-plugin-astro": "1.0.1",
-    "selenium-webdriver": "4.49.0",
-    "sharp": "0.35.4",
-    "wrangler": "4.137.0"
+    "prettier": "3.9.9",
+    "prettier-plugin-astro": "1.1.0",
+    "selenium-webdriver": "4.50.0",
+    "sharp": "0.35.5",
+    "wrangler": "4.147.0"
   },
   "engines": {
     "node": ">=22"
@@ -44,7 +44,7 @@
     "verify:peer": "node scripts/verify-peer-engineering.mjs"
   },
   "overrides": {
-    "sharp": "0.35.4",
+    "sharp": "0.35.5",
     "undici": "7.29.1"
   },
   "type": "module"
