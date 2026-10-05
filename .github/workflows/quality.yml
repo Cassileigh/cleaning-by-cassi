@@ -3,9 +3,9 @@ name: Cleaning by Cassi Quality
 on:
   push:
     branches: [main]
+  workflow_dispatch:
   pull_request:
     branches: [main]
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -23,29 +23,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          fetch-depth: 0
           persist-credentials: false
-      - name: Repository security contract
-        run: node scripts/security-audit.mjs
-      - name: Sanitized full-history credential audit
-        run: node scripts/security-history-audit.mjs
+          fetch-depth: 0
+
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           cache: npm
+
       - name: Install dependencies
         run: npm ci
-      - name: API contract tests (no email sends)
-        run: npm test
-      - name: Source formatting
-        run: npm run format:check
-      - name: Build
-        run: npm run build
-      - name: Type check
-        run: npm run typecheck
-      - name: Cloudflare deploy dry run
-        run: npx wrangler deploy --dry-run
+
+      - name: Shared local and CI checks
+        run: npm run check
+
       - name: Dependency audit
         run: npm run audit
 
@@ -53,21 +45,23 @@ jobs:
     name: Current revision has no open code-scanning alerts
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     permissions:
       contents: read
       security-events: read
     steps:
-      - name: Checkout exact protected main revision
+      - name: Checkout trusted main revision
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 22
           package-manager-cache: false
+
       - name: Enforce fresh analysis and zero open alerts
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

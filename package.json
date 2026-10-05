@@ -12,11 +12,12 @@
     "@playwright/test": "1.63.0",
     "axe-core": "4.13.0",
     "lighthouse": "13.5.0",
+    "parse5": "8.0.1",
     "prettier": "3.9.8",
     "prettier-plugin-astro": "1.0.1",
     "selenium-webdriver": "4.49.0",
     "sharp": "0.35.4",
-    "wrangler": "4.136.3"
+    "wrangler": "4.137.0"
   },
   "engines": {
     "node": ">=22"
@@ -26,22 +27,25 @@
     "astro": "astro",
     "build": "node scripts/write-release.mjs && node scripts/optimize-images.mjs && astro build",
     "cf-typegen": "wrangler types && node scripts/scope-worker-types.mjs",
-    "check": "npm test && npm run typecheck && npm run build && wrangler deploy --dry-run",
+    "check": "npm run format:check && npm run security:audit && npm run security:history && npm test && npm run build && npm run verify:target && npm run typecheck && wrangler deploy --dry-run",
     "audit": "npm audit --audit-level=low",
     "deploy": "node scripts/verify-ci.mjs && wrangler deploy",
     "dev": "node scripts/write-release.mjs && node scripts/optimize-images.mjs && astro dev",
     "preview": "npm run build && wrangler dev --host 127.0.0.1 --upstream-protocol http",
     "typecheck": "node scripts/write-release.mjs && astro check && tsc --noEmit",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test tests/*.test.*",
     "test:browser": "playwright test",
-    "format": "prettier --write src public/*.js scripts tests .github README.md QUALITY.md lighthouse.config.cjs docs/*.md",
-    "format:check": "prettier --check src public/*.js scripts tests .github README.md QUALITY.md lighthouse.config.cjs docs/*.md"
+    "format": "prettier --write src public scripts tests .github \"*.md\" \"docs/*.md\" \"*.config.*\" package.json .prettierrc.json",
+    "format:check": "prettier --check src public scripts tests .github \"*.md\" \"docs/*.md\" \"*.config.*\" package.json .prettierrc.json",
+    "security:audit": "node scripts/security-audit.mjs",
+    "security:history": "node scripts/security-history-audit.mjs",
+    "verify:target": "node scripts/verify-deploy-target.mjs",
+    "preflight": "npm run check && npm run audit",
+    "verify:peer": "node scripts/verify-peer-engineering.mjs"
   },
   "overrides": {
     "sharp": "0.35.4",
-    "miniflare": {
-      "undici": "7.29.1"
-    }
+    "undici": "7.29.1"
   },
   "type": "module"
 }

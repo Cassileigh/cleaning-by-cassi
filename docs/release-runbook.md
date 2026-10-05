@@ -1,5 +1,15 @@
 # Cleaning — operations
 
+## Shared preflight
+
+Use Node 22 and `npm ci`. After the final edit, run `npm run format` and
+`npm run preflight`. Preflight runs formatting, repository and history security
+scans, regression tests, production build, generated deployment-target validation,
+type checks, Worker dry run and all-severity dependency audit. Quality CI invokes
+those same `check` and `audit` commands. Browser and post-deployment gates remain
+separate and mandatory. Formatting includes instructions and package.json.
+Do not commit temporary diagnostic replacements for format:check.
+
 ## Protected release and build
 
 Follow AGENTS.md and QUALITY.md. main is the only production branch. Use scoped
@@ -29,8 +39,7 @@ alone does not establish cause. Documentation makes no administrative changes.
 
 ## Validation and production
 
-Run npm ci, format:check, check, audit and repository/history audits. check includes
-tests, types, build and Worker dry run; audit includes all severities. Keep exact
+Run `npm ci`, `npm run format`, and `npm run preflight` as described above. Keep exact
 dependency/action pins, full-history checkout, minimal explicit read permissions
 and persist-credentials: false. Never print secret detector matches.
 
