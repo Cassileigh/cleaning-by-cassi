@@ -1,5 +1,11 @@
+import { site } from './site-config.mjs';
 import { pathToFileURL } from 'node:url';
-import { assertHeaders, assertSecurityHeaders } from './integrity-contract.mjs';
+import {
+  assertCsp,
+  assertSeo,
+  assertHeaders,
+  assertSecurityHeaders,
+} from './integrity-contract.mjs';
 
 export async function verifyIntegrity({
   expected,
@@ -13,17 +19,8 @@ export async function verifyIntegrity({
     throw Error('An exact expected revision is required');
   const origins = candidate
     ? ['http://127.0.0.1:4321']
-    : ['https://cleaningbycassi.com', 'https://www.cleaningbycassi.com'];
-  const routes = [
-    '/',
-    '/about',
-    '/services',
-    '/pricing',
-    '/quote',
-    '/quote-success',
-    '/review',
-    '/privacy',
-  ];
+    : [site.origin, site.origin.replace('https://', 'https://www.')];
+  const routes = site.routes;
   const request = (origin, path, options = {}) => {
     const url = new URL(path, origin);
     url.searchParams.set('_integrity', expected + '-' + now());
@@ -64,14 +61,24 @@ export async function verifyIntegrity({
         !response.headers.get('content-type')?.includes('text/html')
       )
         throw Error(route + ': expected successful HTML response');
-      assertHeaders(response.headers, { candidate });
       const html = await response.text();
+      if (site.csp.headerResources)
+        assertHeaders(response.headers, { candidate });
+      else {
+        assertSecurityHeaders(response.headers);
+        assertCsp(response.headers.get('content-security-policy'), html);
+      }
+      assertSeo(html, route);
       if (!candidate && /localhost|127\.0\.0\.1|workers\.dev/i.test(html))
         throw Error(route + ': development host leakage');
-      if (route === '/quote' && !html.includes('0x4AAAAAAEmmOovf3yTuy_Ua'))
+      if (
+        route === site.form.route &&
+        site.form.widget &&
+        !html.includes(site.form.widget)
+      )
         throw Error('Wrong Turnstile widget');
       if (
-        route === '/quote-success' &&
+        site.noindexRoutes.includes(route) &&
         !/<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(
           html,
         )
@@ -79,19 +86,17 @@ export async function verifyIntegrity({
         throw Error('Receipt must not be indexed');
     }
     const status = await request(origin, '/api/status');
-    assertHeaders(status.headers, { status: true });
+    if (site.privateStatus) assertHeaders(status.headers, { status: true });
+    else assertSecurityHeaders(status.headers);
     const release = await request(origin, '/api/release');
-    assertHeaders(release.headers, { candidate });
+    if (site.csp.headerResources) assertHeaders(release.headers, { candidate });
+    else assertSecurityHeaders(release.headers);
     // Read-only error path: never submit a quote or send mail.
     const missing = await request(origin, '/__integrity_missing_page');
     if (missing.status !== 404) throw Error('Missing route must return 404');
-    assertHeaders(missing.headers, { candidate });
-    for (const path of [
-      '/navigation.js',
-      '/header-logo-optimized.webp',
-      '/robots.txt',
-      '/sitemap-index.xml',
-    ]) {
+    if (site.csp.headerResources) assertHeaders(missing.headers, { candidate });
+    else assertSecurityHeaders(missing.headers);
+    for (const path of site.assets) {
       const asset = await request(origin, path);
       if (!asset.ok) throw Error(path + ': asset unavailable');
       assertSecurityHeaders(asset.headers);
@@ -102,7 +107,9 @@ export async function verifyIntegrity({
         ? (status.status === 503 && data.ok === false) ||
           (status.status === 200 && data.ok === true)
         : status.status === 200 && data.ok === true) ||
-      data.scope !== 'configuration-readiness'
+      (site.privateStatus
+        ? data.scope !== 'configuration-readiness'
+        : !['operational', 'degraded'].includes(data.status))
     )
       throw Error('Readiness degraded');
     if (!candidate) {
@@ -135,8 +142,18 @@ if (
   const args = process.argv.slice(2);
   if (args.length > 1 || args.some((arg) => arg !== '--candidate'))
     throw Error('Only --candidate is supported; production is the default');
+  let expected = process.env.EXPECTED_REVISION;
+  if (!expected && !args.includes('--candidate')) {
+    const response = await fetch(new URL('/api/release', site.origin), {
+      cache: 'no-store',
+      redirect: 'error',
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!response.ok) throw Error('Release metadata unavailable');
+    expected = (await response.json()).revision;
+  }
   await verifyIntegrity({
-    expected: process.env.EXPECTED_REVISION,
+    expected,
     candidate: args.includes('--candidate'),
   });
 }

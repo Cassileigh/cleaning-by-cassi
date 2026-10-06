@@ -138,3 +138,61 @@ test('Back after success restores a usable quote form', async ({ page }) => {
     'Request My Free Quote',
   );
 });
+
+test('server field errors focus and describe controls, then clear on correction without losing retry identity', async ({
+  page,
+}) => {
+  let requests = 0;
+  await page.route('**/api/quote', (route) => {
+    requests++;
+    return route.fulfill({
+      status: 400,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        error: 'Please check the information you entered.',
+        code: 'invalid-fields',
+        fieldErrors: {
+          email: 'Please enter a valid email address.',
+          phone: 'Please enter a phone number with 7 to 15 digits.',
+          submissionId: 'must never render',
+          unknown: 'must never render',
+        },
+      }),
+    });
+  });
+  await prepare(page);
+  const id = await page.locator('[name="submissionId"]').inputValue();
+  await page
+    .locator('[name="email"]')
+    .evaluate((el) => el.setAttribute('aria-describedby', 'email-help'));
+  await page.locator('#quote-submit').click();
+  const email = page.locator('[name="email"]');
+  await expect(email).toBeFocused();
+  await expect(email).toHaveAttribute('aria-invalid', 'true');
+  await expect(email).toHaveAttribute(
+    'aria-describedby',
+    'email-help quote-error-email',
+  );
+  await expect(page.locator('#quote-error-email')).toHaveText(
+    'Please enter a valid email address.',
+  );
+  await expect(page.locator('#form-status')).toContainText('Please check');
+  await expect(page.locator('#quote-error-submissionId')).toHaveCount(0);
+  await expect(page.locator('#quote-error-unknown')).toHaveCount(0);
+  await expect(page.locator('[name="submissionId"]')).toHaveValue(id);
+  await expect(page.locator('[name="phone"]')).toHaveValue('9205550123');
+  await expect(page.locator('#quote-submit')).toBeEnabled();
+  await email.fill('corrected@example.com');
+  await expect(email).not.toHaveAttribute('aria-invalid');
+  await expect(email).toHaveAttribute('aria-describedby', 'email-help');
+  await expect(page.locator('#quote-error-email')).toHaveCount(0);
+  await expect(page.locator('[name="phone"]')).toHaveAttribute(
+    'aria-invalid',
+    'true',
+  );
+  await page.locator('#quote-submit').click();
+  await expect(page.locator('#form-status')).toContainText(
+    'complete the security check',
+  );
+  expect(requests).toBe(1);
+});

@@ -1,3 +1,4 @@
+import { secure } from './security';
 import { defineMiddleware } from 'astro:middleware';
 import { env } from 'cloudflare:workers';
 import type { ApplicationBindings } from './bindings';
@@ -6,65 +7,6 @@ const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 8;
 const MAX_TRACKED_IPS = 5_000;
 const attempts = new Map<string, number[]>();
-
-const contentSecurityPolicy = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "form-action 'self'",
-  "img-src 'self' data:",
-  "font-src 'self'",
-  "style-src 'self'",
-  "script-src 'self' https://challenges.cloudflare.com",
-  'frame-src https://challenges.cloudflare.com',
-  "connect-src 'self' https://challenges.cloudflare.com",
-  'upgrade-insecure-requests',
-].join('; ');
-
-const securityHeaders = {
-  'Content-Security-Policy': contentSecurityPolicy,
-  'X-Permitted-Cross-Domain-Policies': 'none',
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy':
-    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=(), display-capture=()',
-  'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'same-origin',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-};
-
-const secure = (
-  response: Response,
-  statusRoute = false,
-  localHttpPreview = false,
-) => {
-  const headers = new Headers(response.headers);
-  for (const [name, value] of Object.entries(securityHeaders))
-    headers.set(name, value);
-  // WebKit upgrades loopback assets too; Wrangler's local preview serves HTTP.
-  // Only explicit HTTP loopback requests omit this directive. Public hosts and
-  // every HTTPS response retain the production upgrade policy.
-  if (localHttpPreview) {
-    headers.set(
-      'Content-Security-Policy',
-      contentSecurityPolicy.replace('; upgrade-insecure-requests', ''),
-    );
-  }
-  if (statusRoute) {
-    headers.set(
-      'Content-Security-Policy',
-      "default-src 'none'; base-uri 'none'; frame-ancestors 'none'",
-    );
-    headers.set('Referrer-Policy', 'no-referrer');
-  }
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
-};
 
 const json = (
   body: Record<string, unknown>,

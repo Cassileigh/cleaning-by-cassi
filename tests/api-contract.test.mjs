@@ -1,3 +1,25 @@
+function middlewareSource() {
+  const security = readFileSync(
+    new URL('../src/security.ts', import.meta.url),
+    'utf8',
+  ).replace(
+    "import site from '../engineering.config.json';",
+    'const site = ' +
+      readFileSync(
+        new URL('../engineering.config.json', import.meta.url),
+        'utf8',
+      ) +
+      ';',
+  );
+  return (
+    security +
+    '\n' +
+    readFileSync(
+      new URL('../src/middleware.ts', import.meta.url),
+      'utf8',
+    ).replace("import { secure } from './security';", '')
+  );
+}
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -398,10 +420,7 @@ test('status hides implementation metadata and returns real failure codes', asyn
 });
 
 test('middleware preserves status policy and limits both quote URL forms', async () => {
-  const source = readFileSync(
-    new URL('../src/middleware.ts', import.meta.url),
-    'utf8',
-  )
+  const source = middlewareSource()
     .replace(
       "import { env } from 'cloudflare:workers';",
       'const env = { QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) } };',
@@ -485,10 +504,7 @@ test('native validation error provides an HTML recovery path', async () => {
 });
 
 test('saturated limiter preserves active blocks and expires old records', async () => {
-  const source = readFileSync(
-    new URL('../src/middleware.ts', import.meta.url),
-    'utf8',
-  )
+  const source = middlewareSource()
     .replace(
       "import { env } from 'cloudflare:workers';",
       'const env = { QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) } };',
@@ -529,10 +545,7 @@ test('saturated limiter preserves active blocks and expires old records', async 
 });
 
 test('HTTPS upgrading stays enforced outside the explicit HTTP loopback preview', async () => {
-  const source = readFileSync(
-    new URL('../src/middleware.ts', import.meta.url),
-    'utf8',
-  )
+  const source = middlewareSource()
     .replace(
       "import { env } from 'cloudflare:workers';",
       'const env = { QUOTE_RATE_LIMITER: { limit: async () => ({ success: true }) } };',
@@ -580,10 +593,7 @@ test('edge limiter blocks requests and fails closed on missing or broken binding
     'missing',
     'throw',
   ]) {
-    const source = readFileSync(
-      new URL('../src/middleware.ts', import.meta.url),
-      'utf8',
-    )
+    const source = middlewareSource()
       .replace(
         "import { defineMiddleware } from 'astro:middleware';",
         'const defineMiddleware = h => h;',
@@ -651,5 +661,26 @@ test('edge limiter blocks requests and fails closed on missing or broken binding
       response.headers.get('permissions-policy'),
       /display-capture=\(\)/,
     );
+  }
+});
+
+test('field validation identifies safe field names without contacting providers', async () => {
+  for (const [fields, expected] of [
+    [{ name: '' }, 'name'],
+    [{ email: 'invalid' }, 'email'],
+    [{ phone: '12' }, 'phone'],
+    [{ address: 'a'.repeat(251) }, 'address'],
+    [{ homeType: 'invalid' }, 'homeType'],
+    [{ squareFootage: '0' }, 'squareFootage'],
+    [{ preferredDate: '2026-02-30' }, 'preferredDate'],
+    [{ message: 'bad\u0001value' }, 'message'],
+  ]) {
+    const handler = route('quote');
+    const response = await handler.POST({ request: request(fields) });
+    assert.equal(response.status, 400);
+    const body = await response.json();
+    assert.equal(typeof body.fieldErrors[expected], 'string');
+    assert.ok(body.fieldErrors[expected].length > 0);
+    assert.equal(handler.calls.length, 0);
   }
 });

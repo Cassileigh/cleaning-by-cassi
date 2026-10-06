@@ -323,6 +323,10 @@ export const POST: APIRoute = async ({ request }) => {
           {
             error: 'Please check the information you entered.',
             code: 'invalid-fields',
+            fieldErrors:
+              Object.hasOwn(MAX_LENGTHS, key) || Object.hasOwn(ALLOWED, key)
+                ? { [key]: 'Remove unsupported characters from this field.' }
+                : {},
             requestId,
           },
           400,
@@ -357,6 +361,15 @@ export const POST: APIRoute = async ({ request }) => {
         {
           error: 'Please fill out your name, email, and phone number.',
           code: 'missing-fields',
+          fieldErrors: Object.fromEntries(
+            [
+              ['name', name],
+              ['email', email],
+              ['phone', phone],
+            ]
+              .filter(([, input]) => !input)
+              .map(([field]) => [field, `Please enter your ${field}.`]),
+          ),
           requestId,
         },
         400,
@@ -374,6 +387,25 @@ export const POST: APIRoute = async ({ request }) => {
         {
           error: 'Please check the information you entered.',
           code: 'invalid-fields',
+          fieldErrors: {
+            ...Object.fromEntries(
+              Object.entries(MAX_LENGTHS)
+                .filter(([key, max]) => value(formData, key).length > max)
+                .map(([key, max]) => [
+                  key,
+                  `Please use ${max} characters or fewer.`,
+                ]),
+            ),
+            ...(name.length < 2
+              ? { name: 'Please enter at least two characters for your name.' }
+              : {}),
+            ...(!isValidEmail(email)
+              ? { email: 'Please enter a valid email address.' }
+              : {}),
+            ...(!isReasonablePhone(phone)
+              ? { phone: 'Please enter a phone number with 7 to 15 digits.' }
+              : {}),
+          },
           requestId,
         },
         400,
@@ -386,6 +418,21 @@ export const POST: APIRoute = async ({ request }) => {
         {
           error: 'One or more submitted values were invalid.',
           code: 'invalid-selection',
+          fieldErrors: Object.fromEntries(
+            Object.entries(ALLOWED)
+              .filter(([key, allowed]) =>
+                key === 'addons'
+                  ? formData.getAll(key).length > 13 ||
+                    formData
+                      .getAll(key)
+                      .some((entry) => !allowed.has(String(entry)))
+                  : !allowed.has(value(formData, key)),
+              )
+              .map(([key]) => [
+                key,
+                'Please choose one of the listed options.',
+              ]),
+          ),
           requestId,
         },
         400,
@@ -404,6 +451,9 @@ export const POST: APIRoute = async ({ request }) => {
         {
           error: 'Please enter a valid square footage.',
           code: 'invalid-square-footage',
+          fieldErrors: {
+            squareFootage: 'Please enter a whole number between 1 and 100,000.',
+          },
           requestId,
         },
         400,
@@ -423,6 +473,7 @@ export const POST: APIRoute = async ({ request }) => {
         {
           error: 'Please enter a valid preferred date.',
           code: 'invalid-date',
+          fieldErrors: { preferredDate: 'Please enter a valid calendar date.' },
           requestId,
         },
         400,

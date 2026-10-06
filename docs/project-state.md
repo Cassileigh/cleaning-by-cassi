@@ -1,6 +1,6 @@
 # Cleaning by Cassi — current state
 
-Updated October 5, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 2, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
@@ -25,27 +25,41 @@ retries retain all attempts/stdout/stderr/assets; low scores never retry.
 GitHub-native operator alerts use trusted origin checks and no provider history.
 The form-health probe submits no verified inquiry and uses an empty security token.
 
-Local Node 22 preflight passed for the prepared migration: formatting, source/history
-scans, unit tests, build, target guard, type checks, Worker dry run and zero dependency
-vulnerabilities. The migrated-component comparison also passed. Verification is
-pending for the final paired PR heads and exact deployed mains. The earlier automatic
-approval rejection of branch publication was resolved by explicit owner publication
-authorization. AlienX #123 and Cleaning #41 are the active paired PRs. Their initial
-heads exposed test assumptions: Safari imposed a single-row header on AlienX's
-intentional two-row tablet layout; heading contrast used container colors and
-ignored painted gradients. The candidate correction measures actual child text
-against screenshot backdrops and validates the explicit navigation breakpoint,
-without lowering thresholds or removing axe checks. Browser regression fixtures
-cover both readable and unreadable child text/gradients. Acceptance still requires
-fresh exact-head CI and production evidence; publication alone is not acceptance.
-Local browser installation failed while downloading the pinned Chromium archive;
-this is not browser acceptance. Local preflight initially hit the restricted
-network-interface inspector probe; the explicit local-only disable switch is
-available without changing production defaults. No new release is claimed here.
-Remaining #39 work includes shared framework/build revision/CSP and integrity
-implementation, final migration comparison, and both production evidence chains.
-Existing account, recovery, real-device, content and incident findings below stay
-open unless independently evidenced. #32–#36 are not closed by this migration.
+The follow-up candidate also shares framework configuration, generated release
+metadata, security-header implementation, SEO/integrity checks, exact-revision
+production Smoke/Integrity, TLS probes, image decoding/generation and the scheduled
+mail retry engine. Explicit rendering/CSP inputs retain the server-rendered
+Cleaning header policy and AlienX's generated hash policy. This preserves each
+site's emitted content requirements while using the same implementation.
+The peer verifier compares these source files, normalized workflow display names,
+commands and normalized dependency locks; it does not certify private acceptance.
+
+Paired PRs: [Cleaning #41](https://github.com/Cassileigh/cleaning-by-cassi/pull/41)
+and [AlienX #123](https://github.com/AlienX420710/alienx-smarthome/pull/123).
+Latest published heads passed Quality, Responsive, Lighthouse and Safari, but
+failed Accessibility. The screenshot-based contrast checker revealed genuine
+low-contrast Cleaning hero text and AlienX's light status accent; candidate fixes
+darken the photo overlay and make the intended light-theme accent win scoped CSS
+specificity. A fixture's `endswith` typo is corrected. The screenshot checker and
+its regression fixtures are retained from the concurrent PR continuation.
+Fresh final-head verification is still required. October 6 audit newly reported
+GHSA-r4xh-jqrq-34v2 and GHSA-68fv-2mgg-jv7q in the prior lock; the candidate
+updates smol-toml to 1.9.0 and source-map-js to 1.2.2 without audit exceptions.
+
+The owner explicitly authorized publication to both named repositories after an
+earlier automatic approval rejection. The connector published both draft PRs;
+terminal Git credential access remains unavailable. Local browser installation
+failed downloading the pinned archive, so browser evidence must come from CI.
+No merge or production acceptance is claimed by this candidate record.
+
+Failed heartbeat-response cleanup is now best-effort and cannot change permanent
+versus transient retry decisions. Regression tests cover canceled, missing and
+rejecting bodies with the same bounded attempts and stable key. Cleaning field
+validation now returns safe field errors; inline descriptions, invalid state and
+focus guide correction while preserving input, retry identity and Turnstile.
+Cleaning #35/#36 require deployment evidence before closure. #32/#33 retain private
+account/mailbox and physical-device evidence requirements; #34 retains CSP and
+reporting acceptance. Existing unresolved findings below remain authoritative.
 
 ## October 5 engineering alignment — partial release acceptance
 
@@ -151,7 +165,7 @@ do not replace it with AlienX's global override just for parity.
 | CBC-10 | Core verified; later candidate tranche released PR #23 | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                             |
 | CBC-11 | Verified at 308138f                                    | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.          |
 | CBC-12 | Verified at 308138f                                    | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                              |
-| CBC-13 | Hardening follow-up, not confirmed exploit             | src/mail.ts follows default redirect behavior; email-health.ts does not cancel non-OK response bodies. Keep direct transport; evaluate failed-body cleanup with mocked tests in #35.                              |
+| CBC-13 | Hardening follow-up, not confirmed exploit             | src/mail.ts follows default redirect behavior; the candidate shared heartbeat engine cancels non-OK bodies without masking retry disposition. Mocked regression coverage is implemented; #35 awaits release acceptance.                              |
 
 PR #23 runtime/navigation changes passed at 5522d60440bfe66cb92adde8f2ce3a75c9eb77d4,
 Smoke 36490018374 and Integrity 36490418251. Earlier layout/Lighthouse failures
@@ -183,7 +197,7 @@ owns its remaining work; these are Cleaning's dispositions.
 | Release      | AlienX's exact-main approval/build/Smoke/Integrity passed. Cleaning retained its REST verifier and independently verified PR #28 production. Do not copy approval tags without a separately reviewed migration.                              |
 | Forms        | Both have bounded input, mandatory edge limits, strict Turnstile, safe email rendering and idempotency. Retain Cleaning's multipart fields, best-effort customer confirmation and generic status; AlienX's JSON schema is not a replacement. |
 | Lighthouse   | Adapt PR #53 stderr capture in PR #28 with real subprocess regressions and per-attempt output; retain single-sample budgets. PR #28 exact-head and exact-main CI passed; future revisions need their own checks.                             |
-| Mail         | Both use a fixed daily schedule/recipient and stable provider keys. AlienX PR #79 adopted direct transport; decline its obsolete redirect rejection. Failed-body cleanup remains #35; keep independent senders/permissions.                  |
+| Mail         | Both use a fixed daily schedule/recipient and stable provider keys. AlienX PR #79 adopted direct transport; decline its obsolete redirect rejection. Candidate failed-body cleanup awaits release acceptance in #35; keep independent senders/permissions.                  |
 | CSP          | Cleaning's external styles/host policy differs from Astro-generated AlienX hashes. Stronger policy needs real-widget validation, not a scanner-score transplant.                                                                             |
 | Dependencies | Runtime pins match; Wrangler/Prettier/parse5 and Undici override scope differ for local reasons. Fresh audits are clean; no blanket version synchronization.                                                                                 |
 | Operations   | AlienX PR #87 records its own heartbeat/inquiry receipt; Cleaning still needs independent acceptance. Neither peer evidence nor source parity closes local controls.                                                                         |

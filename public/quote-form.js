@@ -64,6 +64,76 @@
   const { form, button } = getElements();
   if (!form || !button || form.dataset.turnstileBound === 'true') return;
   form.dataset.turnstileBound = 'true';
+  const fieldNames = new Set([
+    'name',
+    'email',
+    'phone',
+    'address',
+    'squareFootage',
+    'message',
+    'preferredDays',
+    'referrerName',
+    'referralDetails',
+    'contactMethod',
+    'homeType',
+    'bedrooms',
+    'bathrooms',
+    'cleaningType',
+    'frequency',
+    'referralSource',
+    'preferredTime',
+    'addons',
+    'preferredDate',
+  ]);
+  const clearField = (name) => {
+    if (!fieldNames.has(name)) return;
+    const id = `quote-error-${name}`;
+    document.getElementById(id)?.remove();
+    for (const field of form.querySelectorAll(`[name="${name}"]`)) {
+      field.removeAttribute('aria-invalid');
+      const described = (field.getAttribute('aria-describedby') || '')
+        .split(/\s+/)
+        .filter((value) => value && value !== id);
+      if (described.length)
+        field.setAttribute('aria-describedby', described.join(' '));
+      else field.removeAttribute('aria-describedby');
+    }
+  };
+  const showFieldErrors = (errors) => {
+    if (!errors || typeof errors !== 'object' || Array.isArray(errors))
+      return null;
+    let first = null;
+    // DOM order, not response-object order, determines the first invalid field.
+    for (const field of form.querySelectorAll('input,select,textarea')) {
+      const name = field.name;
+      if (
+        !fieldNames.has(name) ||
+        typeof errors[name] !== 'string' ||
+        !errors[name].trim()
+      )
+        continue;
+      const id = `quote-error-${name}`;
+      if (!document.getElementById(id)) {
+        const message = document.createElement('span');
+        message.id = id;
+        message.className = 'field-error';
+        message.textContent = errors[name].slice(0, 300);
+        field.closest('label').append(message);
+      }
+      field.setAttribute('aria-invalid', 'true');
+      const described = (field.getAttribute('aria-describedby') || '')
+        .split(/\s+/)
+        .filter(Boolean);
+      field.setAttribute(
+        'aria-describedby',
+        [...new Set([...described, id])].join(' '),
+      );
+      first ||= field;
+    }
+    return first;
+  };
+  form.addEventListener('input', (event) => clearField(event.target.name));
+  form.addEventListener('change', (event) => clearField(event.target.name));
   const originalLabel = button.textContent;
   let generation = 0;
   let controller;
@@ -94,6 +164,7 @@
     event.preventDefault();
     if (button.disabled) return;
     setStatus('');
+    for (const name of fieldNames) clearField(name);
     if (!form.reportValidity()) return;
 
     const formData = new FormData(form);
@@ -110,6 +181,7 @@
     controller = new AbortController();
     button.textContent = 'Sending…';
 
+    let invalidField = null;
     let timedOut = false;
     const timeoutId = window.setTimeout(() => {
       timedOut = true;
@@ -127,6 +199,7 @@
       if (attempt !== generation) return;
       const responseBody = parsed && typeof parsed === 'object' ? parsed : {};
       if (!response.ok) {
+        invalidField = showFieldErrors(responseBody.fieldErrors);
         throw new Error(
           typeof responseBody.error === 'string'
             ? responseBody.error +
@@ -155,6 +228,7 @@
             : 'Something went wrong. Please try again.',
         'failure',
       );
+      invalidField?.focus();
       button.disabled = false;
       button.textContent = originalLabel;
     } finally {
