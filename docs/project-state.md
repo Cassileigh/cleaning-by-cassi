@@ -4,14 +4,22 @@ Updated October 6, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## October 6 diagnostic parity follow-up — candidate
+## October 6 diagnostic parity follow-up — verified
 
 The manual WebKit runner and workflow now share one implementation, retaining
 traces, screenshots, preview logs and baseline failure semantics in both repos.
 Regression coverage blocks external requests/local writes and verifies altered
 modes cannot count as release acceptance. The peer verifier now covers this
-previously omitted tool and workflow. This is candidate source work, not deployed
-acceptance; full application parity and owner-dependent checklist items stay open.
+previously omitted tool and workflow. PR #43 passed all five exact-head gates and
+real macOS WebKit diagnostics, then merged as
+`ee5edf747a63bc7bf8dfafc9bbf403aa738170e9`. All five main gates, fresh CodeQL and
+zero-open-alert policy passed. Release approval published this exact SHA and
+Workers Build 112468489765 succeeded. [Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37520859629)
+and [Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37521751610)
+verified this revision on both hosts, including TLS protocol acceptance. Full
+application parity and owner-dependent checklist items stay open. No real mail or
+account/recovery operation was performed. This evidence-only follow-up needs no
+recursive state update.
 
 ## October 6 shared infrastructure and quote release — verified
 
