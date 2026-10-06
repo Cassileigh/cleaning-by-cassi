@@ -99,3 +99,26 @@ through `aria-describedby`, marks invalid fields, focuses the first field in DOM
 order, and clears only the corrected field on input/change. Existing descriptions,
 values and submission identity are retained. Security/provider failures retain the
 form-level error and fresh Turnstile requirement; no user-controlled HTML is rendered.
+
+## Shared application primitives
+
+`src/worker.ts`, `src/mail.ts` and `src/email-health.ts` are identical across both
+repositories. Mail identity, timeout, daily message/key and permission to send a
+customer confirmation are explicit non-secret configuration. Scheduled/business
+mail always uses the fixed recipient; only Cleaning's existing confirmation path
+can use its validated customer address. The scheduled time and retry contract are
+unchanged.
+
+`src/status.ts` and `/api/status` share configuration-only readiness evaluation,
+strict nonblank credentials/hostnames, callable limiter checks, bodyless HEAD and
+405 responses with Allow. All status responses are no-store with a restrictive
+CSP and no-referrer policy, preserved through middleware. Cleaning retains its
+generic private schema; AlienX retains its existing configured-check metadata.
+No status request calls a provider or consumes a limiter counter.
+
+`src/form-engine.ts` owns bounded stream reads with reader cleanup, the bounded
+isolate limiter, Turnstile verification, HTML escaping, email syntax and content
+digests. Site routes still own their field schemas, limits, response copy and
+retry payloads. Mandatory edge bindings and independent handler validation remain.
+The peer verifier compares these engines and their shared regression tests. UI
+behavior and remaining route/schema extraction are still open parity work.

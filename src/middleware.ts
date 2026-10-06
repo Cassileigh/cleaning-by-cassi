@@ -1,12 +1,10 @@
+import { createAttemptLimiter, RATE_WINDOW_MS } from './form-engine';
 import { secure } from './security';
 import { defineMiddleware } from 'astro:middleware';
 import { env } from 'cloudflare:workers';
 import type { ApplicationBindings } from './bindings';
 
-const RATE_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT = 8;
-const MAX_TRACKED_IPS = 5_000;
-const attempts = new Map<string, number[]>();
+const attempt = createAttemptLimiter();
 
 const json = (
   body: Record<string, unknown>,
@@ -27,29 +25,14 @@ const json = (
     }),
   );
 
-const pruneAttempts = (now: number) => {
-  for (const [ip, timestamps] of attempts) {
-    const recent = timestamps.filter(
-      (timestamp) => now - timestamp < RATE_WINDOW_MS,
-    );
-    if (recent.length === 0) attempts.delete(ip);
-    else attempts.set(ip, recent);
-  }
-};
-
 export const onRequest = defineMiddleware(async ({ request }, next) => {
   const requestUrl = new URL(request.url);
   const pathname = requestUrl.pathname.replace(/\/+$/, '');
   if (request.method === 'POST' && pathname === '/api/quote') {
     const requestId = `CBC-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
     const ip = request.headers.get('CF-Connecting-IP') ?? 'unknown';
-    const now = Date.now();
-    const recent = (attempts.get(ip) ?? []).filter(
-      (timestamp) => now - timestamp < RATE_WINDOW_MS,
-    );
-
-    if (attempts.size >= MAX_TRACKED_IPS) pruneAttempts(now);
-    if (recent.length >= RATE_LIMIT) {
+    const decision = attempt(ip);
+    if (decision === 'limited') {
       return json(
         {
           error: 'Too many quote requests. Please try again later.',
@@ -62,7 +45,7 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
     }
 
     // Never evict an active limit to admit a new address. This is an isolate-local safety net, not distributed enforcement.
-    if (!attempts.has(ip) && attempts.size >= MAX_TRACKED_IPS) {
+    if (decision === 'capacity') {
       return json(
         {
           error:
@@ -75,8 +58,6 @@ export const onRequest = defineMiddleware(async ({ request }, next) => {
       );
     }
 
-    recent.push(now);
-    attempts.set(ip, recent);
     const bindings: ApplicationBindings = env;
     try {
       // Cloudflare shares counters within an edge location, across isolates.

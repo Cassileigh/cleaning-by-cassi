@@ -4,6 +4,19 @@ Updated October 6, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## October 6 shared application engine — in progress
+
+The paired application changes consolidate Worker/mail/heartbeat adapters, status
+readiness and method handling, and common form stream/abuse/verification/retry
+primitives. AlienX now rejects malformed limiter bindings as unready; both status
+routes preserve restrictive API headers through middleware. Site forms, recipients,
+confirmation permissions and retry identities remain separate explicit inputs.
+This candidate has not yet completed exact-head CI or production acceptance.
+Parent #39 stays open for UI behavior, remaining route/schema extraction and
+full parity inventory beyond the migrated-component allowlist. All existing
+owner/device/account/recovery acceptance gaps remain open; no real mail test or
+private account operation was performed.
+
 ## October 6 diagnostic parity follow-up — verified
 
 The manual WebKit runner and workflow now share one implementation, retaining

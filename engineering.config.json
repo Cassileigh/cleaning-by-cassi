@@ -48,7 +48,11 @@
     "sender": "Cleaning by Cassi <quotes@cleaningbycassi.com>",
     "address": "quotes@cleaningbycassi.com",
     "recipient": "cassandramorris@cleaningbycassi.com",
-    "healthSubject": "Cleaning by Cassi \u2014 daily email health check \u2014 "
+    "healthSubject": "Cleaning by Cassi — daily email health check — ",
+    "customerConfirmation": true,
+    "timeoutMs": 10000,
+    "healthText": "Good morning, Cassi!\n\nThis is your daily 5:00 a.m. Central email health check for {date}.\n\nReceiving this confirms that the production website's scheduled job, mail credential, shared sending code, and delivery to your business mailbox worked for this message.\n\nIt does not test a customer's Turnstile challenge, their form submission, or delivery to every customer's inbox. Those paths have separate automated checks.\n\nNo customer quote was created. If this email is missing, check the delivery monitor and Cloudflare scheduled-event logs.\n\nCleaning by Cassi",
+    "healthKeyPrefix": "daily-email-health/"
   },
   "form": {
     "route": "/quote",
@@ -217,5 +221,38 @@
         "effort": 6
       }
     }
-  ]
+  ],
+  "status": {
+    "limiterBinding": "QUOTE_RATE_LIMITER",
+    "checks": [
+      {
+        "key": "worker",
+        "requires": [],
+        "ready": "operational",
+        "detail": "Production Worker is responding",
+        "failure": "Production Worker is responding"
+      },
+      {
+        "key": "quote",
+        "requires": [],
+        "ready": "operational",
+        "detail": "Quote handler is included in this application",
+        "failure": "Quote handler is included in this application"
+      },
+      {
+        "key": "protection",
+        "requires": ["verification", "limiter"],
+        "ready": "operational",
+        "detail": "Security verification is configured; provider availability is not checked",
+        "failure": "Security verification configuration is incomplete"
+      },
+      {
+        "key": "delivery",
+        "requires": ["delivery"],
+        "ready": "operational",
+        "detail": "Email service is configured; inbox delivery is not checked",
+        "failure": "Email service configuration is incomplete"
+      }
+    ]
+  }
 }

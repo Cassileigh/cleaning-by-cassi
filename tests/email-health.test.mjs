@@ -20,6 +20,17 @@ function health(responses = [Response.json({ id: 'accepted' })]) {
     },
   };
   function load(name) {
+    if (name.endsWith('.json'))
+      return {
+        __esModule: true,
+        default: JSON.parse(
+          readFileSync(
+            new URL('../engineering.config.json', import.meta.url),
+            'utf8',
+          ),
+        ),
+      };
+
     const exports = {};
     const source = readFileSync(
       new URL(`../src/${name}.ts`, import.meta.url),
