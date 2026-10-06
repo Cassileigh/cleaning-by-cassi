@@ -4,6 +4,15 @@ Updated October 6, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## October 6 diagnostic parity follow-up — candidate
+
+The manual WebKit runner and workflow now share one implementation, retaining
+traces, screenshots, preview logs and baseline failure semantics in both repos.
+Regression coverage blocks external requests/local writes and verifies altered
+modes cannot count as release acceptance. The peer verifier now covers this
+previously omitted tool and workflow. This is candidate source work, not deployed
+acceptance; full application parity and owner-dependent checklist items stay open.
+
 ## October 6 shared infrastructure and quote release — verified
 
 PR #41 merged as `10797180847f5d2b61d3c46a85df6874a500f874`.
