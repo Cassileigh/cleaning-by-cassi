@@ -10,19 +10,19 @@ test('actual workflow guards survive regression and cannot be satisfied by comme
       'production-integrity.yml',
       'github.event.workflow_run.head_repository.full_name == github.repository &&',
     ],
-    ['safari.yml', 'tests/keyboard.spec.cjs'],
+    ['safari.yml', 'npm run test:webkit'],
   ]) {
     const source = readFileSync(
       new URL(`../.github/workflows/${name}`, import.meta.url),
       'utf8',
     );
     assert.deepEqual(workflowFailures(name, source), []);
-    assert.equal(workflowFailures(name, source.replace(control, '')).length, 1);
+    assert.ok(workflowFailures(name, source.replace(control, '')).length >= 1);
     const commented = source
       .split('\n')
       .map((line) => (line.includes(control) ? `# ${line}` : line))
       .join('\n');
-    assert.equal(workflowFailures(name, commented).length, 1);
+    assert.ok(workflowFailures(name, commented).length >= 1);
   }
 });
 

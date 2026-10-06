@@ -6,6 +6,7 @@ import {
   classifyApproval,
   getGitHubJson,
 } from '../scripts/verify-ci.mjs';
+import { site } from '../scripts/site-config.mjs';
 const sha = 'a'.repeat(40);
 
 test('GitHub evidence requests support read-only build authentication and reject redirects', async () => {
@@ -15,7 +16,7 @@ test('GitHub evidence requests support read-only build authentication and reject
       fetchImpl: async (url, init) => {
         assert.equal(
           url,
-          'https://api.github.com/repos/Cassileigh/cleaning-by-cassi/git/ref/heads/main',
+          `https://api.github.com/repos/${site.repository}/git/ref/heads/main`,
         );
         assert.equal(
           init.headers.Authorization,

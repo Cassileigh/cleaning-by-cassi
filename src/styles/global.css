@@ -474,3 +474,15 @@ table {
 .privacy-note {
   font-size: 0.9rem;
 }
+
+.field-error {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+[aria-invalid='true'] {
+  outline: 2px solid var(--emphasis);
+  outline-offset: 2px;
+}

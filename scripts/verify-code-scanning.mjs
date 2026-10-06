@@ -1,6 +1,7 @@
 import { pathToFileURL } from 'node:url';
 
-const repository = 'Cassileigh/cleaning-by-cassi';
+import { site } from './site-config.mjs';
+const repository = site.repository;
 const ref = 'refs/heads/main';
 const languages = ['actions', 'javascript-typescript'];
 
@@ -75,7 +76,7 @@ export async function verifyCodeScanning({
           Accept: 'application/vnd.github+json',
           Authorization: `Bearer ${token}`,
           'X-GitHub-Api-Version': '2022-11-28',
-          'User-Agent': 'Cleaning-by-Cassi-security-policy',
+          'User-Agent': 'Shared-security-policy',
         },
         redirect: 'error',
         signal: AbortSignal.timeout(15000),

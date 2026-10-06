@@ -1,3 +1,4 @@
+const site = require('../engineering.config.json');
 const { Builder } = require('selenium-webdriver');
 const safari = require('selenium-webdriver/safari');
 const assert = require('node:assert/strict');
@@ -22,18 +23,9 @@ const { mkdirSync, writeFileSync } = require('node:fs');
   try {
     for (const width of [768, 1280]) {
       await driver.manage().window().setRect({ width, height: 900 });
-      for (const route of [
-        '',
-        'about',
-        'services',
-        'pricing',
-        'quote',
-        'quote-success',
-        'review',
-        'privacy',
-      ]) {
+      for (const route of site.routes) {
         console.log(`Checking Safari ${width}px /${route}`);
-        await driver.get(`http://127.0.0.1:4321/${route}`);
+        await driver.get(`http://127.0.0.1:4321${route}`);
         await driver.executeScript(() => {
           for (const image of document.images) image.loading = 'eager';
         });
@@ -60,11 +52,47 @@ const { mkdirSync, writeFileSync } = require('node:fs');
             () => requestAnimationFrame(() => requestAnimationFrame(done)),
           );
         });
-        const state = await driver.executeScript(() => {
+        if (route === site.browser.statusRoute) {
+          await driver.wait(
+            () =>
+              driver.executeScript(
+                () => document.querySelectorAll('#checks .check').length === 4,
+              ),
+            10000,
+            'Expected four status checks',
+          );
+        }
+        for (const theme of site.browser.themeSetter ? ['light', 'dark'] : []) {
+          const applied = await driver.executeAsyncScript(
+            (config, selected, done) => {
+              if (typeof window[config.themeSetter] !== 'function')
+                return done(false);
+              window[config.themeSetter](selected);
+              requestAnimationFrame(() =>
+                requestAnimationFrame(() =>
+                  done(
+                    document.documentElement.getAttribute(
+                      config.themeAttribute,
+                    ) === selected &&
+                      localStorage.getItem(config.themeKey) === selected &&
+                      Boolean(
+                        getComputedStyle(document.body).backgroundColor,
+                      ) &&
+                      Boolean(getComputedStyle(document.body).color),
+                  ),
+                ),
+              );
+            },
+            site.browser,
+            theme,
+          );
+          assert.ok(applied, `${route}: native Safari theme ${theme}`);
+        }
+        const state = await driver.executeScript((config) => {
           const box = (selector) =>
             document.querySelector(selector).getBoundingClientRect();
-          const logo = box('.brand-logo');
-          const facebook = box('.facebook-link');
+          const logo = box(config.logoSelector);
+          const facebook = box(config.externalSelector);
           const nav = box('.internal-links');
           const active = document
             .querySelector('.internal-links [aria-current="page"]')
@@ -78,7 +106,7 @@ const { mkdirSync, writeFileSync } = require('node:fs');
             },
             readyState: document.readyState,
             fonts: document.fonts.status,
-            navDisplay: getComputedStyle(document.querySelector('.site-nav'))
+            navDisplay: getComputedStyle(document.querySelector('header nav'))
               .display,
             main: Boolean(document.querySelector('main')),
             overflow: document.documentElement.scrollWidth > innerWidth + 1,
@@ -88,15 +116,18 @@ const { mkdirSync, writeFileSync } = require('node:fs');
               facebook.width > 0 &&
               facebook.left >= 0 &&
               facebook.right <= innerWidth,
-            sameRow: logo.top < nav.bottom && nav.top < logo.bottom,
+            navigationLayout:
+              innerWidth <= config.navigationRowBreakpoint
+                ? nav.top >= Math.max(logo.bottom, facebook.bottom) - 1
+                : logo.top < nav.bottom && nav.top < logo.bottom,
             activeVisible:
               !active ||
               (active.left >= nav.left - 1 && active.right <= nav.right + 1),
           };
-        });
+        }, site.browser);
         mkdirSync('safari-diagnostics', { recursive: true });
         writeFileSync(
-          `safari-diagnostics/${width}-${route || 'home'}.json`,
+          `safari-diagnostics/${width}-${route.replaceAll('/', '_') || 'home'}.json`,
           JSON.stringify(state, null, 2),
         );
         assert.ok(state.title && state.main, `${route}: page structure`);
@@ -104,7 +135,7 @@ const { mkdirSync, writeFileSync } = require('node:fs');
         for (const key of [
           'logoVisible',
           'facebookVisible',
-          'sameRow',
+          'navigationLayout',
           'activeVisible',
         ])
           assert.ok(state[key], `${route}: ${key}`);

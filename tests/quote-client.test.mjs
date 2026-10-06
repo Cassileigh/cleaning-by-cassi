@@ -14,6 +14,7 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
     action: '/api/quote',
     reportValidity: () => true,
     querySelector: () => id,
+    querySelectorAll: () => [],
     addEventListener: (_, handler) => {
       submit = handler;
     },
@@ -44,7 +45,10 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
     readFileSync(new URL('../public/quote-form.js', import.meta.url), 'utf8'),
     {
       window,
-      document: { querySelector: (selector) => elements[selector] },
+      document: {
+        querySelector: (selector) => elements[selector],
+        getElementById: () => null,
+      },
       crypto,
       AbortController,
       FormData: class {

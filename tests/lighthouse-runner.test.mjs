@@ -62,7 +62,7 @@ for (const mode of ['trace-twice', 'unrelated', 'missing', 'malformed']) {
   test(`${mode} fails closed with bounded calls`, (t) => {
     const f = fixture(t, mode);
     assert.throws(f.run);
-    assert.equal(f.calls(), mode === 'trace-twice' ? 2 : 1);
+    assert.equal(f.calls(), mode === 'trace-twice' ? 3 : 1);
   });
 }
 test('low scores never retry even with NO_NAVSTART in stderr', (t) => {

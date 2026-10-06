@@ -128,8 +128,7 @@ function fixture({
             .replace('; upgrade-insecure-requests', ''),
         );
       h.set('content-type', 'text/html');
-      let body =
-        '<meta name="robots" content="noindex">0x4AAAAAAEmmOovf3yTuy_Ua';
+      let body = `<html><head><title>Fixture</title><meta name="description" content="Fixture"><link rel="canonical" href="https://cleaningbycassi.com${url.pathname}"><meta property="og:url" content="https://cleaningbycassi.com${url.pathname}"><meta property="og:image" content="https://cleaningbycassi.com/image.webp"><meta name="robots" content="${url.pathname === '/quote-success' ? 'noindex, follow' : 'index, follow'}"></head><body>0x4AAAAAAEmmOovf3yTuy_Ua</body></html>`;
       let status = 200;
       if (url.pathname === '/api/release')
         body = JSON.stringify({

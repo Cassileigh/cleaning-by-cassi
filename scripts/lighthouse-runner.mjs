@@ -9,11 +9,11 @@ export function runLighthouse({
   outputBase,
 }) {
   mkdirSync(dirname(outputBase), { recursive: true });
-  for (let attempt = 1; attempt <= 2; attempt++) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
     for (const suffix of ['', '.stderr.log', '.stdout.log'])
       rmSync(`${outputBase}-attempt-${attempt}.json${suffix}`, { force: true });
   }
-  for (let attempt = 0; attempt < 2; attempt++) {
+  for (let attempt = 0; attempt < 3; attempt++) {
     const output = `${outputBase}-attempt-${attempt + 1}.json`;
     const result = spawnSync(command, [...args, `--output-path=${output}`], {
       encoding: 'utf8',
@@ -30,15 +30,36 @@ export function runLighthouse({
     } catch (error) {
       reportError = error;
     }
+    if (
+      reportError ||
+      report?.runtimeError ||
+      result.error ||
+      result.signal ||
+      result.status !== 0
+    )
+      writeFileSync(
+        output + '.error.txt',
+        [
+          reportError?.message,
+          report?.runtimeError?.message,
+          result.error?.message,
+          stderr,
+        ]
+          .filter(Boolean)
+          .join('\n'),
+      );
     const missing = reportError?.code === 'ENOENT';
     const traceFailure =
       report?.runtimeError?.code === 'NO_NAVSTART' ||
+      /NO_NAVSTART|recording the trace over your page load/i.test(
+        report?.runtimeError?.message ?? '',
+      ) ||
       (missing && /\bNO_NAVSTART\b/.test(stderr));
     // Spawn/timeouts/signals and malformed reports are not retryable. A report
     // with scores must never retry merely because stderr contains a trace token.
-    if (!result.error && !result.signal && traceFailure && attempt === 0) {
+    if (!result.error && !result.signal && traceFailure && attempt < 2) {
       console.warn(
-        'Retrying NO_NAVSTART trace collection once; retaining diagnostics',
+        'Retrying NO_NAVSTART trace collection within the two-retry limit; retaining diagnostics',
       );
       continue;
     }

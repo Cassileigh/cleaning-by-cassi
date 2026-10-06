@@ -4,19 +4,82 @@ Updated October 2, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## October 5 engineering alignment — verification pending
+## October 5 shared implementation migration — candidate, not released
+
+Owner requested completion of Cleaning #39 / AlienX #122, not cancellation.
+The mistaken administrative closure of #39 was reversed; no parity acceptance
+is inferred from issue state. Candidate work migrates the release verifier and
+publisher, security audit/code-scanning checks, dependency pins and normalized
+lock, Dependabot policy, responsive/accessibility/native Safari runners, browser
+workflows, Lighthouse, form-health and optional provider-evidence validator.
+`engineering.config.json` owns repository/ref identity, public site routes,
+form encoding/selectors, theme controls, and fixed mail identity. It contains no
+credentials. Existing application-specific interaction suites remain mandatory.
+
+The common release verifier retains malformed/incomplete evidence rejection and
+uses exact approved/rejected Git refs; target guard runs again before Wrangler.
+The shared Lighthouse gate retains all budgets, uses three fixed samples and
+requires **every** score to pass (stronger than the former median). The locked
+Playwright Chromium is selected in both measurement workflows. Two trace-only
+retries retain all attempts/stdout/stderr/assets; low scores never retry.
+GitHub-native operator alerts use trusted origin checks and no provider history.
+The form-health probe submits no verified inquiry and uses an empty security token.
+
+The follow-up candidate also shares framework configuration, generated release
+metadata, security-header implementation, SEO/integrity checks, exact-revision
+production Smoke/Integrity, TLS probes, image decoding/generation and the scheduled
+mail retry engine. Explicit rendering/CSP inputs retain the server-rendered
+Cleaning header policy and AlienX's generated hash policy. This preserves each
+site's emitted content requirements while using the same implementation.
+The peer verifier compares these source files, normalized workflow display names,
+commands and normalized dependency locks; it does not certify private acceptance.
+
+Paired PRs: [Cleaning #41](https://github.com/Cassileigh/cleaning-by-cassi/pull/41)
+and [AlienX #123](https://github.com/AlienX420710/alienx-smarthome/pull/123).
+Latest published heads passed Quality, Responsive, Lighthouse and Safari, but
+failed Accessibility. The screenshot-based contrast checker revealed genuine
+low-contrast Cleaning hero text and AlienX's light status accent; candidate fixes
+darken the photo overlay and make the intended light-theme accent win scoped CSS
+specificity. A fixture's `endswith` typo is corrected. The screenshot checker and
+its regression fixtures are retained from the concurrent PR continuation.
+Fresh final-head verification is still required. October 6 audit newly reported
+GHSA-r4xh-jqrq-34v2 and GHSA-68fv-2mgg-jv7q in the prior lock; the candidate
+updates smol-toml to 1.9.0 and source-map-js to 1.2.2 without audit exceptions.
+
+The owner explicitly authorized publication to both named repositories after an
+earlier automatic approval rejection. The connector published both draft PRs;
+terminal Git credential access remains unavailable. Local browser installation
+failed downloading the pinned archive, so browser evidence must come from CI.
+No merge or production acceptance is claimed by this candidate record.
+
+Failed heartbeat-response cleanup is now best-effort and cannot change permanent
+versus transient retry decisions. Regression tests cover canceled, missing and
+rejecting bodies with the same bounded attempts and stable key. Cleaning field
+validation now returns safe field errors; inline descriptions, invalid state and
+focus guide correction while preserving input, retry identity and Turnstile.
+Cleaning #35/#36 require deployment evidence before closure. #32/#33 retain private
+account/mailbox and physical-device evidence requirements; #34 retains CSP and
+reporting acceptance. Existing unresolved findings below remain authoritative.
+
+## October 5 engineering alignment — partial release acceptance
 
 The owner requires identical engineering except for site content/configuration.
-The paired changes align assistant instructions, dependency pins/overrides,
-formatting coverage, Quality checks, preflight and generated-target validation.
-The dependency lock updates patch http-cache-semantics rather than granting an
-audit exception. Existing historical release evidence below remains authoritative
-until the paired PR heads and resulting deployments pass their required gates.
-Application-specific browser suites and the existing release/monitoring machinery
-still differ; full non-content parity is not yet established. Those differences
-must be migrated and verified, not relabeled as content or silently accepted.
+The preflight repair merged as PR #38 / main
+`b9a1f36639cbde4007bbc0b032b2ad61b77db042`. Its required checks, code-scanning
+policy, Workers Build, [Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37360074481)
+and [Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37360660074)
+passed; Integrity observed that exact revision on both production hosts.
 
-## Last verified application release
+Later main `1cd22cd93532e1ee032cfe1f6abfe7f20663c3b6` is **not production accepted**:
+Safari and CodeQL were cancelled, the fresh-analysis policy failed, Workers Build
+failed, and [Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37384302374)
+exhausted its expected-revision wait. A failed promotion does not establish an
+outage of the prior live release. Candidate #41 must pass its own complete
+exact-head/main/deployment evidence chain. Full engineering parity and #32–#36
+remain open; neither branch publication nor the earlier successful deployment
+closes them.
+
+## Previous verified application release
 
 October 2, 2026: PR #28 merged as `308138f43c22f49a0fbfeb1806a547181ad5e4d4`.
 All five exact-main gates passed: [Quality](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37079024725),
@@ -88,21 +151,21 @@ Fresh September 30 comparison: npm ci, all-severity npm audit (zero findings),
 3.1.8 is remediated. The scoped Miniflare Undici override remains deliberate;
 do not replace it with AlienX's global override just for parity.
 
-| ID     | Disposition                                            | Evidence or remaining acceptance                                                                                                                                                                                  |
-| ------ | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CBC-01 | Verified September 26                                  | Integrity uses trusted workflow revision, release SHA as data, no cache or retained credentials.                                                                                                                  |
-| CBC-02 | Main execution verified September 26                   | Fresh exact-main Actions/JS/TS analyses, no warnings/errors, zero open alerts; bounded complete pagination. API/stale/malformed evidence fails closed.                                                            |
-| CBC-03 | Implemented                                            | Secret-free Worker example/local hostname policy; no production defaults or new PUBLIC architecture.                                                                                                              |
-| CBC-04 | Implemented; consolidated                              | One register, contract, operations and pinned history; no duplicate status narratives.                                                                                                                            |
-| CBC-05 | Partly verified; account evidence open                 | Required PR/five strict checks observed, historical delivered heartbeat, offline rejection/recovery passed. Remaining controls below.                                                                             |
-| CBC-06 | Partial; device/business work open                     | Font notice/unused art cleanup done. Real iPad/VoiceOver/touch/zoom, verified Facebook reviews destination and owner copy review remain. Historical per-field server-error mapping remains a usability follow-up. |
-| CBC-07 | Verified at ee9f3e8                                    | Legacy cross-domain and display-capture denial on dynamic/static paths.                                                                                                                                           |
-| CBC-08 | Design evaluated; implementation/live-widget work open | Nonce/hash strict-dynamic must cover parser-inserted scripts, Turnstile and caching; keep existing policy until proven or compatibility disposition recorded.                                                     |
-| CBC-09 | Provisioning/operational evidence open                 | Monitored CSP destination needs owner, bounded body/rates, URL/query/sample redaction, retention and actionable synthetic non-production evidence; no unmonitored collector.                                      |
-| CBC-10 | Core verified; later candidate tranche released PR #23 | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                             |
-| CBC-11 | Verified at 308138f                                    | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.          |
-| CBC-12 | Verified at 308138f                                    | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                              |
-| CBC-13 | Hardening follow-up, not confirmed exploit             | src/mail.ts follows default redirect behavior; email-health.ts does not cancel non-OK response bodies. Keep direct transport; evaluate failed-body cleanup with mocked tests in #35.                              |
+| ID     | Disposition                                            | Evidence or remaining acceptance                                                                                                                                                                                        |
+| ------ | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CBC-01 | Verified September 26                                  | Integrity uses trusted workflow revision, release SHA as data, no cache or retained credentials.                                                                                                                        |
+| CBC-02 | Main execution verified September 26                   | Fresh exact-main Actions/JS/TS analyses, no warnings/errors, zero open alerts; bounded complete pagination. API/stale/malformed evidence fails closed.                                                                  |
+| CBC-03 | Implemented                                            | Secret-free Worker example/local hostname policy; no production defaults or new PUBLIC architecture.                                                                                                                    |
+| CBC-04 | Implemented; consolidated                              | One register, contract, operations and pinned history; no duplicate status narratives.                                                                                                                                  |
+| CBC-05 | Partly verified; account evidence open                 | Required PR/five strict checks observed, historical delivered heartbeat, offline rejection/recovery passed. Remaining controls below.                                                                                   |
+| CBC-06 | Partial; device/business work open                     | Font notice/unused art cleanup done. Real iPad/VoiceOver/touch/zoom, verified Facebook reviews destination and owner copy review remain. Historical per-field server-error mapping remains a usability follow-up.       |
+| CBC-07 | Verified at ee9f3e8                                    | Legacy cross-domain and display-capture denial on dynamic/static paths.                                                                                                                                                 |
+| CBC-08 | Design evaluated; implementation/live-widget work open | Nonce/hash strict-dynamic must cover parser-inserted scripts, Turnstile and caching; keep existing policy until proven or compatibility disposition recorded.                                                           |
+| CBC-09 | Provisioning/operational evidence open                 | Monitored CSP destination needs owner, bounded body/rates, URL/query/sample redaction, retention and actionable synthetic non-production evidence; no unmonitored collector.                                            |
+| CBC-10 | Core verified; later candidate tranche released PR #23 | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                                   |
+| CBC-11 | Verified at 308138f                                    | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.                |
+| CBC-12 | Verified at 308138f                                    | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                                    |
+| CBC-13 | Hardening follow-up, not confirmed exploit             | src/mail.ts follows default redirect behavior; the candidate shared heartbeat engine cancels non-OK bodies without masking retry disposition. Mocked regression coverage is implemented; #35 awaits release acceptance. |
 
 PR #23 runtime/navigation changes passed at 5522d60440bfe66cb92adde8f2ce3a75c9eb77d4,
 Smoke 36490018374 and Integrity 36490418251. Earlier layout/Lighthouse failures
@@ -129,15 +192,15 @@ Peer baseline: AlienX main `adb8d5d9f5af7a0bfd074e44eaf119ecd5bcff1d` (October 2
 Its [local register](https://github.com/AlienX420710/alienx-smarthome/blob/main/docs/project-state.md)
 owns its remaining work; these are Cleaning's dispositions.
 
-| Concern      | Comparison and Cleaning disposition                                                                                                                                                                                                          |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Release      | AlienX's exact-main approval/build/Smoke/Integrity passed. Cleaning retained its REST verifier and independently verified PR #28 production. Do not copy approval tags without a separately reviewed migration.                              |
-| Forms        | Both have bounded input, mandatory edge limits, strict Turnstile, safe email rendering and idempotency. Retain Cleaning's multipart fields, best-effort customer confirmation and generic status; AlienX's JSON schema is not a replacement. |
-| Lighthouse   | Adapt PR #53 stderr capture in PR #28 with real subprocess regressions and per-attempt output; retain single-sample budgets. PR #28 exact-head and exact-main CI passed; future revisions need their own checks.                             |
-| Mail         | Both use a fixed daily schedule/recipient and stable provider keys. AlienX PR #79 adopted direct transport; decline its obsolete redirect rejection. Failed-body cleanup remains #35; keep independent senders/permissions.                  |
-| CSP          | Cleaning's external styles/host policy differs from Astro-generated AlienX hashes. Stronger policy needs real-widget validation, not a scanner-score transplant.                                                                             |
-| Dependencies | Runtime pins match; Wrangler/Prettier/parse5 and Undici override scope differ for local reasons. Fresh audits are clean; no blanket version synchronization.                                                                                 |
-| Operations   | AlienX PR #87 records its own heartbeat/inquiry receipt; Cleaning still needs independent acceptance. Neither peer evidence nor source parity closes local controls.                                                                         |
+| Concern      | Comparison and Cleaning disposition                                                                                                                                                                                                                        |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Release      | AlienX's exact-main approval/build/Smoke/Integrity passed. Cleaning retained its REST verifier and independently verified PR #28 production. Do not copy approval tags without a separately reviewed migration.                                            |
+| Forms        | Both have bounded input, mandatory edge limits, strict Turnstile, safe email rendering and idempotency. Retain Cleaning's multipart fields, best-effort customer confirmation and generic status; AlienX's JSON schema is not a replacement.               |
+| Lighthouse   | Adapt PR #53 stderr capture in PR #28 with real subprocess regressions and per-attempt output; retain single-sample budgets. PR #28 exact-head and exact-main CI passed; future revisions need their own checks.                                           |
+| Mail         | Both use a fixed daily schedule/recipient and stable provider keys. AlienX PR #79 adopted direct transport; decline its obsolete redirect rejection. Candidate failed-body cleanup awaits release acceptance in #35; keep independent senders/permissions. |
+| CSP          | Cleaning's external styles/host policy differs from Astro-generated AlienX hashes. Stronger policy needs real-widget validation, not a scanner-score transplant.                                                                                           |
+| Dependencies | Runtime pins match; Wrangler/Prettier/parse5 and Undici override scope differ for local reasons. Fresh audits are clean; no blanket version synchronization.                                                                                               |
+| Operations   | AlienX PR #87 records its own heartbeat/inquiry receipt; Cleaning still needs independent acceptance. Neither peer evidence nor source parity closes local controls.                                                                                       |
 
 Review limits: direct read-only requests to both sites' release/status endpoints
 returned HTTP 403 from this environment. No fresh served SHA is inferred; use the

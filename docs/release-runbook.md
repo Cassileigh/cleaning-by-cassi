@@ -19,23 +19,17 @@ direct main push, force reset, weakened gate or retry-until-green. Auto-merge on
 under these protections; delete temporary heads after verified merge. Observed
 ruleset 23093180 has no bypass; zero human approvals does not waive PRs/checks.
 
-Cloudflare Workers: main, root /, npm run build, **npm run deploy**. Direct Wrangler
-bypasses the gate. Owner screenshots/settings confirmed this and disabled preview
-builds; actual CI approved main execution-log evidence is separate in current state.
-The verifier checks clean checkout, build SHA, current GitHub main and five
-successful main-push workflows, then rechecks main before deployment. Failed,
-missing, skipped, stale, inaccessible evidence or 12-minute timeout fails closed.
-
-## Build credential
-
-GITHUB_READ_TOKEN is an optional build-only secret in Worker Settings > Build >
-Build variables and secrets, never runtime/PUBLIC/committed env. Fine-grained repo
-scope, Actions and Contents read-only, no writes, appropriate expiry. Enter through
-secure provider UI, not chat. Cloudflare's Git connection does not authenticate
-the verifier's REST calls. Anonymous calls share lower limits; authenticated errors
-must not fall back silently. Reject redirects and suppress credentials/provider
-bodies. Retain gates/freshness when retrying after credential repair. Old HTTP 403
-alone does not establish cause. Documentation makes no administrative changes.
+Cloudflare Workers: main, root /, npm run build, **npm run deploy**.
+The deployment command checks exact-main approved/rejected Git refs, clean
+checkout and Workers build revision, then validates the production Worker target
+before Wrangler. Direct Wrangler bypasses the release gate and is prohibited.
+The release publisher uses the trusted workflow revision and ephemeral GitHub
+token; it checks the latest five exact-main push workflows and current main before
+publishing the configured dedicated refs. Missing, malformed, stale or unavailable
+evidence fails closed. Both approval and rejection for one SHA mean rejection.
+A corrected exact-SHA run may replace rejection within the twelve-minute window.
+No Cloudflare GitHub PAT is required by this verifier. Existing account secrets
+are not deleted or rotated by this code migration.
 
 ## Validation and production
 
@@ -50,10 +44,10 @@ local HTTP-upgrade/readiness-503 exceptions. Production requires HTTPS/readiness
 Chromium, themes, keyboard/quote retry coverage; providers are mocked, no mail.
 Keep build.inlineStylesheets: never and external same-origin styles.
 
-Lighthouse retains configured single-sample budgets/eight routes; only the noindex
+Lighthouse retains the configured budgets and site routes with three fixed samples; each sample must pass; only the noindex
 receipt omits SEO. Inspect diagnostics; do not retry poor scores just to pass.
 The runner captures each attempt's stdout/stderr before reading its report and
-retries only NO_NAVSTART once; missing, malformed, unrelated and low-score results
+retries only recognized NO_NAVSTART trace-capture failures, at most twice; missing, malformed, unrelated and low-score results
 fail. Safari waits for document/font/transition readiness, then applies unchanged
 geometry assertions. Its separate safari-diagnostics directory survives WebKit's
 output cleanup. Attach attempt evidence to the linked local issue/PR.
@@ -173,3 +167,39 @@ text-size/display settings and tester before starting. Repeat in light and dark.
 6. Record failures with route, exact steps and screenshot where helpful. Never
    record customer data. Record pass/fail/not-tested for each step; not-tested is
    not a pass. Attach evidence to the current roadmap before closing CBC-06.
+
+## Shared engineering configuration and verification
+
+`engineering.config.json` supplies explicit repository/release-ref identity,
+public routes, form selectors/encoding, theme capability and fixed mail identity.
+The migrated scripts and browser workflows are shared; site interaction suites
+remain selected explicitly and must not be dropped. Run `npm run verify:peer --
+/path/to/peer-checkout` after final formatting. It compares migrated components
+and normalized lockfiles, not unimplemented application parity or deployments.
+Use `SITE_DISABLE_INSPECTOR=1` only for restricted local preflight environments;
+production defaults are unchanged. Native Safari still requires macOS CI.
+
+The common Lighthouse runner uses the locked Playwright Chromium, three samples
+for quality and accessibility, and requires every applicable score to meet the
+unchanged threshold. At most two retries apply solely to trace-capture failures;
+missing/malformed reports, process failures and score failures never retry.
+All samples, attempts, assets and process diagnostics remain under `.lighthouseci`.
+Historical single-sample/median results remain evidence for their recorded revisions only.
+
+The shared form-health monitor checks visible UI, empty-form validation, security
+bootstrap and unverified API rejection; it cannot prove successful delivery.
+Operator Alert watches failed trusted production, release and form-health runs.
+Its canary changes only `.github/alert-canary` and never touches production or
+mail. Actual alert creation/owner receipt requires separate evidence.
+The optional provider-evidence validator remains operator-authorized and is not
+called by Actions. Mailbox receipt, MFA, credential scope and recovery evidence
+remain distinct from source checks; no real quote test is authorized here.
+
+The shared production Smoke workflow installs locked verification dependencies,
+waits for its exact Git SHA at `/api/release`, verifies both hosts and configured
+readiness/content markers, and sends only a deliberately unverified rejection
+probe. Integrity follows a successful same-repository main push Smoke run using
+the trusted controller revision; it checks that exact deployed SHA, headers, SEO,
+assets, redirects and TLS. Scheduled/manual runs also pin their expected revision.
+A source comparison (`npm run verify:peer -- /path/to/peer`) checks migrated shared
+implementation; it never substitutes for each site's exact-head gates or deployment.

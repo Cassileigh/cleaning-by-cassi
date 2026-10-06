@@ -1,0 +1,221 @@
+{
+  "repository": "Cassileigh/cleaning-by-cassi",
+  "releaseRefPrefix": "cleaning",
+  "routes": [
+    "/",
+    "/about",
+    "/services",
+    "/pricing",
+    "/quote",
+    "/quote-success",
+    "/review",
+    "/privacy"
+  ],
+  "noindexRoutes": ["/quote-success"],
+  "browser": {
+    "themeKey": null,
+    "themeAttribute": null,
+    "themeSetter": null,
+    "statusRoute": null,
+    "missingRoute": "/__integrity_missing_page",
+    "turnstileCallback": "cleaningByCassiTurnstileLoad",
+    "suites": {
+      "responsive": [
+        "tests/responsive.spec.cjs",
+        "tests/navigation.spec.cjs",
+        "tests/keyboard.spec.cjs"
+      ],
+      "accessibility": [
+        "tests/accessibility.spec.cjs",
+        "tests/theme-assets.spec.cjs",
+        "tests/quote-interactions.spec.cjs",
+        "tests/navigation.spec.cjs",
+        "tests/keyboard.spec.cjs",
+        "tests/heading-contrast.spec.cjs"
+      ],
+      "webkit": [
+        "tests/quote-interactions.spec.cjs",
+        "tests/navigation.spec.cjs",
+        "tests/keyboard.spec.cjs"
+      ]
+    },
+    "logoSelector": ".brand-logo",
+    "externalSelector": ".facebook-link",
+    "navigationRowBreakpoint": 0
+  },
+  "origin": "https://cleaningbycassi.com",
+  "mail": {
+    "sender": "Cleaning by Cassi <quotes@cleaningbycassi.com>",
+    "address": "quotes@cleaningbycassi.com",
+    "recipient": "cassandramorris@cleaningbycassi.com",
+    "healthSubject": "Cleaning by Cassi \u2014 daily email health check \u2014 "
+  },
+  "form": {
+    "route": "/quote",
+    "selector": ".quote-form",
+    "submit": "#quote-submit",
+    "turnstile": "#quote-turnstile",
+    "script": "/quote-form.js",
+    "error": null,
+    "endpoint": "/api/quote",
+    "encoding": "form",
+    "invalid": {
+      "name": "Health Monitor",
+      "email": "monitor@example.invalid",
+      "phone": "5555555555",
+      "faxNumber": "",
+      "cf-turnstile-response": ""
+    },
+    "widget": "0x4AAAAAAEmmOovf3yTuy_Ua"
+  },
+  "rendering": "server",
+  "csp": {
+    "imageSources": ["'self'", "data:"],
+    "headerResources": true,
+    "generatedHashes": false,
+    "externalStyles": true
+  },
+  "privateStatus": true,
+  "revision": {
+    "path": "/api/release",
+    "key": "revision"
+  },
+  "assets": [
+    "/navigation.js",
+    "/header-logo-optimized.webp",
+    "/robots.txt",
+    "/sitemap-index.xml"
+  ],
+  "smoke": {
+    "markers": {
+      "/": "Cleaning by Cassi",
+      "/quote": "0x4AAAAAAEmmOovf3yTuy_Ua",
+      "/quote-success": "Quote Request Received",
+      "/about": "Cassi",
+      "/services": "Cleaning",
+      "/pricing": "Pricing",
+      "/review": "feedback",
+      "/privacy": "information"
+    },
+    "statusChecks": ["worker", "quote", "protection", "delivery"],
+    "rejectionCode": "turnstile-failed"
+  },
+  "images": [
+    {
+      "input": "public/homepage.jpg",
+      "output": "public/homepage-optimized.webp",
+      "rotate": true,
+      "resize": {
+        "width": 1600,
+        "withoutEnlargement": true,
+        "fit": "inside"
+      },
+      "format": "webp",
+      "options": {
+        "quality": 80,
+        "effort": 5
+      }
+    },
+    {
+      "input": "public/homepage.jpg",
+      "output": "public/homepage-optimized.avif",
+      "rotate": true,
+      "resize": {
+        "width": 1600,
+        "withoutEnlargement": true,
+        "fit": "inside"
+      },
+      "format": "avif",
+      "options": {
+        "quality": 55,
+        "effort": 5
+      }
+    },
+    {
+      "input": "public/cassi-family.jpg",
+      "output": "public/about-optimized.webp",
+      "rotate": true,
+      "resize": {
+        "width": 1400,
+        "withoutEnlargement": true,
+        "fit": "inside"
+      },
+      "format": "webp",
+      "options": {
+        "quality": 80,
+        "effort": 5
+      }
+    },
+    {
+      "input": "public/cassi-family.jpg",
+      "output": "public/about-optimized.avif",
+      "rotate": true,
+      "resize": {
+        "width": 1400,
+        "withoutEnlargement": true,
+        "fit": "inside"
+      },
+      "format": "avif",
+      "options": {
+        "quality": 55,
+        "effort": 5
+      }
+    },
+    {
+      "input": "public/cassi-and-bear.jpg",
+      "output": "public/cassi-bear-optimized.webp",
+      "rotate": true,
+      "resize": {
+        "width": 1100,
+        "withoutEnlargement": true,
+        "fit": "inside"
+      },
+      "format": "webp",
+      "options": {
+        "quality": 80,
+        "effort": 5
+      }
+    },
+    {
+      "input": "public/cassi-and-bear.jpg",
+      "output": "public/cassi-bear-optimized.avif",
+      "rotate": true,
+      "resize": {
+        "width": 1100,
+        "withoutEnlargement": true,
+        "fit": "inside"
+      },
+      "format": "avif",
+      "options": {
+        "quality": 55,
+        "effort": 5
+      }
+    },
+    {
+      "input": "docs/brand/header-logo-original.png",
+      "output": "public/header-logo-optimized.webp",
+      "rotate": false,
+      "resize": {
+        "width": 344
+      },
+      "format": "webp",
+      "options": {
+        "quality": 80,
+        "effort": 6
+      }
+    },
+    {
+      "input": "docs/brand/header-logo-original.png",
+      "output": "public/header-logo-small-optimized.webp",
+      "rotate": false,
+      "resize": {
+        "width": 176
+      },
+      "format": "webp",
+      "options": {
+        "quality": 80,
+        "effort": 6
+      }
+    }
+  ]
+}
