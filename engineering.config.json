@@ -30,7 +30,8 @@
         "tests/theme-assets.spec.cjs",
         "tests/quote-interactions.spec.cjs",
         "tests/navigation.spec.cjs",
-        "tests/keyboard.spec.cjs"
+        "tests/keyboard.spec.cjs",
+        "tests/heading-contrast.spec.cjs"
       ],
       "webkit": [
         "tests/quote-interactions.spec.cjs",
@@ -39,7 +40,8 @@
       ]
     },
     "logoSelector": ".brand-logo",
-    "externalSelector": ".facebook-link"
+    "externalSelector": ".facebook-link",
+    "navigationRowBreakpoint": 0
   },
   "origin": "https://cleaningbycassi.com",
   "mail": {
