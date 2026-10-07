@@ -21,6 +21,7 @@
     "turnstileCallback": "cleaningByCassiTurnstileLoad",
     "suites": {
       "responsive": [
+        "tests/navigation-engine.spec.cjs",
         "tests/responsive.spec.cjs",
         "tests/navigation.spec.cjs",
         "tests/keyboard.spec.cjs"
@@ -34,6 +35,7 @@
         "tests/heading-contrast.spec.cjs"
       ],
       "webkit": [
+        "tests/navigation-engine.spec.cjs",
         "tests/quote-interactions.spec.cjs",
         "tests/navigation.spec.cjs",
         "tests/keyboard.spec.cjs"

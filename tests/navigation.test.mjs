@@ -17,6 +17,9 @@ test('navigation reveals after layout changes without fighting manual scroll', (
     readFileSync(new URL('../public/navigation.js', import.meta.url), 'utf8'),
     {
       document: {
+        addEventListener: (name, fn) => {
+          events[name] = fn;
+        },
         querySelector: () => links,
         fonts: {
           ready: {
@@ -27,6 +30,9 @@ test('navigation reveals after layout changes without fighting manual scroll', (
           addEventListener: (name, fn) => {
             events[name] = fn;
           },
+          removeEventListener: (name) => {
+            delete events[name];
+          },
         },
       },
       window: {
@@ -35,6 +41,7 @@ test('navigation reveals after layout changes without fighting manual scroll', (
         },
       },
       ResizeObserver: class {
+        disconnect() {}
         constructor(fn) {
           resize = fn;
         }
