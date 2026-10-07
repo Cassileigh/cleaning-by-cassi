@@ -4,6 +4,15 @@ Updated October 6, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## Shared navigation follow-up — in progress
+
+Both sites now use the same navigation-rail and command-trigger implementation.
+It reveals the active link after layout/font/page lifecycle changes without moving
+document scroll or keyboard focus, disconnects stale observers during page swaps,
+and binds global listeners once. Unit coverage includes stale callbacks, manual
+scroll preservation and command-opener focus. Candidate CI/deployment is pending;
+broader UI/schema parity and owner-dependent acceptance remain open.
+
 ## October 6 shared application engine — in progress
 
 The paired application changes consolidate Worker/mail/heartbeat adapters, status

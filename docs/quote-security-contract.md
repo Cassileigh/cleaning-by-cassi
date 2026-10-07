@@ -100,6 +100,14 @@ order, and clears only the corrected field on input/change. Existing description
 values and submission identity are retained. Security/provider failures retain the
 form-level error and fresh Turnstile requirement; no user-controlled HTML is rendered.
 
+## Shared navigation behavior
+
+`public/navigation.js` owns active-link rail visibility and optional
+`data-command-trigger` activation. It moves only the rail, reveals after font,
+resize and page lifecycle changes, and disconnects observers before Astro swaps.
+Re-executing the script does not duplicate handlers. Site markup and styles stay
+separate; neither a command button nor an extra navigation item is added to a site.
+
 ## Shared application primitives
 
 `src/worker.ts`, `src/mail.ts` and `src/email-health.ts` are identical across both
