@@ -84,6 +84,11 @@ release acceptance stays in the existing findings register.
 
 ## Shared release and validation implementation
 
+Smoke requests use unique query identifiers and explicit no-cache/no-store request
+headers, matching the freshness intent of release and integrity verification.
+The final exact-revision assertion still fails on a changed or stale response;
+there is no retry that converts a mismatch into acceptance.
+
 `engineering.config.json` supplies site identity, routes, selectors, rendering/CSP
 inputs and image transformations. `astro.config.mjs`, `src/security.ts`, release
 metadata generation, integrity/SEO verification and production smoke use the same
