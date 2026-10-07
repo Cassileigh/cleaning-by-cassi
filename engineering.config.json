@@ -21,6 +21,7 @@
     "turnstileCallback": "cleaningByCassiTurnstileLoad",
     "suites": {
       "responsive": [
+        "tests/turnstile-engine.spec.cjs",
         "tests/navigation-engine.spec.cjs",
         "tests/responsive.spec.cjs",
         "tests/navigation.spec.cjs",
@@ -35,6 +36,7 @@
         "tests/heading-contrast.spec.cjs"
       ],
       "webkit": [
+        "tests/turnstile-engine.spec.cjs",
         "tests/navigation-engine.spec.cjs",
         "tests/quote-interactions.spec.cjs",
         "tests/navigation.spec.cjs",
@@ -87,6 +89,7 @@
     "key": "revision"
   },
   "assets": [
+    "/turnstile-engine.js",
     "/navigation.js",
     "/header-logo-optimized.webp",
     "/robots.txt",
