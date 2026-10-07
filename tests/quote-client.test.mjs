@@ -42,10 +42,15 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
     },
   };
   vm.runInNewContext(
-    readFileSync(new URL('../public/quote-form.js', import.meta.url), 'utf8'),
+    readFileSync(
+      new URL('../public/turnstile-engine.js', import.meta.url),
+      'utf8',
+    ) +
+      readFileSync(new URL('../public/quote-form.js', import.meta.url), 'utf8'),
     {
       window,
       document: {
+        addEventListener() {},
         querySelector: (selector) => elements[selector],
         getElementById: () => null,
       },

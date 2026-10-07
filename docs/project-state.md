@@ -1,8 +1,19 @@
 # Cleaning by Cassi — current state
 
-Updated October 6, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 7, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
+
+## October 7 shared challenge widget — candidate
+
+The common Turnstile lifecycle now handles duplicate loads, page-swap cleanup,
+stale callbacks and provider reset/remove errors. Site actions, response fields,
+widget presentation and security feedback remain explicit adapter inputs. Shared
+unit and browser regressions are included in the existing mandatory gates and
+peer comparison. This candidate is not yet production verified; the verified
+navigation release below remains the implementation baseline. Broader form/UI
+parity (#39 / AlienX #122) and all owner/device/account/recovery gaps remain open.
+No live form submission, replacement heartbeat or private account operation was run.
 
 ## October 6 shared navigation release — verified
 

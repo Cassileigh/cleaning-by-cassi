@@ -1,6 +1,4 @@
 (() => {
-  const state = (window.__cleaningByCassiTurnstile ??= { widgetId: null });
-
   const getElements = () => ({
     container: document.querySelector('#quote-turnstile'),
     form: document.querySelector('.quote-form'),
@@ -16,50 +14,27 @@
     if (kind === 'failure') status.focus({ preventScroll: false });
   };
 
-  const resetTurnstile = () => {
-    if (state.widgetId === null || !window.turnstile) return;
-    try {
-      window.turnstile.reset(state.widgetId);
-    } catch {}
-  };
-
-  const renderTurnstile = () => {
-    const { container } = getElements();
-    if (!container || !window.turnstile) return;
-    if (state.widgetId !== null) {
-      try {
-        window.turnstile.remove(state.widgetId);
-      } catch {}
-      state.widgetId = null;
-    }
-    container.innerHTML = '';
-    state.widgetId = window.turnstile.render(container, {
-      sitekey: container.dataset.sitekey,
-      action: 'quote',
-      theme: 'auto',
-      size: window.matchMedia('(max-width: 399px)').matches
-        ? 'compact'
-        : 'flexible',
-      'response-field-name': 'cf-turnstile-response',
-      'refresh-expired': 'auto',
-      'refresh-timeout': 'auto',
-      callback: () => setStatus(''),
-      'expired-callback': () =>
-        setStatus(
-          'The security check expired. Please complete it again.',
-          'failure',
-        ),
-      'error-callback': () =>
-        setStatus(
-          'The security check could not load. Please refresh the page and try again.',
-          'failure',
-        ),
-    });
-  };
-
-  window.cleaningByCassiTurnstileLoad = renderTurnstile;
-
-  renderTurnstile();
+  const widget = window.createSiteTurnstile('#quote-turnstile', () => ({
+    action: 'quote',
+    size: window.matchMedia('(max-width: 399px)').matches
+      ? 'compact'
+      : 'flexible',
+    'response-field-name': 'cf-turnstile-response',
+    callback: () => setStatus(''),
+    'expired-callback': () =>
+      setStatus(
+        'The security check expired. Please complete it again.',
+        'failure',
+      ),
+    'error-callback': () =>
+      setStatus(
+        'The security check could not load. Please refresh the page and try again.',
+        'failure',
+      ),
+  }));
+  const resetTurnstile = widget.reset;
+  window.cleaningByCassiTurnstileLoad = widget.render;
+  widget.render();
 
   const { form, button } = getElements();
   if (!form || !button || form.dataset.turnstileBound === 'true') return;
