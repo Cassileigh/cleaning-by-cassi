@@ -4,23 +4,39 @@ Updated October 6, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## Shared navigation follow-up — in progress
+## October 6 shared navigation release — verified
 
 Both sites now use the same navigation-rail and command-trigger implementation.
 It reveals the active link after layout/font/page lifecycle changes without moving
 document scroll or keyboard focus, disconnects stale observers during page swaps,
 and binds global listeners once. Unit coverage includes stale callbacks, manual
-scroll preservation and command-opener focus. Candidate CI/deployment is pending;
-broader UI/schema parity and owner-dependent acceptance remain open.
+scroll preservation and command-opener focus. PR #46 passed all five exact-head
+gates and merged as `c1038f011d785f74b3cb6b927950416ff6952bc7`.
+All five main gates, fresh CodeQL and zero-open-alert policy passed. The release
+approval ref matched this SHA and Workers Build 112626419051 succeeded.
+[Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37569480235)
+and [Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37570078893)
+verified this exact revision on both production hosts, including TLS protocol
+acceptance. The expanded migrated-component peer comparison also passed locally.
+This is the latest verified implementation release; broader UI/schema parity in
+#39 / AlienX #122 and owner-dependent acceptance remain open. CBC/static-RSA
+cipher observations are not closed by TLS protocol success. No real quote,
+replacement heartbeat, private account inspection or recovery drill was performed.
+This evidence-only documentation follow-up needs no recursive state update.
 
-## October 6 shared application engine — in progress
+## October 6 shared application engine — verified
 
 The paired application changes consolidate Worker/mail/heartbeat adapters, status
 readiness and method handling, and common form stream/abuse/verification/retry
 primitives. AlienX now rejects malformed limiter bindings as unready; both status
 routes preserve restrictive API headers through middleware. Site forms, recipients,
 confirmation permissions and retry identities remain separate explicit inputs.
-This candidate has not yet completed exact-head CI or production acceptance.
+PR #45 merged as `89809bd47c7cbb42ff16a208cf989b59f0db8082`.
+All five exact-main gates, fresh CodeQL and zero-open-alert policy passed;
+the approved-main ref matched this SHA and Workers Build 112620796841 succeeded.
+[Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37567674476)
+and [Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37568276883)
+verified this revision on both hosts, including TLS protocol acceptance.
 Parent #39 stays open for UI behavior, remaining route/schema extraction and
 full parity inventory beyond the migrated-component allowlist. All existing
 owner/device/account/recovery acceptance gaps remain open; no real mail test or
@@ -214,7 +230,7 @@ connection cannot bypass it. Review-thread resolution is false: explicitly
 accept that policy or enable the desired setting through authorized administration.
 AlienX PR #55 merged; Cleaning adopted the matching protocol through merged PR #28. Each repository retains local authority.
 
-## Comparison with AlienX
+## Historical comparison with AlienX
 
 Peer baseline: AlienX main `adb8d5d9f5af7a0bfd074e44eaf119ecd5bcff1d` (October 2).
 Its [local register](https://github.com/AlienX420710/alienx-smarthome/blob/main/docs/project-state.md)
