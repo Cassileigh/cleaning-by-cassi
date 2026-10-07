@@ -12,12 +12,13 @@ function middlewareSource() {
       ';',
   );
   return (
+    readFileSync(new URL('../src/form-engine.ts', import.meta.url), 'utf8') +
+    '\n' +
     security +
     '\n' +
-    readFileSync(
-      new URL('../src/middleware.ts', import.meta.url),
-      'utf8',
-    ).replace("import { secure } from './security';", '')
+    readFileSync(new URL('../src/middleware.ts', import.meta.url), 'utf8')
+      .replace("import { secure } from './security';", '')
+      .replace(/^import \{[^;]+from '\.\/form-engine';\n/m, '')
   );
 }
 import { test } from 'node:test';
@@ -25,6 +26,19 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 function sourceModule(specifier, globals) {
+  if (specifier.endsWith('.json'))
+    return {
+      __esModule: true,
+      default: specifier.includes('release')
+        ? { revision: 'test-revision' }
+        : JSON.parse(
+            readFileSync(
+              new URL('../engineering.config.json', import.meta.url),
+              'utf8',
+            ),
+          ),
+    };
+
   const file = new URL(
     `../src/${specifier.replace('../../', '')}.ts`,
     import.meta.url,
@@ -37,7 +51,16 @@ function sourceModule(specifier, globals) {
         target: ts.ScriptTarget.ES2022,
       },
     }).outputText,
-    { exports, ...globals },
+    {
+      exports,
+      Response,
+      crypto,
+      TextEncoder,
+      Uint8Array,
+      URLSearchParams,
+      require: (specifier) => sourceModule(specifier, globals),
+      ...globals,
+    },
   );
   return exports;
 }

@@ -1,3 +1,10 @@
+import {
+  readBoundedBody,
+  escapeHtml,
+  isValidEmail,
+  contentDigest,
+  verifyChallenge,
+} from '../../form-engine';
 import type { APIRoute } from 'astro';
 import type { ApplicationBindings } from '../../bindings';
 import { env } from 'cloudflare:workers';
@@ -47,51 +54,9 @@ const ALLOWED = {
   addons: new Set(ADD_ONS.map(([value]) => value)),
 };
 
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
 function value(formData: FormData, key: string) {
   const entry = formData.get(key);
   return typeof entry === 'string' ? entry.trim() : '';
-}
-
-// Read no more than the permitted bytes, including requests without Content-Length.
-async function readBody(request: Request) {
-  const reader = request.body?.getReader();
-  if (!reader) return new Uint8Array();
-  const chunks: Uint8Array[] = [];
-  let size = 0;
-  try {
-    while (true) {
-      const part = await reader.read();
-      if (part.done) break;
-      size += part.value.byteLength;
-      if (size > MAX_REQUEST_BYTES) {
-        await reader.cancel();
-        return null;
-      }
-      chunks.push(part.value);
-    }
-  } finally {
-    reader.releaseLock();
-  }
-  const body = new Uint8Array(size);
-  let offset = 0;
-  for (const chunk of chunks) {
-    body.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  return body;
-}
-
-function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.length <= 254;
 }
 
 function isReasonablePhone(phone: string) {
@@ -126,17 +91,6 @@ function hasInvalidSelectValue(formData: FormData) {
   );
 }
 
-type TurnstileSiteverifyResponse = {
-  success?: boolean;
-  hostname?: string;
-  action?: string;
-  'error-codes'?: string[];
-};
-
-const TURNSTILE_SITEVERIFY_URL =
-  'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-const TURNSTILE_ACTION = 'quote';
-
 function json(body: Record<string, unknown>, status = 200, requestId?: string) {
   return new Response(JSON.stringify(body), {
     status,
@@ -148,46 +102,6 @@ function json(body: Record<string, unknown>, status = 200, requestId?: string) {
       ...(requestId ? { 'X-Request-ID': requestId } : {}),
     },
   });
-}
-
-async function verifyTurnstile(
-  request: Request,
-  formData: FormData,
-  secret: string,
-  expectedHostnames: Set<string>,
-) {
-  const token = value(formData, 'cf-turnstile-response');
-  if (!token || token.length > 2048) return false;
-
-  try {
-    const body = new URLSearchParams({
-      secret,
-      response: token,
-    });
-
-    const remoteIp = request.headers.get('CF-Connecting-IP');
-    if (remoteIp) body.set('remoteip', remoteIp);
-
-    const verification = await fetch(TURNSTILE_SITEVERIFY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body,
-      signal: AbortSignal.timeout(10_000),
-    });
-
-    if (!verification.ok) return false;
-
-    const result = (await verification.json()) as TurnstileSiteverifyResponse;
-
-    return (
-      result.success === true &&
-      typeof result.hostname === 'string' &&
-      expectedHostnames.has(result.hostname) &&
-      result.action === TURNSTILE_ACTION
-    );
-  } catch {
-    return false;
-  }
 }
 
 export const POST: APIRoute = async ({ request }) => {
@@ -260,7 +174,7 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const rawBody = await readBody(request);
+    const rawBody = await readBoundedBody(request, MAX_REQUEST_BYTES);
     if (rawBody === null) {
       return respond(
         { error: 'Request too large.', code: 'request-too-large', requestId },
@@ -505,12 +419,14 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const passedTurnstile = await verifyTurnstile(
-      request,
-      formData,
-      turnstileSecret,
-      expectedHostnames,
-    );
+    const passedTurnstile =
+      (await verifyChallenge(
+        turnstileSecret,
+        value(formData, 'cf-turnstile-response'),
+        expectedHostnames,
+        'quote',
+        request.headers.get('CF-Connecting-IP'),
+      )) === 'passed';
 
     if (!passedTurnstile) {
       return respond(
@@ -578,13 +494,7 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Resend retains idempotency keys for 24 hours. Tokens and request IDs must
     // not enter this digest: both change on a legitimate retry.
-    const digest = await crypto.subtle.digest(
-      'SHA-256',
-      new TextEncoder().encode(JSON.stringify([submissionId, fields])),
-    );
-    const deliveryKey = Array.from(new Uint8Array(digest), (byte) =>
-      byte.toString(16).padStart(2, '0'),
-    ).join('');
+    const deliveryKey = await contentDigest([submissionId, fields]);
 
     const rows = fields
       .map(([label, submittedValue]) => {
