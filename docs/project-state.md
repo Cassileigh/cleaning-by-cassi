@@ -4,16 +4,27 @@ Updated October 7, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## October 7 shared challenge widget — candidate
+## October 7 shared challenge widget — verified
 
 The common Turnstile lifecycle now handles duplicate loads, page-swap cleanup,
 stale callbacks and provider reset/remove errors. Site actions, response fields,
 widget presentation and security feedback remain explicit adapter inputs. Shared
 unit and browser regressions are included in the existing mandatory gates and
-peer comparison. This candidate is not yet production verified; the verified
-navigation release below remains the implementation baseline. Broader form/UI
+peer comparison. PR #48 merged as `8fc826f8cc60f879ddffeb5947d990786fc07355`.
+All five main gates, fresh CodeQL and zero-open-alert policy passed; the approved
+ref matched this SHA and Workers Build 112767960370 succeeded.
+[Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37613175252)
+and [Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37614096712)
+verified this exact revision on both production hosts, including TLS protocol
+acceptance. AlienX independently verified its paired #131 release after an initial
+asset-availability failure; that failure and recovery remain in AlienX #132.
+This supersedes the navigation release below as the verified implementation.
+The owner-approved personalized website confirmations are still pending; pricing,
+Cloudflare changes and new confirmation emails are outside that feature scope.
+Broader form/UI
 parity (#39 / AlienX #122) and all owner/device/account/recovery gaps remain open.
 No live form submission, replacement heartbeat or private account operation was run.
+This evidence-only documentation follow-up needs no recursive state update.
 
 ## October 6 shared navigation release — verified
 
@@ -29,7 +40,7 @@ approval ref matched this SHA and Workers Build 112626419051 succeeded.
 and [Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/37570078893)
 verified this exact revision on both production hosts, including TLS protocol
 acceptance. The expanded migrated-component peer comparison also passed locally.
-This is the latest verified implementation release; broader UI/schema parity in
+This was the verified implementation release on October 6; broader UI/schema parity in
 #39 / AlienX #122 and owner-dependent acceptance remain open. CBC/static-RSA
 cipher observations are not closed by TLS protocol success. No real quote,
 replacement heartbeat, private account inspection or recovery drill was performed.
