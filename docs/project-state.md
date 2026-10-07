@@ -4,6 +4,29 @@ Updated October 7, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## Requested website terms — candidate
+
+The owner requested the missing policy using AlienX's recent policies as a reference.
+Cleaning already had /privacy; /terms now provides website terms through PageLayout.
+Both policies are linked from the footer and quote notice. The copy follows current
+quote and starting-price behavior without adding fees, booking promises, entity
+claims or consent fields. The new route is included in all shared route checks.
+This scoped request does not close #33's broader device/business acceptance;
+independent production verification remains pending.
+
+## October 7 sitewide capture repair — candidate
+
+The owner requests AlienX #134's capture fix across every URL on both sites.
+A shared opaque html/body canvas replaces route-specific transparent root gradients;
+site palettes, artwork and content remain separate. Full-page Chromium/WebKit
+coverage now includes every configured HTML route, receipts, policies and error
+pages in both themes and multiple widths. Captures are retained for seven days.
+AlienX also replaces the homepage call-to-action's radial wash with an opaque
+linear gradient and extends readable light header/footer accents across routes.
+These are candidate changes; original-device iOS Full Page results and independent
+production verification remain pending. Existing security/release gates and all
+unresolved parity, device, account, recovery and business findings remain open.
+
 ## October 7 smoke freshness repair — candidate
 
 Cleaning's documentation release d9de7bedfaba3a920beba7af06885e7a201cfa53 passed

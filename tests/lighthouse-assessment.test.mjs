@@ -17,7 +17,17 @@ test('Lighthouse preserves budgets and the receipt-only SEO exception', () => {
     performance: 0.85,
     seo: 0.95,
   });
-  assert.equal(config.routes.length, 8);
+  assert.deepEqual(config.routes, [
+    '/',
+    '/about',
+    '/services',
+    '/pricing',
+    '/quote',
+    '/quote-success',
+    '/review',
+    '/privacy',
+    '/terms',
+  ]);
   assert.deepEqual(config.noindexRoutes, ['/quote-success']);
   assert.ok(
     assessReport(report(1), config.thresholds).every((result) => result.passed),

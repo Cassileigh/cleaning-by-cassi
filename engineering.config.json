@@ -9,7 +9,8 @@
     "/quote",
     "/quote-success",
     "/review",
-    "/privacy"
+    "/privacy",
+    "/terms"
   ],
   "noindexRoutes": ["/quote-success"],
   "browser": {
@@ -21,6 +22,7 @@
     "turnstileCallback": "cleaningByCassiTurnstileLoad",
     "suites": {
       "responsive": [
+        "tests/site-canvas.spec.cjs",
         "tests/turnstile-engine.spec.cjs",
         "tests/navigation-engine.spec.cjs",
         "tests/responsive.spec.cjs",
@@ -36,6 +38,7 @@
         "tests/heading-contrast.spec.cjs"
       ],
       "webkit": [
+        "tests/site-canvas.spec.cjs",
         "tests/turnstile-engine.spec.cjs",
         "tests/navigation-engine.spec.cjs",
         "tests/quote-interactions.spec.cjs",
