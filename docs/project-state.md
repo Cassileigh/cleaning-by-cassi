@@ -11,6 +11,10 @@ Cleaning already had /privacy; /terms now provides website terms through PageLay
 Both policies are linked from the footer and quote notice. The copy follows current
 quote and starting-price behavior without adding fees, booking promises, entity
 claims or consent fields. The new route is included in all shared route checks.
+Initial PR #52 checks caught narrow-screen overflow from the terms contact address
+and insufficient inline-link distinction on review and policy pages. Policy text
+now wraps long addresses and prose links have persistent underlines; replacement
+exact-head checks are required before release. No accessibility rule is waived.
 This scoped request does not close #33's broader device/business acceptance;
 independent production verification remains pending.
 

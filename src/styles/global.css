@@ -167,6 +167,11 @@ a:hover {
   color: var(--pink);
 }
 
+main p a {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
 img {
   display: block;
   max-width: 100%;
