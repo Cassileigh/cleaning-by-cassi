@@ -4,6 +4,18 @@ Updated October 7, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## October 7 smoke freshness repair — candidate
+
+Cleaning's documentation release d9de7bedfaba3a920beba7af06885e7a201cfa53 passed
+all five main gates and Workers Build 113019952521. Smoke 37686977369 passed
+cache-busted Integrity on both hosts, then its bare final release URL returned
+previous revision 8fc826f8cc60f879ddffeb5947d990786fc07355 at 21:13:03 UTC.
+Cleaning #50 retains this failure. The exact cache/edge cause is not established.
+Shared Smoke now requests fresh responses consistently; mocked regression proves
+the final mismatch still fails. This candidate requires independent PR/main and
+production verification. No gate, threshold, mail or account control is weakened.
+Remaining parity and owner/device/account/recovery findings stay open.
+
 ## October 7 shared challenge widget — verified
 
 The common Turnstile lifecycle now handles duplicate loads, page-swap cleanup,
