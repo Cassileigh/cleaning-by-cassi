@@ -6,6 +6,23 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 
 ## Requested website terms — candidate
 
+October 8 release verification: #52 merged as
+`1d17b1ad35c7e9f4109ddc9a93039513d76accec`. All five main gates,
+fresh CodeQL and zero-open-alert policy passed. Workers Build 113083053895
+succeeded. Push Smoke job 113080848400 verified the exact revision and both
+hosts at 00:15 UTC; subsequent Integrity job 113083134234 verified both hosts
+and TLS protocol acceptance at 00:16 UTC. This supersedes the candidate
+production caveats below for Cleaning's terms, canvas and smoke-freshness repair;
+original failed runs remain historical evidence. Physical-device, account,
+business and full-parity acceptance remain open, and AlienX #135 is independent.
+
+The October 8 paired follow-up remains a candidate: body inherits the opaque
+root background after AlienX WebKit observed a root/body mismatch. Smoke groups
+include event type so scheduled monitoring cannot cancel push release evidence;
+Cleaning scheduled run 37693642363 cancelled push 37693468744 on the earlier
+#51 revision. Exact-SHA and successful trusted-push Integrity requirements remain
+unchanged, with shared regression coverage. No real quote/mail/account operation.
+
 The owner requested the missing policy using AlienX's recent policies as a reference.
 Cleaning already had /privacy; /terms now provides website terms through PageLayout.
 Both policies are linked from the footer and quote notice. The copy follows current
