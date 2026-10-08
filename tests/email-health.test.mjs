@@ -71,7 +71,7 @@ test('05:00 Chicago follows winter, summer and both DST transitions', () => {
   }
   assert.equal(healthDate(NaN), null);
 });
-test('daily mail uses fixed business recipient, real shared transport and a stable daily key', async () => {
+test('daily mail goes only to Jordan while preserving shared transport and daily key', async () => {
   const h = health();
   const time = Date.parse('2026-09-21T10:00:00Z');
   await h.sendDailyHealth(time, env, time);
@@ -84,7 +84,9 @@ test('daily mail uses fixed business recipient, real shared transport and a stab
     'daily-email-health/2026-09-21',
   );
   const body = JSON.parse(init.body);
-  assert.deepEqual(body.to, ['cassandramorris@cleaningbycassi.com']);
+  assert.deepEqual(body.to, ['jordanakstulewicz@cleaningbycassi.com']);
+  assert.match(body.text, /Good morning, Jordan!/);
+  assert.doesNotMatch(body.text, /Good morning, Cassi!/);
   assert.equal(body.from, 'Cleaning by Cassi <quotes@cleaningbycassi.com>');
   assert.match(body.subject, /daily email health check — 2026-09-21/);
   assert.match(body.text, /does not test/);

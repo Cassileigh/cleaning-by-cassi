@@ -6,6 +6,27 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 
 ## Requested website terms — candidate
 
+October 8 owner update: README live-site/quote, main-workflow and stack badges
+are restored with dynamic status/version sources. Daily health mail must go only
+to jordanakstulewicz@cleaningbycassi.com, never Cassi; it now has an independent
+healthRecipient and fixed transport. Quote/customer notification recipients,
+05:00 Chicago schedule, retries and date-based deduplication are unchanged.
+Monitor expectations and mocked destination/override regressions are updated.
+Deployment and Jordan's receipt of the next natural heartbeat remain pending;
+no manual mail, private mailbox or provider-history inspection was performed.
+
+October 8 Cassi continuation: follow-up pairs explicit background-color/image
+assignment after AlienX #135 WebKit reported transparent inherited Contact bodies.
+Shared Turnstile lifecycle now responds to container size/presentation changes;
+both adapters choose compact only when less than 300px is available. AlienX also
+follows its saved theme. Existing challenges, tokens and stale-callback protection
+remain intact. New browser checks cover resizing and saved-theme changes.
+This candidate still requires independent CI and release verification on each site.
+AlienX e88b281 still exposed two stale system-dark Contact palette comparisons in
+WebKit. The paired canvas now resolves constant light/dark palette values through
+each element's effective color-scheme, retaining the older-browser fallback.
+Cleaning's first follow-up Safari run passed; this shared correction needs fresh CI.
+
 October 8 release verification: #52 merged as
 `1d17b1ad35c7e9f4109ddc9a93039513d76accec`. All five main gates,
 fresh CodeQL and zero-open-alert policy passed. Workers Build 113083053895

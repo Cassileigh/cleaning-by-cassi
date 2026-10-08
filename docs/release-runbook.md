@@ -92,7 +92,9 @@ sanitized outcomes. Source cannot certify WAF, MFA, credential scope or account 
   CST/CDT without a seasonal configuration change. Provider processing can delay
   arrival; 05:00 is the scheduled start, not an inbox-delivery deadline.
 - Sender: `Cleaning by Cassi <quotes@cleaningbycassi.com>`; recipient:
-  `cassandramorris@cleaningbycassi.com`, the existing business quote mailbox.
+  `jordanakstulewicz@cleaningbycassi.com` only, from `mail.healthRecipient`.
+  Cassi receives no scheduled health email. Customer quote notifications retain
+  their separate `mail.recipient` business address; customer confirmations are unchanged.
 - Quote notifications, customer confirmations and the heartbeat share
   `src/mail.ts` and the production Worker's `RESEND_API_KEY`. No new secret is
   required. No customer record or quote is created.

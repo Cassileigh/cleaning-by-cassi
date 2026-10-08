@@ -20,7 +20,10 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
     },
   };
   const status = { focus() {} };
-  const container = { dataset: { sitekey: 'test' } };
+  const container = {
+    dataset: { sitekey: 'test' },
+    getBoundingClientRect: () => ({ width: 500 }),
+  };
   const elements = {
     '#quote-submit': button,
     '.quote-form': form,

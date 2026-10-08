@@ -1,5 +1,7 @@
 :root {
   --site-canvas: var(--cream);
+  --site-canvas-light: #fffafe;
+  --site-canvas-dark: #090b20;
   color-scheme: light dark;
 
   /* Cleaning by Cassi business-card palette */

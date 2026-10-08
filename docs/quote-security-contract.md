@@ -35,6 +35,10 @@ these details does not promise a discount or automatically award referral credit
 Quote notifications and customer confirmations use the shared `src/mail.ts`
 transport. The authorized daily operational email uses that same transport and
 production credential but is invoked only by the Worker's scheduled handler.
+Its `mail.healthRecipient` is separate from the business `mail.recipient`:
+daily health mail goes only to jordanakstulewicz@cleaningbycassi.com; genuine
+quote notifications continue to Cassi. No CC/BCC or runtime destination override
+is accepted by the fixed health transport.
 It cannot bypass any quote validation or accept a caller-selected destination.
 See [email-health.md](release-runbook.md#email-health).
 
@@ -149,6 +153,10 @@ Astro swaps and rendering on page load. Duplicate initialization preserves the
 current challenge; callbacks from a removed widget cannot update the next page.
 Provider reset/remove exceptions do not interrupt form recovery. Failed render
 attempts retain the site's error notification and can be retried on the next load.
+Container resizes and root preference changes reevaluate adapter presentation;
+only a changed size class/theme replaces the challenge. Adapters choose flexible
+at 300px of available width and compact below it. AlienX uses its saved theme
+when selected, otherwise the provider's automatic theme.
 Site adapters retain their action, response-field name, size, callbacks and provider
 bootstrap. The engine loads before those adapters; no challenge bypass or change
 to server verification is introduced. Unit and mocked Chromium/WebKit cases cover
@@ -159,7 +167,9 @@ this lifecycle; they do not establish live challenge completion or mail delivery
 `src/styles/site-canvas.css` owns opaque, matching html/body backgrounds and a
 viewport-height minimum on every HTML route. BaseHead imports it on normal,
 policy, receipt and error pages. Site foundations supply `--site-canvas` from
-their own theme palette; page styles do not override root backgrounds. Brand
+their own theme palette as a fallback, plus constant --site-canvas-light/dark
+values selected through the effective color-scheme. Page styles do not override
+root backgrounds. Brand
 surfaces, artwork and content remain local. Shared Chromium/WebKit coverage visits
 all configured public routes and error pages at phone, tablet and desktop widths
 in light/dark mode, plus explicit saved-theme precedence where supported. It

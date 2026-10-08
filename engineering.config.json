@@ -55,10 +55,11 @@
     "sender": "Cleaning by Cassi <quotes@cleaningbycassi.com>",
     "address": "quotes@cleaningbycassi.com",
     "recipient": "cassandramorris@cleaningbycassi.com",
+    "healthRecipient": "jordanakstulewicz@cleaningbycassi.com",
     "healthSubject": "Cleaning by Cassi — daily email health check — ",
     "customerConfirmation": true,
     "timeoutMs": 10000,
-    "healthText": "Good morning, Cassi!\n\nThis is your daily 5:00 a.m. Central email health check for {date}.\n\nReceiving this confirms that the production website's scheduled job, mail credential, shared sending code, and delivery to your business mailbox worked for this message.\n\nIt does not test a customer's Turnstile challenge, their form submission, or delivery to every customer's inbox. Those paths have separate automated checks.\n\nNo customer quote was created. If this email is missing, check the delivery monitor and Cloudflare scheduled-event logs.\n\nCleaning by Cassi",
+    "healthText": "Good morning, Jordan!\n\nThis is the daily 5:00 a.m. Central email health check for Cleaning by Cassi for {date}.\n\nNo action is required when this message arrives. Receiving it confirms that the production scheduled job and shared mail transport reached this operational mailbox.\n\nIt does not test a customer's Turnstile challenge, their form submission, or delivery to every customer's inbox. Those paths have separate checks.\n\nNo customer quote was created.\n\nCleaning by Cassi",
     "healthKeyPrefix": "daily-email-health/"
   },
   "form": {
