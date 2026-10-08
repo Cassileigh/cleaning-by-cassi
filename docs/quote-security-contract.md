@@ -35,6 +35,10 @@ these details does not promise a discount or automatically award referral credit
 Quote notifications and customer confirmations use the shared `src/mail.ts`
 transport. The authorized daily operational email uses that same transport and
 production credential but is invoked only by the Worker's scheduled handler.
+Its `mail.healthRecipient` is separate from the business `mail.recipient`:
+daily health mail goes only to jordanakstulewicz@cleaningbycassi.com; genuine
+quote notifications continue to Cassi. No CC/BCC or runtime destination override
+is accepted by the fixed health transport.
 It cannot bypass any quote validation or accept a caller-selected destination.
 See [email-health.md](release-runbook.md#email-health).
 

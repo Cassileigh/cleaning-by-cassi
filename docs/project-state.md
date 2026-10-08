@@ -6,6 +6,15 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 
 ## Requested website terms — candidate
 
+October 8 owner update: README live-site/quote, main-workflow and stack badges
+are restored with dynamic status/version sources. Daily health mail must go only
+to jordanakstulewicz@cleaningbycassi.com, never Cassi; it now has an independent
+healthRecipient and fixed transport. Quote/customer notification recipients,
+05:00 Chicago schedule, retries and date-based deduplication are unchanged.
+Monitor expectations and mocked destination/override regressions are updated.
+Deployment and Jordan's receipt of the next natural heartbeat remain pending;
+no manual mail, private mailbox or provider-history inspection was performed.
+
 October 8 Cassi continuation: follow-up pairs explicit background-color/image
 assignment after AlienX #135 WebKit reported transparent inherited Contact bodies.
 Shared Turnstile lifecycle now responds to container size/presentation changes;
