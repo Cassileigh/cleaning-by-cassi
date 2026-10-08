@@ -6,6 +6,12 @@ this implementation keeps generic public protection/delivery checks.
 
 ## Quote request chain
 
+`/privacy` explains quote information use; `/terms` provides website terms.
+Both are linked from the footer and quote notice. Terms distinguish a quote request
+from a confirmed booking and preserve existing starting-price and separately quoted
+first-cleaning/add-on descriptions. Service arrangements remain directly agreed
+with Cassi; no new fee, cancellation rule or consent field is added.
+
 1. Reject cross-origin submissions when an Origin header is supplied. Origin checks are not authentication; Turnstile remains mandatory.
 2. Accept only URL-encoded or multipart forms. Read at most 30,000 bytes before parsing, regardless of Content-Length. Malformed forms return 400; unsupported types return 415; oversized requests return 413.
 3. `faxNumber` is a spam trap, never a contact field. Absent or one empty string is acceptable. Any nonempty value, including whitespace or a file, returns 403 `quote-rejected`. Duplicate scalar fields and uploaded files are rejected. No fake success, redirect, Turnstile call, or email send occurs for a populated trap.
@@ -147,3 +153,15 @@ Site adapters retain their action, response-field name, size, callbacks and prov
 bootstrap. The engine loads before those adapters; no challenge bypass or change
 to server verification is introduced. Unit and mocked Chromium/WebKit cases cover
 this lifecycle; they do not establish live challenge completion or mail delivery.
+
+## Shared full-page canvas
+
+`src/styles/site-canvas.css` owns opaque, matching html/body backgrounds and a
+viewport-height minimum on every HTML route. BaseHead imports it on normal,
+policy, receipt and error pages. Site foundations supply `--site-canvas` from
+their own theme palette; page styles do not override root backgrounds. Brand
+surfaces, artwork and content remain local. Shared Chromium/WebKit coverage visits
+all configured public routes and error pages at phone, tablet and desktop widths
+in light/dark mode, plus explicit saved-theme precedence where supported. It
+scrolls to load images before full-page capture and checks opacity, overflow and
+image loading. Automated capture is separate from physical iOS Full Page acceptance.

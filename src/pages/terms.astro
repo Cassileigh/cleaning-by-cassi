@@ -1,0 +1,105 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { CONTACT_EMAIL } from '../consts';
+---
+
+<PageLayout
+  title="Terms of Service | Cleaning by Cassi"
+  description="Terms for using the Cleaning by Cassi website and requesting a cleaning quote."
+>
+  <article class="policy">
+    <h1>Terms of Service</h1>
+    <p>
+      Last updated: <time datetime="2026-10-07">October 7, 2026</time>
+    </p>
+    <p>
+      These terms describe use of cleaningbycassi.com and its quote request
+      form. Arrangements for cleaning services are agreed directly with Cassi.
+    </p>
+
+    <h2>Website information and quote requests</h2>
+    <p>
+      The website describes cleaning services and provides a way to request a
+      personalized quote. Submitting the form does not book a cleaning, reserve
+      a date or commit you to purchase services. Your preferred date and time
+      are requests; Cassi will confirm availability and arrangements directly.
+    </p>
+    <p>
+      Published prices are starting points, as explained on the
+      <a href="/pricing">Pricing page</a>. Your final quote depends on your
+      home's size, condition, rooms and requested services. First-time cleanings
+      and add-ons are quoted separately. Confirm the scope, price, schedule,
+      payment and any cancellation arrangements with Cassi before service.
+    </p>
+    <p>
+      A form confirmation acknowledges your quote request; it is not a booking
+      confirmation. If you need to follow up, contact Cassi using the email
+      address below.
+    </p>
+
+    <h2>Using the website responsibly</h2>
+    <p>
+      Provide accurate contact and property information, and share only
+      information you are entitled to provide. Do not submit spam, impersonate
+      someone else, send malicious content, attempt unauthorized access or
+      bypass the site's security controls. Access may be limited to protect the
+      website from abuse.
+    </p>
+    <p>
+      Do not include passwords, alarm or door codes, payment details or other
+      sensitive information in the quote form. Arrange any necessary property
+      access directly with Cassi.
+    </p>
+
+    <h2>Your information and submissions</h2>
+    <p>
+      Your submitted details are used to prepare your quote and contact you
+      about cleaning. You retain your rights in material you submit; a quote
+      request does not transfer ownership of that material. The{' '}
+      <a href="/privacy">Privacy Policy</a> explains how the form uses
+      information and how to request a correction or deletion.
+    </p>
+
+    <h2>Website content and external links</h2>
+    <p>
+      Website content, branding and third-party material remain subject to their
+      owners' rights and applicable licenses. Separately licensed code and
+      assets remain governed by their respective licenses.
+    </p>
+    <p>
+      External websites, including Facebook, have their own terms and privacy
+      policies. Links do not guarantee the availability or suitability of those
+      services.
+    </p>
+
+    <h2>Availability and your rights</h2>
+    <p>
+      Website information may be updated, contain errors or be temporarily
+      unavailable. Please confirm service details directly with Cassi. Nothing
+      in these website terms excludes rights or remedies that applicable law
+      does not allow to be excluded.
+    </p>
+
+    <h2>Questions and updates</h2>
+    <p>
+      Contact <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a> with
+      questions about these terms or your quote. Updates will be posted here
+      with a revised date. Changes to this page do not change an existing agreed
+      cleaning arrangement.
+    </p>
+    <p>
+      <a href="/quote">Back to the quote form</a>
+    </p>
+  </article>
+</PageLayout>
+
+<style>
+  .policy {
+    max-width: 72ch;
+    margin-inline: auto;
+    overflow-wrap: anywhere;
+  }
+  .policy h2 {
+    margin-top: 2rem;
+  }
+</style>
