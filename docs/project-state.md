@@ -6,6 +6,14 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 
 ## Requested website terms — candidate
 
+October 8 Cassi continuation: follow-up pairs explicit background-color/image
+assignment after AlienX #135 WebKit reported transparent inherited Contact bodies.
+Shared Turnstile lifecycle now responds to container size/presentation changes;
+both adapters choose compact only when less than 300px is available. AlienX also
+follows its saved theme. Existing challenges, tokens and stale-callback protection
+remain intact. New browser checks cover resizing and saved-theme changes.
+This candidate still requires independent CI and release verification on each site.
+
 October 8 release verification: #52 merged as
 `1d17b1ad35c7e9f4109ddc9a93039513d76accec`. All five main gates,
 fresh CodeQL and zero-open-alert policy passed. Workers Build 113083053895

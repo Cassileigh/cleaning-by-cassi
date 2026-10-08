@@ -14,11 +14,9 @@
     if (kind === 'failure') status.focus({ preventScroll: false });
   };
 
-  const widget = window.createSiteTurnstile('#quote-turnstile', () => ({
+  const widget = window.createSiteTurnstile('#quote-turnstile', (next) => ({
     action: 'quote',
-    size: window.matchMedia('(max-width: 399px)').matches
-      ? 'compact'
-      : 'flexible',
+    size: next.getBoundingClientRect().width < 300 ? 'compact' : 'flexible',
     'response-field-name': 'cf-turnstile-response',
     callback: () => setStatus(''),
     'expired-callback': () =>
