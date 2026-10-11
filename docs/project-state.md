@@ -4,6 +4,53 @@ Updated October 7, 2026; September 30 consolidation retained. This is the sole c
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## October 10 PR #74 release verification
+
+PR #74 merged as `c19459468e5e13b03fda56b68a40bf4c33c2409c`.
+Fresh GitHub inspection confirms all five main gates, both CodeQL analyses,
+zero-open-alert policy and release approval passed. The approved-main ref matches
+this SHA and Workers Build 114290853647 succeeded.
+[Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38078152292)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38078676194)
+passed, including the TLS protocol step. Later scheduled Smoke 38095729835 and
+Integrity 38089703974 also passed at this revision. This supersedes PR #73 as the
+verified implementation release; account, inbox, device and recovery acceptance
+remain open.
+
+AlienX #135 at `f3b1c12e92f8f8d17ecfab3e764e734c7153db3e` still fails three
+Contact canvas comparisons in WebKit job 114287913749; 108 cases and native
+Safari passed. Removing the unused animation did not resolve the mismatch.
+Its retained JSON confirms the mismatch persists after capture. The PR remains
+blocked; no claim of a confirmed root cause or completed shared parity is made.
+AlienX production remains on approved `5054f18e0837ec1228c928b7e273dd79847b0575`,
+with passing Smoke 38095594737 and Integrity 38089697226. No live mail was sent.
+
+The paired candidate introduces shared `canvas-ready.js` before form markup in
+both headers, with peer verification covering the same source. Pinned WebKit 2359
+locally reproduces AlienX's Contact mismatch; synchronizing root/body styles after
+the head's CSS links corrects it. Synchronization in the early head preference
+script did not correct Contact. Existing canvas assertions remain unchanged;
+macOS CI and independent release verification are still required.
+October 11 local validation: both production builds passed; all six unchanged
+Quote canvas cases and AlienX's eight Contact canvas cases passed on Windows
+WebKit 2359. Source parity passes. Windows `prepare:pr` cannot launch npm
+(`spawnSync npm ENOENT`); full preparation uses an isolated Linux checkout with
+Node 22 instead. Local results do not waive exact-head CI, native Safari or
+independent production verification. Production evidence above belongs only to
+merged PR #74.
+
+Cleaning's full Linux preparation passed, including 170 regression tests and
+zero dependency vulnerabilities. AlienX's Linux preparation passed its tests but
+failed prerendering because this host's WSL 1 cannot allocate the Worker runtime's
+required address space. Both preparation scripts now invoke the actual Node/npm
+CLI and use Git index executable bits on Windows; mode and symlink regressions
+remain enforced. This portability change requires fresh native preparation for
+the final candidate; the earlier receipt does not validate the new bytes.
+
+October 11 GitHub refresh found unchanged main and PR heads. Scheduled Smoke
+38141656598 and Integrity 38143547948 passed at Cleaning's approved main;
+AlienX Smoke 38141271932 and Integrity 38143502201 also passed at its approved main.
+
 ## October 10 fresh GitHub continuation
 
 Cleaning PR #73 is production verified at
