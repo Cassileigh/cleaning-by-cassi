@@ -1,8 +1,39 @@
 # Cleaning by Cassi — current state
 
-Updated October 7, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 12, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
+
+## October 12 canvas and preparation release
+
+[PR #75](https://github.com/Cassileigh/cleaning-by-cassi/pull/75) merged as
+`be1fd8d5478608489f6c57b9e9cb155cc71862c4`. All five required checks and CodeQL
+passed on its up-to-date head `26bf65d63c2f601d564c8aab5bbecaaf0af211ce`, including
+native Safari and the unchanged WebKit canvas suite. The shared body-positioned
+style boundary and portable preparation implementation are adopted.
+
+Final Node 22 preparation passed on Linux: both security scans, all 170 regression
+tests, build, target/type checks, Worker dry run and zero dependency vulnerabilities.
+The published tree matched its preparation fingerprint and shared-source comparison
+passed. Executable-bit/symlink checks and all eight offline deployment approval/
+rejection scenarios remain enforced. The earlier preparation receipt was replaced
+after the final portability edits; it was not reused to validate new bytes.
+
+All five main gates, both fresh CodeQL analyses and the zero-open-alert check
+passed. [Release approval](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38246214670)
+published the exact merged SHA to `cleaning-ci-approved-main`; Workers Build
+114801030118 succeeded. [Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38245442858)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38246374670)
+passed at that revision. This is the verified implementation release, superseding
+PR #74 below.
+
+Paired [AlienX #135](https://github.com/AlienX420710/alienx-smarthome/pull/135)
+merged as `4c5468f3b2d5b9947dd2259206552ad878777972` after its own five PR gates.
+Its final native Windows preparation passed 177 tests and the published tree
+fingerprint. The Contact WebKit blocker is resolved in automated CI; earlier
+failures below remain historical evidence. Broader parity (#39 / AlienX #122),
+physical-device, inbox, account and recovery acceptance remain open. No live form
+submission or mail was sent during this work.
 
 ## October 10 PR #74 release verification
 
