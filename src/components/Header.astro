@@ -3,6 +3,8 @@ import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 ---
 
+<script is:inline src="/canvas-ready.js"></script>
+
 <header class="site-header">
   <nav class="site-nav">
     <a href="/" class="brand" aria-label={`${SITE_TITLE} home`}>

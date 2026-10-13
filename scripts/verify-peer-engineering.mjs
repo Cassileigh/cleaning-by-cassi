@@ -10,6 +10,7 @@ if (!peer)
 const read = (directory, file) =>
   readFileSync(resolve(directory, file), 'utf8');
 const files = [
+  'public/canvas-ready.js',
   'scripts/prepare-change.mjs',
   'tests/prepare-change.test.mjs',
   'src/styles/site-canvas.css',
@@ -43,6 +44,7 @@ const files = [
   'scripts/integrity-contract.mjs',
   'scripts/verify-tls-posture.sh',
   'scripts/optimize-images.mjs',
+  'tests/image-generation.test.mjs',
   'tests/email-health-cleanup.test.mjs',
   'tests/application-engine.test.mjs',
   'tests/tls-posture-script.test.cjs',

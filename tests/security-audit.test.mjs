@@ -11,6 +11,7 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 function fixture(fn) {
   const dir = mkdtempSync(join(tmpdir(), 'cbc-security-test-'));
@@ -58,7 +59,7 @@ test('history detects a removed credential without exposing its value', () =>
       ],
       { cwd: dir },
     );
-    const result = spawnSync(process.execPath, [history.pathname], {
+    const result = spawnSync(process.execPath, [fileURLToPath(history)], {
       cwd: dir,
       encoding: 'utf8',
     });
@@ -109,7 +110,11 @@ function repositoryAudit(workflow = safeWorkflow, prepare = () => {}) {
     prepare(dir);
     return spawnSync(
       process.execPath,
-      [new URL('../scripts/security-audit.mjs', import.meta.url).pathname],
+      [
+        fileURLToPath(
+          new URL('../scripts/security-audit.mjs', import.meta.url),
+        ),
+      ],
       { cwd: dir, encoding: 'utf8' },
     );
   });
@@ -196,7 +201,7 @@ test('history rejects shallow repositories', () =>
       encoding: 'utf8',
     }).trim();
     writeFileSync(join(dir, '.git/shallow'), sha + '\n');
-    const result = spawnSync(process.execPath, [history.pathname], {
+    const result = spawnSync(process.execPath, [fileURLToPath(history)], {
       cwd: dir,
       encoding: 'utf8',
     });
@@ -225,7 +230,11 @@ test('repository audit rejects shorthand unpinned actions', () =>
     execFileSync('git', ['add', '.'], { cwd: dir });
     const result = spawnSync(
       process.execPath,
-      [new URL('../scripts/security-audit.mjs', import.meta.url).pathname],
+      [
+        fileURLToPath(
+          new URL('../scripts/security-audit.mjs', import.meta.url),
+        ),
+      ],
       { cwd: dir, encoding: 'utf8' },
     );
     assert.equal(result.status, 1);

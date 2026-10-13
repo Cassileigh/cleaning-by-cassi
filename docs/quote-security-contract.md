@@ -72,7 +72,8 @@ September 22, 2026 source review:
   references. Both unused files are removed. The current homepage hero remains
   `cleaned-living-room.webp` (1312×1199); no image was enlarged or replaced.
 - The build decodes every shipped raster and generates existing AVIF/WebP variants
-  without enlarging source images. CI verifies actual image loading and layout.
+  without enlarging source images. Operation caching is disabled so decoded outputs
+  can be replaced on repeated Windows builds. CI verifies actual image loading and layout.
 - All existing Lighthouse budgets are retained. Lab measurements do not establish
   field Core Web Vitals; no additional tracking was introduced.
 
@@ -163,6 +164,13 @@ to server verification is introduced. Unit and mocked Chromium/WebKit cases cove
 this lifecycle; they do not establish live challenge completion or mail delivery.
 
 ## Shared full-page canvas
+
+Both headers run `public/canvas-ready.js` synchronously before form markup.
+The body-positioned script waits behind the head's stylesheets and resolves
+root/body styles before select insertion, avoiding stale ancestor styles in
+WebKit 326092. Keep this script parser-blocking; the earlier head preference
+script runs before Astro's generated CSS links and cannot provide this boundary.
+It does not change theme selection, styles, form values or network permissions.
 
 `src/styles/site-canvas.css` owns opaque, matching html/body backgrounds and a
 viewport-height minimum on every HTML route. BaseHead imports it on normal,
