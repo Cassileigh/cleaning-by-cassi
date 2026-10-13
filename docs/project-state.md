@@ -532,9 +532,11 @@ remain in history. No audit-wide or account-security completion is claimed.
 | P1 — CBC-06         | Run physical iPad/VoiceOver/touch/keyboard/zoom acceptance, resolve failures, verify public review destination and owner business content.                                                                                                                                               | Cassi/human tester + engineering     |
 | P2 — CBC-08, CBC-09 | Decide stricter CSP/reporting based on threat model and operational ownership. Keep current enforced CSP unless replacement is proven with Turnstile/cache tests; no collector without privacy/retention/alert ownership. These are hardening decisions, not automatic release blockers. | Maintainer/operator                  |
 
-Live ruleset 23093180 still enforces PRs and five strict Actions checks; this
-connection cannot bypass it. Review-thread resolution is false: explicitly
-accept that policy or enable the desired setting through authorized administration.
+October 13 read-only verification of live ruleset 23093180 confirms required
+review-thread resolution, PRs and all five strict Actions checks. Deletion and
+force-push remain prohibited; this connection cannot bypass the ruleset. This
+confirms the October 8 policy resolution recorded in issue #32; account, receipt
+and isolated recovery evidence remain open.
 AlienX PR #55 merged; Cleaning adopted the matching protocol through merged PR #28. Each repository retains local authority.
 
 ## Historical comparison with AlienX
@@ -569,7 +571,7 @@ physical-device or complete penetration assessment was performed. No mail sent.
 - Verify WAF, accessible legacy protection and one successful Cloudflare build's
   CI approved main line for the SHA. Existing owner screenshots already establish
   main/build/deploy settings and disabled preview builds; require drift evidence
-  before reopening those questions. Review-thread enforcement remains unconfirmed.
+  before reopening those questions. Review-thread enforcement was verified October 13.
 - Confirm heartbeat inbox and independent failure-notification receipt. September
   21–26 metadata showed one delivered heartbeat daily; September 26 at 05:01:18 CDT.
   This is receiving-server acceptance, not inbox placement or September 30 evidence.
