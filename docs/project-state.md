@@ -1,17 +1,27 @@
 # Cleaning by Cassi — current state
 
-Updated October 12, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 13, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## October 12 dependency maintenance candidate
+## October 13 dependency and repeated-build release
 
-Owner-prioritized continuation of open dependency PR #65, incorporating #66 and
-paired with AlienX #137. Both candidates pin Astro 7.3.6, Cloudflare adapter
+[PR #65](https://github.com/Cassileigh/cleaning-by-cassi/pull/65) merged as
+`9a54e4306f6ea8fac6a8d0a972c97688258ba13b` after all five required checks passed on
+the up-to-date head `57d88748f71d38c9739c50950629a7bd1b3cc8b3`. It incorporates
+#66 and is paired with AlienX #137. Both repositories pin Astro 7.3.6, Cloudflare adapter
 14.3.4, Playwright 1.64.0, axe-core 4.14.0, Prettier Astro plugin 1.1.1 and
-Wrangler 4.149.0. Lockfiles are regenerated together; local preparation, exact-head
-CI and independent production verification remain required. Personalized website
-confirmation work is preserved separately and resumes after these PRs.
+Wrangler 4.149.0 with matching normalized lockfiles and shared engineering checks.
+Final native Node 22 preparation passed 171 tests, both security scans, formatting,
+build, target/type checks, Worker dry run and the zero-vulnerability dependency audit.
+Every uploaded file hash and the fetched published-tree fingerprint matched the
+prepared source. All five main gates, fresh CodeQL analyses and zero-open-alert
+policy passed. The `cleaning-ci-approved-main` tag matches this merged revision;
+Workers Build 115261030420 succeeded. [Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38386088663)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38386991238)
+passed, including both deployed hostnames and live TLS protocol checks. PR #66
+is closed as superseded by this verified release.
+Personalized website confirmation work is preserved for continuation after closeout.
 
 Native Windows preparation exposed seven failures in the existing security-test
 harness: URL.pathname became an invalid `C:\C:\...` module path. The harness now
@@ -21,10 +31,11 @@ This is a local test portability correction, not weakened production protection.
 The first local preparation passed 170 tests and all checks. Subsequent shared
 image preparation disables the operation cache to release decoded generated
 images before replacing them on Windows; AlienX reproduced the prior repeat-build
-lock. Both repositories add a two-build regression and require fresh preparation
+lock. Both repositories add a two-build regression and passed fresh preparation
 after this correction. AlienX's isolated navigation run passed 29 cases with one
 Contact keyboard timeout; the original 12 failures remain preserved. This does not
-count as browser acceptance for either site; exact-head browser CI remains required.
+count as local browser acceptance. Both published PR heads passed the unchanged
+native Safari/WebKit and other browser gates on their configured CI runners.
 
 The preceding documentation release #76 is verified at
 `b852c79ce0078f4b70c9be1ffb71da0db5d9dac4`: five main gates, CodeQL/zero alerts,
