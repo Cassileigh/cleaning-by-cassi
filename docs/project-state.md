@@ -4,6 +4,35 @@ Updated October 12, 2026; September 30 consolidation retained. This is the sole 
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## October 12 dependency maintenance candidate
+
+Owner-prioritized continuation of open dependency PR #65, incorporating #66 and
+paired with AlienX #137. Both candidates pin Astro 7.3.6, Cloudflare adapter
+14.3.4, Playwright 1.64.0, axe-core 4.14.0, Prettier Astro plugin 1.1.1 and
+Wrangler 4.149.0. Lockfiles are regenerated together; local preparation, exact-head
+CI and independent production verification remain required. Personalized website
+confirmation work is preserved separately and resumes after these PRs.
+
+Native Windows preparation exposed seven failures in the existing security-test
+harness: URL.pathname became an invalid `C:\C:\...` module path. The harness now
+uses fileURLToPath for its subprocess script paths, retaining all assertions.
+This is a local test portability correction, not weakened production protection.
+
+The first local preparation passed 170 tests and all checks. Subsequent shared
+image preparation disables the operation cache to release decoded generated
+images before replacing them on Windows; AlienX reproduced the prior repeat-build
+lock. Both repositories add a two-build regression and require fresh preparation
+after this correction. AlienX's isolated navigation run passed 29 cases with one
+Contact keyboard timeout; the original 12 failures remain preserved. This does not
+count as browser acceptance for either site; exact-head browser CI remains required.
+
+The preceding documentation release #76 is verified at
+`b852c79ce0078f4b70c9be1ffb71da0db5d9dac4`: five main gates, CodeQL/zero alerts,
+approved tag, Workers Build 114809574004, push Smoke 38248066994 and post-Smoke
+Integrity 38248840201 with TLS passed. AlienX #138 is verified after an unchanged-
+revision retry of a deployment-API 504; its original failure is retained.
+Broader parity and separate device/inbox/account/recovery acceptance remain open.
+
 ## October 12 canvas and preparation release
 
 [PR #75](https://github.com/Cassileigh/cleaning-by-cassi/pull/75) merged as

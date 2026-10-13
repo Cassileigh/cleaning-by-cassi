@@ -72,7 +72,8 @@ September 22, 2026 source review:
   references. Both unused files are removed. The current homepage hero remains
   `cleaned-living-room.webp` (1312×1199); no image was enlarged or replaced.
 - The build decodes every shipped raster and generates existing AVIF/WebP variants
-  without enlarging source images. CI verifies actual image loading and layout.
+  without enlarging source images. Operation caching is disabled so decoded outputs
+  can be replaced on repeated Windows builds. CI verifies actual image loading and layout.
 - All existing Lighthouse budgets are retained. Lab measurements do not establish
   field Core Web Vitals; no additional tracking was introduced.
 
