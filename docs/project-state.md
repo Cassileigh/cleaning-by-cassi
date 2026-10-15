@@ -1,8 +1,27 @@
 # Cleaning by Cassi — current state
 
-Updated October 13, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 15, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
+
+## October 15 review-thread policy documentation release
+
+[PR #79](https://github.com/Cassileigh/cleaning-by-cassi/pull/79) corrected the
+stale review-thread policy record and merged as
+`99da3460dd4572004ef910a40e6c543300eb7dfa`. All five required checks passed
+on its current PR head. The resulting main revision passed all five gates, fresh
+Actions and JavaScript CodeQL analyses, and the zero-open-alert policy. The
+`cleaning-ci-approved-main` tag points to that exact revision. Workers Build
+`4ba64f8f-9925-4bb3-82fd-25cb32a0b713` succeeded. [Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38661387664)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38662163108)
+succeeded; Integrity verified the exact revision on both production hosts and
+rejected TLS 1.0/1.1 while accepting TLS 1.2/1.3. CBC/static-RSA negotiation
+remains observed. This is the current verified release, superseding #65 below.
+
+The review-thread requirement is verified; issue #32 remains open for private
+account, receipt and isolated recovery acceptance. Physical-device and business
+acceptance (#33), CSP/reporting decisions (#34), and broader parity (#39) remain
+open. The automated release checks do not establish those separate outcomes.
 
 ## October 13 dependency and repeated-build release
 
