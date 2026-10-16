@@ -1,4 +1,7 @@
+@import './accessibility.css';
+
 :root {
+  --site-focus: var(--purple);
   --site-canvas: var(--cream);
   --site-canvas-light: #fffafe;
   --site-canvas-dark: #090b20;
@@ -82,15 +85,6 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -290,29 +284,9 @@ table {
 }
 
 /* Keep a visible keyboard indicator across both color schemes. */
-:where(
-  a,
-  button,
-  input,
-  select,
-  textarea,
-  summary,
-  [tabindex='0']
-):focus-visible {
-  outline: 3px solid var(--purple);
-  outline-offset: 3px;
-}
 @media (prefers-color-scheme: dark) {
-  :where(
-    a,
-    button,
-    input,
-    select,
-    textarea,
-    summary,
-    [tabindex='0']
-  ):focus-visible {
-    outline-color: #ff8ad8;
+  :root {
+    --site-focus: #ff8ad8;
   }
 }
 
@@ -379,18 +353,6 @@ table {
   }
 }
 
-/* Respect reduced motion accessibility preference */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
 /* Smooth cross-page navigation */
 @view-transition {
   navigation: auto;
@@ -422,26 +384,11 @@ table {
   animation: page-enter 200ms ease-in-out both;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation: none;
-  }
-}
-
 .skip-link {
-  position: fixed;
-  top: 0.5rem;
-  left: 0.5rem;
-  z-index: 200;
   padding: 0.8rem 1rem;
   background: var(--surface-solid);
   color: var(--ink);
   border: 2px solid var(--accent);
-  transform: translateY(-200%);
-}
-.skip-link:focus {
-  transform: translateY(0);
 }
 #main-content {
   scroll-margin-top: 8rem;

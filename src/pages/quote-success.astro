@@ -11,7 +11,9 @@ const description =
     <section class="success-card">
       <div class="success-icon">✨</div>
       <p class="eyebrow">Request Received</p>
-      <h1>Thank you!</h1>
+      <h1 data-confirmation-heading data-confirmation-generic="Thank you!">
+        Thank you!
+      </h1>
       <p>
         If you’ve just submitted your quote request, thank you! I’ll review the
         details and be in touch. If you reached this page without submitting,
@@ -34,6 +36,7 @@ const description =
       </div>
     </section>
   </div>
+  <script is:inline src="/confirmation-engine.js"></script>
 </PageLayout>
 
 <style>

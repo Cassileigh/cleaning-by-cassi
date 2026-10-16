@@ -16,9 +16,18 @@ function middlewareSource() {
     '\n' +
     security +
     '\n' +
+    readFileSync(
+      new URL('../src/form-request-engine.ts', import.meta.url),
+      'utf8',
+    ).replace(/^import [\s\S]*?;\r?\n/gm, '') +
+    '\n' +
     readFileSync(new URL('../src/middleware.ts', import.meta.url), 'utf8')
       .replace("import { secure } from './security';", '')
       .replace(/^import \{[^;]+from '\.\/form-engine';\n/m, '')
+      .replace(
+        "import { createFormRequestMiddleware } from './form-request-engine';",
+        '',
+      )
   );
 }
 import { test } from 'node:test';
@@ -54,6 +63,7 @@ function sourceModule(specifier, globals) {
     {
       exports,
       Response,
+      URL,
       crypto,
       TextEncoder,
       Uint8Array,
@@ -185,6 +195,13 @@ for (const [name, fields, options, status, code] of [
   ['oversized field', { message: 'a'.repeat(2501) }, {}, 400, 'invalid-fields'],
   ['invalid selection', { frequency: 'daily' }, {}, 400, 'invalid-selection'],
   [
+    'retired three-week frequency',
+    { frequency: 'every-3-weeks' },
+    {},
+    400,
+    'invalid-selection',
+  ],
+  [
     'invalid referral source',
     { referralSource: 'unknown' },
     {},
@@ -220,6 +237,13 @@ for (const [name, fields, options, status, code] of [
     'invalid-form',
   ],
   ['invalid addon', { addons: 'invalid' }, {}, 400, 'invalid-selection'],
+  [
+    'retired wall spot add-on',
+    { addons: 'wall-spots' },
+    {},
+    400,
+    'invalid-selection',
+  ],
   ['zero area', { squareFootage: '0' }, {}, 400, 'invalid-square-footage'],
   ['impossible date', { preferredDate: '2026-02-30' }, {}, 400, 'invalid-date'],
   [

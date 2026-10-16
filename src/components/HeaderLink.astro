@@ -1,16 +1,21 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import { isNavigationActive } from '../navigation-link';
 
-type Props = HTMLAttributes<'a'>;
+type Props = HTMLAttributes<'a'> & { reload?: boolean };
 
-const { href, class: className, ...props } = Astro.props;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
-const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+const { href, class: className, reload, ...props } = Astro.props;
+const isActive = isNavigationActive(
+  Astro.url.pathname,
+  import.meta.env.BASE_URL,
+  href,
+);
 ---
 
 <a
+  tabindex="0"
   href={href}
+  data-astro-reload={reload}
   aria-current={isActive ? 'page' : undefined}
   class:list={[className, { active: isActive }]}
   {...props}
