@@ -1,5 +1,10 @@
+import { parseFormRequest } from '../../form-request-engine';
 import {
-  readBoundedBody,
+  jsonFormResponse as json,
+  createFormResponder,
+  acceptedFormResponse,
+} from '../../form-response';
+import {
   escapeHtml,
   isValidEmail,
   contentDigest,
@@ -14,6 +19,13 @@ export const prerender = false;
 import { CONTACT_EMAIL as BUSINESS_EMAIL } from '../../consts';
 import { ADD_ONS, FREQUENCIES, REFERRAL_SOURCES } from '../../catalog';
 import { sendMail } from '../../mail';
+import { acceptMail } from '../../form-delivery';
+import {
+  validateFields,
+  validateString,
+  validPhone,
+  validCalendarDate,
+} from '../../form-schema';
 
 const MAX_REQUEST_BYTES = 30_000;
 const MAX_LENGTHS: Record<string, number> = {
@@ -27,6 +39,9 @@ const MAX_LENGTHS: Record<string, number> = {
   referrerName: 100,
   referralDetails: 250,
 };
+const LENGTH_SCHEMA = Object.fromEntries(
+  Object.entries(MAX_LENGTHS).map(([key, max]) => [key, { max }]),
+);
 
 const ALLOWED = {
   contactMethod: new Set(['', 'email', 'phone', 'text']),
@@ -60,13 +75,17 @@ function value(formData: FormData, key: string) {
 }
 
 function isReasonablePhone(phone: string) {
-  const digits = phone.replace(/\D/g, '');
-  return digits.length >= 7 && digits.length <= 15 && phone.length <= 40;
+  return validPhone(phone, 40);
 }
 
 function exceedsLength(formData: FormData) {
-  return Object.entries(MAX_LENGTHS).some(
-    ([key, max]) => value(formData, key).length > max,
+  return (
+    validateFields(
+      Object.fromEntries(
+        Object.keys(MAX_LENGTHS).map((key) => [key, value(formData, key)]),
+      ),
+      LENGTH_SCHEMA,
+    ).length > 0
   );
 }
 
@@ -82,172 +101,79 @@ function hasInvalidSelectValue(formData: FormData) {
     ['preferredTime', value(formData, 'preferredTime')],
   ];
 
-  if (singleFields.some(([key, submitted]) => !ALLOWED[key].has(submitted)))
+  if (
+    singleFields.some(
+      ([key, submitted]) =>
+        !validateString(submitted, { allowed: ALLOWED[key] }),
+    )
+  )
     return true;
 
   const addons = formData.getAll('addons').map((item) => String(item));
   return (
-    addons.length > 13 || addons.some((addon) => !ALLOWED.addons.has(addon))
+    addons.length > 13 ||
+    addons.some((addon) => !validateString(addon, { allowed: ALLOWED.addons }))
   );
 }
 
-function json(body: Record<string, unknown>, status = 200, requestId?: string) {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Cache-Control': 'no-store',
-      'X-Content-Type-Options': 'nosniff',
-      ...(status === 405 ? { Allow: 'POST' } : {}),
-      ...(requestId ? { 'X-Request-ID': requestId } : {}),
-    },
-  });
-}
-
 export const POST: APIRoute = async ({ request }) => {
-  const wantsHTML =
-    request.headers.get('accept')?.includes('text/html') &&
-    !request.headers.get('accept')?.includes('application/json');
-  const respondJSON = json;
-  const respond = (
-    body: Record<string, unknown>,
-    status = 200,
-    id?: string,
-  ) => {
-    if (!wantsHTML || status < 400) return respondJSON(body, status, id);
+  const respond = createFormResponder(request, (body, id) => {
     const message = escapeHtml(
       String(body.error || 'Your request could not be sent.'),
     );
-    return new Response(
-      `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Quote request needs attention | Cleaning by Cassi</title><main><h1>Your request needs attention</h1><p>${message}</p><p>Reference: ${escapeHtml(id || '')}</p><p>Use your browser’s Back button to return to your details, or <a href="/quote">open the quote form</a>.</p><p><a href="mailto:${BUSINESS_EMAIL}">Email Cassi</a></p></main></html>`,
-      {
-        status,
-        headers: {
-          'Content-Type': 'text/html; charset=utf-8',
-          'Cache-Control': 'no-store',
-          'X-Content-Type-Options': 'nosniff',
-          ...(id ? { 'X-Request-ID': id } : {}),
-        },
-      },
-    );
-  };
+    return `<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Quote request needs attention | Cleaning by Cassi</title><main><h1>Your request needs attention</h1><p>${message}</p><p>Reference: ${escapeHtml(id || '')}</p><p>Use your browser’s Back button to return to your details, or <a href="/quote">open the quote form</a>.</p><p><a href="mailto:${BUSINESS_EMAIL}">Email Cassi</a></p></main></html>`;
+  });
   const requestId = `CBC-${crypto.randomUUID().replaceAll('-', '').slice(0, 12).toUpperCase()}`;
 
   try {
-    const contentLength = Number(request.headers.get('content-length') || 0);
-    if (Number.isFinite(contentLength) && contentLength > MAX_REQUEST_BYTES) {
-      return respond(
-        { error: 'Request too large.', code: 'request-too-large', requestId },
-        413,
-        requestId,
-      );
-    }
-
-    const requestUrl = new URL(request.url);
-    const origin = request.headers.get('origin');
-    if (origin && origin !== requestUrl.origin) {
-      return respond(
-        { error: 'Invalid request origin.', code: 'invalid-origin', requestId },
-        403,
-        requestId,
-      );
-    }
-
-    const mediaType = request.headers
-      .get('content-type')
-      ?.split(';')[0]
-      .trim()
-      .toLowerCase();
-    if (
-      !['application/x-www-form-urlencoded', 'multipart/form-data'].includes(
-        mediaType || '',
-      )
-    ) {
-      return respond(
-        {
+    const parsedRequest = await parseFormRequest(request, {
+      maxBytes: MAX_REQUEST_BYTES,
+      trapField: 'faxNumber',
+      repeatableFields: new Set(['addons']),
+      multilineFields: new Set(['message']),
+    });
+    if (!parsedRequest.ok) {
+      const failures = {
+        size: { error: 'Request too large.', code: 'request-too-large' },
+        origin: { error: 'Invalid request origin.', code: 'invalid-origin' },
+        media: {
           error: 'Unsupported content type.',
           code: 'unsupported-media-type',
-          requestId,
         },
-        415,
-        requestId,
-      );
-    }
-
-    const rawBody = await readBoundedBody(request, MAX_REQUEST_BYTES);
-    if (rawBody === null) {
-      return respond(
-        { error: 'Request too large.', code: 'request-too-large', requestId },
-        413,
-        requestId,
-      );
-    }
-
-    let formData: FormData;
-    try {
-      formData = await new Response(rawBody, {
-        headers: { 'Content-Type': request.headers.get('content-type')! },
-      }).formData();
-    } catch {
-      return respond(
-        { error: 'Invalid form submission.', code: 'invalid-form', requestId },
-        400,
-        requestId,
-      );
-    }
-
-    // Empty/absent passes. ANY populated value (even whitespace or a file)
-    // rejects before verification or email. Never return success for this trap.
-    if (
-      formData
-        .getAll('faxNumber')
-        .some((entry) => typeof entry !== 'string' || entry.length > 0)
-    ) {
-      return respond(
-        {
+        parse: { error: 'Invalid form submission.', code: 'invalid-form' },
+        trap: {
           error: 'We could not verify this quote request.',
           code: 'quote-rejected',
-          requestId,
         },
-        403,
+        controls: {
+          error: 'Please check the information you entered.',
+          code: 'invalid-fields',
+        },
+      };
+      const field = parsedRequest.field;
+      return respond(
+        {
+          ...failures[parsedRequest.kind],
+          requestId,
+          ...(parsedRequest.kind === 'controls'
+            ? {
+                fieldErrors:
+                  field &&
+                  (Object.hasOwn(MAX_LENGTHS, field) ||
+                    Object.hasOwn(ALLOWED, field))
+                    ? {
+                        [field]:
+                          'Remove unsupported characters from this field.',
+                      }
+                    : {},
+              }
+            : {}),
+        },
+        parsedRequest.status,
         requestId,
       );
     }
-
-    const seen = new Set<string>();
-    for (const [key, entry] of formData) {
-      if (typeof entry !== 'string' || (key !== 'addons' && seen.has(key))) {
-        return respond(
-          {
-            error: 'Invalid form submission.',
-            code: 'invalid-form',
-            requestId,
-          },
-          400,
-          requestId,
-        );
-      }
-      seen.add(key);
-      const controls =
-        key === 'message'
-          ? /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/
-          : /[\u0000-\u001f\u007f]/;
-      if (controls.test(entry)) {
-        return respond(
-          {
-            error: 'Please check the information you entered.',
-            code: 'invalid-fields',
-            fieldErrors:
-              Object.hasOwn(MAX_LENGTHS, key) || Object.hasOwn(ALLOWED, key)
-                ? { [key]: 'Remove unsupported characters from this field.' }
-                : {},
-            requestId,
-          },
-          400,
-          requestId,
-        );
-      }
-    }
+    const formData = parsedRequest.data;
 
     const submissionId = value(formData, 'submissionId');
     if (
@@ -376,13 +302,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     const preferredDate = value(formData, 'preferredDate');
-    const parsedDate = new Date(`${preferredDate}T00:00:00.000Z`);
-    if (
-      preferredDate &&
-      (!/^\d{4}-\d{2}-\d{2}$/.test(preferredDate) ||
-        !Number.isFinite(parsedDate.getTime()) ||
-        parsedDate.toISOString().slice(0, 10) !== preferredDate)
-    ) {
+    if (preferredDate && !validCalendarDate(preferredDate)) {
       return respond(
         {
           error: 'Please enter a valid preferred date.',
@@ -527,19 +447,15 @@ export const POST: APIRoute = async ({ request }) => {
         <p><strong>Cassi</strong><br />Cleaning by Cassi</p>
       </div>`;
 
-    let resendResponse: Response;
-    try {
-      resendResponse = await sendMail(
-        resendApiKey,
-        `quote-business/${deliveryKey}`,
-        {
-          to: [BUSINESS_EMAIL],
-          reply_to: email,
-          subject: `🧼 New Quote Request — ${name}`,
-          html: businessEmailHtml,
-        },
-      );
-    } catch (error) {
+    const acceptance = await acceptMail(() =>
+      sendMail(resendApiKey, `quote-business/${deliveryKey}`, {
+        to: [BUSINESS_EMAIL],
+        reply_to: email,
+        subject: `🧼 New Quote Request — ${name}`,
+        html: businessEmailHtml,
+      }),
+    );
+    if (acceptance.outcome === 'request-failed') {
       console.error('Resend business email request failed.', {
         requestId,
         category: 'provider-request-failed',
@@ -554,11 +470,10 @@ export const POST: APIRoute = async ({ request }) => {
         requestId,
       );
     }
-
-    if (!resendResponse.ok) {
+    if (acceptance.outcome === 'rejected') {
       console.error('Resend business email request was rejected.', {
         requestId,
-        status: resendResponse.status,
+        status: acceptance.status,
       });
       return respond(
         {
@@ -570,15 +485,7 @@ export const POST: APIRoute = async ({ request }) => {
         requestId,
       );
     }
-
-    let resendResult: { id?: unknown } | null;
-    try {
-      resendResult = (await resendResponse.json()) as { id?: unknown };
-    } catch {
-      resendResult = {};
-    }
-
-    if (typeof resendResult?.id !== 'string' || !resendResult.id.trim()) {
+    if (acceptance.outcome === 'unconfirmed') {
       console.error('Resend returned success without an email ID.', {
         requestId,
       });
@@ -592,10 +499,9 @@ export const POST: APIRoute = async ({ request }) => {
         requestId,
       );
     }
-
     console.info('Business quote email accepted by Resend.', {
       requestId,
-      emailId: resendResult.id,
+      emailId: acceptance.id,
     });
 
     try {
@@ -623,18 +529,7 @@ export const POST: APIRoute = async ({ request }) => {
       });
     }
 
-    if (request.headers.get('accept')?.includes('application/json')) {
-      return respond({ ok: true, requestId }, 200, requestId);
-    }
-
-    return new Response(null, {
-      status: 303,
-      headers: {
-        Location: new URL('/quote-success', request.url).href,
-        'Cache-Control': 'no-store',
-        'X-Request-ID': requestId,
-      },
-    });
+    return acceptedFormResponse(request, requestId, '/quote-success');
   } catch (error) {
     console.error('Quote form error:', 'Request handling failed', {
       requestId,

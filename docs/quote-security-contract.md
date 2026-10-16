@@ -184,6 +184,68 @@ in light/dark mode, plus explicit saved-theme precedence where supported. It
 scrolls to load images before full-page capture and checks opacity, overflow and
 image loading. Automated capture is separate from physical iOS Full Page acceptance.
 
+## Shared application completion engines
+
+Shared browser confirmation is display-only. After an accepted HTTP response with
+`ok: true`, `public/confirmation-engine.js` keeps only the first name, fixed
+success route and expiry in same-tab sessionStorage for ten minutes. A new submit
+clears the previous name. Invalid, hostile, expired or unavailable storage retains
+the generic heading. Rendering uses textContent, never HTML. Names do not enter
+URLs or analytics; API contracts and email behavior are unchanged. A success-page
+visit is not evidence of provider delivery or inbox placement.
+
+`public/form-client-engine.js` owns asynchronous submission, cancellation,
+stale-response suppression, timeout recovery, safe field errors, status/button
+state and accepted confirmation hooks. Site adapters own fields, encodings,
+validation rules, retry identity inputs, copy and fixed destinations. Failed
+requests preserve entered values and require a fresh challenge. Page lifecycle
+cleanup prevents departed forms from navigating or changing confirmation storage.
+
+`src/form-request-engine.ts` owns shared edge/isolate protection orchestration
+and configurable JSON/form request policy. `src/form-schema.ts` evaluates site rules;
+`src/form-delivery.ts` requires successful provider HTTP plus a nonblank email ID.
+`src/form-response.ts` owns no-store JSON, HTML-error negotiation, method headers
+and accepted native redirects. Site schemas, message templates, recipients and
+native response copy remain local.
+Validation order and request-size, origin, honeypot, challenge, binding, abuse and
+idempotency guarantees remain enforced by the preserved route regression suites.
+
+`DocumentMetadata.astro` renders configured canonical, robots, social metadata,
+fonts/icons and optional structured data. BaseHead supplies each site's inputs;
+client routing and preference controls activate only where configured. Shared
+`site-preferences.js`, `status-response.js`, `status-dashboard.js` and
+`command-palette.js` separate behavior from site commands, labels and controls.
+Status/palette requests abort on page departure; optional engines do not add UI.
+`src/navigation-link.ts` supplies active-route semantics, and
+`src/styles/accessibility.css` owns reset, focus, skip-link and reduced-motion
+mechanics with local palette/layout tokens.
+
+`scripts/reference-history.mjs` owns read-only all-ref history comparison,
+including root and first-parent digests with replacement refs and lazy fetching
+disabled. The compare-reference-history and compare-cassi-history CLI adapters
+preserve their site-specific output filenames.
+
+## October 14 CSP and reporting disposition
+
+CBC-08 retains the current enforced policy while stricter nonce/hash CSP is
+deferred. [Cloudflare supports Turnstile with nonce-based strict-dynamic](https://developers.cloudflare.com/turnstile/reference/content-security-policy/),
+but [strict-dynamic ignores host allowlists and changes parser-inserted script trust](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/script-src).
+This site's parser-blocking canvas boundary and external form/navigation scripts
+need a complete trusted-root/nonce mapping, cache design and real-widget/browser
+acceptance before replacement. Adding the keyword alone would not establish those
+guarantees. The existing object/frame/form/resource restrictions remain enforced.
+This is a compatibility disposition, not a claim that stricter CSP was implemented
+or that an injection defect exists.
+
+CBC-09 defers a CSP report collector: no operated destination, retention policy or
+private failure-alert ownership has been provisioned. A collector would receive
+untrusted URLs and potentially sensitive samples. Before enabling one, require an
+explicit operator/destination, bounded body/rates, URL/query/sample redaction,
+limited retention and actionable synthetic non-production evidence. No new
+unmonitored endpoint or report-sample collection is introduced. Reopen this
+hardening decision when those prerequisites are supplied; this deferral does not
+block the existing protected release process.
+
 ## Validated publication
 
 The shared preparation script runs the locked install, pinned write formatter,
