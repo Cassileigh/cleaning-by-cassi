@@ -30,23 +30,25 @@ const deepTasks = [
 const addOnDetails: Record<string, { icon: string; description: string }> = {
   'window-tracks': {
     icon: '🪟',
-    description: 'Extra attention to window tracks and sills.',
+    description: 'Wiping window tracks and sills to clear dust and buildup.',
   },
   baseboards: {
     icon: '🧽',
-    description: 'Detailed cleaning of baseboards throughout the home.',
+    description: 'Wiping dust and buildup from baseboards along the floor.',
   },
   doors: {
     icon: '🚪',
-    description: 'Cleaning for doors and door frames.',
+    description: 'Wiping doors and frames, including commonly touched areas.',
   },
   'cabinet-fronts': {
     icon: '✨',
-    description: 'Extra attention to cabinet fronts.',
+    description:
+      'Wiping exterior cabinet surfaces to remove everyday smudges and buildup.',
   },
   'shower-tub': {
     icon: '🛁',
-    description: 'Detailed cleaning for showers and tubs.',
+    description:
+      'Extra attention to shower and tub surfaces where buildup collects.',
   },
   'trash-cans': {
     icon: '🗑️',
@@ -63,19 +65,19 @@ const addOnDetails: Record<string, { icon: string; description: string }> = {
   },
   'pet-hair': {
     icon: '🐾',
-    description: 'Pet hair removal from furniture and upholstery.',
+    description: 'Removing collected pet hair from furniture and upholstery.',
   },
   cobwebs: {
     icon: '🕸️',
-    description: 'Removal of cobwebs around the home.',
+    description: 'Clearing cobwebs from corners and other reachable areas.',
   },
   'floor-edges': {
     icon: '🧹',
-    description: 'Detailed cleaning along floor edges and in corners.',
+    description: 'Cleaning dust and buildup along floor edges and in corners.',
   },
   'high-areas': {
     icon: '🏡',
-    description: 'Extra attention to high and hard-to-reach areas.',
+    description: 'Extra dusting where routine cleaning is harder to reach.',
   },
 };
 const addOns = ADD_ONS.map(([value, label]) => ({
@@ -192,20 +194,24 @@ const addOns = ADD_ONS.map(([value, label]) => ({
           home's needs.
         </p>
       </div>
-      <details class="addons-details">
-        <summary>View all add-on services</summary>
-        <div class="addon-grid">
-          {addOns.map((addon) => (
+      <div class="addon-grid">
+        {addOns.map((addon) => (
+          <details class="addons-details">
+            <summary>
+              <span class="addon-star" aria-hidden="true">
+                ✦
+              </span>
+              <span class="addon-icon" aria-hidden="true">
+                {addon.icon}
+              </span>
+              <span class="addon-label">{addon.label}</span>
+            </summary>
             <article class="addon-card">
-              <h3>
-                <span aria-hidden="true">{addon.icon}</span>
-                {addon.label}
-              </h3>
               <p>{addon.description}</p>
             </article>
-          ))}
-        </div>
-      </details>
+          </details>
+        ))}
+      </div>
     </section>
 
     <section class="pricing-note">
@@ -401,18 +407,46 @@ const addOns = ADD_ONS.map(([value, label]) => ({
   .addon-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
     gap: 0.8rem;
     margin: 0.5rem 0 1rem;
   }
   .addons-details {
-    border-top: 1px solid var(--border);
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--surface-solid);
+    box-shadow: 0 7px 20px rgba(49, 24, 95, 0.06);
   }
   .addons-details summary {
-    padding-block: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
     min-height: 44px;
     cursor: pointer;
-    color: var(--accent);
+    color: var(--ink);
     font-weight: 600;
+    list-style: none;
+  }
+  .addons-details summary::-webkit-details-marker {
+    display: none;
+  }
+  .addon-star {
+    display: inline-block;
+    flex-shrink: 0;
+    color: var(--pink);
+    transform: rotate(0deg);
+    transition: transform 220ms ease;
+  }
+  .addons-details[open] .addon-star {
+    transform: rotate(-90deg);
+  }
+  .addon-icon {
+    flex-shrink: 0;
+  }
+  .addon-label {
+    min-width: 0;
   }
   .addons-details summary:focus-visible {
     outline: 3px solid var(--accent);
@@ -420,26 +454,20 @@ const addOns = ADD_ONS.map(([value, label]) => ({
     border-radius: 4px;
   }
   .addon-card {
-    padding: 1rem 1.1rem;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--surface-solid);
-    box-shadow: 0 7px 20px rgba(49, 24, 95, 0.06);
-  }
-  .addon-card h3 {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin: 0;
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.5;
+    margin: 0 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
   }
   .addon-card p {
-    margin: 0.35rem 0 0;
+    margin: 0;
     color: var(--muted);
     font-size: 0.9rem;
     line-height: 1.7;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .addon-star {
+      transition: none !important;
+    }
   }
 
   .pricing-note {

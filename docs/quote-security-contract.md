@@ -220,6 +220,13 @@ Status/palette requests abort on page departure; optional engines do not add UI.
 `src/styles/accessibility.css` owns reset, focus, skip-link and reduced-motion
 mechanics with local palette/layout tokens.
 
+Each Services add-on uses its own native details/summary disclosure with a
+corresponding description card. The summary shows the star, emoji and title;
+the expanded card contains only the description, without repeating the title.
+Its decorative star rotates counterclockwise on
+opening and reverses on closing; reduced-motion preferences suppress animation.
+The catalog supplies the available choices consistently to Services, Quote and API.
+
 `scripts/reference-history.mjs` owns read-only all-ref history comparison,
 including root and first-parent digests with replacement refs and lazy fetching
 disabled. The compare-reference-history and compare-cassi-history CLI adapters

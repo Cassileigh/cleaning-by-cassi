@@ -1,6 +1,6 @@
 # Cleaning by Cassi — current state
 
-Updated October 16, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 17, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
@@ -33,6 +33,12 @@ and optional controls remain explicit site adapters. Full source inventory and
 each site's independent preparation, browser gates and production chain are required;
 local work is not a deployed release.
 
+Initial PR security scanning found that the inventory's HTML-script regular
+expressions missed noncanonical closing tags. The validator now uses the existing
+pinned HTML parser; whitespace, malformed endings, quoted attributes and nested
+templates have regressions. The original CodeQL failures are retained in PR #84
+and paired AlienX #148; fresh preparation and new-head scans are required.
+
 The owner explicitly authorized this public summary on October 14:
 accessibility checks passed on iOS/Windows using Safari/Chrome, intended daily
 emails arrive, and GitHub/Cloudflare MFA is enabled. These are owner-reported
@@ -43,14 +49,32 @@ independent failure-alert receipt remain separate unresolved acceptance.
 
 Services uses the site catalog consistently across display, quote options and API
 allowlists. Wall Spot Cleaning and Every 3 Weeks are removed; remaining recurring
-choices are weekly, every two weeks and monthly. Twelve individual add-on cards
-sit inside a native collapsed disclosure. Laundry includes washing, drying and
+choices are weekly, every two weeks and monthly. Per the October 17 owner update,
+twelve individual native disclosures each contain their corresponding add-on
+card and brief explanation. Wall Spot Cleaning remains removed. Stars rotate
+counterclockwise on expansion and clockwise on closing, respecting reduced motion.
+The summary places the emoji after the star and before the title; expanded cards
+show only their description instead of repeating that title.
+Laundry includes washing, drying and
 folding only; bed-sheet preparation requirements are retained. Homepage contact
 copy now reads naturally without changing the service area.
 
 Actual WebKit keyboard validation exposed a skipped skip-navigation anchor.
 The shared page layout now gives it explicit tabindex zero, matching AlienX's
 existing native tab-order policy; the original failure is retained for recheck.
+The October 16 corrected build and all 42 scoped WebKit cases subsequently passed.
+For the October 17 individual-disclosure update, the build and all eight new
+Services WebKit cases passed, including reversible rotation, reduced motion,
+keyboard operation, both themes and expanded/collapsed axe checks. The existing
+dark Services accessibility case passed; the light case reached its unchanged
+30-second limit during heading-contrast screenshot cleanup. That local failure
+and trace are retained without a retry or timeout increase. Fresh CI must establish
+acceptance for the updated head; the local timeout is not a passed check.
+
+After the owner's emoji/title refinement, a fresh build and all ten scoped
+WebKit checks passed, including both existing Services accessibility cases.
+The emoji now belongs to the summary and duplicate expanded headings are removed.
+The earlier timeout evidence remains retained; no timeout limit was increased.
 
 ## October 13 dependency and repeated-build release
 
