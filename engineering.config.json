@@ -27,7 +27,11 @@
         "tests/navigation-engine.spec.cjs",
         "tests/responsive.spec.cjs",
         "tests/navigation.spec.cjs",
-        "tests/keyboard.spec.cjs"
+        "tests/keyboard.spec.cjs",
+        "tests/confirmation.spec.cjs",
+        "tests/services.spec.cjs",
+        "tests/shared-ui-engines.spec.cjs",
+        "tests/document-metadata.spec.cjs"
       ],
       "accessibility": [
         "tests/accessibility.spec.cjs",
@@ -35,7 +39,8 @@
         "tests/quote-interactions.spec.cjs",
         "tests/navigation.spec.cjs",
         "tests/keyboard.spec.cjs",
-        "tests/heading-contrast.spec.cjs"
+        "tests/heading-contrast.spec.cjs",
+        "tests/services.spec.cjs"
       ],
       "webkit": [
         "tests/site-canvas.spec.cjs",
@@ -43,7 +48,11 @@
         "tests/navigation-engine.spec.cjs",
         "tests/quote-interactions.spec.cjs",
         "tests/navigation.spec.cjs",
-        "tests/keyboard.spec.cjs"
+        "tests/keyboard.spec.cjs",
+        "tests/confirmation.spec.cjs",
+        "tests/services.spec.cjs",
+        "tests/shared-ui-engines.spec.cjs",
+        "tests/document-metadata.spec.cjs"
       ]
     },
     "logoSelector": ".brand-logo",
@@ -97,7 +106,12 @@
     "/navigation.js",
     "/header-logo-optimized.webp",
     "/robots.txt",
-    "/sitemap-index.xml"
+    "/sitemap-index.xml",
+    "/confirmation-engine.js",
+    "/site-preferences.js",
+    "/status-response.js",
+    "/status-dashboard.js",
+    "/command-palette.js"
   ],
   "smoke": {
     "markers": {

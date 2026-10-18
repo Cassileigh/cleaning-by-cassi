@@ -27,7 +27,63 @@ const deepTasks = [
   'Removing built-up dirt and grime',
   'Addressing additional areas based on your home’s needs',
 ];
-const addOns = ADD_ONS.map(([, label]) => label);
+const addOnDetails: Record<string, { icon: string; description: string }> = {
+  'window-tracks': {
+    icon: '🪟',
+    description: 'Wiping window tracks and sills to clear dust and buildup.',
+  },
+  baseboards: {
+    icon: '🧽',
+    description: 'Wiping dust and buildup from baseboards along the floor.',
+  },
+  doors: {
+    icon: '🚪',
+    description: 'Wiping doors and frames, including commonly touched areas.',
+  },
+  'cabinet-fronts': {
+    icon: '✨',
+    description:
+      'Wiping exterior cabinet surfaces to remove everyday smudges and buildup.',
+  },
+  'shower-tub': {
+    icon: '🛁',
+    description:
+      'Extra attention to shower and tub surfaces where buildup collects.',
+  },
+  'trash-cans': {
+    icon: '🗑️',
+    description: 'Cleaning and sanitizing household trash cans.',
+  },
+  'bed-making': {
+    icon: '🛏️',
+    description:
+      'Clean sheets must be provided and left out. Please remove soiled sheets before arrival.',
+  },
+  laundry: {
+    icon: '🧺',
+    description: 'Laundry service includes washing, drying, and folding only.',
+  },
+  'pet-hair': {
+    icon: '🐾',
+    description: 'Removing collected pet hair from furniture and upholstery.',
+  },
+  cobwebs: {
+    icon: '🕸️',
+    description: 'Clearing cobwebs from corners and other reachable areas.',
+  },
+  'floor-edges': {
+    icon: '🧹',
+    description: 'Cleaning dust and buildup along floor edges and in corners.',
+  },
+  'high-areas': {
+    icon: '🏡',
+    description: 'Extra dusting where routine cleaning is harder to reach.',
+  },
+};
+const addOns = ADD_ONS.map(([value, label]) => ({
+  label: value === 'laundry' ? 'Laundry' : label,
+  ...addOnDetails[value],
+}));
 ---
 
 <PageLayout title={title} description={description}>
@@ -118,9 +174,8 @@ const addOns = ADD_ONS.map(([, label]) => label);
         <p class="eyebrow">Keep It Under Control</p>
         <h2>Recurring Cleaning</h2>
         <p>
-          Weekly, every-two-weeks, every-three-weeks, and monthly cleaning
-          options help you stay ahead of the mess without spending your free
-          time catching up.
+          Weekly, every-two-weeks, and monthly cleaning options help you stay
+          ahead of the mess without spending your free time catching up.
         </p>
       </div>
       <div class="frequency-pills">
@@ -141,24 +196,21 @@ const addOns = ADD_ONS.map(([, label]) => label);
       </div>
       <div class="addon-grid">
         {addOns.map((addon) => (
-          <div class="addon-card">
-            <span>✦</span>
-            {addon}
-          </div>
+          <details class="addons-details">
+            <summary>
+              <span class="addon-star" aria-hidden="true">
+                ✦
+              </span>
+              <span class="addon-icon" aria-hidden="true">
+                {addon.icon}
+              </span>
+              <span class="addon-label">{addon.label}</span>
+            </summary>
+            <article class="addon-card">
+              <p>{addon.description}</p>
+            </article>
+          </details>
         ))}
-      </div>
-      <div class="notes-grid">
-        <div class="note-card">
-          <strong>🛏️ Bed Making</strong>
-          <p>
-            Clean sheets must be provided and left out. Please remove soiled
-            sheets before arrival.
-          </p>
-        </div>
-        <div class="note-card">
-          <strong>🧺 Laundry</strong>
-          <p>Laundry service includes washing, drying, and folding only.</p>
-        </div>
       </div>
     </section>
 
@@ -355,42 +407,67 @@ const addOns = ADD_ONS.map(([, label]) => label);
   .addon-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
     gap: 0.8rem;
+    margin: 0.5rem 0 1rem;
   }
-  .addon-card {
-    display: flex;
-    gap: 0.6rem;
-    align-items: center;
-    padding: 0.9rem 1rem;
+  .addons-details {
+    min-width: 0;
     border: 1px solid var(--border);
     border-radius: 16px;
     background: var(--surface-solid);
     box-shadow: 0 7px 20px rgba(49, 24, 95, 0.06);
+  }
+  .addons-details summary {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+    min-height: 44px;
+    cursor: pointer;
+    color: var(--ink);
     font-weight: 600;
+    list-style: none;
   }
-  .addon-card span {
+  .addons-details summary::-webkit-details-marker {
+    display: none;
+  }
+  .addon-star {
+    display: inline-block;
+    flex-shrink: 0;
     color: var(--pink);
+    transform: rotate(0deg);
+    transition: transform 220ms ease;
   }
-  .notes-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1.2rem;
+  .addons-details[open] .addon-star {
+    transform: rotate(-90deg);
   }
-  .note-card {
-    padding: 1rem 1.1rem;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: linear-gradient(
-      145deg,
-      rgba(167, 223, 36, 0.12),
-      rgba(242, 75, 181, 0.05)
-    );
+  .addon-icon {
+    flex-shrink: 0;
   }
-  .note-card p {
-    margin: 0.35rem 0 0;
+  .addon-label {
+    min-width: 0;
+  }
+  .addons-details summary:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+  .addon-card {
+    margin: 0 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
+  }
+  .addon-card p {
+    margin: 0;
     color: var(--muted);
     font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .addon-star {
+      transition: none !important;
+    }
   }
 
   .pricing-note {
@@ -449,8 +526,7 @@ const addOns = ADD_ONS.map(([, label]) => label);
       grid-template-columns: 1fr;
     }
     .task-grid,
-    .addon-grid,
-    .notes-grid {
+    .addon-grid {
       grid-template-columns: 1fr;
     }
     .hero-actions a {

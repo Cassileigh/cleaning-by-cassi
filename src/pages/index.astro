@@ -2,12 +2,7 @@
 import PageLayout from '../layouts/PageLayout.astro';
 import Testimonials from '../components/Testimonials.astro';
 import ServiceAreaContact from '../components/ServiceAreaContact.astro';
-import {
-  SITE_TITLE,
-  SITE_DESCRIPTION,
-  OWNER_NAME,
-  SERVICE_AREA,
-} from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION, OWNER_NAME } from '../consts';
 ---
 
 <PageLayout title={SITE_TITLE} description={SITE_DESCRIPTION} class="home">
@@ -181,8 +176,8 @@ import {
       A brighter home is <em>one quote away.</em>
     </h2>
     <p>
-      Let's find the cleaning plan that's right for your home in the{' '}
-      {SERVICE_AREA} area.
+      Let's find the right cleaning plan for your home in the Fox Cities and
+      surrounding communities.
     </p>
     <a href="/quote" class="button light">
       Get My Free Quote →

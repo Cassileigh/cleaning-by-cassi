@@ -7,13 +7,15 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
   const events = {};
   let submit;
   let destination;
+  const storage = new Map();
   const button = { disabled: false, textContent: 'Request My Free Quote' };
   const id = { value: '11111111-1111-4111-8111-111111111111' };
   const form = {
     dataset: {},
     action: '/api/quote',
     reportValidity: () => true,
-    querySelector: () => id,
+    querySelector: (selector) =>
+      selector === '[name="submissionId"]' ? id : null,
     querySelectorAll: () => [],
     addEventListener: (_, handler) => {
       submit = handler;
@@ -31,6 +33,11 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
     '#quote-turnstile': container,
   };
   const window = {
+    sessionStorage: {
+      getItem: (key) => storage.get(key) ?? null,
+      setItem: (key, value) => storage.set(key, value),
+      removeItem: (key) => storage.delete(key),
+    },
     matchMedia: () => ({ matches: false }),
     turnstile: { render: () => 1, reset() {}, remove() {} },
     setTimeout: timers.setTimeout,
@@ -49,19 +56,29 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
       new URL('../public/turnstile-engine.js', import.meta.url),
       'utf8',
     ) +
+      readFileSync(
+        new URL('../public/confirmation-engine.js', import.meta.url),
+        'utf8',
+      ) +
+      readFileSync(
+        new URL('../public/form-client-engine.js', import.meta.url),
+        'utf8',
+      ) +
       readFileSync(new URL('../public/quote-form.js', import.meta.url), 'utf8'),
     {
       window,
       document: {
-        addEventListener() {},
+        addEventListener(name, handler) {
+          events[name] = handler;
+        },
         querySelector: (selector) => elements[selector],
         getElementById: () => null,
       },
       crypto,
       AbortController,
       FormData: class {
-        get() {
-          return 'test-token';
+        get(name) {
+          return name === 'name' ? 'Test PrivateSurname' : 'test-token';
         }
       },
       fetch,
@@ -72,6 +89,7 @@ function client(fetch, timers = { setTimeout, clearTimeout }) {
     button,
     status,
     id,
+    storage,
     submit: () => submit({ preventDefault() {} }),
     destination: () => destination,
   };
@@ -104,10 +122,41 @@ test('successful quote can be restored and submitted again', async () => {
   const originalId = page.id.value;
   await page.submit();
   assert.equal(page.destination(), '/quote-success');
+  assert.equal(JSON.parse([...page.storage.values()][0]).firstName, 'Test');
+  assert.doesNotMatch([...page.storage.values()][0], /PrivateSurname/);
   page.events.pageshow({ persisted: true });
   assert.equal(page.button.disabled, false);
   assert.equal(page.button.textContent, 'Request My Free Quote');
   assert.notEqual(page.id.value, originalId);
+});
+
+test('rejected or unconfirmed quotes cannot retain a personalized confirmation', async () => {
+  for (const response of [
+    Response.json({ error: 'Rejected' }, { status: 502 }),
+    Response.json({ ok: false }),
+    Response.json(null),
+  ]) {
+    const page = client(async () => response);
+    await page.submit();
+    assert.equal(page.storage.size, 0);
+    assert.equal(page.destination(), undefined);
+  }
+});
+
+test('an accepted response after an Astro swap cannot retain a name or navigate', async () => {
+  let complete;
+  const page = client(
+    () =>
+      new Promise((resolve) => {
+        complete = resolve;
+      }),
+  );
+  const pending = page.submit();
+  page.events['astro:before-swap']();
+  complete(Response.json({ ok: true }));
+  await pending;
+  assert.equal(page.storage.size, 0);
+  assert.equal(page.destination(), undefined);
 });
 
 test('a response from a departed page cannot redirect the restored page', async () => {

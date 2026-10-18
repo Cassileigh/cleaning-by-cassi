@@ -1,6 +1,6 @@
 # Cleaning by Cassi — current state
 
-Updated October 15, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 17, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
@@ -22,6 +22,84 @@ The review-thread requirement is verified; issue #32 remains open for private
 account, receipt and isolated recovery acceptance. Physical-device and business
 acceptance (#33), CSP/reporting decisions (#34), and broader parity (#39) remain
 open. The automated release checks do not establish those separate outcomes.
+
+## October 16 continuation of shared application completion candidate
+
+The October 17 head `eabfef1b2b3bf7685374884ef83e1ad756611547` passed
+build/security, responsive, Safari/WebKit and performance checks, but its
+[accessibility run](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39080251950)
+failed one light-theme Services heading measurement. The retained trace shows a
+canvas-colored strip at the bottom of the masked heading capture: the reported
+1.031566 contrast is white against the page canvas, rather than the banner's
+painted gradient. Supplementary installed-Chrome captures measured 5.528352
+across three viewport heights; these are diagnostic evidence, not pinned CI.
+The shared contrast helper now centers each heading in the usable viewport
+below a sticky/fixed banner before reading text rectangles and taking the masked
+capture. A fractional viewport-edge regression covers that geometry. Thresholds
+and every sampled text-rectangle pixel remain enforced; the failed run was not
+retried. The existing negative-gradient fixture now places its pale endpoint
+under the text in both engines: the original WebKit text run ended before the
+old pale endpoint, and both the original and corrected helper correctly measured
+that old fixture above the failure threshold. The fixture still requires both
+poor-contrast examples to fail. The three contrast regressions passed in pinned
+WebKit and supplementary installed Chrome. The combined pinned-WebKit run passed
+12 of 13 cases, including both existing Services accessibility cases; the dark
+768px add-on test reached its unchanged 30-second whole-test limit at the fourth
+card-count assertion. Its failure evidence is retained without rerunning it or
+increasing limits. An earlier restricted run could not reach the local preview;
+that transport failure is not a passed browser check. Fresh candidate preparation
+and CI remain required.
+
+The owner requested completion of remaining engineering work. Current candidates
+extract shared request-boundary, schema, provider-acceptance, form-client,
+confirmation, preferences, status, command-palette, document metadata, navigation
+and accessibility mechanics. Fields, templates, route contracts, brand presentation
+and optional controls remain explicit site adapters. Full source inventory and
+each site's independent preparation, browser gates and production chain are required;
+local work is not a deployed release.
+
+Initial PR security scanning found that the inventory's HTML-script regular
+expressions missed noncanonical closing tags. The validator now uses the existing
+pinned HTML parser; whitespace, malformed endings, quoted attributes and nested
+templates have regressions. The original CodeQL failures are retained in PR #84
+and paired AlienX #148; fresh preparation and new-head scans are required.
+
+The owner explicitly authorized this public summary on October 14:
+accessibility checks passed on iOS/Windows using Safari/Chrome, intended daily
+emails arrive, and GitHub/Cloudflare MFA is enabled. These are owner-reported
+observations, separate from assistant-run browser tests or private account inspection.
+Exact device/browser versions and tested release revisions were not provided.
+Token scope, WAF/recovery configuration, isolated negative-promotion execution and
+independent failure-alert receipt remain separate unresolved acceptance.
+
+Services uses the site catalog consistently across display, quote options and API
+allowlists. Wall Spot Cleaning and Every 3 Weeks are removed; remaining recurring
+choices are weekly, every two weeks and monthly. Per the October 17 owner update,
+twelve individual native disclosures each contain their corresponding add-on
+card and brief explanation. Wall Spot Cleaning remains removed. Stars rotate
+counterclockwise on expansion and clockwise on closing, respecting reduced motion.
+The summary places the emoji after the star and before the title; expanded cards
+show only their description instead of repeating that title.
+Laundry includes washing, drying and
+folding only; bed-sheet preparation requirements are retained. Homepage contact
+copy now reads naturally without changing the service area.
+
+Actual WebKit keyboard validation exposed a skipped skip-navigation anchor.
+The shared page layout now gives it explicit tabindex zero, matching AlienX's
+existing native tab-order policy; the original failure is retained for recheck.
+The October 16 corrected build and all 42 scoped WebKit cases subsequently passed.
+For the October 17 individual-disclosure update, the build and all eight new
+Services WebKit cases passed, including reversible rotation, reduced motion,
+keyboard operation, both themes and expanded/collapsed axe checks. The existing
+dark Services accessibility case passed; the light case reached its unchanged
+30-second limit during heading-contrast screenshot cleanup. That local failure
+and trace are retained without a retry or timeout increase. Fresh CI must establish
+acceptance for the updated head; the local timeout is not a passed check.
+
+After the owner's emoji/title refinement, a fresh build and all ten scoped
+WebKit checks passed, including both existing Services accessibility cases.
+The emoji now belongs to the summary and duplicate expanded headings are removed.
+The earlier timeout evidence remains retained; no timeout limit was increased.
 
 ## October 13 dependency and repeated-build release
 
@@ -523,21 +601,21 @@ Fresh September 30 comparison: npm ci, all-severity npm audit (zero findings),
 3.1.8 is remediated. The scoped Miniflare Undici override remains deliberate;
 do not replace it with AlienX's global override just for parity.
 
-| ID     | Disposition                                            | Evidence or remaining acceptance                                                                                                                                                                                                                            |
-| ------ | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CBC-01 | Verified September 26                                  | Integrity uses trusted workflow revision, release SHA as data, no cache or retained credentials.                                                                                                                                                            |
-| CBC-02 | Main execution verified September 26                   | Fresh exact-main Actions/JS/TS analyses, no warnings/errors, zero open alerts; bounded complete pagination. API/stale/malformed evidence fails closed.                                                                                                      |
-| CBC-03 | Implemented                                            | Secret-free Worker example/local hostname policy; no production defaults or new PUBLIC architecture.                                                                                                                                                        |
-| CBC-04 | Implemented; consolidated                              | One register, contract, operations and pinned history; no duplicate status narratives.                                                                                                                                                                      |
-| CBC-05 | Partly verified; account evidence open                 | Required PR/five strict checks observed, historical delivered heartbeat, offline rejection/recovery passed. Remaining controls below.                                                                                                                       |
-| CBC-06 | Partial; device/business work open                     | Font notice/unused art cleanup done. Real iPad/VoiceOver/touch/zoom, verified Facebook reviews destination and owner copy review remain. Per-field server-error mapping is verified in the October 6 release; real-device/business acceptance remains open. |
-| CBC-07 | Verified at ee9f3e8                                    | Legacy cross-domain and display-capture denial on dynamic/static paths.                                                                                                                                                                                     |
-| CBC-08 | Design evaluated; implementation/live-widget work open | Nonce/hash strict-dynamic must cover parser-inserted scripts, Turnstile and caching; keep existing policy until proven or compatibility disposition recorded.                                                                                               |
-| CBC-09 | Provisioning/operational evidence open                 | Monitored CSP destination needs owner, bounded body/rates, URL/query/sample redaction, retention and actionable synthetic non-production evidence; no unmonitored collector.                                                                                |
-| CBC-10 | Core verified; later candidate tranche released PR #23 | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                                                                       |
-| CBC-11 | Verified at 308138f                                    | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.                                                    |
-| CBC-12 | Verified at 308138f                                    | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                                                                        |
-| CBC-13 | Verified October 6                                     | Shared heartbeat cleanup and mocked failure-path tests deployed in PR #41 / 1079718, with exact-main checks, Workers Build, Smoke and Integrity passed. No live mail test was performed.                                                                    |
+| ID     | Disposition                                                   | Evidence or remaining acceptance                                                                                                                                                                                   |
+| ------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| CBC-01 | Verified September 26                                         | Integrity uses trusted workflow revision, release SHA as data, no cache or retained credentials.                                                                                                                   |
+| CBC-02 | Main execution verified September 26                          | Fresh exact-main Actions/JS/TS analyses, no warnings/errors, zero open alerts; bounded complete pagination. API/stale/malformed evidence fails closed.                                                             |
+| CBC-03 | Implemented                                                   | Secret-free Worker example/local hostname policy; no production defaults or new PUBLIC architecture.                                                                                                               |
+| CBC-04 | Implemented; consolidated                                     | One register, contract, operations and pinned history; no duplicate status narratives.                                                                                                                             |
+| CBC-05 | Partly verified; account evidence open                        | Required PR/five strict checks observed, historical delivered heartbeat, offline rejection/recovery passed. Remaining controls below.                                                                              |
+| CBC-06 | Owner device results reported; business review open           | Owner reports all accessibility checks passed on iOS/Windows using Safari/Chrome. Exact versions and tested revisions were not supplied. Facebook review destination and business-copy acceptance remain separate. |
+| CBC-07 | Verified at ee9f3e8                                           | Legacy cross-domain and display-capture denial on dynamic/static paths.                                                                                                                                            |
+| CBC-08 | Compatibility disposition recorded — stricter policy deferred | Existing enforced policy retained. Trusted roots, parser scripts, nonce/cache design and real-widget acceptance are required before replacement; see October 14 contract decision.                                 |
+| CBC-09 | Reasoned deferral recorded — no collector provisioned         | Operator/destination, bounded ingestion, redaction, retention and actionable synthetic evidence are prerequisites; see October 14 contract decision.                                                               |
+| CBC-10 | Core verified; later candidate tranche released PR #23        | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                              |
+| CBC-11 | Verified at 308138f                                           | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.           |
+| CBC-12 | Verified at 308138f                                           | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                               |
+| CBC-13 | Verified October 6                                            | Shared heartbeat cleanup and mocked failure-path tests deployed in PR #41 / 1079718, with exact-main checks, Workers Build, Smoke and Integrity passed. No live mail test was performed.                           |
 
 PR #23 runtime/navigation changes passed at 5522d60440bfe66cb92adde8f2ce3a75c9eb77d4,
 Smoke 36490018374 and Integrity 36490418251. Earlier layout/Lighthouse failures
