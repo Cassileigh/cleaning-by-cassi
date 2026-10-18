@@ -25,6 +25,31 @@ open. The automated release checks do not establish those separate outcomes.
 
 ## October 16 continuation of shared application completion candidate
 
+The October 17 head `eabfef1b2b3bf7685374884ef83e1ad756611547` passed
+build/security, responsive, Safari/WebKit and performance checks, but its
+[accessibility run](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39080251950)
+failed one light-theme Services heading measurement. The retained trace shows a
+canvas-colored strip at the bottom of the masked heading capture: the reported
+1.031566 contrast is white against the page canvas, rather than the banner's
+painted gradient. Supplementary installed-Chrome captures measured 5.528352
+across three viewport heights; these are diagnostic evidence, not pinned CI.
+The shared contrast helper now centers each heading in the usable viewport
+below a sticky/fixed banner before reading text rectangles and taking the masked
+capture. A fractional viewport-edge regression covers that geometry. Thresholds
+and every sampled text-rectangle pixel remain enforced; the failed run was not
+retried. The existing negative-gradient fixture now places its pale endpoint
+under the text in both engines: the original WebKit text run ended before the
+old pale endpoint, and both the original and corrected helper correctly measured
+that old fixture above the failure threshold. The fixture still requires both
+poor-contrast examples to fail. The three contrast regressions passed in pinned
+WebKit and supplementary installed Chrome. The combined pinned-WebKit run passed
+12 of 13 cases, including both existing Services accessibility cases; the dark
+768px add-on test reached its unchanged 30-second whole-test limit at the fourth
+card-count assertion. Its failure evidence is retained without rerunning it or
+increasing limits. An earlier restricted run could not reach the local preview;
+that transport failure is not a passed browser check. Fresh candidate preparation
+and CI remain required.
+
 The owner requested completion of remaining engineering work. Current candidates
 extract shared request-boundary, schema, provider-acceptance, form-client,
 confirmation, preferences, status, command-palette, document metadata, navigation
