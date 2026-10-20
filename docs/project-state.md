@@ -1,10 +1,88 @@
 # Cleaning by Cassi — current state
 
-Updated October 17, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 19, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## October 15 review-thread policy documentation release
+## Current verified release and beta disposition — October 19
+
+[PR #85](https://github.com/Cassileigh/cleaning-by-cassi/pull/85) corrected
+the visual-theme test race found in AlienX #143. A late, hidden Turnstile
+response input no longer changes a snapshot of visible colors; the new
+regression still detects an actual visible color change. The shared test is
+byte-identical to AlienX [#151](https://github.com/AlienX420710/alienx-smarthome/pull/151),
+which independently deployed at
+`028e2b85ad07bec4c1319337f0a2fcc963481b51`.
+AlienX [#150](https://github.com/AlienX420710/alienx-smarthome/pull/150)
+previously corrected the two heading-contrast test files found in the final
+source audit. Reciprocal `verify:peer` checks now classify 176 AlienX and 181
+Cleaning implementation files with zero pending extraction; shared engineering
+implementations match while site contracts remain separate.
+
+Cleaning #85 merged as `39e185a8996857e37a43c9731e4b6403eec821ae`.
+All five required checks, fresh Actions and JavaScript CodeQL analyses, the
+zero-open-alert policy, the exact `cleaning-ci-approved-main` tag and Workers
+Build check `118266811835` passed for that revision.
+[Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39311739541)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39312939098)
+verified the exact revision on both production hosts. The live protocol check
+rejected TLS 1.0/1.1 and accepted TLS 1.2/1.3. Engineering parity is complete
+in [#39](https://github.com/Cassileigh/cleaning-by-cassi/issues/39) and
+[AlienX #122](https://github.com/AlienX420710/alienx-smarthome/issues/122).
+These automated results do not establish private account, physical-device,
+mailbox or owner business acceptance.
+
+### Earlier shared application release
+
+[PR #84](https://github.com/Cassileigh/cleaning-by-cassi/pull/84) merged as
+`ebe2f6f93f581585bca6ca7b5a5cfebf542fa075`. Its shared application engines,
+site adapters and maintained engineering inventory are source on main, no longer
+candidates. The 181-file inventory classifies every tracked or candidate
+implementation file with zero pending entries. The shared request/form,
+confirmation, preferences, status, command-palette, navigation, metadata and
+accessibility mechanics are implemented; business identity, route/form contracts,
+recipients and presentation remain site-specific. The subsequent peer audit
+found the contrast-test drift and hidden-input test race resolved above.
+
+All five required checks, fresh Actions and JavaScript CodeQL analyses, and the
+zero-open-alert approval policy passed for the exact merged main revision.
+Workers Build `117581399918` succeeded. [Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39095198909)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39095662138)
+succeeded for both production hosts; Integrity also passed live TLS protocol
+acceptance. This was the verified Cleaning release before #85. These checks
+established source, deployment and automated production acceptance at that
+revision, not private account, inbox, original-device or owner business acceptance.
+
+### Beta disposition
+
+[Issues #32](https://github.com/Cassileigh/cleaning-by-cassi/issues/32) and
+[#33](https://github.com/Cassileigh/cleaning-by-cassi/issues/33) closed
+`not_planned` for the beta engineering scope, not as completed private/operator
+or device/business verification. The owner's October 14 report of iOS/Windows
+Safari/Chrome accessibility passes, intended daily mail arrival and
+GitHub/Cloudflare MFA remains attributed owner evidence. Exact tested device,
+browser and release versions; independent failure-alert receipt; private token,
+WAF and recovery inspection; isolated no-mail recovery; public Facebook review
+destination; and business-copy acceptance were not established by these releases.
+The credential-shaped Resend key display name is an account-inventory concern,
+not evidence of exposure or compromise; identify usage and scope privately
+before any credential change. See the owner/operator handoff below.
+
+[Issue #34](https://github.com/Cassileigh/cleaning-by-cassi/issues/34) closed as a
+completed **decision**, not an implemented stricter CSP or reporting service.
+The existing enforced policy remains. The contract records a reasoned deferral
+of nonce/hash policy replacement until parser roots, Turnstile and cache behavior
+are proven, and of report collection until an operator, bounded ingestion,
+redaction, retention and alert ownership exist. No exploit or credential leak is
+inferred from these optional hardening decisions.
+
+## Historical release and candidate evidence
+
+The dated sections below preserve earlier candidate claims and failures as they
+stood at the time. Their pending-release and open-issue wording is superseded by
+the current release and beta disposition above; it is not a current checklist.
+
+### October 15 review-thread policy documentation release
 
 [PR #79](https://github.com/Cassileigh/cleaning-by-cassi/pull/79) corrected the
 stale review-thread policy record and merged as
@@ -16,14 +94,14 @@ Actions and JavaScript CodeQL analyses, and the zero-open-alert policy. The
 and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/38662163108)
 succeeded; Integrity verified the exact revision on both production hosts and
 rejected TLS 1.0/1.1 while accepting TLS 1.2/1.3. CBC/static-RSA negotiation
-remains observed. This is the current verified release, superseding #65 below.
+remains observed. This was the verified release at the time, superseding #65 below.
 
-The review-thread requirement is verified; issue #32 remains open for private
+The review-thread requirement was verified; issue #32 then remained open for private
 account, receipt and isolated recovery acceptance. Physical-device and business
-acceptance (#33), CSP/reporting decisions (#34), and broader parity (#39) remain
-open. The automated release checks do not establish those separate outcomes.
+acceptance (#33), CSP/reporting decisions (#34), and broader parity (#39) were
+still open. The automated release checks did not establish those separate outcomes.
 
-## October 16 continuation of shared application completion candidate
+### October 16–17 shared application completion candidate — superseded by #84
 
 The October 17 head `eabfef1b2b3bf7685374884ef83e1ad756611547` passed
 build/security, responsive, Safari/WebKit and performance checks, but its
@@ -48,21 +126,22 @@ WebKit and supplementary installed Chrome. The combined pinned-WebKit run passed
 card-count assertion. Its failure evidence is retained without rerunning it or
 increasing limits. An earlier restricted run could not reach the local preview;
 that transport failure is not a passed browser check. Fresh candidate preparation
-and CI remain required.
+and CI were required at that point; the later #84 release evidence is above.
 
-The owner requested completion of remaining engineering work. Current candidates
+The owner requested completion of remaining engineering work. At that point, candidates
 extract shared request-boundary, schema, provider-acceptance, form-client,
 confirmation, preferences, status, command-palette, document metadata, navigation
 and accessibility mechanics. Fields, templates, route contracts, brand presentation
 and optional controls remain explicit site adapters. Full source inventory and
-each site's independent preparation, browser gates and production chain are required;
-local work is not a deployed release.
+each site's independent preparation, browser gates and production chain were
+required; local work alone was not a deployed release.
 
 Initial PR security scanning found that the inventory's HTML-script regular
 expressions missed noncanonical closing tags. The validator now uses the existing
 pinned HTML parser; whitespace, malformed endings, quoted attributes and nested
 templates have regressions. The original CodeQL failures are retained in PR #84
-and paired AlienX #148; fresh preparation and new-head scans are required.
+and paired AlienX #148; fresh preparation and new-head scans were required for
+that candidate. The merged #84 release evidence is above.
 
 The owner explicitly authorized this public summary on October 14:
 accessibility checks passed on iOS/Windows using Safari/Chrome, intended daily
@@ -243,7 +322,7 @@ migration; no painted surface references them. Whether this removes the WebKit
 mismatch still requires fresh CI; it is not a confirmed browser root cause.
 Paired work continues in AlienX #135 / Cleaning #74. No live mail was sent.
 
-## October 9 repeated-failure audit — remediation candidate
+## Historical October 9 repeated-failure audit — remediation candidate
 
 October 10 follow-up: both full local Node 22 preparations passed and the
 published trees matched their validated fingerprints (AlienX #135 f182d1ea,
@@ -309,7 +388,7 @@ No real form/mail test, private provider inspection or production drill was run.
 Docs: updated state and operations; release/device/account/owner acceptance stays
 open until its own evidence exists. These changes are not yet production accepted.
 
-## Requested website terms — candidate
+## Historical requested website terms — candidate
 
 October 8 owner update: README live-site/quote, main-workflow and stack badges
 are restored with dynamic status/version sources. Daily health mail must go only
@@ -361,7 +440,7 @@ exact-head checks are required before release. No accessibility rule is waived.
 This scoped request does not close #33's broader device/business acceptance;
 independent production verification remains pending.
 
-## October 7 sitewide capture repair — candidate
+## Historical October 7 sitewide capture repair — candidate
 
 The owner requests AlienX #134's capture fix across every URL on both sites.
 A shared opaque html/body canvas replaces route-specific transparent root gradients;
@@ -374,7 +453,7 @@ These are candidate changes; original-device iOS Full Page results and independe
 production verification remain pending. Existing security/release gates and all
 unresolved parity, device, account, recovery and business findings remain open.
 
-## October 7 smoke freshness repair — candidate
+## Historical October 7 smoke freshness repair — candidate
 
 Cleaning's documentation release d9de7bedfaba3a920beba7af06885e7a201cfa53 passed
 all five main gates and Workers Build 113019952521. Smoke 37686977369 passed
@@ -512,7 +591,7 @@ review also found conversation resolution required in AlienX but not Cleaning;
 rulesets. No private account inspection or production recovery drill was run.
 This evidence-only documentation closeout needs no recursive state update.
 
-## October 5 engineering alignment — partial release acceptance
+## Historical October 5 engineering alignment — partial release acceptance
 
 The owner requires identical engineering except for site content/configuration.
 The preflight repair merged as PR #38 / main
@@ -527,7 +606,8 @@ failed, and [Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs
 exhausted its expected-revision wait. A failed promotion does not establish an
 outage of the prior live release. The later #41 release above passed its own complete
 exact-head/main/deployment evidence chain. This failed promotion remains historical
-evidence. Full engineering parity and #32–#34 remain open.
+evidence. Full engineering parity and #32–#34 were open at that release; current
+dispositions are recorded above.
 
 ## Previous verified application release
 
@@ -601,39 +681,46 @@ Fresh September 30 comparison: npm ci, all-severity npm audit (zero findings),
 3.1.8 is remediated. The scoped Miniflare Undici override remains deliberate;
 do not replace it with AlienX's global override just for parity.
 
-| ID     | Disposition                                                   | Evidence or remaining acceptance                                                                                                                                                                                   |
-| ------ | ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| CBC-01 | Verified September 26                                         | Integrity uses trusted workflow revision, release SHA as data, no cache or retained credentials.                                                                                                                   |
-| CBC-02 | Main execution verified September 26                          | Fresh exact-main Actions/JS/TS analyses, no warnings/errors, zero open alerts; bounded complete pagination. API/stale/malformed evidence fails closed.                                                             |
-| CBC-03 | Implemented                                                   | Secret-free Worker example/local hostname policy; no production defaults or new PUBLIC architecture.                                                                                                               |
-| CBC-04 | Implemented; consolidated                                     | One register, contract, operations and pinned history; no duplicate status narratives.                                                                                                                             |
-| CBC-05 | Partly verified; account evidence open                        | Required PR/five strict checks observed, historical delivered heartbeat, offline rejection/recovery passed. Remaining controls below.                                                                              |
-| CBC-06 | Owner device results reported; business review open           | Owner reports all accessibility checks passed on iOS/Windows using Safari/Chrome. Exact versions and tested revisions were not supplied. Facebook review destination and business-copy acceptance remain separate. |
-| CBC-07 | Verified at ee9f3e8                                           | Legacy cross-domain and display-capture denial on dynamic/static paths.                                                                                                                                            |
-| CBC-08 | Compatibility disposition recorded — stricter policy deferred | Existing enforced policy retained. Trusted roots, parser scripts, nonce/cache design and real-widget acceptance are required before replacement; see October 14 contract decision.                                 |
-| CBC-09 | Reasoned deferral recorded — no collector provisioned         | Operator/destination, bounded ingestion, redaction, retention and actionable synthetic evidence are prerequisites; see October 14 contract decision.                                                               |
-| CBC-10 | Core verified; later candidate tranche released PR #23        | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                              |
-| CBC-11 | Verified at 308138f                                           | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.           |
-| CBC-12 | Verified at 308138f                                           | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                               |
-| CBC-13 | Verified October 6                                            | Shared heartbeat cleanup and mocked failure-path tests deployed in PR #41 / 1079718, with exact-main checks, Workers Build, Smoke and Integrity passed. No live mail test was performed.                           |
+| ID     | Disposition                                                   | Evidence or remaining acceptance                                                                                                                                                                                                                                           |
+| ------ | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| CBC-01 | Verified September 26                                         | Integrity uses trusted workflow revision, release SHA as data, no cache or retained credentials.                                                                                                                                                                           |
+| CBC-02 | Main execution verified September 26                          | Fresh exact-main Actions/JS/TS analyses, no warnings/errors, zero open alerts; bounded complete pagination. API/stale/malformed evidence fails closed.                                                                                                                     |
+| CBC-03 | Implemented                                                   | Secret-free Worker example/local hostname policy; no production defaults or new PUBLIC architecture.                                                                                                                                                                       |
+| CBC-04 | Implemented; consolidated                                     | One register, contract, operations and pinned history; no duplicate status narratives.                                                                                                                                                                                     |
+| CBC-05 | Beta scope closed `not_planned`; operator evidence incomplete | Required PR/five strict checks observed, historical delivered heartbeat and offline rejection/recovery passed. Owner reports intended mail arrival and GitHub/Cloudflare MFA. Private account, independent alert receipt and isolated recovery evidence remain unverified. |
+| CBC-06 | Beta scope closed `not_planned`; owner acceptance incomplete  | Owner reports accessibility checks passed on iOS/Windows using Safari/Chrome. Exact devices, browser versions and tested revisions were not supplied. Facebook review destination and business-copy acceptance remain separate.                                            |
+| CBC-07 | Verified at ee9f3e8                                           | Legacy cross-domain and display-capture denial on dynamic/static paths.                                                                                                                                                                                                    |
+| CBC-08 | Decision complete; stricter policy deferred                   | Existing enforced policy retained. Trusted roots, parser scripts, nonce/cache design and real-widget acceptance are required before replacement; see October 14 contract decision. No exploit is claimed.                                                                  |
+| CBC-09 | Decision complete; no collector provisioned                   | Operator/destination, bounded ingestion, redaction, retention and actionable synthetic evidence are prerequisites; see October 14 contract decision.                                                                                                                       |
+| CBC-10 | Core verified; later candidate tranche released PR #23        | Shared candidate/live assertions, strict seven-capability parsing, API/error/static coverage; retain exact-revision evidence and no live quote tests.                                                                                                                      |
+| CBC-11 | Verified at 308138f                                           | Prior Lighthouse/promotion/Safari failures retained below; exact-main five gates, Workers Build, Smoke and Integrity passed for PR #28. Resolve causes and verify a fresh exact-main release end to end.                                                                   |
+| CBC-12 | Verified at 308138f                                           | Runner classifies stderr-only NO_NAVSTART before report parsing; subprocess regressions enforce one retry, retained diagnostics and rejection of stale/malformed/unrelated failures.                                                                                       |
+| CBC-13 | Verified October 6                                            | Shared heartbeat cleanup and mocked failure-path tests deployed in PR #41 / 1079718, with exact-main checks, Workers Build, Smoke and Integrity passed. No live mail test was performed.                                                                                   |
 
 PR #23 runtime/navigation changes passed at 5522d60440bfe66cb92adde8f2ce3a75c9eb77d4,
 Smoke 36490018374 and Integrity 36490418251. Earlier layout/Lighthouse failures
 remain in history. No audit-wide or account-security completion is claimed.
 
-## Production-readiness priorities
+## Post-beta owner/operator handoff
 
-| Priority / finding  | Next action and completion evidence                                                                                                                                                                                                                                                      | Responsible role                     |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
-| P1 — CBC-05         | Verify current natural heartbeat delivery and independent failure-notification receipt, private credential/MFA/WAF review, and compatible recovery/rejection evidence. Use an isolated no-mail Worker for drills first. No real quote test sends.                                        | Account operator/owner + engineering |
-| P1 — CBC-06         | Run physical iPad/VoiceOver/touch/keyboard/zoom acceptance, resolve failures, verify public review destination and owner business content.                                                                                                                                               | Cassi/human tester + engineering     |
-| P2 — CBC-08, CBC-09 | Decide stricter CSP/reporting based on threat model and operational ownership. Keep current enforced CSP unless replacement is proven with Turnstile/cache tests; no collector without privacy/retention/alert ownership. These are hardening decisions, not automatic release blockers. | Maintainer/operator                  |
+The following are optional follow-ups or independent human/operator acceptance,
+not pending beta engineering release gates. Issues #32 and #33 were closed
+`not_planned`; closure does not certify their unperformed checks. Reopen a
+scoped issue if a real defect is reproduced or an owner elects to fund the
+specific follow-up. Issue #34 completed the hardening decision and did not
+implement a stronger CSP or a report collector.
 
-October 13 read-only verification of live ruleset 23093180 confirms required
+| Priority / finding                   | Next action and completion evidence                                                                                                                                                                                                                          | Responsible role       |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- |
+| CBC-05 — optional operator review    | If the operator chooses, verify independent failure-notification receipt, private credential/MFA/WAF and recovery settings, and isolated no-mail rejection/recovery. Owner-reported mail arrival is not independent alert receipt. No real quote test sends. | Account operator/owner |
+| CBC-06 — optional owner acceptance   | If desired, record physical iPad/VoiceOver/touch/keyboard/zoom results with device/browser/release identity, confirm the actual public review destination and accept business copy. File any reproduced defect separately.                                   | Cassi/human tester     |
+| CBC-08 / CBC-09 — deferred hardening | Keep current enforced CSP. Revisit nonce/hash replacement only with real-widget/cache compatibility proof; provision no report collector without privacy, retention and alert ownership.                                                                     | Maintainer/operator    |
+
+October 13 read-only verification of live ruleset 23093180 confirmed required
 review-thread resolution, PRs and all five strict Actions checks. Deletion and
-force-push remain prohibited; this connection cannot bypass the ruleset. This
-confirms the October 8 policy resolution recorded in issue #32; account, receipt
-and isolated recovery evidence remain open.
+force-push were prohibited; this connection could not bypass the ruleset. This
+confirmed the October 8 policy resolution recorded in issue #32. The remaining
+account, receipt and isolated recovery work is the optional handoff above.
 AlienX PR #55 merged; Cleaning adopted the matching protocol through merged PR #28. Each repository retains local authority.
 
 ## Historical comparison with AlienX
@@ -657,12 +744,18 @@ returned HTTP 403 from this environment. No fresh served SHA is inferred; use th
 attributed GitHub checks above. No current mailbox/provider, account-settings,
 physical-device or complete penetration assessment was performed. No mail sent.
 
-## Remaining account and owner work
+## Optional account and owner follow-up details
+
+These items were not verified in the #84 engineering release and are not
+represented as beta blockers or completed controls. Their original owner/operator
+checklists were closed `not_planned` in #32 and #33. The following preserves safe
+handoff boundaries if the owner chooses to revisit them.
 
 - Privately inspect Dependabot/secret alert counts and disposition, account MFA
   and recovery for GitHub/Cloudflare/Resend. Never publish secret values.
-- Privately review the credential-shaped Resend key display name. Identify usage
-  and scope first; if exposed, create domain-restricted sending-only replacement,
+- Privately review the credential-shaped Resend key display name. The name alone
+  is not evidence that a key is exposed. Identify usage and scope first; if
+  exposure is established, create a domain-restricted sending-only replacement,
   update Worker securely, verify delivery, then revoke old access. Never revoke an
   unidentified live key. Review obsolete onboarding keys/read-only build token.
 - Verify WAF, accessible legacy protection and one successful Cloudflare build's
@@ -712,19 +805,23 @@ The September 30 main homepage performance failure in
 [PR #27](https://github.com/Cassileigh/cleaning-by-cassi/pull/27) (0.84 versus 0.85)
 is separate; its failed evidence remains historical after PR #28 restored verified promotion.
 
-## Active issue map
+## Issue disposition map
 
-Issues own task checklists and handoffs; this register owns durable decisions and
-release evidence. No central transcript or duplicate status document is introduced.
+Issues own their historical task checklists and handoffs; this register owns
+durable decisions and release evidence. No central transcript or duplicate status
+document is introduced. Closed `not_planned` means the owner-dependent checks
+were de-scoped from beta, not silently verified.
 
-| Scope                                                      | Local issue                                                      |
-| ---------------------------------------------------------- | ---------------------------------------------------------------- |
-| CBC-11 / CBC-12: PR #28, Safari, Lighthouse and production | [#31](https://github.com/Cassileigh/cleaning-by-cassi/issues/31) |
-| CBC-05: accounts, monitoring, recovery and review policy   | [#32](https://github.com/Cassileigh/cleaning-by-cassi/issues/32) |
-| CBC-06: physical-device and business acceptance            | [#33](https://github.com/Cassileigh/cleaning-by-cassi/issues/33) |
-| CBC-08 / CBC-09: CSP and reporting decision                | [#34](https://github.com/Cassileigh/cleaning-by-cassi/issues/34) |
-| CBC-13: failed mail-response cleanup — verified            | [#35](https://github.com/Cassileigh/cleaning-by-cassi/issues/35) |
-| CBC-06 usability follow-up: field errors — verified        | [#36](https://github.com/Cassileigh/cleaning-by-cassi/issues/36) |
+| Scope                                                       | Local issue                                                      | Disposition                                                |
+| ----------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------- |
+| CBC-11 / CBC-12: PR #28, Safari, Lighthouse and production  | [#31](https://github.com/Cassileigh/cleaning-by-cassi/issues/31) | Verified historical release                                |
+| CBC-05: accounts, monitoring, recovery and review policy    | [#32](https://github.com/Cassileigh/cleaning-by-cassi/issues/32) | Closed `not_planned`; operator evidence remains unverified |
+| CBC-06: physical-device and business acceptance             | [#33](https://github.com/Cassileigh/cleaning-by-cassi/issues/33) | Closed `not_planned`; owner acceptance remains unverified  |
+| CBC-08 / CBC-09: CSP and reporting decision                 | [#34](https://github.com/Cassileigh/cleaning-by-cassi/issues/34) | Closed; decision completed, hardening deferred             |
+| CBC-13: failed mail-response cleanup — verified             | [#35](https://github.com/Cassileigh/cleaning-by-cassi/issues/35) | Verified historical release                                |
+| CBC-06 usability follow-up: field errors — verified         | [#36](https://github.com/Cassileigh/cleaning-by-cassi/issues/36) | Verified historical release                                |
+| Shared application engines and source inventory             | [#84](https://github.com/Cassileigh/cleaning-by-cassi/pull/84)   | Merged and production verified at `ebe2f6f`                |
+| Final cross-repository source parity and paired peer checks | [#39](https://github.com/Cassileigh/cleaning-by-cassi/issues/39) | Closed `completed`; paired #85 / AlienX #151 verified      |
 
 Peer review: adapt AlienX #53/#83 diagnostics/readiness concepts; retain Cleaning's
 release-gate architecture. Adopt #81 documentation-closeout practice without
