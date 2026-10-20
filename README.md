@@ -16,7 +16,7 @@
   <a href="https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/lighthouse.yml"><img alt="Lighthouse Quality" src="https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/lighthouse.yml/badge.svg?branch=main" /></a>
   <a href="https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-integrity.yml"><img alt="Production Integrity" src="https://github.com/Cassileigh/cleaning-by-cassi/actions/workflows/production-integrity.yml/badge.svg?branch=main" /></a>
   <a href="https://github.com/Cassileigh/cleaning-by-cassi/blob/main/package.json"><img alt="Astro dependency version" src="https://img.shields.io/github/package-json/dependency-version/Cassileigh/cleaning-by-cassi/astro/main?label=Astro&logo=astro&logoColor=white&color=1548f5" /></a>
-  <a href="https://developers.cloudflare.com/workers/"><img alt="Cloudflare Workers" src="https://img.shields.io/badge/Cloudflare-Workers-a7df24?logo=cloudflare&logoColor=white" /></a>
+  <a href="https://developers.cloudflare.com/workers/"><img alt="Cloudflare Workers" src="https://img.shields.io/badge/Cloudflare-Workers-FF5E1F?logo=cloudflare&logoColor=white" /></a>
 </p>
 
 ### A cleaner home. A little more breathing room.
