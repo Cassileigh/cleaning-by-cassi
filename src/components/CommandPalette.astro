@@ -1,0 +1,331 @@
+---
+const commandPalette = {
+  siteName: 'Cleaning by Cassi',
+  inputId: 'cleaning-palette-input',
+  resultsId: 'cleaning-palette-results',
+  overlayId: 'cleaning-command-overlay',
+  toastId: 'cleaning-command-toast',
+  commands: [
+    {
+      name: 'Get a Free Quote',
+      description: "Request a quote for your home's cleaning needs.",
+      keywords: 'estimate request cleaning plan book schedule appointment',
+      action: 'navigate',
+      href: '/quote',
+    },
+    {
+      name: 'Cleaning Services',
+      description: 'Explore standard, deep and recurring cleaning.',
+      keywords: 'services move first time',
+      action: 'navigate',
+      href: '/services',
+    },
+    {
+      name: 'Cleaning Prices',
+      description: 'See room rates and cleaning frequency options.',
+      keywords: 'pricing cost budget rates',
+      action: 'navigate',
+      href: '/pricing',
+    },
+    {
+      name: 'Add-On Starting Prices',
+      description: 'A little extra TLC, from laundry to window tracks.',
+      keywords:
+        'extras laundry bed making pet hair baseboards window tracks add ons',
+      action: 'navigate',
+      href: '/pricing#add-on-pricing',
+    },
+    {
+      name: 'About Cassi',
+      description: 'Meet the person caring for your home.',
+      keywords: 'about owner story',
+      action: 'navigate',
+      href: '/about',
+    },
+    {
+      name: 'Home',
+      description: 'Back to Cleaning by Cassi.',
+      keywords: 'homepage start',
+      action: 'navigate',
+      href: '/',
+    },
+    {
+      name: 'Service Areas & Contact',
+      description: 'Find local coverage and ways to reach Cassi.',
+      keywords: 'cities map contact email phone fox',
+      action: 'navigate',
+      href: '/#contact',
+    },
+    {
+      name: 'Share Feedback',
+      description: 'Share your experience with Cleaning by Cassi.',
+      keywords: 'review feedback experience',
+      action: 'navigate',
+      href: '/review',
+    },
+    {
+      name: 'Privacy Policy',
+      description: 'How your quote information is used.',
+      keywords: 'privacy data information',
+      action: 'navigate',
+      href: '/privacy',
+    },
+    {
+      name: 'Website Terms',
+      description: 'Read the terms for using this website.',
+      keywords: 'terms conditions',
+      action: 'navigate',
+      href: '/terms',
+    },
+  ],
+};
+---
+
+<dialog
+  id="cleaning-palette"
+  data-command-palette={JSON.stringify(commandPalette)}
+  aria-labelledby="cleaning-palette-title"
+  aria-describedby="cleaning-palette-hint"
+  hidden
+>
+  <div class="cleaning-palette-backdrop" data-palette-close></div>
+  <section class="cleaning-palette-panel">
+    <div class="cleaning-palette-heading">
+      <div>
+        <span class="cleaning-palette-eyebrow">
+          A little help finding your way
+        </span>
+        <strong id="cleaning-palette-title">
+          Find your way to a cleaner home
+        </strong>
+      </div>
+      <button
+        type="button"
+        data-palette-close
+        aria-label="Close command palette"
+      >
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <label class="cleaning-palette-label" for="cleaning-palette-input">
+      What are you looking for?
+    </label>
+    <input
+      id="cleaning-palette-input"
+      type="search"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-expanded="true"
+      aria-controls="cleaning-palette-results"
+      autocomplete="off"
+      placeholder="Try pricing, laundry or a free quote…"
+    />
+    <div
+      id="cleaning-palette-results"
+      role="listbox"
+      aria-label="Pages and shortcuts"
+      aria-live="polite"
+    ></div>
+    <p id="cleaning-palette-hint">
+      <span>
+        <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> to open
+      </span>
+      <span>↑ ↓ to explore · Enter to go · Esc to close</span>
+    </p>
+  </section>
+</dialog>
+
+<script is:inline type="module" src="/command-palette.js"></script>
+
+<style is:global>
+  #cleaning-palette[hidden] {
+    display: none;
+  }
+  #cleaning-palette {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: clamp(1rem, 8vh, 5rem) 1rem;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    overflow: hidden;
+  }
+  #cleaning-palette[open] {
+    display: grid;
+    align-items: start;
+    justify-items: center;
+  }
+  #cleaning-palette::backdrop {
+    background: transparent;
+  }
+  #cleaning-palette .cleaning-palette-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(25, 10, 45, 0.7);
+    backdrop-filter: blur(6px);
+  }
+  #cleaning-palette .cleaning-palette-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 640px);
+    max-height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--pink);
+    border-radius: 24px;
+    background: var(--surface-solid);
+    box-shadow: 0 24px 80px rgba(25, 10, 45, 0.35);
+  }
+  #cleaning-palette .cleaning-palette-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1.25rem 1.25rem 0.8rem;
+  }
+  #cleaning-palette .cleaning-palette-heading > div {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+  #cleaning-palette .cleaning-palette-eyebrow {
+    color: var(--emphasis);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  #cleaning-palette-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  #cleaning-palette [data-palette-close]:is(button) {
+    display: grid;
+    place-items: center;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--accent);
+    background: var(--surface-soft);
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+  #cleaning-palette .cleaning-palette-label {
+    padding: 0 1.25rem;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+  #cleaning-palette-input {
+    width: calc(100% - 2.5rem);
+    min-width: 0;
+    min-height: 48px;
+    margin: 0.4rem 1.25rem 0.8rem;
+    padding: 0.75rem;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    color: var(--ink);
+    background: var(--surface-soft);
+    font-size: 1rem;
+  }
+  #cleaning-palette-input::placeholder {
+    color: var(--muted);
+    opacity: 1;
+  }
+  #cleaning-palette-results {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.25rem 0.75rem 0.75rem;
+  }
+  #cleaning-palette .palette__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 64px;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+  }
+  #cleaning-palette .palette__item > span {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  #cleaning-palette .palette__item strong {
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  #cleaning-palette .palette__item small {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  #cleaning-palette .palette__item:is(:hover, .is-active) {
+    background: var(--surface-soft);
+    border-color: var(--accent);
+  }
+  #cleaning-palette .palette__item kbd {
+    color: var(--accent);
+    font-size: 1.1rem;
+  }
+  #cleaning-palette .palette__empty {
+    padding: 1rem;
+    color: var(--muted);
+  }
+  #cleaning-palette :is(button, input):focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+  }
+  #cleaning-palette-hint {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.4rem 1rem;
+    margin: 0;
+    padding: 0.8rem 1.25rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.68rem;
+  }
+  #cleaning-palette-hint kbd {
+    font: inherit;
+  }
+  @media (max-width: 480px) {
+    #cleaning-palette {
+      padding: 0.5rem;
+    }
+    #cleaning-palette .cleaning-palette-panel {
+      border-radius: 18px;
+    }
+    #cleaning-palette .cleaning-palette-heading {
+      padding: 1rem 1rem 0.7rem;
+    }
+    #cleaning-palette .cleaning-palette-label {
+      padding-inline: 1rem;
+    }
+    #cleaning-palette-input {
+      width: calc(100% - 2rem);
+      margin-inline: 1rem;
+    }
+    #cleaning-palette-hint {
+      padding-inline: 1rem;
+    }
+  }
+</style>

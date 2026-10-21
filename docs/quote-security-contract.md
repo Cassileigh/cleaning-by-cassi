@@ -216,6 +216,13 @@ client routing and preference controls activate only where configured. Shared
 `site-preferences.js`, `status-response.js`, `status-dashboard.js` and
 `command-palette.js` separate behavior from site commands, labels and controls.
 Status/palette requests abort on page departure; optional engines do not add UI.
+Cleaning's `CommandPalette.astro` supplies ten local page/anchor destinations to
+the unchanged shared palette engine. A visible header Quick links button and
+Ctrl/Cmd+K open the native dialog on every layout page. Search, arrow selection,
+Enter, Tab containment, Escape and return-to-opener focus use the shared engine.
+The customer commands navigate only; they do not enable developer commands,
+submit the quote form, request private status, or store/send the search query.
+Site styles provide the responsive light/dark dialog and touch controls.
 `src/navigation-link.ts` supplies active-route semantics, and
 `src/styles/accessibility.css` owns reset, focus, skip-link and reduced-motion
 mechanics with local palette/layout tokens.
