@@ -199,3 +199,23 @@ test('production still requires readiness and HTTPS on both domains', async () =
     2,
   );
 });
+test('integrity consumes status before starting later requests', async () => {
+  const mock = fixture({ candidate: false, ready: true });
+  let status;
+  await verifyIntegrity({
+    expected: revision,
+    wait: async () => {},
+    log: () => {},
+    fetcher: async (...args) => {
+      if (status)
+        assert.equal(
+          status.bodyUsed,
+          true,
+          'Status body must be read promptly',
+        );
+      const response = await mock.fetcher(...args);
+      if (new URL(args[0]).pathname === '/api/status') status = response;
+      return response;
+    },
+  });
+});
