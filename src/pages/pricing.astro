@@ -16,12 +16,29 @@ const roomRates = [
   { icon: '🍴', name: 'Kitchen / Dining', unit: 'per room', price: '$35' },
 ];
 
-const addOns = ADD_ONS.map(([, label]) => label);
+const addOnStartingRates: Record<string, { amount: number; unit: string }> = {
+  'window-tracks': { amount: 5, unit: 'window' },
+  baseboards: { amount: 15, unit: 'room' },
+  doors: { amount: 5, unit: 'door' },
+  'cabinet-fronts': { amount: 15, unit: 'kitchen' },
+  'shower-tub': { amount: 20, unit: 'shower/tub' },
+  'trash-cans': { amount: 5, unit: 'can' },
+  'bed-making': { amount: 5, unit: 'bed' },
+  laundry: { amount: 15, unit: 'load' },
+  'pet-hair': { amount: 10, unit: 'affected room' },
+  cobwebs: { amount: 10, unit: 'home' },
+  'floor-edges': { amount: 10, unit: 'room' },
+  'high-areas': { amount: 15, unit: 'home' },
+};
+const addOns = ADD_ONS.map(([value, label]) => ({
+  label,
+  rate: addOnStartingRates[value],
+}));
 ---
 
 <PageLayout
   title={`Pricing | ${SITE_TITLE}`}
-  description="Explore starting room rates, recurring cleaning options and individually quoted add-ons from Cleaning by Cassi."
+  description="Explore starting room and add-on rates, plus recurring cleaning options from Cleaning by Cassi."
   class="pricing-page"
 >
   <section class="pricing-hero">
@@ -95,26 +112,51 @@ const addOns = ADD_ONS.map(([, label]) => label);
     </div>
   </section>
 
-  <section class="pricing-section soft-green">
-    <div class="section-heading">
-      <span class="section-icon">➕</span>
+  <section
+    id="add-on-pricing"
+    class="pricing-section soft-green"
+    aria-labelledby="addon-pricing-title"
+  >
+    <div class="section-heading addon-section-heading">
       <div>
-        <p class="eyebrow">Customize Your Clean</p>
-        <h2>Add-On Services</h2>
+        <p class="eyebrow">Add-On Services</p>
+        <h2 id="addon-pricing-title">A Little Extra TLC</h2>
       </div>
+      <span class="section-icon" aria-hidden="true">
+        ✨
+      </span>
     </div>
     <p class="section-copy">
-      Add-ons are quoted individually based on the size, condition, and time
-      required.
+      Customize your clean with the little extras that make a big difference.
     </p>
     <div class="addon-grid">
       {addOns.map((addon) => (
-        <div class="addon-card">
-          <span>✦</span>
-          {addon}
-        </div>
+        <article class="addon-card">
+          <span class="addon-star" aria-hidden="true">
+            ✦
+          </span>
+          <div class="addon-content">
+            <h3>{addon.label}</h3>
+            {addon.rate ? (
+              <p class="addon-price">
+                <span class="starting-label">Starting at</span>
+                <span>
+                  <strong>${addon.rate.amount}</strong>
+                  <span class="addon-unit"> / {addon.rate.unit}</span>
+                </span>
+              </p>
+            ) : (
+              <p class="addon-pending">Quoted individually</p>
+            )}
+          </div>
+        </article>
       ))}
     </div>
+    <p class="addon-disclaimer">
+      Additional services are priced based on the size, condition, and specific
+      needs of your home. Final pricing is confirmed before your cleaning
+      appointment.
+    </p>
     <div class="fine-print">
       <p>
         <strong>🛏️ Bed Making:</strong> Clean sheets must be provided and left
@@ -181,6 +223,7 @@ const addOns = ADD_ONS.map(([, label]) => label);
   }
 
   .pricing-section {
+    scroll-margin-top: 8rem;
     margin: 0 0 2rem;
     padding: clamp(1.5rem, 4vw, 2.4rem);
     border: 1px solid var(--border);
@@ -315,18 +358,57 @@ const addOns = ADD_ONS.map(([, label]) => label);
     gap: 0.8rem;
   }
   .addon-card {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.9rem 1rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    gap: 0.75rem;
+    padding: 1.2rem;
     border: 1px solid var(--border);
     border-radius: 16px;
     background: var(--surface-solid);
-    font-weight: 600;
     box-shadow: 0 6px 18px rgba(49, 24, 95, 0.06);
   }
-  .addon-card span {
+  .addon-star {
     color: var(--pink);
+    line-height: 1.6;
+  }
+  .addon-content h3 {
+    margin: 0;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .addon-price {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0.75rem 0 0;
+  }
+  .starting-label {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .addon-price strong {
+    color: var(--accent);
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+  .addon-unit,
+  .addon-pending {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .addon-pending {
+    margin: 0.75rem 0 0;
+  }
+  .addon-disclaimer {
+    margin: 1.4rem 0 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+  }
+  .addon-section-heading {
+    flex-wrap: wrap;
   }
   .fine-print {
     margin-top: 1.2rem;

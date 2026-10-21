@@ -1,8 +1,36 @@
 # Cleaning by Cassi — current state
 
-Updated October 19, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 21, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
+
+## October 21 add-on starting-price candidate
+
+The owner requested starting prices on Pricing, explanation-focused Services,
+existing add-on selection on Quote, and a simple homepage link to the pricing
+section. The candidate uses the lower end of the owner's supplied ranges and
+labels rates per window, room, door, kitchen, shower/tub, can, bed, load or affected
+room as applicable. Final prices depend on size, condition and specific needs and
+are confirmed before the appointment. Wall Spot Cleaning remains removed.
+All twelve rates and units were supplied by the owner; no business rates are invented.
+This is a local candidate under [issue #93](https://github.com/Cassileigh/cleaning-by-cassi/issues/93),
+not a new verified release. Existing release evidence and beta limits below remain
+separate from this pricing change.
+
+## October 21 production monitoring recovery
+
+Current main `cc1c0f575dbb070869adeb7a4c96589f6865b842` passed all five
+release gates, fresh CodeQL and the zero-open-alert policy. Its actual approved-main
+tag matches that revision. The initial [push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39626971698)
+timed out at 15:50:14 UTC waiting for deployment; Workers Build completed later,
+at 15:53:07 UTC. Read-only release checks then confirmed the exact main was live.
+One unchanged-revision failed-job rerun passed at 16:41:16 UTC; the failed first
+attempt remains recorded. Its automatic [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39637001903)
+passed at 16:41:56 UTC, verifying the exact revision on both production hosts,
+rejecting TLS 1.0/1.1 and accepting TLS 1.2/1.3. CBC/static-RSA observations remain
+separate from protocol acceptance. The older scheduled Smoke body-consumption
+failure in #88 was corrected by #89; the current successful Smoke uses that fix.
+These results establish the production baseline before the pricing candidate.
 
 ## Current verified release and beta disposition — October 19
 
