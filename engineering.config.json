@@ -31,7 +31,8 @@
         "tests/confirmation.spec.cjs",
         "tests/services.spec.cjs",
         "tests/shared-ui-engines.spec.cjs",
-        "tests/document-metadata.spec.cjs"
+        "tests/document-metadata.spec.cjs",
+        "tests/command-palette.spec.cjs"
       ],
       "accessibility": [
         "tests/accessibility.spec.cjs",
@@ -40,7 +41,8 @@
         "tests/navigation.spec.cjs",
         "tests/keyboard.spec.cjs",
         "tests/heading-contrast.spec.cjs",
-        "tests/services.spec.cjs"
+        "tests/services.spec.cjs",
+        "tests/command-palette.spec.cjs"
       ],
       "webkit": [
         "tests/site-canvas.spec.cjs",
@@ -52,7 +54,8 @@
         "tests/confirmation.spec.cjs",
         "tests/services.spec.cjs",
         "tests/shared-ui-engines.spec.cjs",
-        "tests/document-metadata.spec.cjs"
+        "tests/document-metadata.spec.cjs",
+        "tests/command-palette.spec.cjs"
       ]
     },
     "logoSelector": ".brand-logo",

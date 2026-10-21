@@ -3,6 +3,7 @@ import type { HTMLAttributes } from 'astro/types';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CommandPalette from '../components/CommandPalette.astro';
 
 interface Props extends HTMLAttributes<'main'> {
   title: string;
@@ -38,5 +39,6 @@ const {
       <slot />
     </main>
     <Footer />
+    <CommandPalette />
   </body>
 </html>

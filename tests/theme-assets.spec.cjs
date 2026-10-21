@@ -222,7 +222,11 @@ for (const width of [320, 390, 520, 768]) {
     await page.setViewportSize({ width: 320, height: 900 });
     await expectActiveVisible('Get a Quote');
     await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.evaluate(() => window.scrollTo(0, 400));
+    // Establish a settled baseline independently of smooth-scroll/media timing.
+    await page.evaluate(() =>
+      window.scrollTo({ top: 400, behavior: 'instant' }),
+    );
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(400);
     const scrollY = await page.evaluate(() => window.scrollY);
     await page.evaluate(() => {
       document.querySelector('.internal-links').scrollLeft = 0;

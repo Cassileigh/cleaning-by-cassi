@@ -4,6 +4,36 @@ Updated October 21, 2026; September 30 consolidation retained. This is the sole 
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
+## October 21 command palette candidate
+
+[Issue #97](https://github.com/Cassileigh/cleaning-by-cassi/issues/97) adds a
+customer command palette from Cleaning base
+`ec7f24fc07129b204d637b96a8bdd184ca5f3af4`. AlienX main
+`88996978e00997676346cd59dfa756564890df98` supplied the reference; the shared
+palette and navigation engines remain unchanged. Cleaning supplies the branded
+dialog, visible Quick links trigger and ten local page/anchor commands, including
+quote requests, add-on prices and service areas. Search stays in browser memory;
+opening/dismissing the palette preserves quote fields and sends no quote.
+Nine palette cases passed with each pinned local Chromium and WebKit browser,
+including six theme/viewport combinations with zero axe violations and preserved
+quote fields. Chromium's keyboard/shared-engine checks also passed. Visual review
+covered 320px dark and 1440px light. The header scroll test now establishes its
+400px baseline explicitly before asserting that navigation preserves it; all four
+affected WebKit cases passed in isolation after an earlier media/scroll timing
+failure and a closed-browser interruption during overlapping runs. Shared-engine
+source comparison passes with 183 local and 177 reference files, no pending
+extractions. These checks do not claim a new human/device review. First PR head
+`bda380b4890fcb02125f848dca14c7e469f3abb1` failed closed-page accessibility checks
+because the trigger's spoken name omitted its visible keyboard hint.
+The corrected trigger uses its native visible text as
+its accessible name, and a local closed-trigger axe check now covers that state.
+The correction passed 38 pinned Chromium palette/Services/full-page accessibility
+checks and nine pinned WebKit palette cases, including the closed trigger.
+Final preparation and exact-head checks must pass for the corrected revision.
+This feature remains separate from the previously blocked pricing release-record
+PR #95 and AlienX document publication; neither earlier approval block is resolved
+by this feature.
+
 ## October 21 add-on starting-price candidate
 
 The owner requested starting prices on Pricing, explanation-focused Services,
