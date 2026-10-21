@@ -240,7 +240,8 @@ const overlay = (title, content, destinations = []) => {
       if (
         typeof destination?.label !== 'string' ||
         typeof destination?.href !== 'string' ||
-        !/^\/(?:[a-z0-9-]+\/?)*$/i.test(destination.href)
+        !/^\/[a-z0-9/-]*$/i.test(destination.href) ||
+        destination.href.includes('//')
       )
         continue;
       const link = document.createElement('a');
