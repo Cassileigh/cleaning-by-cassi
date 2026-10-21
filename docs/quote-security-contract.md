@@ -227,6 +227,13 @@ Its decorative star rotates counterclockwise on
 opening and reverses on closing; reduced-motion preferences suppress animation.
 The catalog supplies the available choices consistently to Services, Quote and API.
 
+The Pricing page pairs that same add-on catalog with owner-supplied per-unit
+starting rates. These are guides, not fixed totals: home size, condition and
+specific needs determine the final price, confirmed before the appointment.
+Services explains the work and preparation requirements; Quote collects selected
+add-ons without calculating a price or confirming a booking. The homepage links
+to the add-on pricing section instead of repeating the rate list.
+
 `scripts/reference-history.mjs` owns read-only all-ref history comparison,
 including root and first-parent digests with replacement refs and lazy fetching
 disabled. The compare-reference-history and compare-cassi-history CLI adapters
