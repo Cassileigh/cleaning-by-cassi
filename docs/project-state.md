@@ -22,10 +22,17 @@ covered 320px dark and 1440px light. The header scroll test now establishes its
 affected WebKit cases passed in isolation after an earlier media/scroll timing
 failure and a closed-browser interruption during overlapping runs. Shared-engine
 source comparison passes with 183 local and 177 reference files, no pending
-extractions. These checks do not claim a new human/device review. Final preparation,
-exact-head CI and production verification remain required. This candidate is separate
-from the previously blocked pricing release-record PR #95 and AlienX document
-publication; neither earlier approval block is resolved by this feature.
+extractions. These checks do not claim a new human/device review. First PR head
+`bda380b4890fcb02125f848dca14c7e469f3abb1` failed closed-page accessibility checks
+because the trigger's spoken name omitted its visible keyboard hint.
+The corrected trigger uses its native visible text as
+its accessible name, and a local closed-trigger axe check now covers that state.
+The correction passed 38 pinned Chromium palette/Services/full-page accessibility
+checks and nine pinned WebKit palette cases, including the closed trigger.
+Final preparation and exact-head checks must pass for the corrected revision.
+This feature remains separate from the previously blocked pricing release-record
+PR #95 and AlienX document publication; neither earlier approval block is resolved
+by this feature.
 
 ## October 21 add-on starting-price candidate
 

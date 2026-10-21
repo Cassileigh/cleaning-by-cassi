@@ -15,10 +15,23 @@ for (const colorScheme of ['light', 'dark']) {
       await page.addInitScript({ content: axe.source });
       await page.goto(`${origin}/services`);
       const trigger = page.getByRole('button', {
-        name: 'Quick links — open command palette',
+        name: /^Quick links/,
       });
       await expect(trigger).toBeInViewport();
       await expect(trigger).toContainText('Quick links');
+      // Check the trigger while it is exposed; a modal makes the header inert.
+      const triggerViolations = await page.evaluate(
+        async () =>
+          (
+            await axe.run('.command-trigger', {
+              runOnly: {
+                type: 'rule',
+                values: ['label-content-name-mismatch'],
+              },
+            })
+          ).violations,
+      );
+      expect(triggerViolations).toEqual([]);
       expect((await trigger.boundingBox()).height).toBeGreaterThanOrEqual(44);
       const scroll = await page.evaluate(() => scrollY);
       await trigger.click();
@@ -130,12 +143,10 @@ for (const shortcut of ['Control+k', 'Meta+k']) {
     await expect(name).toBeFocused();
     await expect(name).toHaveValue('Sample homek');
     expect(submissions).toBe(0);
-    await page
-      .getByRole('button', { name: 'Quick links — open command palette' })
-      .click();
+    await page.getByRole('button', { name: /^Quick links/ }).click();
     await page.getByRole('button', { name: 'Close command palette' }).click();
     await expect(
-      page.getByRole('button', { name: 'Quick links — open command palette' }),
+      page.getByRole('button', { name: /^Quick links/ }),
     ).toBeFocused();
     await page.keyboard.press(shortcut);
     await page
@@ -151,9 +162,7 @@ test('arrow selection and Tab activation use the customer destinations', async (
   browserName,
 }) => {
   await page.goto(`${origin}/about`);
-  await page
-    .getByRole('button', { name: 'Quick links — open command palette' })
-    .click();
+  await page.getByRole('button', { name: /^Quick links/ }).click();
   const options = page.locator('#cleaning-palette-results button');
   await page.keyboard.press('ArrowDown');
   await expect(options.nth(1)).toHaveAttribute('aria-selected', 'true');
