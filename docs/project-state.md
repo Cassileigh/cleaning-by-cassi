@@ -4,10 +4,12 @@ Updated October 21, 2026; September 30 consolidation retained. This is the sole 
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
-## October 21 command palette candidate
+## October 21 command palette verified release
 
-[Issue #97](https://github.com/Cassileigh/cleaning-by-cassi/issues/97) adds a
-customer command palette from Cleaning base
+[PR #98](https://github.com/Cassileigh/cleaning-by-cassi/pull/98) merged as
+`c8cc17eb9341e49ac07fb04bb72ca071fa0e375a`, addressing
+[issue #97](https://github.com/Cassileigh/cleaning-by-cassi/issues/97).
+The customer command palette started from Cleaning base
 `ec7f24fc07129b204d637b96a8bdd184ca5f3af4`. AlienX main
 `88996978e00997676346cd59dfa756564890df98` supplied the reference; the shared
 palette and navigation engines remain unchanged. Cleaning supplies the branded
@@ -29,7 +31,24 @@ The corrected trigger uses its native visible text as
 its accessible name, and a local closed-trigger axe check now covers that state.
 The correction passed 38 pinned Chromium palette/Services/full-page accessibility
 checks and nine pinned WebKit palette cases, including the closed trigger.
-Final preparation and exact-head checks must pass for the corrected revision.
+Corrected head `84490c695dab72b7746fed9dd60fcd98eea9056b` passed full Node 22
+preparation (244 tests, zero dependency vulnerabilities), published-tree
+fingerprint `1a829d5753d90045b6edda3b61779ec796a92846f7296344cc6fed91838f8ba3`,
+all five PR gates and fresh Actions/JavaScript CodeQL without reruns.
+The resulting main independently passed all five push gates, fresh CodeQL and
+the zero-open-alert policy. The actual `cleaning-ci-approved-main` tag matched
+that exact revision. Workers Build `427edff6-d372-4b57-b85e-db774d67c67d`
+succeeded (check `119517669099`) at 22:16:30 UTC.
+[Initial push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39684290837)
+passed at 22:16:40 UTC and its automatic
+[post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39685313539)
+passed at 22:17:17 UTC, both on attempt one. Both hosts served the exact revision;
+TLS 1.0/1.1 were rejected and TLS 1.2/1.3 accepted. Existing CBC/static-RSA
+observations remain separate from protocol acceptance.
+Live read-only Chromium review on the canonical host at 320px/dark and www at
+1440px/light passed search, add-on pricing navigation, dismissal and focus
+restoration with zero write requests. Both live captures were visually reviewed.
+This evidence-only closeout changes no runtime or operator procedure.
 This feature remains separate from the previously blocked pricing release-record
 PR #95 and AlienX document publication; neither earlier approval block is resolved
 by this feature.
