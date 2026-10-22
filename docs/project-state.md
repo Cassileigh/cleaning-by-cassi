@@ -49,28 +49,50 @@ Live read-only Chromium review on the canonical host at 320px/dark and www at
 1440px/light passed search, add-on pricing navigation, dismissal and focus
 restoration with zero write requests. Both live captures were visually reviewed.
 This evidence-only closeout changes no runtime or operator procedure.
-This feature remains separate from the previously blocked pricing release-record
-PR #95 and AlienX document publication; neither earlier approval block is resolved
-by this feature.
+This feature remains separate from the pricing release recorded below and AlienX's
+independent release evidence.
 
-## October 21 add-on starting-price candidate
+## October 21 verified add-on starting-price release
 
 The owner requested starting prices on Pricing, explanation-focused Services,
 existing add-on selection on Quote, and a simple homepage link to the pricing
-section. The candidate uses the lower end of the owner's supplied ranges and
+section. The released page uses the lower end of the owner's supplied ranges and
 labels rates per window, room, door, kitchen, shower/tub, can, bed, load or affected
 room as applicable. Final prices depend on size, condition and specific needs and
 are confirmed before the appointment. Wall Spot Cleaning remains removed.
 All twelve rates and units were supplied by the owner; no business rates are invented.
-This is a local candidate under [issue #93](https://github.com/Cassileigh/cleaning-by-cassi/issues/93),
-not a new verified release. Existing release evidence and beta limits below remain
-separate from this pricing change.
+[PR #94](https://github.com/Cassileigh/cleaning-by-cassi/pull/94) resolved
+[issue #93](https://github.com/Cassileigh/cleaning-by-cassi/issues/93) and merged as
+`45f5742132c0109cafc2d2eecb1a9888775c541d`. Final Node 22 preparation passed
+244 unit tests, source/history scans, formatting, build/type/target checks, Worker
+dry run and a zero-vulnerability dependency audit. The fetched PR head and merged
+main both matched the prepared fingerprint. Pinned WebKit review at 320, 768 and
+1440 pixels in light and dark verified all twelve amounts and units, no clipped
+card text or page overflow, zero axe violations, and the homepage deep link with
+its heading below the sticky header. Desktop and mobile captures were reviewed.
+
+All five required checks passed on the up-to-date PR head and resulting main.
+Fresh Actions and JavaScript CodeQL and the zero-open-alert policy passed. The
+actual `cleaning-ci-approved-main` tag matched the merged revision; Workers Build
+`42fffbea-a60a-41c3-9b9d-6ff6f7ccd5c5` succeeded (check `119369751514`).
+[Push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39640536486)
+and its automatic [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39642651255)
+passed without reruns. Integrity verified both production hosts at that exact
+revision, rejected TLS 1.0/1.1 and accepted TLS 1.2/1.3; CBC/static-RSA observations
+remain separate. Additional read-only checks confirmed all twelve live starting
+prices and units on both hosts. No real quote or replacement email was sent.
+
+The unmodified local peer comparison passed complete 181/176 inventories after
+the separately prepared AlienX Dependabot-label alignment. Cleaning #89's working
+default-label configuration remains in place; AlienX's counterpart was subsequently
+released independently.
+The older beta/account/device limits below are not changed by this pricing release.
 
 ## October 21 production monitoring recovery
 
-Current main `cc1c0f575dbb070869adeb7a4c96589f6865b842` passed all five
+The pre-pricing baseline `cc1c0f575dbb070869adeb7a4c96589f6865b842` passed all five
 release gates, fresh CodeQL and the zero-open-alert policy. Its actual approved-main
-tag matches that revision. The initial [push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39626971698)
+tag matched that revision. The initial [push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39626971698)
 timed out at 15:50:14 UTC waiting for deployment; Workers Build completed later,
 at 15:53:07 UTC. Read-only release checks then confirmed the exact main was live.
 One unchanged-revision failed-job rerun passed at 16:41:16 UTC; the failed first
@@ -79,9 +101,9 @@ passed at 16:41:56 UTC, verifying the exact revision on both production hosts,
 rejecting TLS 1.0/1.1 and accepting TLS 1.2/1.3. CBC/static-RSA observations remain
 separate from protocol acceptance. The older scheduled Smoke body-consumption
 failure in #88 was corrected by #89; the current successful Smoke uses that fix.
-These results establish the production baseline before the pricing candidate.
+These results establish the production baseline before the pricing release.
 
-## Current verified release and beta disposition — October 19
+## October 19 verified release and beta disposition
 
 [PR #85](https://github.com/Cassileigh/cleaning-by-cassi/pull/85) corrected
 the visual-theme test race found in AlienX #143. A late, hidden Turnstile
