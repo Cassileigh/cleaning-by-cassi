@@ -356,6 +356,10 @@
       "kind": "site-template",
       "reason": "Local content, component composition, metadata and styles; behavioral script bodies and independent browser lifecycle calls are forbidden."
     },
+    "src/components/CommandPalette.astro": {
+      "kind": "site-template",
+      "reason": "Local content, component composition, metadata and styles; behavioral script bodies and independent browser lifecycle calls are forbidden."
+    },
     "src/components/DocumentMetadata.astro": {
       "kind": "shared",
       "reason": "Identical implementation or policy; exact bytes required in the paired repository."
@@ -531,6 +535,10 @@
     "tests/code-scanning-policy.test.mjs": {
       "kind": "site-test",
       "reason": "Independent acceptance fixtures for this site’s routes, schemas, rendered controls and identity. Shared engine suites are additionally byte checked."
+    },
+    "tests/command-palette.spec.cjs": {
+      "kind": "site-test",
+      "reason": "Independent acceptance fixtures for local routes, schemas, rendered controls and identity. Shared engine suites are additionally byte checked."
     },
     "tests/confirmation-engine.test.mjs": {
       "kind": "shared",
