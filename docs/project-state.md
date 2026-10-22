@@ -8,6 +8,21 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 the pricing release record below with the command-palette evidence from #99.
 Both sections preserve their independent production checks and acceptance limits.
 
+## October 22 v1.0.0 release gate — pending
+
+At 21:31 UTC, main `c4479db0614ffd46d4eb7d9fd8e3ea3b0ca6907b` included the
+documentation-only merges #99–#101, but both public hosts and the
+`cleaning-ci-approved-main` tag still served the earlier verified application
+revision `c8cc17eb9341e49ac07fb04bb72ca071fa0e375a`. No main-push quality
+checks or Workers Build appeared for those merges. Scheduled
+[Integrity alert #102](https://github.com/Cassileigh/cleaning-by-cassi/issues/102)
+and [Smoke alert #103](https://github.com/Cassileigh/cleaning-by-cassi/issues/103)
+are real revision-mismatch alerts: production had not reached `c4479db`.
+GitHub Actions recovered during this period, but its earlier degradation is not
+confirmed as the cause. The v1.0.0 tag remains unpublished. A fresh main push
+must pass the five required checks, exact-revision approval, Workers Build,
+Smoke and Integrity before the release can be published and these alerts closed.
+
 ## October 21 command palette verified release
 
 [PR #98](https://github.com/Cassileigh/cleaning-by-cassi/pull/98) merged as
