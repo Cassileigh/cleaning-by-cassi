@@ -1,8 +1,12 @@
 # Cleaning by Cassi — current state
 
-Updated October 21, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 22, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
+
+[PR #100](https://github.com/Cassileigh/cleaning-by-cassi/pull/100) reconciled
+the pricing release record below with the command-palette evidence from #99.
+Both sections preserve their independent production checks and acceptance limits.
 
 ## October 21 command palette verified release
 
