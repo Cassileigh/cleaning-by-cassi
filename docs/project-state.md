@@ -1,6 +1,6 @@
 # Cleaning by Cassi — current state
 
-Updated October 22, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated October 23, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
@@ -8,7 +8,7 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 the pricing release record below with the command-palette evidence from #99.
 Both sections preserve their independent production checks and acceptance limits.
 
-## October 22 v1.0.0 release gate — pending
+## October 23 v1.0.0 release
 
 At 21:31 UTC, main `c4479db0614ffd46d4eb7d9fd8e3ea3b0ca6907b` included the
 documentation-only merges #99–#101, but both public hosts and the
@@ -19,9 +19,32 @@ checks or Workers Build appeared for those merges. Scheduled
 and [Smoke alert #103](https://github.com/Cassileigh/cleaning-by-cassi/issues/103)
 are real revision-mismatch alerts: production had not reached `c4479db`.
 GitHub Actions recovered during this period, but its earlier degradation is not
-confirmed as the cause. The v1.0.0 tag remains unpublished. A fresh main push
-must pass the five required checks, exact-revision approval, Workers Build,
-Smoke and Integrity before the release can be published and these alerts closed.
+confirmed as the cause. [PR #104](https://github.com/Cassileigh/cleaning-by-cassi/pull/104)
+merged as `d715b0a5d3ab395f3d578e137db3697a8ecd6e7d` and generated a fresh
+main push. All five required checks and exact-revision approval passed. The
+[initial Workers Build](https://dash.cloudflare.com/9f7b92e0ca70555ecc5be95474081f75/workers/services/view/cleaning-by-cassi/production/builds/7e4eac86-76d2-4248-a3cb-3ca4600b361d)
+built successfully but timed out after twelve minutes waiting for that approval;
+the two remaining browser checks finished about four minutes later. Its failure
+and the intervening Smoke and Integrity failures remain historical evidence.
+
+The unchanged, approved revision passed a
+[Workers Build retry](https://dash.cloudflare.com/9f7b92e0ca70555ecc5be95474081f75/workers/services/view/cleaning-by-cassi/production/builds/41ba6d2c-a0e6-4218-8885-f0a98a94e92e)
+at 00:11 UTC on October 23. Both public hosts served that exact revision. The
+[push Smoke rerun](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39859606708)
+passed at 00:13 UTC, and its automatic
+[post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/39876788848)
+passed for both hosts at 00:13 UTC. Integrity rejected TLS 1.0/1.1 and accepted
+TLS 1.2/1.3; CBC and static-RSA negotiation remain observed separately. The
+[v1.0.0 release](https://github.com/Cassileigh/cleaning-by-cassi/releases/tag/v1.0.0)
+tag points to `d715b0a5d3ab395f3d578e137db3697a8ecd6e7d`. The original
+alerts [#102](https://github.com/Cassileigh/cleaning-by-cassi/issues/102),
+[#103](https://github.com/Cassileigh/cleaning-by-cassi/issues/103),
+[#105](https://github.com/Cassileigh/cleaning-by-cassi/issues/105),
+[#106](https://github.com/Cassileigh/cleaning-by-cassi/issues/106) and
+[#107](https://github.com/Cassileigh/cleaning-by-cassi/issues/107) closed after
+the replacement checks, without treating their failed attempts as passing.
+This automated release does not establish private-account, physical-device,
+mailbox or owner business acceptance.
 
 ## October 21 command palette verified release
 
