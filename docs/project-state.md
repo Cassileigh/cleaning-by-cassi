@@ -8,38 +8,56 @@ Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 the pricing release record below with the command-palette evidence from #99.
 Both sections preserve their independent production checks and acceptance limits.
 
-## November 5 add-on disclosure arrow candidate
+## November 5 add-on disclosure arrows — verified release
 
-[Issue #116](https://github.com/Cassileigh/cleaning-by-cassi/issues/116) adds a
-far-right decorative chevron to each Services add-on: down while closed, up while
-open. CSS follows the native details state; the star, emoji, title, descriptions
-and keyboard/touch controls remain intact. The candidate starts from
-`b8216e5412b59c11d69037c7c3f8542f8525ec87`. All eight existing Services cases
-passed in each pinned local Chromium and WebKit browser. Rendered arrow direction
-and layout checks passed at 320, 768 and 1440px in both themes; representative
-phone/dark and desktop/light captures were visually reviewed. Full preparation,
-exact-head CI and protected release verification remain pending; this section does
-not claim a new deployed revision.
+[PR #117](https://github.com/Cassileigh/cleaning-by-cassi/pull/117) merged as
+`dc53b0f3e49e6b05a353db7ee46a9ca5680bb786`, addressing
+[issue #116](https://github.com/Cassileigh/cleaning-by-cassi/issues/116).
+All twelve Services add-ons show a far-right decorative chevron: down while
+closed, up while open. CSS follows native details state; the star animation,
+emoji, title, descriptions and keyboard/touch controls remain intact.
 
-The first unchanged preparation passed 244 tests/build/type checks but failed its
-all-severity audit on eight existing dependency findings (four moderate/four high).
-The separately prepared release prerequisite would adapt [PR #115](https://github.com/Cassileigh/cleaning-by-cassi/pull/115)
-with the minimum fixed compatible Puppeteer 25.13/Bidi/Zod graph, fast-uri 3.1.9,
-Undici 7.30.1 and scoped unifont Undici 8.12.2. Direct pins and both Undici majors
-are preserved; no forced incompatible Zod override or gate change is used. The
-scratch audit is clean. Its first locked install failed because this host could
-not resolve registry.npmjs.org; fresh peer Git access also could not resolve
-github.com. Subsequent native Git access and the normal-TLS package endpoint
-recovered, allowing validation to restart. Final full preparation and release
-checks are still required. The paired engineering follow-up is AlienX
-[#170](https://github.com/AlienX420710/alienx-smarthome/pull/170).
+Final native Node 22 preparation passed 244 tests, history/security scans,
+build/type checks, Worker dry run and the all-severity audit with zero findings.
+Fetched head `920e6fb336a788e5c243b71d08228fcb9603a87b` matched prepared
+fingerprint `c8662f8af901374039dd6558b57deec20021b5a933f2924edd196e41122cb3bb`.
+Twelve Services/confirmation cases passed in each pinned local Chromium and
+WebKit browser. Arrow/layout checks passed at 320, 768 and 1440px in both themes;
+representative captures were visually reviewed. All five exact-head PR gates and
+all five resulting-main push gates passed on their first attempts, with fresh
+Actions/JavaScript CodeQL and the resulting-main zero-open-alert policy.
 
-The peer check also found one inherited shared-test difference: the JSON/AlienX
-confirmation fixture still checked a consent field removed by AlienX #161.
-Adopting the published peer test removes that obsolete check without changing
-Cleaning's quote form. The unmodified peer verifier now passes with 183 local and
-177 peer implementation files and no pending extraction; it is source evidence,
-not production acceptance.
+The actual `cleaning-ci-approved-main` tag matched the exact merged revision.
+Workers Build `32ea01b6-0f03-45ed-b615-160cb6e7b3db` succeeded at 15:31:29 UTC
+(check `127343846636`).
+[Initial push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/42053823253)
+passed at 15:31:32 UTC, followed by automatic
+[post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/42055859031)
+at 15:32:12 UTC. Both hosts served the exact revision. TLS 1.0/1.1 were rejected
+and TLS 1.2/1.3 accepted; CBC/static-RSA observations remain separate.
+Read-only live review on apex at 320px/dark and www at 1440px/light confirmed all
+twelve arrows, independent open/close behavior and zero write requests. Both live
+captures were visually reviewed; no new physical-device acceptance is claimed.
+
+The initial preparation failed its audit on eight existing findings (four
+moderate/four high). The required repair uses the minimum fixed compatible
+Puppeteer 25.13/Bidi/Zod graph, fast-uri 3.1.9, Undici 7.30.1 and scoped unifont
+Undici 8.12.2, preserving direct pins and both Undici majors. Initial host DNS
+failures interrupted the repaired install and peer Git access; normal access
+recovered before successful final validation. Automatic approval review declined
+updating the original Dependabot branch, so its proposal in
+[PR #115](https://github.com/Cassileigh/cleaning-by-cassi/pull/115) was preserved
+and the verified candidate used a separate feature branch. No forced incompatible
+override, gate weakening or low-score retry was used.
+
+AlienX [#170](https://github.com/AlienX420710/alienx-smarthome/pull/170) independently
+verified its paired repair as `bcd5ddb8546586517e3d6cc9242a9ec90fe0ee78`.
+The inherited shared confirmation test now follows AlienX's published removal of
+its retired consent-checkbox step; Cleaning's quote form is unchanged. The
+unmodified peer verifier passed 183 local / 177 peer files with no pending
+extraction. Earlier failures and private acceptance limits remain below. No real
+quote, inquiry or email was sent. This evidence-only closeout changes no runtime
+or operator procedure.
 
 ## October 23 v1.0.0 release
 
