@@ -432,6 +432,19 @@ const addOns = ADD_ONS.map(([value, label]) => ({
   .addons-details summary::-webkit-details-marker {
     display: none;
   }
+  .addons-details summary::after {
+    content: '';
+    flex: 0 0 0.6rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    margin-inline-start: auto;
+    border-right: 2px solid var(--accent);
+    border-bottom: 2px solid var(--accent);
+    transform: rotate(45deg);
+  }
+  .addons-details[open] summary::after {
+    transform: rotate(-135deg);
+  }
   .addon-star {
     display: inline-block;
     flex-shrink: 0;

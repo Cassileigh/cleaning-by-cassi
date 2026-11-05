@@ -1,12 +1,45 @@
 # Cleaning by Cassi — current state
 
-Updated October 23, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated November 5, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
 
 [PR #100](https://github.com/Cassileigh/cleaning-by-cassi/pull/100) reconciled
 the pricing release record below with the command-palette evidence from #99.
 Both sections preserve their independent production checks and acceptance limits.
+
+## November 5 add-on disclosure arrow candidate
+
+[Issue #116](https://github.com/Cassileigh/cleaning-by-cassi/issues/116) adds a
+far-right decorative chevron to each Services add-on: down while closed, up while
+open. CSS follows the native details state; the star, emoji, title, descriptions
+and keyboard/touch controls remain intact. The candidate starts from
+`b8216e5412b59c11d69037c7c3f8542f8525ec87`. All eight existing Services cases
+passed in each pinned local Chromium and WebKit browser. Rendered arrow direction
+and layout checks passed at 320, 768 and 1440px in both themes; representative
+phone/dark and desktop/light captures were visually reviewed. Full preparation,
+exact-head CI and protected release verification remain pending; this section does
+not claim a new deployed revision.
+
+The first unchanged preparation passed 244 tests/build/type checks but failed its
+all-severity audit on eight existing dependency findings (four moderate/four high).
+The separately prepared release prerequisite would adapt [PR #115](https://github.com/Cassileigh/cleaning-by-cassi/pull/115)
+with the minimum fixed compatible Puppeteer 25.13/Bidi/Zod graph, fast-uri 3.1.9,
+Undici 7.30.1 and scoped unifont Undici 8.12.2. Direct pins and both Undici majors
+are preserved; no forced incompatible Zod override or gate change is used. The
+scratch audit is clean. Its first locked install failed because this host could
+not resolve registry.npmjs.org; fresh peer Git access also could not resolve
+github.com. Subsequent native Git access and the normal-TLS package endpoint
+recovered, allowing validation to restart. Final full preparation and release
+checks are still required. The paired engineering follow-up is AlienX
+[#170](https://github.com/AlienX420710/alienx-smarthome/pull/170).
+
+The peer check also found one inherited shared-test difference: the JSON/AlienX
+confirmation fixture still checked a consent field removed by AlienX #161.
+Adopting the published peer test removes that obsolete check without changing
+Cleaning's quote form. The unmodified peer verifier now passes with 183 local and
+177 peer implementation files and no pending extraction; it is source evidence,
+not production acceptance.
 
 ## October 23 v1.0.0 release
 

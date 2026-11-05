@@ -229,7 +229,10 @@ mechanics with local palette/layout tokens.
 
 Each Services add-on uses its own native details/summary disclosure with a
 corresponding description card. The summary shows the star, emoji and title;
-the expanded card contains only the description, without repeating the title.
+an empty decorative chevron sits at the far right, pointing down while closed
+and up while open. CSS follows the native details open state, without extra
+controls or spoken text. The expanded card contains only the description,
+without repeating the title.
 Its decorative star rotates counterclockwise on
 opening and reverses on closing; reduced-motion preferences suppress animation.
 The catalog supplies the available choices consistently to Services, Quote and API.
