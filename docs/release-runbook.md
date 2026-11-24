@@ -83,8 +83,9 @@ Lighthouse retains the configured budgets and site routes with three fixed sampl
 receipt omits SEO. Inspect diagnostics; do not retry poor scores just to pass.
 The runner captures each attempt's stdout/stderr before reading its report and
 retries only recognized NO_NAVSTART trace-capture failures, at most twice; missing, malformed, unrelated and low-score results
-fail. Safari waits for document/font/transition readiness, then applies unchanged
-geometry assertions. Its separate safari-diagnostics directory survives WebKit's
+fail. Safari checks DOM, stylesheet, font and transition readiness directly,
+then applies unchanged geometry assertions. Unrelated subresources can hold
+the document at `interactive`. Its separate safari-diagnostics directory survives WebKit's
 output cleanup. Attach attempt evidence to the linked local issue/PR.
 Main Quality requires exact-main fresh Actions/JS/TS CodeQL, no warnings/errors
 and zero open alerts through bounded complete pagination. Missing/malformed/API/
