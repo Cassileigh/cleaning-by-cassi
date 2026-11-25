@@ -1,8 +1,35 @@
 # Cleaning by Cassi — current state
 
-Updated November 5, 2026; September 30 consolidation retained. This is the sole current findings register.
+Updated November 25, 2026; September 30 consolidation retained. This is the sole current findings register.
 Read AGENTS.md, QUALITY.md, [contract](quote-security-contract.md) and
 [operations](release-runbook.md); historical prose is not current release approval.
+
+## November 25 dependency and Safari release — verified
+
+[PR #121](https://github.com/Cassileigh/cleaning-by-cassi/pull/121)
+updated the shared production dependencies and made native Safari wait for DOM
+and stylesheet readiness directly. Its merged main `41cf21d1bbfe3c0223636c052ce0fc5d9eebd7c3`
+then failed the Safari test's separate animation-frame wait on `/quote-success`;
+the Workers Build and push Smoke for that revision failed, so post-Smoke
+Integrity did not run. Both public hosts continued to serve
+`0c5e4ba74762b1a36362d50b2451243e3066a219`.
+The Cloudflare provider log was unavailable here, so the build failure's cause
+is not inferred from the Safari failure.
+
+[PR #129](https://github.com/Cassileigh/cleaning-by-cassi/pull/129)
+separated font readiness from animation-frame settling and added a bounded
+fallback for WebDriver background tabs. Its AlienX counterpart is
+[PR #180](https://github.com/AlienX420710/alienx-smarthome/pull/180).
+The #129 head matched the Node 22 prepared-source receipt, passed the
+all-severity audit with zero vulnerabilities and all five exact-head checks.
+Merged main `db3a8404f72157cdc0ad303b51921de2f89ef5fc` passed all five push
+checks; `cleaning-ci-approved-main` pointed to that exact commit. Cloudflare
+Workers Build `fa702950-55a2-49ab-8323-701ce5b566e0` succeeded, followed by
+[push Smoke](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/45540338097)
+and [post-Smoke Integrity](https://github.com/Cassileigh/cleaning-by-cassi/actions/runs/45541228281),
+both successful. Three cache-busted reads from each production hostname returned
+HTTP 200 and that exact revision. No real quote, inbox receipt or new physical-device
+acceptance is claimed.
 
 [PR #100](https://github.com/Cassileigh/cleaning-by-cassi/pull/100) reconciled
 the pricing release record below with the command-palette evidence from #99.
