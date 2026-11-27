@@ -2,9 +2,9 @@
   "name": "cleaning-by-cassi",
   "description": "Public website and quote request service for Cleaning by Cassi.",
   "dependencies": {
-    "@astrojs/cloudflare": "14.4.8",
-    "@astrojs/sitemap": "3.7.5",
-    "astro": "7.4.12",
+    "@astrojs/cloudflare": "14.4.9",
+    "@astrojs/sitemap": "3.7.6",
+    "astro": "7.4.13",
     "typescript": "6.0.3"
   },
   "devDependencies": {
